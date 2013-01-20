@@ -23,9 +23,13 @@ For DOM manipulation. It's lightning fast in comparison to server-side jQuery or
 
 Only used for its $.extend() function.
 
+* ent
+
+Used for entity-encoding strings.
+
 ## What helper functions are there?
 
-### expands(element_to_expand)
+### expands(element_to_expand [, options])
 
 Indicate that the working element blocks should be "injected" into the given element_to_expand.
 
@@ -33,7 +37,7 @@ Any HTML not inside a block is discarded.
 
 (This element_to_expand is relative to the main base dir, without the extension.)
 
-### implement(element_to_implement)
+### implement(element_to_implement [,options])
 
 The reverse of expands(), the element_to_implement will be rendered and fully injected into the current element.
 
@@ -43,7 +47,7 @@ New blocks are also added to the current scope.
 
 Even though they look alike, implement() is different than print_element().
 
-### print_element(element_to_print)
+### print_element(element_to_print [, options])
 
 Render the element_to_print in its own scope, but with the given variables of the current element, and print it out immediately.
 
@@ -51,7 +55,7 @@ So any blocks created inside this print_element() *CAN NOT* be used outside of i
 
 In order to do that, you need implement()
 
-### parse_element(element_to_parse)
+### parse_element(element_to_parse [, options])
 
 Any blocks found in the element are added to the current scope.
 
@@ -59,7 +63,7 @@ Any HTML not inside a block is discarded.
 
 So, this function does not inject new HTML into the current, working element.
 
-### start(name) & end(name)
+### start(name [, options]) & end(name [, options])
 
 Define a new block content.
 
@@ -67,7 +71,7 @@ The EJS code & HTML statements between these 2 functions will be executed immedi
 
 They can be print out somewhere else using assign()
 
-### assign(name) [& assign_end(name)]
+### assign(name [, options]) [& assign_end(name [, options])]
 
 Assign a new space.
 
@@ -81,16 +85,42 @@ Assign leaves behind some extra html:
 
     <div id="hawkejs-space-name" data-hawkejs-space="name" data-remove="false"></div>
 
-### style(url, options) & script(url)
+### style(url [, options]) & script(url [, options])
 
 Add style & script tags.
 
+These tags are not printed out immediately.
+You can give a destination-option as to where you want them.
+
+If none is given, they are put into the <head> element.
+
 ### print(string)
 
-Simply print something out.
+Simply print something out (by pushing it into the buffer).
 
-### print_block(name)
+### print_block(name [, options])
 
 Unlike assign(), print_block() will get the block content *right now* and print it out, with no extra wrapper divs.
 
 So if you use this to get a block *before* defining it, it will return nothing.
+
+### add_link(href [, options])
+
+Add an anchor tag to the buffer.
+
+This function takes in a bunch of options:
+
+* name    {string}   The text inside the anchor tag. Uses the href if absent
+* title   {string}   The title (hover) text. Uses name if absent
+* id      {string}   The id of the tag. Empty if absent
+* class   {string}   The classes of the tag. Empty if absent
+* match   {string}   The express route string to match against (eg /a/:id)
+* return  {string}   What this function should return. Defaults to 'print'
+
+	- print   = The function will add the html to the buffer and return nothing
+
+	- options = The function will return the options array WITH a new html property with the result and WILL NOT add anything to the buffer. This is useful for building other helpers on top of this one.
+
+	- string  = The function will return the html and print out nothing.
+
+	- all     = The function will add the html & return the options
