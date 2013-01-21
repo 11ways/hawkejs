@@ -27,6 +27,10 @@ Only used for its $.extend() function.
 
 Used for entity-encoding strings.
 
+* uglify-js
+
+Used for minifying the client side javascript files.
+
 ## What helper functions are there?
 
 ### expands(element_to_expand [, options])
