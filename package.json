@@ -13,6 +13,14 @@
 		"ent": "0.0.5",
 		"uglify-js": "2.2.x"
 	},
+	"devDependencies": {
+		"benchmark": "1.0.x",
+		"microtime": "0.3.x",
+		"express": "3.x"
+	},
+	"scripts": {
+    "test": ""
+  },
   "license": "MIT",
   "engines": {
     "node": ">=0.8"
