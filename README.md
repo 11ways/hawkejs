@@ -118,7 +118,24 @@ This function takes in a bunch of options:
 * title   {string}   The title (hover) text. Uses name if absent
 * id      {string}   The id of the tag. Empty if absent
 * class   {string}   The classes of the tag. Empty if absent
-* match   {string}   The express route string to match against (eg /a/:id)
+* match   {object}   CSS attributes to apply when the url matches the href
+
+	- Any attribute is allowed, and will be replaced with the given. These are special, though:
+
+	- css        =    This css class will be ADDED to the current classes
+	
+	- replaceCss =    The current css classes will be replaced with these
+	
+	- content    =    The inner html will be replaced with this
+	
+	- parent     =    Recursively apply the attributes in THIS object to the parent. For example, when you do: {parent: {css: "test"}}, the parent item's css will be appended with "test"
+	
+	- ... any other attribute will just be set to the given value, for example:
+	
+	- title      =    The title attribute will be set to this
+	
+
+
 * return  {string}   What this function should return. Defaults to 'print'
 
 	- print   = The function will add the html to the buffer and return nothing
@@ -128,3 +145,4 @@ This function takes in a bunch of options:
 	- string  = The function will return the html and print out nothing.
 
 	- all     = The function will add the html & return the options
+	
