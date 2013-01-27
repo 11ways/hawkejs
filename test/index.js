@@ -77,7 +77,7 @@ app.get('/news/:id', function(req, res){
 	
 	var newsitem = db[req.params.id];
 	
-  res.render('pages/index', {firstname: "Riza", lastname: "Hawkeye", newsitem: newsitem});
+  res.render('elements/image', {firstname: "Riza", lastname: "Hawkeye", newsitem: newsitem});
 });
 
 app.listen(3000);
