@@ -1,7 +1,7 @@
 node_modules
 *.komodo*
 *.log
-
+*.temp
 # the client side file is generated on startup
 hawkejs-client-side.js
 
