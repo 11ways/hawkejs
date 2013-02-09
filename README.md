@@ -23,13 +23,17 @@ For DOM manipulation. It's lightning fast in comparison to server-side jQuery or
 
 Only used for its $.extend() function.
 
-* ent
-
-Used for entity-encoding strings.
-
 * uglify-js
 
 Used for minifying the client side javascript files.
+
+* file-utils
+
+Used for creating a temporary folder to store the views in.
+
+* async
+
+Also used for creating a temporary folder to store the views in.
 
 ## What helper functions are there?
 
