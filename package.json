@@ -1,7 +1,7 @@
 {
 	"name": "hawkejs",
 	"description": "Extension of the EJS templating system",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"author": "Jelle De Loecker <jelle@kipdola.be>",
 	"keywords": ["template", "engine", "ejs", "hawkejs"],
 	"main": "./lib/hawkejs.js",
@@ -12,7 +12,7 @@
 		"ejs": "0.8.3",
 		"uglify-js": "2.2.x",
 		"async": "0.2.x",
-		"file-utils": "0.3.x"
+		"mkdirp": "0.3.x"
 	},
 	"devDependencies": {
 		"bootstrap": "https://github.com/twitter/bootstrap/tarball/v2.2.2",

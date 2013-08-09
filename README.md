@@ -27,7 +27,7 @@ Only used for its $.extend() function.
 
 Used for minifying the client side javascript files.
 
-* file-utils
+* mkdirp
 
 Used for creating a temporary folder to store the views in.
 
