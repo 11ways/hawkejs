@@ -1,7 +1,7 @@
 {
 	"name": "hawkejs",
 	"description": "Extension of the EJS templating system",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"author": "Jelle De Loecker <jelle@kipdola.be>",
 	"keywords": ["template", "engine", "ejs", "hawkejs"],
 	"main": "./lib/hawkejs.js",
