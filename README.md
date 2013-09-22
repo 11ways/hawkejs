@@ -1,19 +1,22 @@
 # Hawkejs
-A Node.js templating engine built upon TJ Holowaychuk's EJS.
+A Node.js templating engine built upon TJ Holowaychuk's ejs.
 
 ## Installation
 
     $ npm install hawkejs
 
-## Why did you fork EJS?
+## Example
 
-I didn't. EJS is a dependency of Hawkejs.
+You can check out the example in the test/ subfolder.
+It's quite ugly and not at all feature complete, but you can see it works.
 
-In essence, Hawkejs is a wrapper around EJS that adds some features (like blocks) as simple function helpers.
-
-Original EJS templates can be used as Hawkejs templates, and the other way around (though Hawkejs functions should be removed, then)
+    $ node test/index.js
 
 ## What other dependencies are there?
+
+* ejs
+
+The rendering of the templates is done by ejs
 
 * Cheerio
 

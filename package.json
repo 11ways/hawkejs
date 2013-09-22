@@ -15,7 +15,7 @@
 		"mkdirp": "0.3.x"
 	},
 	"devDependencies": {
-		"bootstrap": "https://github.com/twbs/bootstrap/tarball/v2.2.2",
+		"bootstrap": "https://github.com/twbs/bootstrap/tarball/v2.3.2",
 		"less-middleware": "0.1.x",
 		"benchmark": "1.0.x",
 		"microtime": "0.3.x",

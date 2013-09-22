@@ -1,0 +1,19 @@
+<% expands('layouts/base') %>
+
+<% start('main') %>
+<div class="container-fluid">
+	<div class="row-fluid">
+
+		<!-- Include all the content of elements/sidebar into this template -->
+		<% implement('elements/sidebar') %>
+
+		<!-- 'content' blocks will be put in here -->
+		<% assign('content') %>
+
+	</div><!--/row-->
+	<hr>
+	<footer>
+		<p>&copy; Hawkejs 2013</p>
+	</footer>
+</div>
+<% end('main') %>
