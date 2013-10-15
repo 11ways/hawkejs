@@ -1,13 +1,13 @@
 {
 	"name": "hawkejs",
 	"description": "Extension of the EJS templating system",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"author": "Jelle De Loecker <jelle@kipdola.be>",
 	"keywords": ["template", "engine", "ejs", "hawkejs"],
 	"main": "./lib/hawkejs.js",
 	"repository": "git@github.com:skerit/hawkejs.git",
 	"dependencies": {
-		"cheerio": "0.12.x",
+		"cheerio": "0.12.2",
 		"jquery": "1.8.x",
 		"ejs": "0.8.3",
 		"uglify-js": "2.4.x",
