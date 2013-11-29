@@ -1,9 +1,9 @@
 {
 	"name": "hawkejs",
 	"description": "Extension of the EJS templating system",
-	"version": "0.0.9",
+	"version": "0.0.10",
 	"author": "Jelle De Loecker <jelle@kipdola.be>",
-	"keywords": ["template", "engine", "ejs", "hawkejs"],
+	"keywords": ["template", "engine", "ejs", "hawkejs", "view"],
 	"main": "./lib/hawkejs.js",
 	"repository": "git@github.com:skerit/hawkejs.git",
 	"dependencies": {
@@ -21,8 +21,8 @@
 		"microtime": "0.3.x",
 		"express": "3.x"
 	},
-  "license": "MIT",
-  "engines": {
-    "node": ">=0.8"
-  }
+	"license": "MIT",
+	"engines": {
+		"node": ">=0.8"
+	}
 }
