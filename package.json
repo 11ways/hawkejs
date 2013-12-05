@@ -7,7 +7,7 @@
 	"main": "./lib/hawkejs.js",
 	"repository": "git@github.com:skerit/hawkejs.git",
 	"dependencies": {
-		"cheerio": "0.12.2",
+		"cheerio": "0.12.4",
 		"jquery": "1.8.x",
 		"ejs": "0.8.3",
 		"uglify-js": "2.4.x",
