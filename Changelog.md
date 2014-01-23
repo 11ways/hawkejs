@@ -1,3 +1,11 @@
+## 0.0.11 (WIP)
+
+* Add uneval function. Right now it only correctly uneval's functions,
+  but more is to come.
+* Script tag names are no longer prefixed with 'hawkejs' because it messed up
+  encoding of chars like '<'. To not have the scripts run too soon,
+  jQuery's .parseHTML is used.
+
 ## 0.0.10 (2014-01-21)
 
 * Many new functions & helpers
