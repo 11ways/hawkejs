@@ -5,6 +5,7 @@
 * Script tag names are no longer prefixed with 'hawkejs' because it messed up
   encoding of chars like '<'. To not have the scripts run too soon,
   jQuery's .parseHTML is used.
+* Replace hawkejs.µ with hawkejs.utils, as it caused encoding problems.
 
 ## 0.0.10 (2014-01-21)
 
