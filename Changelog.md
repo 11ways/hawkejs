@@ -6,6 +6,7 @@
   encoding of chars like '<'. To not have the scripts run too soon,
   jQuery's .parseHTML is used.
 * Replace hawkejs.µ with hawkejs.utils, as it caused encoding problems.
+* Add a new jQuery converter setting for json-dry strings
 
 ## 0.0.10 (2014-01-21)
 
