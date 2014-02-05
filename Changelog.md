@@ -1,4 +1,4 @@
-## 0.0.11 (WIP)
+## 0.0.11 (2014-02-05)
 
 * Add uneval function. Right now it only correctly uneval's functions,
   but more is to come.
@@ -7,6 +7,14 @@
   jQuery's .parseHTML is used.
 * Replace hawkejs.µ with hawkejs.utils, as it caused encoding problems.
 * Add a new jQuery converter setting for json-dry strings
+* Hawkejs event listener now allows you to pass an array of queries or strings
+* Add hawkejs.downloadAjax function, which allows the user to POST data to the
+  server and download the file, as if via AJAX. Even allows callback functions
+  (for when download begins) if the server supports it.
+  Inspired by this stackoverflow question:
+  http://stackoverflow.com/questions/1106377/detect-when-browser-receives-file-download
+* Add formify function, which turns an object into key-value pairs fitted for
+  form submission
 
 ## 0.0.10 (2014-01-21)
 
