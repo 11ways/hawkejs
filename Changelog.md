@@ -1,3 +1,8 @@
+## 0.0.12 (2014-02-16)
+
+* Add getObjectPath function, which takes an object and a string and uses that
+  string as a path to look for in the object
+
 ## 0.0.11 (2014-02-05)
 
 * Add uneval function. Right now it only correctly uneval's functions,
