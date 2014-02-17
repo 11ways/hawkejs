@@ -1,3 +1,8 @@
+## 0.0.13 (WIP)
+
+* Don't thrown an error when _EjsRender returns an empty string after render,
+  sometimes that's just what needs to happen.
+
 ## 0.0.12 (2014-02-16)
 
 * Add getObjectPath function, which takes an object and a string and uses that
