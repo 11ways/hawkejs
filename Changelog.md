@@ -1,7 +1,11 @@
-## 0.0.13 (WIP)
+## 0.0.13 (2014-02-18)
 
 * Don't thrown an error when _EjsRender returns an empty string after render,
   sometimes that's just what needs to happen.
+* Fix the History API implementation.
+  Some functions were modified in a way nothing happened anymore on pressing the
+  back & next buttons.
+  The 'historyChange' event is also emitted after the state has been applied.
 
 ## 0.0.12 (2014-02-16)
 
