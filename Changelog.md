@@ -1,3 +1,7 @@
+## 0.0.14 (2014-02-28)
+
+* Upgrade ejs from 0.8.3 to 0.8.5, an upgrade that needed some tweaking.
+
 ## 0.0.13 (2014-02-18)
 
 * Don't thrown an error when _EjsRender returns an empty string after render,
