@@ -1,6 +1,7 @@
 ## 0.0.14 (2014-02-28)
 
 * Upgrade ejs from 0.8.3 to 0.8.5, an upgrade that needed some tweaking.
+* Also upgrade cheerio, entities and jquery
 
 ## 0.0.13 (2014-02-18)
 
