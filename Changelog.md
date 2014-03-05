@@ -1,3 +1,8 @@
+## 0.0.15 (WIP)
+
+* Add events for created 'implementations'. Still need to add them for destroyed
+  ones, too.
+
 ## 0.0.14 (2014-02-28)
 
 * Upgrade ejs from 0.8.3 to 0.8.5, an upgrade that needed some tweaking.
