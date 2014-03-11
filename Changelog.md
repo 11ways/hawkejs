@@ -1,3 +1,9 @@
+## 0.0.16 (WIP)
+
+* Submit POSTs as JSON instead of urlencoded strings
+* Use Paul Macek's jquery-serialize-object plugin instead of the simple jsonify
+  script. $.fn.jsonify now points to the new function.
+
 ## 0.0.15 (2014-03-11)
 
 * Add events for created 'implementations'. Still need to add them for destroyed
