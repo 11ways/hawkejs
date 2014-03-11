@@ -1,7 +1,9 @@
-## 0.0.15 (WIP)
+## 0.0.15 (2014-03-11)
 
 * Add events for created 'implementations'. Still need to add them for destroyed
   ones, too.
+* Revert to jQuery 1.8 on the server side
+* Add DOMSpot for ClientSide usage
 
 ## 0.0.14 (2014-02-28)
 
