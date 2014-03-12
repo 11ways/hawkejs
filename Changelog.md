@@ -1,4 +1,4 @@
-## 0.0.16 (WIP)
+## 0.1.0 (2014-03-12)
 
 * Submit POSTs as JSON instead of urlencoded strings
 * Use TJ Holowaychuk's querystring code to convert a form to an object.
