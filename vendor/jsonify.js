@@ -1,133 +1,324 @@
+(function(){
+
 /**
- * jQuery serializeObject
- * @copyright 2014, macek <paulmacek@gmail.com>
- * @link https://github.com/macek/jquery-serialize-object
- * @license BSD
- * @version 2.1.0
+ * Object#toString() ref for stringify().
  */
-(function(root, factory) {
 
-	// AMD
-	if (typeof define === "function" && define.amd) {
-		define(["jquery", "exports"], function($, exports) {
-			factory(root, exports, $);
-		});
-	}
+var toString = Object.prototype.toString;
 
-	// CommonJS
-	else if (typeof exports !== "undefined") {
-		var $ = require("jquery");
-		factory(root, exports, $);
-	}
+/**
+ * Array#indexOf shim.
+ */
 
-	// Browser
-	else {
-		root.FormSerializer = factory(root, {}, (root.jQuery || root.Zepto || root.ender || root.$));
-	}
-
-}(this, function(root, exports, $) {
-
-	var FormSerializer = exports.FormSerializer = function FormSerializer(helper) {
-		this._helper    = helper;
-		this._object    = {};
-		this._pushes    = {};
-		this._patterns  = {
-			validate: /^[a-z][a-z0-9_]*(?:\[(?:\d*|[a-z0-9_]+)\])*$/i,
-			key:      /[a-z0-9_]+|(?=\[\])/gi,
-			push:     /^$/,
-			fixed:    /^\d+$/,
-			named:    /^[a-z0-9_]+$/i
+var indexOf = typeof Array.prototype.indexOf === 'function'
+	? function(arr, el) { return arr.indexOf(el); }
+	: function(arr, el) {
+			for (var i = 0; i < arr.length; i++) {
+				if (arr[i] === el) return i;
+			}
+			return -1;
 		};
-	};
 
-	FormSerializer.prototype._build = function _build(base, key, value) {
-		base[key] = value;
-		return base;
-	};
+/**
+ * Array.isArray shim.
+ */
 
-	FormSerializer.prototype._makeObject = function _nest(root, value) {
+var isArray = Array.isArray || function(arr) {
+	return toString.call(arr) == '[object Array]';
+};
 
-		var keys = root.match(this._patterns.key), k;
+/**
+ * Object.keys shim.
+ */
 
-		// nest, nest, ..., nest
-		while ((k = keys.pop()) !== undefined) {
-			// foo[]
-			if (this._patterns.push.test(k)) {
-				var idx = this._incrementPush(root.replace(/\[\]$/, ''));
-				value = this._build([], idx, value);
+var objectKeys = Object.keys || function(obj) {
+	var ret = [];
+	for (var key in obj) ret.push(key);
+	return ret;
+};
+
+/**
+ * Array#forEach shim.
+ */
+
+var forEach = typeof Array.prototype.forEach === 'function'
+	? function(arr, fn) { return arr.forEach(fn); }
+	: function(arr, fn) {
+			for (var i = 0; i < arr.length; i++) fn(arr[i]);
+		};
+
+/**
+ * Array#reduce shim.
+ */
+
+var reduce = function(arr, fn, initial) {
+	if (typeof arr.reduce === 'function') return arr.reduce(fn, initial);
+	var res = initial;
+	for (var i = 0; i < arr.length; i++) res = fn(res, arr[i]);
+	return res;
+};
+
+/**
+ * Cache non-integer test regexp.
+ */
+
+var isint = /^[0-9]+$/;
+
+function promote(parent, key) {
+	if (parent[key].length == 0) return parent[key] = {};
+	var t = {};
+	for (var i in parent[key]) t[i] = parent[key][i];
+	parent[key] = t;
+	return t;
+}
+
+function parse(parts, parent, key, val) {
+	var part = parts.shift();
+	// end
+	if (!part) {
+		if (isArray(parent[key])) {
+			parent[key].push(val);
+		} else if ('object' == typeof parent[key]) {
+			parent[key] = val;
+		} else if ('undefined' == typeof parent[key]) {
+			parent[key] = val;
+		} else {
+			parent[key] = [parent[key], val];
+		}
+		// array
+	} else {
+		var obj = parent[key] = parent[key] || [];
+		if (']' == part) {
+			if (isArray(obj)) {
+				if ('' != val) obj.push(val);
+			} else if ('object' == typeof obj) {
+				obj[objectKeys(obj).length] = val;
+			} else {
+				obj = parent[key] = [parent[key], val];
 			}
-
-			// foo[n]
-			else if (this._patterns.fixed.test(k)) {
-				value = this._build([], k, value);
-			}
-
-			// foo; foo[bar]
-			else if (this._patterns.named.test(k)) {
-				value = this._build({}, k, value);
-			}
+			// prop
+		} else if (~indexOf(part, ']')) {
+			part = part.substr(0, part.length - 1);
+			if (!isint.test(part) && isArray(obj)) obj = promote(parent, key);
+			parse(parts, obj, part, val);
+			// key
+		} else {
+			if (!isint.test(part) && isArray(obj)) obj = promote(parent, key);
+			parse(parts, obj, part, val);
 		}
+	}
+}
 
-		return value;
-	};
+/**
+ * Merge parent key/val pair.
+ */
 
-	FormSerializer.prototype._incrementPush = function _incrementPush(key) {
-		if (this._pushes[key] === undefined) {
-			this._pushes[key] = 0;
+function merge(parent, key, val){
+	if (~indexOf(key, ']')) {
+		var parts = key.split('[')
+			, len = parts.length
+			, last = len - 1;
+		parse(parts, parent, 'base', val);
+		// optimize
+	} else {
+		if (!isint.test(key) && isArray(parent.base)) {
+			var t = {};
+			for (var k in parent.base) t[k] = parent.base[k];
+			parent.base = t;
 		}
-		return this._pushes[key]++;
-	};
-
-	FormSerializer.prototype.addPair = function addPair(pair) {
-		if (!this._patterns.validate.test(pair.name)) return this;
-		var obj = this._makeObject(pair.name, pair.value);
-		this._object = this._helper.extend(true, this._object, obj);
-		return this;
-	};
-
-	FormSerializer.prototype.addPairs = function addPairs(pairs) {
-		if (!this._helper.isArray(pairs)) {
-			throw new Error("formSerializer.addPairs expects an Array");
-		}
-		for (var i=0, len=pairs.length; i<len; i++) {
-			this.addPair(pairs[i]);
-		}
-		return this;
-	};
-
-	FormSerializer.prototype.serialize = function serialize() {
-		return this._object
-	};
-
-	FormSerializer.prototype.serializeJSON = function serializeJSON() {
-		return JSON.stringify(this.serialize());
-	};
-
-	FormSerializer.serializeObject = function serializeObject() {
-		if (this.length > 1) {
-			return new Error("jquery-serialize-object can only serialize one form at a time");
-		}
-
-		return new FormSerializer($).
-			addPairs(this.serializeArray()).
-			serialize();
-	};
-
-	FormSerializer.serializeJSON = function serializeJSON() {
-		if (this.length > 1) {
-			return new Error("jquery-serialize-object can only serialize one form at a time");
-		}
-
-		return new FormSerializer($).
-			addPairs(this.serializeArray()).
-			serializeJSON();
-	};
-
-	if (typeof $.fn !== "undefined") {
-		$.fn.serializeObject = FormSerializer.serializeObject;
-		$.fn.serializeJSON   = FormSerializer.serializeJSON;
-		$.fn.jsonify         = FormSerializer.serializeObject;
+		set(parent.base, key, val);
 	}
 
-	return FormSerializer;
-}));
+	return parent;
+}
+
+/**
+ * Parse the given obj.
+ */
+
+function parseObject(obj){
+	var ret = { base: {} };
+	forEach(objectKeys(obj), function(name){
+		merge(ret, name, obj[name]);
+	});
+	return ret.base;
+}
+
+/**
+ * Parse the given str.
+ */
+
+function parseString(str){
+	return reduce(String(str).split('&'), function(ret, pair){
+		var eql = indexOf(pair, '=')
+			, brace = lastBraceInKey(pair)
+			, key = pair.substr(0, brace || eql)
+			, val = pair.substr(brace || eql, pair.length)
+			, val = val.substr(indexOf(val, '=') + 1, val.length);
+
+		// ?foo
+		if ('' == key) key = pair, val = '';
+		if ('' == key) return ret;
+
+		return merge(ret, decode(key), decode(val));
+	}, { base: {} }).base;
+};
+
+/**
+ * Parse the given query `str` or `obj`, returning an object.
+ *
+ * @param {String} str | {Object} obj
+ * @return {Object}
+ * @api public
+ */
+
+var mainParse = function(str){
+	if (null == str || '' == str) return {};
+	return 'object' == typeof str
+		? parseObject(str)
+		: parseString(str);
+};
+
+/**
+ * Turn the given `obj` into a query string
+ *
+ * @param {Object} obj
+ * @return {String}
+ * @api public
+ */
+
+var mainStringify = stringify = function(obj, prefix) {
+	if (isArray(obj)) {
+		return stringifyArray(obj, prefix);
+	} else if ('[object Object]' == toString.call(obj)) {
+		return stringifyObject(obj, prefix);
+	} else if ('string' == typeof obj) {
+		return stringifyString(obj, prefix);
+	} else {
+		return prefix + '=' + encodeURIComponent(String(obj));
+	}
+};
+
+/**
+ * Stringify the given `str`.
+ *
+ * @param {String} str
+ * @param {String} prefix
+ * @return {String}
+ * @api private
+ */
+
+function stringifyString(str, prefix) {
+	if (!prefix) throw new TypeError('stringify expects an object');
+	return prefix + '=' + encodeURIComponent(str);
+}
+
+/**
+ * Stringify the given `arr`.
+ *
+ * @param {Array} arr
+ * @param {String} prefix
+ * @return {String}
+ * @api private
+ */
+
+function stringifyArray(arr, prefix) {
+	var ret = [];
+	if (!prefix) throw new TypeError('stringify expects an object');
+	for (var i = 0; i < arr.length; i++) {
+		ret.push(stringify(arr[i], prefix + '[' + i + ']'));
+	}
+	return ret.join('&');
+}
+
+/**
+ * Stringify the given `obj`.
+ *
+ * @param {Object} obj
+ * @param {String} prefix
+ * @return {String}
+ * @api private
+ */
+
+function stringifyObject(obj, prefix) {
+	var ret = []
+		, keys = objectKeys(obj)
+		, key;
+
+	for (var i = 0, len = keys.length; i < len; ++i) {
+		key = keys[i];
+		if (null == obj[key]) {
+			ret.push(encodeURIComponent(key) + '=');
+		} else {
+			ret.push(stringify(obj[key], prefix
+				? prefix + '[' + encodeURIComponent(key) + ']'
+				: encodeURIComponent(key)));
+		}
+	}
+
+	return ret.join('&');
+}
+
+/**
+ * Set `obj`'s `key` to `val` respecting
+ * the weird and wonderful syntax of a qs,
+ * where "foo=bar&foo=baz" becomes an array.
+ *
+ * @param {Object} obj
+ * @param {String} key
+ * @param {String} val
+ * @api private
+ */
+
+function set(obj, key, val) {
+	var v = obj[key];
+	if (undefined === v) {
+		obj[key] = val;
+	} else if (isArray(v)) {
+		v.push(val);
+	} else {
+		obj[key] = [v, val];
+	}
+}
+
+/**
+ * Locate last brace in `str` within the key.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function lastBraceInKey(str) {
+	var len = str.length
+		, brace
+		, c;
+	for (var i = 0; i < len; ++i) {
+		c = str[i];
+		if (']' == c) brace = false;
+		if ('[' == c) brace = true;
+		if ('=' == c && !brace) return i;
+	}
+}
+
+/**
+ * Decode `str`.
+ *
+ * @param {String} str
+ * @return {String}
+ * @api private
+ */
+
+function decode(str) {
+	try {
+		return decodeURIComponent(str.replace(/\+/g, ' '));
+	} catch (err) {
+		return str;
+	}
+}
+
+$.fn.jsonify = function jsonify() {
+	return mainParse($(this).serialize());
+}
+
+}());
