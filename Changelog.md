@@ -1,3 +1,8 @@
+## 0.1.1 (WIP)
+
+* Add custom 'x-hawkejs-request' header to GETs and POST requests
+* Add Mozilla's localforage library
+
 ## 0.1.0 (2014-03-12)
 
 * Submit POSTs as JSON instead of urlencoded strings
