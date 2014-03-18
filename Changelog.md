@@ -2,6 +2,7 @@
 
 * Add custom 'x-hawkejs-request' header to GETs and POST requests
 * Add Mozilla's localforage library
+* Expose the ejs renderer via hawkejs.ejs
 
 ## 0.1.0 (2014-03-12)
 
