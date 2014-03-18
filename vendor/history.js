@@ -1,5 +1,5 @@
-/*
- * History API JavaScript Library v4.0.3
+/*!
+ * History API JavaScript Library v4.0.9
  *
  * Support: IE6+, FF3+, Opera 9+, Safari, Chrome and other
  *
@@ -11,7 +11,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  *
- * Update: 08.08.13 18:28
+ * Update: 2013-11-20 13:03
  */
 (function(window) {
     // Prevent the code from running if there is no window.history object
@@ -20,8 +20,6 @@
     var document = window.document;
     // HTML element
     var documentElement = document.documentElement;
-    // symlink to sessionStorage
-    var sessionStorage = window['sessionStorage'];
     // symlink to constructor of Object
     var Object = window['Object'];
     // symlink to JSON Object
@@ -72,6 +70,8 @@
     var stateStorage = {};
     // in this object will be stored custom handlers
     var eventsList = {};
+    // stored last title
+    var lastTitle = document.title;
 
     /**
      * Properties that will be replaced in the global
@@ -82,6 +82,21 @@
     var eventsDescriptors = {
         "onhashchange": null,
         "onpopstate": null
+    };
+
+    /**
+     * Fix for Chrome in iOS
+     * See https://github.com/devote/HTML5-History-API/issues/29
+     */
+    var fastFixChrome = function(method, args) {
+        var isNeedFix = window.history !== windowHistory;
+        if (isNeedFix) {
+            window.history = windowHistory;
+        }
+        method.apply(windowHistory, args);
+        if (isNeedFix) {
+            window.history = historyObject;
+        }
     };
 
     /**
@@ -127,8 +142,14 @@
          * @param {string} [url]
          */
         pushState: function(state, title, url) {
-            historyPushState && historyPushState.apply(windowHistory, arguments);
+            var t = document.title;
+            if (lastTitle != null) {
+                document.title = lastTitle;
+            }
+            historyPushState && fastFixChrome(historyPushState, arguments);
             changeState(state, url);
+            document.title = t;
+            lastTitle = title;
         },
         /**
          * The method updates the state object,
@@ -141,9 +162,15 @@
          * @param {string} [url]
          */
         replaceState: function(state, title, url) {
+            var t = document.title;
+            if (lastTitle != null) {
+                document.title = lastTitle;
+            }
             delete stateStorage[windowLocation.href];
-            historyReplaceState && historyReplaceState.apply(windowHistory, arguments);
+            historyReplaceState && fastFixChrome(historyReplaceState, arguments);
             changeState(state, url, true);
+            document.title = t;
+            lastTitle = title;
         },
         /**
          * Object 'history.location' is similar to the
@@ -317,8 +344,10 @@
      */
     function parseURL(href, isWindowLocation, isNotAPI) {
         var re = /(?:([\w0-9]+:))?(?:\/\/(?:[^@]*@)?([^\/:\?#]+)(?::([0-9]+))?)?([^\?#]*)(?:(\?[^#]+)|\?)?(?:(#.*))?/;
-        if (href && !isWindowLocation) {
+        if (href != null && href !== '' && !isWindowLocation) {
             var current = parseURL(), _pathname = current._pathname, _protocol = current._protocol;
+            // convert to type of string
+            href = '' + href;
             // convert relative link to the absolute
             href = /^(?:[\w0-9]+\:)?\/\//.test(href) ? href.indexOf("/") === 0
                 ? _protocol + href : href : _protocol + "//" + current._host + (
@@ -372,34 +401,45 @@
     /**
      * Initializing storage for the custom state's object
      */
-    function storageInitialize(JSON) {
-        var storage = '';
-        if (sessionStorage) {
-            // get cache from the storage in browser
-            storage += sessionStorage.getItem(sessionStorageKey);
-        } else {
-            var cookie = document.cookie.split(sessionStorageKey + "=");
-            if (cookie.length > 1) {
-                storage += (cookie.pop().split(";").shift() || 'null');
+    function storageInitialize() {
+        var sessionStorage;
+        /**
+         * sessionStorage throws error when cookies are disabled
+         * Chrome content settings when running the site in a Facebook IFrame.
+         * see: https://github.com/devote/HTML5-History-API/issues/34
+         * and: http://stackoverflow.com/a/12976988/669360
+         */
+        try {
+            sessionStorage = window['sessionStorage'];
+            sessionStorage.setItem(sessionStorageKey + 't', '1');
+            sessionStorage.removeItem(sessionStorageKey + 't');
+        } catch(_e_) {
+            sessionStorage = {
+                getItem: function(key) {
+                    var cookie = document.cookie.split(key + "=");
+                    return cookie.length > 1 && cookie.pop().split(";").shift() || 'null';
+                },
+                setItem: function(key, value) {
+                    var state = {};
+                    // insert one current element to cookie
+                    if (state[windowLocation.href] = historyObject.state) {
+                        document.cookie = key + '=' + JSON.stringify(state);
+                    }
+                }
             }
         }
+
         try {
-            stateStorage = JSON.parse(storage) || {};
+            // get cache from the storage in browser
+            stateStorage = JSON.parse(sessionStorage.getItem(sessionStorageKey)) || {};
         } catch(_e_) {
             stateStorage = {};
         }
+
         // hang up the event handler to event unload page
         addEvent(eventNamePrefix + 'unload', function() {
-            if (sessionStorage) {
-                // save current state's object
-                sessionStorage.setItem(sessionStorageKey, JSON.stringify(stateStorage));
-            } else {
-                // save the current 'state' in the cookie
-                var state = {};
-                if (state[windowLocation.href] = historyObject.state) {
-                    document.cookie = sessionStorageKey + '=' + JSON.stringify(state);
-                }
-            }
+            // save current state's object
+            sessionStorage.setItem(sessionStorageKey, JSON.stringify(stateStorage));
         }, false);
     }
 
@@ -749,13 +789,26 @@
     }
 
     /**
-     * handler url with anchor for non-HTML5 browsers
+     * Finds the closest ancestor anchor element (including the target itself).
      *
-     * @param e
+     * @param {HTMLElement} target The element to start scanning from.
+     * @return {HTMLElement} An element which is the closest ancestor anchor.
+     */
+    function anchorTarget(target) {
+        while (target) {
+            if (target.nodeName === 'A') return target;
+            target = target.parentNode;
+        }
+    }
+
+    /**
+     * Handles anchor elements with a hash fragment for non-HTML5 browsers
+     *
+     * @param {Event} e
      */
     function onAnchorClick(e) {
         var event = e || window.event;
-        var target = event.target || event.srcElement;
+        var target = anchorTarget(event.target || event.srcElement);
         var defaultPrevented = "defaultPrevented" in event ? event['defaultPrevented'] : event.returnValue === false;
         if (target && target.nodeName === "A" && !defaultPrevented) {
             var current = parseURL();
@@ -868,7 +921,7 @@
 
         // If browser does not support object 'state' in interface 'History'
         if (!isSupportStateObjectInHistory && JSON) {
-            storageInitialize(JSON);
+            storageInitialize();
         }
 
         // track clicks on anchors

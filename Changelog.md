@@ -3,6 +3,11 @@
 * Add custom 'x-hawkejs-request' header to GETs and POST requests
 * Add Mozilla's localforage library
 * Expose the ejs renderer via hawkejs.ejs
+* Upgrade the History library to version 4.0.9
+* Add LZ-String and use it to compresses History API payloads that are too big
+  for certain browsers (IE & Firefox).
+  This slows down the browser, an asynchronous web-worker solution should be
+  sought after next.
 
 ## 0.1.0 (2014-03-12)
 
