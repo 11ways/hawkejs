@@ -10,6 +10,7 @@
   sought after next.
 * If it is given, use the 'X-History-Url' response header as the url to
   register with the HTML5 History API.
+* Emit viewready event after render or pageload
 
 ## 0.1.0 (2014-03-12)
 
