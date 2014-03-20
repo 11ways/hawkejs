@@ -8,6 +8,8 @@
   for certain browsers (IE & Firefox).
   This slows down the browser, an asynchronous web-worker solution should be
   sought after next.
+* If it is given, use the 'X-History-Url' response header as the url to
+  register with the HTML5 History API.
 
 ## 0.1.0 (2014-03-12)
 
