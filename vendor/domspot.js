@@ -44,7 +44,7 @@ DOMSpot = (function DOMSpotCreator(){
  *
  * @author   Jelle De Loecker   <jelle@codedor.be>
  * @since    0.0.1
- * @version  0.0.1
+ * @version  0.1.0
  */
 function DOMSpot() {
 
@@ -85,13 +85,18 @@ function DOMSpot() {
 
 						// See if any of these elements are new
 						for (j = 0; j < result.length; j++) {
+
 							if (!result[j].__domspot_introduced) {
+								result[j].__domspot_introduced = {};
+							}
+
+							if (!result[j].__domspot_introduced[query]) {
 
 								// Elements without this property are new
 								introducedResult.push(result[j]);
 
-								// Set the property to true
-								result[j].__domspot_introduced = true;
+								// Set the property to true after all the queries have finished
+								result[j].__domspot_introduced[query] = true;
 							}
 						}
 
@@ -240,7 +245,11 @@ DOMSpot.prototype._watchType = function _watchType(type, query, includePresent, 
 			// Set the introduced property
 			if (type == '_introduced') {
 				for (i = 0; i < presentFound.length; i++) {
-					presentFound[i].__domspot_introduced = true;
+					if (!presentFound[i].__domspot_introduced) {
+						presentFound[i].__domspot_introduced = {};
+					}
+
+					presentFound[i].__domspot_introduced[query] = true;
 				}
 			}
 

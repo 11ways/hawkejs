@@ -11,6 +11,8 @@
 * If it is given, use the 'X-History-Url' response header as the url to
   register with the HTML5 History API.
 * Emit viewready event after render or pageload
+* Upgrade DOMSpot to 0.1.0
+* Don't use the History API on forms that have the 'data-no-history' attribute
 
 ## 0.1.0 (2014-03-12)
 
