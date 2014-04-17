@@ -326,5 +326,100 @@ DOMSpot.prototype.removed = function removed(query, callback) {
 	this._watchType('_removed', query, false, callback);
 };
 
+/**
+ * Watch for elements to appear on screen
+ *
+ * @author   Jelle De Loecker   <jelle@codedor.be>
+ * @since    0.1.1
+ * @version  0.1.1
+ *
+ * @param    {String}   query           The CSS query to look for
+ * @param    {Object}   options
+ * @param    {Function} callback
+ */
+DOMSpot.prototype.appeared = function appeared(query, options, callback) {
+
+	var that     = this,
+	    existing = [],
+	    check;
+
+	if (typeof options === 'function') {
+		callback = options;
+		options = {};
+	}
+
+	if (typeof options.topOffset === 'undefined') {
+		options.topOffset = 0;
+	}
+
+	if (typeof options.leftOffset === 'undefined') {
+		options.leftOffset = 0;
+	}
+
+	if (!options.interval || typeof options.interval !== 'number') {
+		options.interval = 250;
+	}
+
+	// Get all the already existing items
+	existing.push.apply(existing, document.querySelectorAll(query));
+
+	check = function check() {
+
+		var visible,
+		    wLeft,
+		    wTop,
+		    item,
+		    i;
+
+		if (!existing.length) {
+			return;
+		}
+
+		wLeft = window.scrollX;
+		wTop = window.scrollY;
+
+		visible = [];
+
+		// Go in reverse so we can splice-remove items
+		for (i = existing.length - 1; i >= 0; i--) {
+
+			item = existing[i];
+
+			if (options.parent) {
+				item = item.parentElement;
+			}
+
+			if (!item || !item.offsetWidth) {
+				continue;
+			}
+
+			if (item.offsetTop + item.offsetHeight >= wTop &&
+				item.offsetTop - options.topOffset <= wTop + window.innerHeight &&
+				item.offsetLeft + item.offsetWidth >= wLeft &&
+				item.offsetLeft - options.leftOffset <= wLeft + window.innerWidth
+				) {
+
+				// Add it to the visible list
+				visible.push(existing[i]);
+
+				// Remove the original item
+				existing.splice(i, 1);
+			}
+		}
+
+		if (visible.length) {
+			callback(visible);
+		}
+	};
+
+	// Add new elements as they're being introduced
+	this.introduced(query, false, function(elements) {
+		existing.push.apply(existing, elements);
+	});
+
+	// Perform the check every given amount of milliseconds
+	setInterval(check, options.interval);
+};
+
 return new DOMSpot();
 }());
