@@ -13,6 +13,7 @@
 * Emit viewready event after render or pageload
 * Upgrade DOMSpot to 0.1.0
 * Don't use the History API on forms that have the 'data-no-history' attribute
+* Update History.js to version v4.1.0, fixes some Firefox security errors
 
 ## 0.1.0 (2014-03-12)
 
