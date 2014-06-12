@@ -1,3 +1,8 @@
+## 1.0.0 (WIP)
+
+* Complete rewrite
+* Remove DOM-style rendering from the server
+
 ## 0.1.1 (2014-06-10)
 
 * Add custom 'x-hawkejs-request' header to GETs and POST requests
