@@ -1,0 +1,30 @@
+<? extend('body') ?>
+
+<? start('content') ?>
+
+<? script('zjiever.js'); ?>
+
+This is a test!
+
+<?= 'zever', "aar" ?>
+
+<? for (var i = 0; i < 5; i++) { ?>
+pushed!!! <?= myVar ?>
+<? //helper.main.print('test') ?>
+<? } ?>
+
+<? //forcerr() ?>
+
+<? implement('print_test') ?>
+
+<? async(function(next) {
+
+	setTimeout(function() {
+		next(null, 'added after a second');
+	},1000)
+
+	}); ?>
+
+This <?= 'should' ?> be <?= 'on' ?> a <?= 'single' ?> line!! <?= {test: 1} ?>
+
+<? end('content') ?>

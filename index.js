@@ -3,6 +3,31 @@ var Hawkejs = require('./lib/class/hawkejs.js'),
     async   = require('async'),
     fs      = require('fs');
 
+Hawkejs.load(__dirname + '/lib/class/hawkejs-server.js', {browser: false});
+Hawkejs.load(__dirname + '/lib/class/view_render.js');
+Hawkejs.load(__dirname + '/lib/class/helper.js');
+Hawkejs.load(__dirname + '/lib/class/scene.js');
+Hawkejs.load(__dirname + '/lib/class/placeholder.js');
+
+module.exports = Hawkejs;
+
+
+
+
+
+var h = new Hawkejs();
+h.templateDir = '/srv/codedor/indiaplatform/ind001/local/jelle/www/node_modules/alchemymvc/node_modules/hawkejs/templates/';
+
+h.open = '<?'
+h.close = '?>'
+
+h.render('test', {myVar: 'This is myVar'}, function(err, html) {
+	console.log(html);
+});
+
+
+return;
+
 files = ['hawkejs.js', 'helper.js', 'placeholder.js', 'scene.js', 'view_render.js'];
 
 // Require all the main class files
@@ -70,4 +95,3 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 };
 
 
-module.exports = Hawkejs;
