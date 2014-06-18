@@ -22,8 +22,10 @@ h.open = '<?'
 h.close = '?>'
 
 h.render('test', {myVar: 'This is myVar'}, function(err, html) {
+	console.log('»»»»»»»»»»»»»»»»»»');
 	console.log(err);
-	console.log(html);
+	//console.log(html);
+	console.log('««««««««««««««««')
 });
 
 
