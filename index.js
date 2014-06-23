@@ -4,6 +4,7 @@ var Hawkejs = require('./lib/class/hawkejs.js'),
     fs      = require('fs');
 
 Hawkejs.load(__dirname + '/lib/class/hawkejs-server.js', {browser: false});
+Hawkejs.load(__dirname + '/lib/class/hashmap.js');
 Hawkejs.load(__dirname + '/lib/class/view_render.js');
 Hawkejs.load(__dirname + '/lib/class/helper.js');
 Hawkejs.load(__dirname + '/lib/class/scene.js');
@@ -27,7 +28,6 @@ h.render('test', {myVar: 'This is myVar'}, function(err, html) {
 	//console.log(html);
 	console.log('««««««««««««««««')
 });
-
 
 return;
 
