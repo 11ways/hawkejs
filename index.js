@@ -1,5 +1,6 @@
 var Hawkejs = require('./lib/class/hawkejs.js'),
     files,
+    lorem   = require('lorem-ipsum'),
     async   = require('async'),
     fs      = require('fs');
 
@@ -30,8 +31,13 @@ files.forEach(function(classPath) {
  */
 Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 
-	var tasks = {},
+	var that = this,
+	    tasks = {},
 	    extraFiles = [];
+
+	if (that.generatedClientFile) {
+		return callback(null, that.generatedClientFile);
+	}
 
 	files.forEach(function(classPath) {
 		extraFiles.push('lib/class/' + classPath);
@@ -59,7 +65,7 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 	};
 
 	tasks.template = function(next) {
-		fs.readFile('./lib/hawkejs-client.js', {encoding: 'utf8'}, function(err, result) {
+		fs.readFile('./lib/client/template.js', {encoding: 'utf8'}, function(err, result) {
 			next(err, result);
 		});
 	};
@@ -109,12 +115,15 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 	async.parallel(tasks, function(err, result) {
 
 		var template,
+		    cfile,
 		    code,
 		    id;
 
 		if (err) {
 			throw err;
 		}
+
+		cfile = __dirname + '/hawkejs-client-side.js';
 
 		template = result.template;
 		id = template.indexOf('//_REGISTER_//');
@@ -162,11 +171,10 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 
 		template = template.slice(0, id) + '\n' + code + template.slice(id);
 
-		
-
-		//eval('var window = {}; ' + template);
-		//console.log(window);
-
+		fs.writeFile(cfile, template, function() {
+			that.generatedClientFile = cfile;
+			callback(null, cfile);
+		});
 	});
 };
 
@@ -176,7 +184,9 @@ h.templateDir = '/srv/codedor/indiaplatform/ind001/local/jelle/www/node_modules/
 h.open = '<?'
 h.close = '?>'
 
-h.createClientFile()
+h.createClientFile(function(err, result) {
+	console.log(result);
+})
 
 
 return;

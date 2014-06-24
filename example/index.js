@@ -1,8 +1,11 @@
 var path    = require('path'),
     express = require('express'),
     lessmw  = require('less-middleware'),
-    hawkejs = require('../lib/hawkejs'),
-    app     = express();
+    Hawkejs = require('../index'),
+    app     = express(),
+    hawkejs;
+
+hawkejs = new Hawkejs();
 
 // Use hawkejs as our template engine, map it to the .ejs extension
 app.engine('ejs', hawkejs.__express);

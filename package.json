@@ -20,7 +20,8 @@
 		"less-middleware": "0.1.x",
 		"benchmark": "1.0.x",
 		"microtime": "0.3.x",
-		"express": "3.x"
+		"express": "3.x",
+		"lorem-ipsum": "1.0.x"
 	},
 	"license": "MIT",
 	"engines": {
