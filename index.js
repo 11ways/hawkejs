@@ -3,35 +3,11 @@ var Hawkejs = require('./lib/class/hawkejs.js'),
     async   = require('async'),
     fs      = require('fs');
 
-Hawkejs.load(__dirname + '/lib/class/hawkejs-server.js', {browser: false});
-Hawkejs.load(__dirname + '/lib/class/hashmap.js');
-Hawkejs.load(__dirname + '/lib/class/view_render.js');
-Hawkejs.load(__dirname + '/lib/class/helper.js');
-Hawkejs.load(__dirname + '/lib/class/scene.js');
-Hawkejs.load(__dirname + '/lib/class/placeholder.js');
+Hawkejs.load('lib/class/hawkejs-server.js', {browser: false});
 
 module.exports = Hawkejs;
 
-
-
-
-
-var h = new Hawkejs();
-h.templateDir = '/srv/codedor/indiaplatform/ind001/local/jelle/www/node_modules/alchemymvc/node_modules/hawkejs/templates/';
-
-h.open = '<?'
-h.close = '?>'
-
-h.render('test', {myVar: 'This is myVar'}, function(err, html) {
-	console.log('»»»»»»»»»»»»»»»»»»');
-	console.log(err);
-	//console.log(html);
-	console.log('««««««««««««««««')
-});
-
-return;
-
-files = ['hawkejs.js', 'helper.js', 'placeholder.js', 'scene.js', 'view_render.js'];
+files = ['hashmap.js', 'helper.js', 'placeholder.js', 'scene.js', 'view_render.js'];
 
 // Require all the main class files
 files.forEach(function(classPath) {
@@ -40,7 +16,7 @@ files.forEach(function(classPath) {
 		return;
 	}
 
-	require('./lib/class/' + classPath)(Hawkejs);
+	Hawkejs.load('lib/class/' + classPath, {id: classPath});
 });
 
 /**
@@ -57,14 +33,14 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 	var tasks = {},
 	    extraFiles = [];
 
-	extraFiles.push('./lib/class/hawkejs.js');
-
 	files.forEach(function(classPath) {
-		extraFiles.push('./lib/class/' + classPath);
+		extraFiles.push('lib/class/' + classPath);
 	});
 
-	Object.each(Hawkejs.prototype.files, function(i, classPath) {
-		extraFiles.push(classPath);
+	Hawkejs.Blast.Bound.Object.each(Hawkejs.prototype.files, function(options, classPath) {
+		if (options.browser) {
+			extraFiles.push(classPath);
+		}
 	});
 
 	// Read in all the main files
@@ -76,8 +52,55 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 		};
 	});
 
+	tasks.hawkejs = function(next) {
+		fs.readFile('./lib/class/hawkejs.js', {encoding: 'utf8'}, function(err, result) {
+			next(err, result);
+		});
+	};
+
 	tasks.template = function(next) {
 		fs.readFile('./lib/hawkejs-client.js', {encoding: 'utf8'}, function(err, result) {
+			next(err, result);
+		});
+	};
+
+	tasks.async = function(next) {
+		fs.readFile(require.resolve('async'), {encoding: 'utf8'}, function(err, result) {
+			next(err, result);
+		});
+	};
+
+	tasks.nuclei = function(next) {
+
+		var nucleiPath = require.resolve('nuclei').split('/');
+		nucleiPath.pop();
+		nucleiPath = nucleiPath.join('/') + '/lib/nuclei.js';
+
+		fs.readFile(nucleiPath, {encoding: 'utf8'}, function(err, result) {
+			next(err, result);
+		});
+	};
+
+	tasks.hawkevents = function(next) {
+
+		var ePath = require.resolve('hawkevents');
+
+		fs.readFile(ePath, {encoding: 'utf8'}, function(err, result) {
+			next(err, result);
+		});
+	};
+
+	tasks.events = function(next) {
+		fs.readFile('./lib/client/events.js', {encoding: 'utf8'}, function(err, result) {
+			next(err, result);
+		});
+	};
+
+	tasks.protoblast = function(next) {
+
+		var Blast = require('protoblast')();
+
+		fs.readFile(Blast.getClientPath(true), {encoding: 'utf8'}, function(err, result) {
 			next(err, result);
 		});
 	};
@@ -85,16 +108,83 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 	// Fetch all the files
 	async.parallel(tasks, function(err, result) {
 
-		var template = result.template,
-		    code     = '';
+		var template,
+		    code,
+		    id;
+
+		if (err) {
+			throw err;
+		}
+
+		template = result.template;
+		id = template.indexOf('//_REGISTER_//');
+
+		// Add async
+		code = 'require.register("async", function(module, exports, require){\n';
+		code += result.async;
+		code += '\n});\n';
+
+		// Add nuclei
+		code += 'require.register("nuclei", function(module, exports, require){\n';
+		code += result.nuclei;
+		code += '\n});\n';
+
+		// Add events for browser
+		code += 'require.register("events", function(module, exports, require){\n';
+		code += result.events;
+		code += '\n});\n';
+
+		// Add hawkevents for browser
+		code += 'require.register("hawkevents", function(module, exports, require){\n';
+		code += result.hawkevents;
+		code += '\n});\n';
+
+		// Add protoblast for browser
+		code += 'require.register("protoblast", function(module, exports, require){\n';
+		code += result.protoblast;
+		code += '\n});\n';
+
+		// Add main hawkejs
+		code += 'require.register("hawkejs", function(module, exports, require){\n';
+		code += result.hawkejs;
+		code += '\n});\n';
 
 		extraFiles.forEach(function(filekey) {
 
-			//code += 
+			var options = Hawkejs.prototype.files[filekey];
 
+			code += 'require.register("' + filekey + '", function(module, exports, require){\n';
+			code += result[filekey];
+			code += '\n});\n';
 		});
+
+		code += 'clientFiles = ' + JSON.stringify(extraFiles) + ';\n';
+
+		template = template.slice(0, id) + '\n' + code + template.slice(id);
+
+		
+
+		//eval('var window = {}; ' + template);
+		//console.log(window);
 
 	});
 };
 
+var h = new Hawkejs();
+h.templateDir = '/srv/codedor/indiaplatform/ind001/local/jelle/www/node_modules/alchemymvc/node_modules/hawkejs/templates/';
 
+h.open = '<?'
+h.close = '?>'
+
+h.createClientFile()
+
+
+return;
+h.render('test', {myVar: 'This is myVar'}, function(err, html) {
+	console.log('»»»»»»»»»»»»»»»»»»');
+	console.log(err);
+	console.log(html);
+	console.log('««««««««««««««««')
+});
+
+return;
