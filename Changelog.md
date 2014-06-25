@@ -1,3 +1,8 @@
+## 0.1.2 (WIP)
+
+* Added support for AJAX file downloads, which required a significant rewrite
+  of the link ajaxifier scripts.
+
 ## 0.1.1 (2014-06-10)
 
 * Add custom 'x-hawkejs-request' header to GETs and POST requests
