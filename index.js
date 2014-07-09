@@ -33,10 +33,12 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 
 	var that = this,
 	    tasks = {},
-	    extraFiles = [];
+	    extraFiles = [],
+	    cfile = __dirname + '/hawkejs-client-side.js';
 
 	if (that.generatedClientFile) {
-		return callback(null, that.generatedClientFile);
+		if (callback) callback(null, that.generatedClientFile);
+		return cfile;
 	}
 
 	files.forEach(function(classPath) {
@@ -115,15 +117,12 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 	async.parallel(tasks, function(err, result) {
 
 		var template,
-		    cfile,
 		    code,
 		    id;
 
 		if (err) {
 			throw err;
 		}
-
-		cfile = __dirname + '/hawkejs-client-side.js';
 
 		template = result.template;
 		id = template.indexOf('//_REGISTER_//');
@@ -173,28 +172,32 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 
 		fs.writeFile(cfile, template, function() {
 			that.generatedClientFile = cfile;
-			callback(null, cfile);
+			
+			if (callback) callback(null, cfile);
 		});
 	});
+
+	return cfile;
 };
 
-var h = new Hawkejs();
-h.templateDir = '/srv/codedor/indiaplatform/ind001/local/jelle/www/node_modules/alchemymvc/node_modules/hawkejs/templates/';
+return;
 
-h.open = '<?'
-h.close = '?>'
+var h = new Hawkejs();
+h.templateDir = '/srv/codedor/indiaplatform/ind001/local/jelle/www/node_modules/alchemymvc/node_modules/hawkejs/example/views/';
 
 h.createClientFile(function(err, result) {
 	console.log(result);
 })
 
 
-return;
-h.render('test', {myVar: 'This is myVar'}, function(err, html) {
+//return;
+h.render('pages/index', {myVar: 'This is myVar'}, function(err, html) {
 	console.log('»»»»»»»»»»»»»»»»»»');
 	console.log(err);
 	console.log(html);
 	console.log('««««««««««««««««')
 });
+
+
 
 return;

@@ -8,24 +8,27 @@ var path    = require('path'),
 hawkejs = new Hawkejs();
 
 // Use hawkejs as our template engine, map it to the .ejs extension
-app.engine('ejs', hawkejs.__express);
+app.engine('ejs', hawkejs.createExpressRenderer());
+
+hawkejs.templateDir = __dirname + '/views/';
+
 
 // Enable hawkejs debug
 hawkejs._debug = true;
 
 // Add client side suport
-hawkejs.enableClientSide(
-    app,     // The express app
-    express, // Express itself
-    path.join(__dirname, 'templates'), // Where the original view files are
-    path.join(__dirname, 'js')         // Where we can store them for the client
-);
+// hawkejs.enableClientSide(
+//     app,     // The express app
+//     express, // Express itself
+//     path.join(__dirname, 'templates'), // Where the original view files are
+//     path.join(__dirname, 'js')         // Where we can store them for the client
+//);
 
 // Express configurations
 app.configure(function(){
 
 	var bootstrapPath = path.join(__dirname, '..', 'node_modules', 'bootstrap');
-	app.set('views', __dirname + '/templates');
+	app.set('views', __dirname + '/views');
 	app.set('view engine', 'ejs');
 	app.use(express.favicon());
 	app.use(express.logger('dev'));
@@ -50,9 +53,10 @@ app.configure(function(){
 					}));
 	
 	app.use('/css', express.static(path.join(__dirname, 'css')));
+	console.log('>>> ' + hawkejs.createClientFile())
 	
 	// Add Hawkejs' middleware
-	app.use(hawkejs.middleware);
+	//app.use(hawkejs.middleware);
 	
 	app.use(app.router);
 });
@@ -80,6 +84,13 @@ var db = {
 		text: "Newsitem text 47"
 	}
 }
+
+//app.use(, express.static(hawkejs.createClientFile()));
+app.get('/hawkejs/hawkejs-client.js', function(req, res) {
+	hawkejs.createClientFile(function(err, path) {
+		res.sendfile(path);
+	})
+});
 
 app.get('/', function(req, res){
 	res.render('pages/index', {firstname: "Riza", lastname: "Hawkeye", newsitem: db[21]});
