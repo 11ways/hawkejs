@@ -47,7 +47,7 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 
 	Hawkejs.Blast.Bound.Object.each(Hawkejs.prototype.files, function(options, classPath) {
 		if (options.browser) {
-			extraFiles.push(classPath);
+			if (extraFiles.indexOf(classPath) < 0) extraFiles.push(classPath);
 		}
 	});
 

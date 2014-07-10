@@ -101,5 +101,9 @@ app.get('/news/:id', function(req, res){
 	res.render('elements/image', {firstname: "Riza", lastname: "Hawkeye", newsitem: newsitem});
 });
 
+app.get('/test.js', function(req, res) {
+	res.sendfile(__dirname + '/test.js');
+})
+
 app.listen(3000);
 console.log('Listening on port 3000');
