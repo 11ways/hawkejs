@@ -10,8 +10,8 @@ hawkejs = new Hawkejs();
 // Use hawkejs as our template engine, map it to the .ejs extension
 app.engine('ejs', hawkejs.createExpressRenderer());
 
-hawkejs.templateDir = __dirname + '/views/';
-
+hawkejs.addViewDirectory(__dirname + '/views/', 1000);
+hawkejs.addViewDirectory(__dirname + '/../test/templates/', 500);
 
 // Enable hawkejs debug
 hawkejs._debug = true;
