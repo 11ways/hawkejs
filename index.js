@@ -8,7 +8,7 @@ Hawkejs.load('lib/class/hawkejs-server.js', {browser: false});
 
 module.exports = Hawkejs;
 
-files = ['hashmap.js', 'helper.js', 'placeholder.js', 'scene.js', 'view_render.js'];
+files = ['helper.js', 'placeholder.js', 'scene.js', 'view_render.js'];
 
 // Require all the main class files
 files.forEach(function(classPath) {
