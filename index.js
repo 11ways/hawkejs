@@ -180,22 +180,28 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 	return cfile;
 };
 
-return;
+//return;
 
 var h = new Hawkejs();
-h.templateDir = '/srv/codedor/indiaplatform/ind001/local/jelle/www/node_modules/alchemymvc/node_modules/hawkejs/example/views/';
 
-h.createClientFile(function(err, result) {
-	console.log(result);
-})
+h.addViewDirectory('/srv/codedor/indiaplatform/ind001/local/jelle/www/node_modules/alchemymvc/node_modules/hawkejs/example/views/');
 
+// h.createClientFile(function(err, result) {
+// 	console.log(result);
+// })
+
+h.render('ast', {}, function(err, html) {
+
+});
+
+return;
 
 //return;
 h.render('pages/index', {myVar: 'This is myVar'}, function(err, html) {
-	console.log('»»»»»»»»»»»»»»»»»»');
-	console.log(err);
-	console.log(html);
-	console.log('««««««««««««««««')
+	// console.log('»»»»»»»»»»»»»»»»»»');
+	// console.log(err);
+	// console.log(html);
+	// console.log('««««««««««««««««')
 });
 
 
