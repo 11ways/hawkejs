@@ -183,7 +183,7 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 return;
 
 var h = new Hawkejs();
-h.templateDir = '/srv/codedor/indiaplatform/ind001/local/jelle/www/node_modules/alchemymvc/node_modules/hawkejs/example/views/';
+h.addViewDirectory('/srv/codedor/indiaplatform/ind001/local/jelle/www/node_modules/alchemymvc/node_modules/hawkejs/example/views/');
 
 h.createClientFile(function(err, result) {
 	console.log(result);
