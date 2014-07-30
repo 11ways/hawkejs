@@ -18,10 +18,10 @@
 	"devDependencies": {
 		"bootstrap": "https://github.com/twbs/bootstrap/tarball/v2.3.2",
 		"less-middleware": "0.1.x",
-		"benchmark": "1.0.x",
 		"microtime": "0.3.x",
 		"express": "3.x",
-		"lorem-ipsum": "1.0.x"
+		"lorem-ipsum": "1.0.x",
+		"matcha": "0.5.x"
 	},
 	"scripts": {
 		"test": "node example/index.js"
