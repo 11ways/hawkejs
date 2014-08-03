@@ -7,11 +7,10 @@ var path    = require('path'),
 
 hawkejs = new Hawkejs();
 
-// Use hawkejs as our template engine, map it to the .ejs extension
-app.engine('ejs', hawkejs.createExpressRenderer());
-
 hawkejs.addViewDirectory(__dirname + '/views/', 1000);
 hawkejs.addViewDirectory(__dirname + '/../test/templates/', 500);
+
+hawkejs.configureExpress(app, express);
 
 // Enable hawkejs debug
 hawkejs._debug = true;
@@ -28,7 +27,7 @@ hawkejs._debug = true;
 app.configure(function(){
 
 	var bootstrapPath = path.join(__dirname, '..', 'node_modules', 'bootstrap');
-	app.set('views', __dirname + '/views');
+	//app.set('views', __dirname + '/views');
 	app.set('view engine', 'ejs');
 	app.use(express.favicon());
 	app.use(express.logger('dev'));
@@ -53,7 +52,6 @@ app.configure(function(){
 					}));
 	
 	app.use('/css', express.static(path.join(__dirname, 'css')));
-	console.log('>>> ' + hawkejs.createClientFile())
 	
 	// Add Hawkejs' middleware
 	//app.use(hawkejs.middleware);
