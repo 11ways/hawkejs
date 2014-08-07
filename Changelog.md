@@ -1,3 +1,7 @@
+## 0.1.2 (WIP)
+
+* Add the payload to the renderend & viewready events
+
 ## 0.1.1 (2014-06-10)
 
 * Add custom 'x-hawkejs-request' header to GETs and POST requests
