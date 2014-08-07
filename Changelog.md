@@ -3,6 +3,7 @@
 * Added support for AJAX file downloads, which required a significant rewrite
   of the link ajaxifier scripts.
 * Added styling to the client side pr() function
+* Add the payload to the renderend & viewready events
 
 ## 0.1.1 (2014-06-10)
 
