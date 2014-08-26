@@ -100,8 +100,15 @@ app.get('/news/:id', function(req, res){
 });
 
 app.get('/test.js', function(req, res) {
-	res.sendfile(__dirname + '/test.js');
+	res.end('console.log("testfile");')
+	//res.sendfile(__dirname + '/test.js');
 })
+
+app.post('/hawkejs/template', function(req, res) {
+	hawkejs.getTemplatePath(req.body.name, function(err, path) {
+		res.sendfile(path);
+	});
+});
 
 app.listen(3000);
 console.log('Listening on port 3000');

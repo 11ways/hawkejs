@@ -4,7 +4,8 @@ var Hawkejs = require('./lib/class/hawkejs.js'),
     async   = require('async'),
     fs      = require('fs');
 
-Hawkejs.load('lib/class/hawkejs-server.js', {browser: false});
+// First extra file needs to be loaded using require, all others go through load
+require(__dirname + '/lib/class/hawkejs-server.js')(Hawkejs);
 
 module.exports = Hawkejs;
 
@@ -19,6 +20,8 @@ files.forEach(function(classPath) {
 
 	Hawkejs.load('lib/class/' + classPath, {id: classPath});
 });
+
+Hawkejs.load('lib/class/hawkejs-client.js', {server: false});
 
 /**
  * Create a file for the client side
