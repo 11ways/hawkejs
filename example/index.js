@@ -34,6 +34,18 @@ app.configure(function(){
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 
+	app.use(function(req, res, next) {
+
+		res.locals({
+			hawkejs: {
+				req: req,
+				res: res
+			}
+		});
+
+		next();
+	});
+
 	// Make the templates publicly accessible
 	app.use('/hawkejs', express.static(path.join(__dirname, 'templates')));
 	

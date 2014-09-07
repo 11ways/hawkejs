@@ -7,3 +7,4 @@ hawkejs-client-side.js
 .npmignore
 
 test/css/*
+scratch.js

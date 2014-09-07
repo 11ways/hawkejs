@@ -17,6 +17,10 @@ declare = 'you can declare variables without var, its legal!';
 		<% assign('hero') %>
 			<h1>Hello, world!</h1>
 			<p>This is the default content for this hero unit</p>
+			<% for (i = 0; i < 10; i++) { %>
+				<% add_link('/test/'+i) %><br>
+				<a href="http://www.codedor.be">Notest</a><br>
+			<% } %>
 		<% assign_end('hero') %>
 		<!--
 		     You don't have to use assign_end, but when you do you can put
