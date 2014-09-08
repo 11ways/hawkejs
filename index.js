@@ -4,12 +4,48 @@ var Hawkejs = require('./lib/class/hawkejs.js'),
     async   = require('async'),
     fs      = require('fs');
 
+/**
+ * Load a script for use with Hawkejs
+ *
+ * @author   Jelle De Loecker   <jelle@codedor.be>
+ * @since    1.0.0
+ * @version  1.0.0
+ */
+Hawkejs.load = function load(filePath, options) {
+
+	var location = filePath;
+
+	if (!options || typeof options != 'object') {
+		options = {};
+	}
+
+	if (typeof options.server == 'undefined') {
+		options.server = true;
+	}
+
+	if (typeof options.browser == 'undefined') {
+		options.browser = true;
+	}
+
+	if (location[0] !== '/') {
+		location = __dirname + '/' + location;
+	}
+
+	if (!Hawkejs.prototype.files[filePath]) {
+		Hawkejs.prototype.files[filePath] = options;
+
+		if (options.server) {
+			require(location)(Hawkejs, Hawkejs.Blast);
+		}
+	}
+};
+
 // First extra file needs to be loaded using require, all others go through load
-require(__dirname + '/lib/class/hawkejs-server.js')(Hawkejs);
+//require(__dirname + '/lib/class/hawkejs-server.js')(Hawkejs);
 
 module.exports = Hawkejs;
 
-files = ['helper.js', 'placeholder.js', 'scene.js', 'view_render.js'];
+files = ['helper.js', 'placeholder.js', 'scene.js', 'view_render.js', 'hawkejs-server.js'];
 
 // Require all the main class files
 files.forEach(function(classPath) {
@@ -101,6 +137,15 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 		});
 	};
 
+	tasks.jsondry = function(next) {
+
+		var ePath = require.resolve('json-dry');
+
+		fs.readFile(ePath, {encoding: 'utf8'}, function(err, result) {
+			next(err, result);
+		});
+	};
+
 	tasks.events = function(next) {
 		fs.readFile('./lib/client/events.js', {encoding: 'utf8'}, function(err, result) {
 			next(err, result);
@@ -148,6 +193,11 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 		// Add hawkevents for browser
 		code += 'require.register("hawkevents", function(module, exports, require){\n';
 		code += result.hawkevents;
+		code += '\n});\n';
+
+		// Add json-dry
+		code += 'require.register("json-dry", function(module, exports, require){\n';
+		code += result.tasks;
 		code += '\n});\n';
 
 		// Add protoblast for browser

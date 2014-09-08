@@ -16,7 +16,7 @@ declare = 'you can declare variables without var, its legal!';
 		<!-- 'hero' blocks go here -->
 		<% assign('hero') %>
 			<h1>Hello, world!</h1>
-			<p>This is the default content for this hero unit</p>
+			<p>This is the default content for this hero unit. <%= Date.now() %></p>
 			<% for (i = 0; i < 10; i++) { %>
 				<% add_link('/test/'+i) %><br>
 				<a href="http://www.codedor.be">Notest</a><br>
