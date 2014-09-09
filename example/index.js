@@ -118,7 +118,11 @@ app.get('/test.js', function(req, res) {
 
 app.post('/hawkejs/template', function(req, res) {
 	hawkejs.getTemplatePath(req.body.name, function(err, path) {
-		res.sendfile(path);
+		if (!path) {
+			res.send(404, 'error');
+		} else {
+			res.sendfile(path);
+		}
 	});
 });
 
