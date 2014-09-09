@@ -45,7 +45,7 @@ Hawkejs.load = function load(filePath, options) {
 
 module.exports = Hawkejs;
 
-files = ['helper.js', 'placeholder.js', 'scene.js', 'view_render.js', 'hawkejs-server.js'];
+files = ['helper.js', 'placeholder.js', 'scene.js', 'view_render.js', 'block_buffer.js', 'hawkejs-server.js'];
 
 // Require all the main class files
 files.forEach(function(classPath) {
