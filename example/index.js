@@ -111,10 +111,12 @@ app.get('/news/:id', function(req, res){
 	res.render('elements/image', {firstname: "Riza", lastname: "Hawkeye", newsitem: newsitem});
 });
 
-app.get('/test.js', function(req, res) {
-	res.end('console.log("testfile");')
-	//res.sendfile(__dirname + '/test.js');
-})
+app.get('/test:id.js', function(req, res) {
+	// To test we add a random timeout
+	setTimeout(function() {
+		res.end('console.log("%c[DEBUG] ", "font-weight:bold;color:red;", "Loaded testfile ' + req.params.id + '");');
+	}, (Math.random()*10)*10);
+});
 
 app.post('/hawkejs/template', function(req, res) {
 	hawkejs.getTemplatePath(req.body.name, function(err, path) {
