@@ -5,11 +5,13 @@ This is still a test
 declare = 'you can declare variables without var, its legal!';
 
 
-script(['test__ordered-1', 'test__ordered-2', 'test__ordered-3'], 'MyOrderedScript');
+
 script('test__async-1');
 script('test__async-2');
 script('test__async-3');
+script(['test__ordered-1', 'test__ordered-2', 'test__ordered-3'], 'MyOrderedScript');
 
+style('style1');
 
 %>
 
@@ -26,7 +28,9 @@ script('test__async-3');
 			<h1>Hello, world!</h1>
 			<p>This is the default content for this hero unit. <%= Date.now() %></p>
 			<% for (i = 0; i < 10; i++) { %>
+				<div class="styletest-<%= i %>">
 				<% add_link('/test/'+i) %><br>
+				</div>
 				<a href="http://www.codedor.be">Notest</a><br>
 			<% } %>
 		<% assign_end('hero') %>

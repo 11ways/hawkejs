@@ -115,7 +115,28 @@ app.get('/test:id.js', function(req, res) {
 	// To test we add a random timeout
 	setTimeout(function() {
 		res.end('console.log("%c[DEBUG] ", "font-weight:bold;color:red;", "Loaded testfile ' + req.params.id + '");');
-	}, (Math.random()*10)*10);
+	}, ~~(Math.random()*20)*10);
+});
+
+var nr = 0,
+	colors = [
+		'#8329D9',
+		'#987186',
+		'#717298',
+		'#988B00',
+		'#FF6666',
+		'#9C9080',
+		'#7A8D9B',
+		'#F76819',
+		'#F03D05',
+		'#2C2218'
+	];
+
+app.get('/style:nr.css', function(req, res) {
+	setTimeout(function() {
+		res.end('.styletest-' + nr + ' { background-color: ' + colors[nr] + ';}');
+		nr++;
+	}, ~~(Math.random()*20)*10);
 });
 
 app.post('/hawkejs/template', function(req, res) {
