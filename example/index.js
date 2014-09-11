@@ -134,7 +134,7 @@ var nr = 0,
 
 app.get('/style:nr.css', function(req, res) {
 	setTimeout(function() {
-		res.end('.styletest-' + nr + ' { background-color: ' + colors[nr] + ';}');
+		res.end('.styletest-' + nr + ' { background-color: ' + colors[nr] + ';display: floxgorn;}');
 		nr++;
 	}, ~~(Math.random()*20)*10);
 });
