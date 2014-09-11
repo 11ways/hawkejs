@@ -1,17 +1,23 @@
 var Hawkejs = require('./lib/class/hawkejs.js'),
-    files,
-    lorem   = require('lorem-ipsum'),
-    async   = require('async'),
-    fs      = require('fs');
+    fs      = require('fs'),
+    files;
+
+// Export the Hawkejs class
+module.exports = Hawkejs;
 
 /**
- * Load a script for use with Hawkejs
+ * Load a script for use with Hawkejs across all instances
  *
  * @author   Jelle De Loecker   <jelle@codedor.be>
  * @since    1.0.0
  * @version  1.0.0
+ *
+ * @param    {String}   filePath
+ * @param    {Object}   options
+ *
+ * @return   {void}
  */
-Hawkejs.load = function load(filePath, options) {
+Hawkejs.load = Hawkejs.prototype.load = function load(filePath, options) {
 
 	var location = filePath;
 
@@ -40,12 +46,15 @@ Hawkejs.load = function load(filePath, options) {
 	}
 };
 
-// First extra file needs to be loaded using require, all others go through load
-//require(__dirname + '/lib/class/hawkejs-server.js')(Hawkejs);
-
-module.exports = Hawkejs;
-
-files = ['element_builder.js', 'helper.js', 'placeholder.js', 'scene.js', 'view_render.js', 'block_buffer.js', 'hawkejs-server.js'];
+// The files that need to be loaded
+files = [
+	'element_builder.js',
+	'helper.js',
+	'placeholder.js',
+	'view_render.js',
+	'block_buffer.js',
+	'hawkejs-server.js'
+];
 
 // Require all the main class files
 files.forEach(function(classPath) {
@@ -57,7 +66,9 @@ files.forEach(function(classPath) {
 	Hawkejs.load('lib/class/' + classPath, {id: classPath});
 });
 
+// Require these files in the browser only
 Hawkejs.load('lib/class/hawkejs-client.js', {server: false});
+Hawkejs.load('lib/class/scene.js', {server: false});
 
 /**
  * Create a file for the client side
@@ -91,11 +102,9 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 	});
 
 	// Read in all the main files
-	extraFiles.forEach(function(classPath) {
-		tasks[classPath] = function(next) {
-			fs.readFile(classPath, {encoding: 'utf8'}, function(err, result) {
-				next(err, result);
-			});
+	extraFiles.forEach(function eachExtraClassFile(classPath) {
+		tasks[classPath] = function readClassFile(next) {
+			fs.readFile(classPath, {encoding: 'utf8'}, next);
 		};
 	});
 
@@ -162,7 +171,7 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 	};
 
 	// Fetch all the files
-	async.parallel(tasks, function(err, result) {
+	Hawkejs.Blast.Bound.Function.parallel(tasks, function(err, result) {
 
 		var template,
 		    code,
@@ -232,25 +241,3 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 
 	return cfile;
 };
-
-return;
-
-var h = new Hawkejs();
-h.addViewDirectory('/srv/codedor/indiaplatform/ind001/local/jelle/www/node_modules/alchemymvc/node_modules/hawkejs/example/views/');
-
-h.createClientFile(function(err, result) {
-	console.log(result);
-})
-
-
-//return;
-h.render('pages/index', {myVar: 'This is myVar'}, function(err, html) {
-	console.log('»»»»»»»»»»»»»»»»»»');
-	console.log(err);
-	console.log(html);
-	console.log('««««««««««««««««')
-});
-
-
-
-return;
