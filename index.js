@@ -104,29 +104,29 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 	// Read in all the main files
 	extraFiles.forEach(function eachExtraClassFile(classPath) {
 		tasks[classPath] = function readClassFile(next) {
-			fs.readFile(classPath, {encoding: 'utf8'}, next);
+			fs.readFile(__dirname + '/' + classPath, {encoding: 'utf8'}, next);
 		};
 	});
 
-	tasks.hawkejs = function(next) {
-		fs.readFile('./lib/class/hawkejs.js', {encoding: 'utf8'}, function(err, result) {
+	tasks.hawkejs = function getHawkejs(next) {
+		fs.readFile(__dirname + '/lib/class/hawkejs.js', {encoding: 'utf8'}, function(err, result) {
 			next(err, result);
 		});
 	};
 
-	tasks.template = function(next) {
-		fs.readFile('./lib/client/template.js', {encoding: 'utf8'}, function(err, result) {
+	tasks.template = function getTemplate(next) {
+		fs.readFile(__dirname + '/lib/client/template.js', {encoding: 'utf8'}, function(err, result) {
 			next(err, result);
 		});
 	};
 
-	tasks.async = function(next) {
+	tasks.async = function getAsync(next) {
 		fs.readFile(require.resolve('async'), {encoding: 'utf8'}, function(err, result) {
 			next(err, result);
 		});
 	};
 
-	tasks.nuclei = function(next) {
+	tasks.nuclei = function getNuclei(next) {
 
 		var nucleiPath = require.resolve('nuclei').split('/');
 		nucleiPath.pop();
@@ -137,7 +137,7 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 		});
 	};
 
-	tasks.hawkevents = function(next) {
+	tasks.hawkevents = function getHawkevents(next) {
 
 		var ePath = require.resolve('hawkevents');
 
@@ -146,7 +146,7 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 		});
 	};
 
-	tasks.jsondry = function(next) {
+	tasks.jsondry = function getJsondry(next) {
 
 		var ePath = require.resolve('json-dry');
 
@@ -155,13 +155,13 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 		});
 	};
 
-	tasks.events = function(next) {
-		fs.readFile('./lib/client/events.js', {encoding: 'utf8'}, function(err, result) {
+	tasks.events = function getEvents(next) {
+		fs.readFile(__dirname + '/lib/client/events.js', {encoding: 'utf8'}, function(err, result) {
 			next(err, result);
 		});
 	};
 
-	tasks.protoblast = function(next) {
+	tasks.protoblast = function getProtoblast(next) {
 
 		var Blast = require('protoblast')();
 
@@ -171,7 +171,7 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 	};
 
 	// Fetch all the files
-	Hawkejs.Blast.Bound.Function.parallel(tasks, function(err, result) {
+	Hawkejs.Blast.Bound.Function.parallel(tasks, function gotAllFiles(err, result) {
 
 		var template,
 		    code,
