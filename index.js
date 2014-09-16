@@ -17,7 +17,7 @@ module.exports = Hawkejs;
  *
  * @return   {void}
  */
-Hawkejs.load = Hawkejs.prototype.load = function load(filePath, options) {
+Hawkejs.setMethod(function load(filePath, options) {
 
 	var location = filePath;
 
@@ -37,14 +37,14 @@ Hawkejs.load = Hawkejs.prototype.load = function load(filePath, options) {
 		location = __dirname + '/' + location;
 	}
 
-	if (!Hawkejs.prototype.files[filePath]) {
-		Hawkejs.prototype.files[filePath] = options;
+	if (!this.files[filePath]) {
+		this.files[filePath] = options;
 
 		if (options.server) {
 			require(location)(Hawkejs, Hawkejs.Blast);
 		}
 	}
-};
+});
 
 // The files that need to be loaded
 files = [
@@ -56,19 +56,27 @@ files = [
 	'hawkejs-server.js'
 ];
 
-// Require all the main class files
-files.forEach(function(classPath) {
+Hawkejs.setMethod(function afterInit() {
 
-	if (classPath == 'hawkejs.js') {
-		return;
-	}
+	var that = this;
 
-	Hawkejs.load('lib/class/' + classPath, {id: classPath});
+	// Call the super function
+	afterInit.super.call(this);
+
+	// Require all the main class files
+	files.forEach(function(classPath) {
+
+		if (classPath == 'hawkejs.js') {
+			return;
+		}
+
+		that.load('lib/class/' + classPath, {id: classPath});
+	});
+
+	// Require these files in the browser only
+	this.load('lib/class/hawkejs-client.js', {server: false});
+	this.load('lib/class/scene.js', {server: false});
 });
-
-// Require these files in the browser only
-Hawkejs.load('lib/class/hawkejs-client.js', {server: false});
-Hawkejs.load('lib/class/scene.js', {server: false});
 
 /**
  * Create a file for the client side
@@ -79,7 +87,7 @@ Hawkejs.load('lib/class/scene.js', {server: false});
  *
  * @param    {Function}  callback
  */
-Hawkejs.prototype.createClientFile = function createClientFile(callback) {
+Hawkejs.setMethod(function createClientFile(callback) {
 
 	var that = this,
 	    tasks = {},
@@ -95,7 +103,7 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 		extraFiles.push('lib/class/' + classPath);
 	});
 
-	Hawkejs.Blast.Bound.Object.each(Hawkejs.prototype.files, function(options, classPath) {
+	Hawkejs.Blast.Bound.Object.each(this.files, function(options, classPath) {
 		if (options.browser) {
 			if (extraFiles.indexOf(classPath) < 0) extraFiles.push(classPath);
 		}
@@ -120,43 +128,11 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 		});
 	};
 
-	tasks.async = function getAsync(next) {
-		fs.readFile(require.resolve('async'), {encoding: 'utf8'}, function(err, result) {
-			next(err, result);
-		});
-	};
-
-	tasks.nuclei = function getNuclei(next) {
-
-		var nucleiPath = require.resolve('nuclei').split('/');
-		nucleiPath.pop();
-		nucleiPath = nucleiPath.join('/') + '/lib/nuclei.js';
-
-		fs.readFile(nucleiPath, {encoding: 'utf8'}, function(err, result) {
-			next(err, result);
-		});
-	};
-
-	tasks.hawkevents = function getHawkevents(next) {
-
-		var ePath = require.resolve('hawkevents');
-
-		fs.readFile(ePath, {encoding: 'utf8'}, function(err, result) {
-			next(err, result);
-		});
-	};
-
 	tasks.jsondry = function getJsondry(next) {
 
 		var ePath = require.resolve('json-dry');
 
 		fs.readFile(ePath, {encoding: 'utf8'}, function(err, result) {
-			next(err, result);
-		});
-	};
-
-	tasks.events = function getEvents(next) {
-		fs.readFile(__dirname + '/lib/client/events.js', {encoding: 'utf8'}, function(err, result) {
 			next(err, result);
 		});
 	};
@@ -181,28 +157,9 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 			throw err;
 		}
 
+		code = '';
 		template = result.template;
 		id = template.indexOf('//_REGISTER_//');
-
-		// Add async
-		code = 'require.register("async", function(module, exports, require){\n';
-		code += result.async;
-		code += '\n});\n';
-
-		// Add nuclei
-		code += 'require.register("nuclei", function(module, exports, require){\n';
-		code += result.nuclei;
-		code += '\n});\n';
-
-		// Add events for browser
-		code += 'require.register("events", function(module, exports, require){\n';
-		code += result.events;
-		code += '\n});\n';
-
-		// Add hawkevents for browser
-		code += 'require.register("hawkevents", function(module, exports, require){\n';
-		code += result.hawkevents;
-		code += '\n});\n';
 
 		// Add json-dry
 		code += 'require.register("json-dry", function(module, exports, require){\n';
@@ -221,7 +178,7 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 
 		extraFiles.forEach(function(filekey) {
 
-			var options = Hawkejs.prototype.files[filekey];
+			var options = that.files[filekey];
 
 			code += 'require.register("' + filekey + '", function(module, exports, require){\n';
 			code += result[filekey];
@@ -240,4 +197,4 @@ Hawkejs.prototype.createClientFile = function createClientFile(callback) {
 	});
 
 	return cfile;
-};
+});

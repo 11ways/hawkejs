@@ -34,6 +34,8 @@ app.configure(function(){
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 
+
+
 	app.use(function(req, res, next) {
 
 		res.locals({
@@ -103,12 +105,12 @@ app.get('/hawkejs/hawkejs-client.js', function(req, res) {
 });
 
 app.get('/', function(req, res){
-	res.render('pages/index', {firstname: "Riza", lastname: "Hawkeye", newsitem: db[21]});
+	res.render('pages/index', [req, res, {firstname: "Riza", lastname: "Hawkeye", newsitem: db[21]}]);
 });
 
 app.get('/news/:id', function(req, res){
 	var newsitem = db[req.params.id];
-	res.render('elements/image', {firstname: "Riza", lastname: "Hawkeye", newsitem: newsitem});
+	res.render('elements/image', [req, res, {firstname: "Riza", lastname: "Hawkeye", newsitem: newsitem}]);
 });
 
 app.get('/test:id.js', function(req, res) {
@@ -142,7 +144,7 @@ app.get('/style:nr.css', function(req, res) {
 app.post('/hawkejs/template', function(req, res) {
 	hawkejs.getTemplatePath(req.body.name, function(err, path) {
 		if (!path) {
-			res.send(404, 'error');
+			res.send(404, 'Could not find ' + req.body.name);
 		} else {
 			res.sendfile(path);
 		}
