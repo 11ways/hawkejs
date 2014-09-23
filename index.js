@@ -38,11 +38,14 @@ Hawkejs.setMethod(function load(filePath, options) {
 	}
 
 	if (!this.files[filePath]) {
-		this.files[filePath] = options;
 
 		if (options.server) {
 			require(location)(Hawkejs, Hawkejs.Blast);
 		}
+
+		// Will only be registered when require works on the server
+		// @todo: still need to add check for client side scripts
+		this.files[filePath] = options;
 	}
 });
 
