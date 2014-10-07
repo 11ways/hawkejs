@@ -1,5 +1,6 @@
 var Hawkejs = require('./lib/class/hawkejs.js'),
     fs      = require('fs'),
+    libpath = require('path'),
     files;
 
 // Export the Hawkejs class
@@ -115,18 +116,18 @@ Hawkejs.setMethod(function createClientFile(callback) {
 	// Read in all the main files
 	extraFiles.forEach(function eachExtraClassFile(classPath) {
 		tasks[classPath] = function readClassFile(next) {
-			fs.readFile(__dirname + '/' + classPath, {encoding: 'utf8'}, next);
+			fs.readFile(libpath.resolve(__dirname, classPath), {encoding: 'utf8'}, next);
 		};
 	});
 
 	tasks.hawkejs = function getHawkejs(next) {
-		fs.readFile(__dirname + '/lib/class/hawkejs.js', {encoding: 'utf8'}, function(err, result) {
+		fs.readFile(libpath.resolve(__dirname, 'lib/class/hawkejs.js'), {encoding: 'utf8'}, function(err, result) {
 			next(err, result);
 		});
 	};
 
 	tasks.template = function getTemplate(next) {
-		fs.readFile(__dirname + '/lib/client/template.js', {encoding: 'utf8'}, function(err, result) {
+		fs.readFile(libpath.resolve(__dirname, 'lib/client/template.js'), {encoding: 'utf8'}, function(err, result) {
 			next(err, result);
 		});
 	};
