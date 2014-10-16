@@ -16,7 +16,8 @@
 		"microtime": "0.3.x",
 		"express": "3.x",
 		"lorem-ipsum": "1.0.x",
-		"matcha": "0.5.x"
+		"matcha": "0.5.x",
+		"mocha": "1.20.x"
 	},
 	"scripts": {
 		"test": "node example/index.js"
