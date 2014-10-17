@@ -8,3 +8,4 @@ hawkejs-client-side.js
 
 test/css/*
 scratch.js
+coverage/

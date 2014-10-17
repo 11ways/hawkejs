@@ -20,7 +20,7 @@
 		"mocha": "1.20.x"
 	},
 	"scripts": {
-		"test": "node example/index.js"
+		"test": "node_modules/.bin/mocha --reporter spec"
 	},
 	"license": "MIT",
 	"engines": {
