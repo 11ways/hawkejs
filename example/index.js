@@ -1,6 +1,6 @@
 var path    = require('path'),
     express = require('express'),
-    lessmw  = require('less-middleware'),
+//    lessmw  = require('less-middleware'),
     Hawkejs = require('../index'),
     app     = express(),
     hawkejs;
@@ -59,11 +59,11 @@ app.configure(function(){
 	app.use('/img', express.static(path.join(bootstrapPath, 'img')));
 	app.use('/js/bootstrap', express.static(path.join(bootstrapPath, 'js')));
 	
-	app.use(lessmw({src    : path.join(__dirname, 'less'),
-					paths  : [path.join(bootstrapPath, 'less')],
-					dest   : path.join(__dirname, 'css'),
-					prefix : '/css'
-					}));
+//	app.use(lessmw({src    : path.join(__dirname, 'less'),
+//					paths  : [path.join(bootstrapPath, 'less')],
+//					dest   : path.join(__dirname, 'css'),
+//					prefix : '/css'
+//					}));
 	
 	app.use('/css', express.static(path.join(__dirname, 'css')));
 	
@@ -151,5 +151,5 @@ app.post('/hawkejs/template', function(req, res) {
 	});
 });
 
-app.listen(3000);
-console.log('Listening on port 3000');
+app.listen(8080);
+console.log('Listening on port 8080');

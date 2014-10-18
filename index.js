@@ -53,6 +53,7 @@ Hawkejs.setMethod(function load(filePath, options) {
 // The files that need to be loaded
 files = [
 	'element_builder.js',
+	'templates.js',
 	'helper.js',
 	'placeholder.js',
 	'view_render.js',
