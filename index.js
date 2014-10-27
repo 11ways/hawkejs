@@ -79,6 +79,7 @@ Hawkejs.setMethod(function afterInit() {
 	});
 
 	// Require these files in the browser only
+	this.load('lib/client/history.js', {server: false});
 	this.load('lib/class/hawkejs-client.js', {server: false});
 	this.load('lib/class/scene.js', {server: false});
 });
