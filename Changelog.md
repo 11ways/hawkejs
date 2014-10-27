@@ -4,6 +4,8 @@
   of the link ajaxifier scripts.
 * Added styling to the client side pr() function
 * Add the payload to the renderend & viewready events
+* Fallback to regular XHR requests in IE (when no FileReader/blog support is present)
+* Upgrade DOMSpot (had problems in IE)
 
 ## 0.1.1 (2014-06-10)
 
