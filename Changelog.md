@@ -6,6 +6,7 @@
 * Add the payload to the renderend & viewready events
 * Fallback to regular XHR requests in IE (when no FileReader/blog support is present)
 * Upgrade DOMSpot (had problems in IE)
+* Add 'history' option to add_link helper
 
 ## 0.1.1 (2014-06-10)
 
