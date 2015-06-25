@@ -1,11 +1,27 @@
-node_modules
+# Ignore IDE specific files
 *.komodo*
-*.log
-*.temp
-# the client side file is generated on startup
-hawkejs-client-side.js
-.npmignore
+*.sublime*
+.idea/
 
+# Ignore special files
+.DS_Store
+.fuse*
+._*
+*.bin
+
+# Ignore log files
+npm-debug.log
+v8.log
+
+# Ignore node modules
+/node_modules/
+
+# The client side file is generated on startup
+hawkejs-client-side.js
+
+# Test files
+scratch*
 test/css/*
-scratch.js
-coverage/
+
+# Ignore coverage results
+/coverage/
