@@ -13,7 +13,7 @@
 	"devDependencies": {
 		"bootstrap": "https://github.com/twbs/bootstrap/tarball/v2.3.2",
 		"less-middleware": "0.1.x",
-		"microtime": "0.3.x",
+		"microtime": "1.4.x",
 		"express": "3.x",
 		"lorem-ipsum": "1.0.x",
 		"matcha": "0.5.x",
