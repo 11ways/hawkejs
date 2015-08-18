@@ -7,6 +7,7 @@
 * Fallback to regular XHR requests in IE (when no FileReader/blog support is present)
 * Upgrade DOMSpot (had problems in IE)
 * Add 'history' option to add_link helper
+* Fix problem with jQuery.extend in iojs
 
 ## 0.1.1 (2014-06-10)
 

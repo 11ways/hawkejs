@@ -9,7 +9,7 @@
 	"dependencies": {
 		"cheerio": "0.13.1",
 		"entities": "0.5.0",
-		"jquery": "1.8.3",
+		"jquery": "2.1.x",
 		"ejs": "0.8.5",
 		"uglify-js": "2.4.x",
 		"async": "0.2.x",
