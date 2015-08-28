@@ -2,13 +2,12 @@
 	"name": "hawkejs",
 	"description": "Asynchronous Embedded JavaScript templates",
 	"version": "1.0.0-alpha",
-	"author": "Jelle De Loecker <jelle@codedor.be>",
+	"author": "Jelle De Loecker <jelle@develry.be>",
 	"keywords": ["template", "engine", "ejs", "hawkejs", "view"],
 	"main": "./lib/hawkejs.js",
 	"repository": "git@github.com:skerit/hawkejs.git",
 	"dependencies": {
-		"protoblast": "0.1.x",
-		"json-dry": "0.1.x"
+		"protoblast": "~0.1.9"
 	},
 	"devDependencies": {
 		"bootstrap": "https://github.com/twbs/bootstrap/tarball/v2.3.2",
