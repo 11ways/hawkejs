@@ -7,7 +7,9 @@
 	"main": "./lib/hawkejs.js",
 	"repository": "git@github.com:skerit/hawkejs.git",
 	"dependencies": {
-		"protoblast": "~0.1.9"
+		"protoblast": "~0.1.9",
+		"temp": "~0.8.3",
+		"useragent": "~2.1.7"
 	},
 	"devDependencies": {
 		"bootstrap": "https://github.com/twbs/bootstrap/tarball/v2.3.2",

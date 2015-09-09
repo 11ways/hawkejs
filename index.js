@@ -1,15 +1,21 @@
 var Hawkejs = require('./lib/class/hawkejs.js'),
-    fs      = require('fs'),
     libpath = require('path'),
+    libua   = require('useragent'),
+    cache   = {},
+    temp    = require('temp'),
+    fs      = require('fs'),
     files;
 
 // Export the Hawkejs class
 module.exports = Hawkejs;
 
+// Track and cleanup files on exit
+temp.track();
+
 /**
  * Load a script for use with Hawkejs across all instances
  *
- * @author   Jelle De Loecker   <jelle@codedor.be>
+ * @author   Jelle De Loecker   <jelle@develry.be>
  * @since    1.0.0
  * @version  1.0.0
  *
@@ -80,43 +86,155 @@ Hawkejs.setMethod(function afterInit() {
 
 	// Require these files in the browser only
 	this.load('lib/client/isvisible.js', {server: false});
-	this.load('lib/client/register_element.js', {server: false});
-	this.load('lib/class/custom_element.js', {server: false});
-	this.load('lib/client/history.js', {server: false});
+
+	// Register Mutation Observer Polyfill
+	this.load('lib/client/mutation_observer.js', {
+		server: false,
+		versions: {
+			android: {max: 4.3},
+			chrome:  {max: 17},
+			firefox: {max: 13},
+			ie:      {max: 10},
+			mobile_safari: {max: 5.1},
+			opera:   {max: 12.1},
+			safari:  {max: 5.1}
+		}
+	});
+
+	// Register Element Polyfill
+	this.load('lib/client/register_element.js', {
+		server: false,
+		versions: {
+			chrome:  {max: 35}
+		}
+	});
+
+	// History API Polyfill
+	this.load('lib/client/history.js', {
+		server: false,
+		versions: {
+			android: {max: 4.1},
+			chrome:  {max: 4},
+			firefox: {max: 3.6},
+			ie:      {max: 9},
+			mobile_safari: {max: 4.3},
+			opera:   {max: 10.1},
+			safari:  {max: 5.1}
+		}
+	});
+
 	this.load('lib/class/hawkejs-client.js', {server: false});
+	this.load('lib/class/custom_element.js', {server: false});
+	this.load('lib/client/he_bound_element.js', {server: false});
 	this.load('lib/class/scene.js', {server: false});
 });
 
 /**
  * Create a file for the client side
  *
- * @author   Jelle De Loecker   <jelle@codedor.be>
+ * @author   Jelle De Loecker   <jelle@develry.be>
  * @since    1.0.0
  * @version  1.0.0
  *
+ * @param    {Object}    options
  * @param    {Function}  callback
  */
-Hawkejs.setMethod(function createClientFile(callback) {
+Hawkejs.setMethod(function createClientFile(options, callback) {
 
 	var that = this,
-	    tasks = {},
-	    extraFiles = [],
-	    cfile = __dirname + '/hawkejs-client-side.js';
+	    extraFiles,
+	    files_id,
+	    browser,
+	    family,
+	    tasks,
+	    ua,
+	    id;
 
-	if (that.generatedClientFile) {
-		if (callback) callback(null, that.generatedClientFile);
-		return cfile;
+	if (typeof options == 'function') {
+		callback = options;
+		options = {};
 	}
 
-	files.forEach(function(classPath) {
-		extraFiles.push('lib/class/' + classPath);
+	if (options.useragent) {
+
+		if (typeof options.useragent == 'object') {
+			ua = options.useragent;
+		} else {
+			ua = libua.parse(options.useragent);
+		}
+
+		family = ua.family.toLowerCase();
+
+		if (~family.indexOf('chrome') || ~family.indexOf('chromium')) {
+			browser = 'chrome';
+		} else if (~family.indexOf('safari')) {
+			browser = 'safari'
+
+			if (~family.indexOf('mobile') && ~family.indexOf('apple')) {
+				browser = 'mobile_safari';
+			}
+		} else if (~family.indexOf('opera')) {
+			browser = 'opera';
+		} else if (~family.indexOf('trident') || ~family.indexOf('msie')) {
+			browser = 'ie';
+		} else if (~family.indexOf('firefox')) {
+			browser = 'firefox';
+		} else if (~family.indexOf('android')) {
+			browser = 'android';
+		}
+
+		id = browser + '-' + ua.major + '.' + ua.minor;
+	} else {
+		id = 'full';
+	}
+
+	if (cache[id]) {
+		if (callback) callback(null, cache[id]);
+		return;
+	}
+
+	extraFiles = [];
+	tasks = {};
+
+	files.forEach(function eachFile(class_path) {
+		extraFiles.push('lib/class/' + class_path);
 	});
 
-	Hawkejs.Blast.Bound.Object.each(this.files, function(options, classPath) {
+	Hawkejs.Blast.Bound.Object.each(this.files, function eachFile(options, class_path) {
+
+		var version,
+		    family,
+		    entry;
+
+		// Only allow files that are meant for the browser
 		if (options.browser) {
-			if (extraFiles.indexOf(classPath) < 0) extraFiles.push(classPath);
+
+			// See if we've been given a useragent
+			if (options.versions && browser && ua && id != 'full') {
+				if (entry = options.versions[browser]) {
+					// Parse the version number
+					version = parseFloat(ua.major + '.' + ua.minor);
+
+					// If the user's browser version is higher than the required max,
+					// it is also not needed
+					if (version > entry.max) {
+						return;
+					}
+				}
+			}
+
+			if (extraFiles.indexOf(class_path) < 0) extraFiles.push(class_path);
 		}
 	});
+
+	// Calculate the id of the combination of files
+	files_id = Blast.Bound.Object.checksum(extraFiles);
+
+	if (cache[files_id]) {
+		cache[id] = cache[files_id];
+		if (callback) callback(null, cache[id]);
+		return;
+	}
 
 	// Read in all the main files
 	extraFiles.forEach(function eachExtraClassFile(classPath) {
@@ -137,18 +255,9 @@ Hawkejs.setMethod(function createClientFile(callback) {
 		});
 	};
 
-	tasks.jsondry = function getJsondry(next) {
-
-		var ePath = require.resolve('json-dry');
-
-		fs.readFile(ePath, {encoding: 'utf8'}, function(err, result) {
-			next(err, result);
-		});
-	};
-
 	tasks.protoblast = function getProtoblast(next) {
 
-		var Blast = require('protoblast')();
+		var Blast = require('protoblast')(false);
 
 		fs.readFile(Blast.getClientPath(true), {encoding: 'utf8'}, function(err, result) {
 			next(err, result);
@@ -169,11 +278,6 @@ Hawkejs.setMethod(function createClientFile(callback) {
 		code = '';
 		template = result.template;
 		id = template.indexOf('//_REGISTER_//');
-
-		// Add json-dry
-		code += 'require.register("json-dry", function(module, exports, require){\n';
-		code += result.tasks;
-		code += '\n});\n';
 
 		// Add protoblast for browser
 		code += 'require.register("protoblast", function(module, exports, require){\n';
@@ -198,12 +302,20 @@ Hawkejs.setMethod(function createClientFile(callback) {
 
 		template = template.slice(0, id) + '\n' + code + template.slice(id);
 
-		fs.writeFile(cfile, template, function() {
-			that.generatedClientFile = cfile;
-			
-			if (callback) callback(null, cfile);
+		temp.open(files_id, function gotTempFile(err, info) {
+
+			if (err) {
+				return callback(err);
+			}
+
+			// Write the newly generated template into the temp file
+			fs.write(info.fd, template);
+
+			// Store the temp path under its two ids
+			cache[id] = info.path;
+			cache[files_id] = info.path;
+
+			if (callback) callback(null, info.path);
 		});
 	});
-
-	return cfile;
 });
