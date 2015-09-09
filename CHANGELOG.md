@@ -2,8 +2,7 @@
 
 * Complete rewrite
 * Remove DOM-style rendering from the server
-* Informer class is now made using Function.inherits and its methods are set
-  using the #setMethod method
+* Live-data binding
 
 ## 0.1.1 (2014-06-10)
 
