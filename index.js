@@ -87,6 +87,34 @@ Hawkejs.setMethod(function afterInit() {
 	// Require these files in the browser only
 	this.load('lib/client/isvisible.js', {server: false});
 
+	// Register Weakmap Polyfill
+	this.load('lib/client/weakmap.js', {
+		server: false,
+		versions: {
+			android: {max: 4.3},
+			chrome:  {max: 35},
+			firefox: {max: 5},
+			ie:      {max: 10},
+			mobile_safari: {max: 7.0},
+			opera:   {max: 22},
+			safari:  {max: 7.0}
+		}
+	});
+
+	// Register ClassList Polyfill
+	this.load('lib/client/classlist.js', {
+		server: false,
+		versions: {
+			android: {max: 2.3},
+			chrome:  {max: 7},
+			firefox: {max: 3.5},
+			ie:      {max: 9},
+			mobile_safari: {max: 4.3},
+			opera:   {max: 10.1},
+			safari:  {max: 5}
+		}
+	});
+
 	// Register Mutation Observer Polyfill
 	this.load('lib/client/mutation_observer.js', {
 		server: false,
