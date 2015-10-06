@@ -87,6 +87,20 @@ Hawkejs.setMethod(function afterInit() {
 	// Require these files in the browser only
 	this.load('lib/client/isvisible.js', {server: false});
 
+	// Register CustomEvent Polyfill for IE
+	this.load('lib/client/custom_event.js', {
+		server: false,
+		versions: {
+			android: {max: 4.2}, // ?
+			chrome:  {max: 14},
+			firefox: {max: 10},
+			ie:      {max: 11},
+			mobile_safari: {max: 7.0}, // ?
+			opera:   {max: 11.5},
+			safari:  {max: 7.0} // ?
+		}
+	});
+
 	// Register Weakmap Polyfill
 	this.load('lib/client/weakmap.js', {
 		server: false,
