@@ -20,6 +20,9 @@
 		"matcha": "0.5.x",
 		"mocha": "1.20.x"
 	},
+	"optionalDependencies": {
+		"harmony-proxy": "0.1.x"
+	},
 	"scripts": {
 		"test": "node_modules/.bin/mocha --reporter spec"
 	},
