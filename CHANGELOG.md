@@ -1,4 +1,10 @@
-## 1.0.0 (WIP)
+## 1.1.0 (WIP)
+
+* Improve template error reporting
+* Integrate custom elements
+* Work with HTMLElements
+
+## 1.0.0
 
 * Complete rewrite
 * Remove DOM-style rendering from the server

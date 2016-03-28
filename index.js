@@ -166,7 +166,12 @@ Hawkejs.setMethod(function afterInit() {
 	});
 
 	this.load('lib/class/hawkejs-client.js', {server: false});
-	this.load('lib/class/custom_element.js', {server: false});
+
+	this.load('lib/class/html_class_list.js', {client: false});
+	this.load('lib/class/html_style.js', {client: false});
+	this.load('lib/class/html_element.js', {client: false});
+
+	this.load('lib/class/custom_element.js', {server: true});
 	this.load('lib/client/dom_spotting.js', {server: false});
 	this.load('lib/client/element_hawkejs.js', {server: false});
 	this.load('lib/client/element_bound.js', {server: false});
