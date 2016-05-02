@@ -41,7 +41,7 @@ Hawkejs.setMethod(function load(filePath, options) {
 	}
 
 	if (location[0] !== '/') {
-		location = __dirname + '/' + location;
+		location = libpath.resolve(__dirname, location);
 	}
 
 	if (!this.files[filePath]) {
@@ -338,11 +338,11 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 		code += result.hawkejs;
 		code += '\n});\n';
 
-		extraFiles.forEach(function(filekey) {
+		extraFiles.forEach(function eachFile(filekey) {
 
 			var options = that.files[filekey];
 
-			code += 'require.register("' + filekey + '", function(module, exports, require){\n';
+			code += 'require.register(' + JSON.stringify(filekey) + ', function(module, exports, require){\n';
 			code += result[filekey];
 			code += '\n});\n';
 		});
