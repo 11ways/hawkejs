@@ -1,4 +1,4 @@
-## 1.1.0 (WIP)
+## 1.1.0 (2016-06-27)
 
 * Improve template error reporting
 * Integrate custom elements
