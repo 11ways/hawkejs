@@ -13,24 +13,103 @@ module.exports = Hawkejs;
 temp.track();
 
 /**
+ * Get a unique name for a certain path
+ *
+ * @author   Jelle De Loecker   <jelle@develry.be>
+ * @since    1.1.1
+ * @version  1.1.1
+ *
+ * @param    {String}   file_path
+ * @param    {Object}   options
+ *
+ * @return   {String}
+ */
+Hawkejs.setMethod(function _getUniqueName(file_path, options) {
+
+	var test_name,
+	    pieces,
+	    file,
+	    name,
+	    key,
+	    nr;
+
+	// Now we need to generate a name for this file:
+	// for that we use the last 2 pieces of the path
+	if (options.name) {
+		name = options.name;
+	} else {
+		pieces = file_path.split('/');
+
+		// Try the filename first, the last part of the path
+		name = Blast.Bound.Array.last(pieces);
+
+		// If that already exists, add the directory name
+		if (this.files[name]) {
+			name = Blast.Bound.Array.last(pieces, 2).join('/');
+		}
+	}
+
+	// Now iterate over all the files already added
+	for (key in this.files) {
+		file = this.files[key];
+
+		// If the same path has already been added, stop now
+		if (file.path == file_path) {
+			return;
+		}
+	}
+
+	test_name = name;
+	nr = 1;
+
+	// See if this name already exists
+	while (this.files[test_name]) {
+		test_name = name + '_' + nr;
+		nr++;
+	}
+
+	name = test_name;
+
+	return name;
+});
+
+/**
  * Load a script for use with Hawkejs across all instances
  *
  * @author   Jelle De Loecker   <jelle@develry.be>
  * @since    1.0.0
- * @version  1.0.0
+ * @version  1.1.1
  *
- * @param    {String}   filePath
+ * @param    {String}   file_path
  * @param    {Object}   options
  *
  * @return   {void}
  */
-Hawkejs.setMethod(function load(filePath, options) {
+Hawkejs.setMethod(function load(file_path, options) {
 
-	var location = filePath;
+	var file,
+	    name;
 
 	if (!options || typeof options != 'object') {
 		options = {};
 	}
+
+	// Generate the proper path to the file
+	// @TODO: this will fail on windows
+	if (file_path[0] !== '/') {
+		file_path = libpath.resolve(__dirname, file_path);
+	}
+
+	// Get a unique name
+	name = this._getUniqueName(file_path, options);
+
+	// If no name is returned, this is a duplicate
+	// and should not be added
+	if (!name) {
+		return;
+	}
+
+	options.name = name;
 
 	if (typeof options.server == 'undefined') {
 		options.server = true;
@@ -40,20 +119,25 @@ Hawkejs.setMethod(function load(filePath, options) {
 		options.browser = true;
 	}
 
-	if (location[0] !== '/') {
-		location = libpath.resolve(__dirname, location);
+	// Enable commonjs support by default
+	if (typeof options.is_commonjs == 'undefined') {
+		options.is_commonjs = true;
 	}
 
-	if (!this.files[filePath]) {
+	// Store the path in the options, too
+	options.path = file_path;
 
-		if (options.server) {
-			require(location)(Hawkejs, Hawkejs.Blast);
+	// See if this file needs to be required on the server
+	if (options.server) {
+		if (options.is_commonjs) {
+			require(file_path)(Hawkejs, Hawkejs.Blast);
+		} else {
+			require(file_path);
 		}
-
-		// Will only be registered when require works on the server
-		// @todo: still need to add check for client side scripts
-		this.files[filePath] = options;
 	}
+
+	// And finally: add this file to the files object
+	this.files[name] = options;
 });
 
 // The files that need to be loaded
@@ -81,7 +165,7 @@ Hawkejs.setMethod(function afterInit() {
 			return;
 		}
 
-		that.load('lib/class/' + classPath, {id: classPath});
+		that.load('lib/class/' + classPath, {name: classPath});
 	});
 
 	// Require these files in the browser only
@@ -183,7 +267,7 @@ Hawkejs.setMethod(function afterInit() {
  *
  * @author   Jelle De Loecker   <jelle@develry.be>
  * @since    1.0.0
- * @version  1.0.0
+ * @version  1.1.1
  *
  * @param    {Object}    options
  * @param    {Function}  callback
@@ -245,15 +329,12 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 	extraFiles = [];
 	tasks = {};
 
-	files.forEach(function eachFile(class_path) {
-		extraFiles.push('lib/class/' + class_path);
-	});
-
-	Hawkejs.Blast.Bound.Object.each(this.files, function eachFile(options, class_path) {
+	Hawkejs.Blast.Bound.Object.each(this.files, function eachFile(options, name) {
 
 		var version,
 		    family,
-		    entry;
+		    entry,
+		    i;
 
 		// Only allow files that are meant for the browser
 		if (options.browser) {
@@ -272,7 +353,20 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 				}
 			}
 
-			if (extraFiles.indexOf(class_path) < 0) extraFiles.push(class_path);
+			// Iterate over all the already added files
+			for (i = 0; i < extraFiles.length; i++) {
+				entry = extraFiles[i];
+
+				// If the paths are the same,
+				// then don't add it again
+				if (entry.path == options.path) {
+					return;
+				}
+			}
+
+			// No duplicates found for this path,
+			// so add it
+			extraFiles.push(options);
 		}
 	});
 
@@ -286,9 +380,9 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 	}
 
 	// Read in all the main files
-	extraFiles.forEach(function eachExtraClassFile(classPath) {
-		tasks[classPath] = function readClassFile(next) {
-			fs.readFile(libpath.resolve(__dirname, classPath), {encoding: 'utf8'}, next);
+	extraFiles.forEach(function eachExtraClassFile(options) {
+		tasks[options.path] = function readClassFile(next) {
+			fs.readFile(libpath.resolve(__dirname, options.path), {encoding: 'utf8'}, next);
 		};
 	});
 
@@ -316,7 +410,8 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 	// Fetch all the files
 	Hawkejs.Blast.Bound.Function.parallel(tasks, function gotAllFiles(err, result) {
 
-		var template,
+		var clientFiles,
+		    template,
 		    code,
 		    id;
 
@@ -338,18 +433,40 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 		code += result.hawkejs;
 		code += '\n});\n';
 
-		extraFiles.forEach(function eachFile(filekey) {
+		clientFiles = [];
 
-			var options = that.files[filekey];
+		extraFiles.forEach(function eachFile(file) {
 
-			code += 'require.register(' + JSON.stringify(filekey) + ', function(module, exports, require){\n';
-			code += result[filekey];
+			var obj = {},
+			    key;
+
+			// Clone the options, without certain properties
+			for (key in file) {
+				switch (key) {
+
+					case 'browser':
+					case 'server':
+					case 'path':
+						continue;
+
+					default:
+						obj[key] = file[key];
+				}
+			}
+
+			clientFiles.push(obj);
+
+			code += 'require.register(' + JSON.stringify(file.name) + ', function(module, exports, require){\n';
+			code += result[file.path];
 			code += '\n});\n';
 		});
 
-		code += 'clientFiles = ' + JSON.stringify(extraFiles) + ';\n';
+		code += 'clientFiles = ' + JSON.stringify(clientFiles, null, 2) + ';\n';
 
 		template = template.slice(0, id) + '\n' + code + template.slice(id);
+
+		// Remove everything between "//HAWKEJS START CUT" and "//HAWKEJS END CUT"
+		template = template.replace(/\/\/\s?HAWKEJS\s?START\s?CUT(.*\n)+?(\/\/\s?HAWKEJS\s?END\s?CUT)+?/gm, '');
 
 		temp.open(files_id, function gotTempFile(err, info) {
 

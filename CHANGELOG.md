@@ -1,3 +1,10 @@
+## 1.1.1 (WIP)
+
+* Stylesheet theme support
+* Client files: remove code between "//HAWKEJS START CUT" and "//HAWKEJS END CUT"
+* Client files can now be non-commonjs formatted (using `is_commonjs` set to false)
+* Client files no longer use the entire file path as an identifier
+
 ## 1.1.0 (2016-06-27)
 
 * Improve template error reporting
