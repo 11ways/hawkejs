@@ -1,6 +1,6 @@
-var Benchmark = require('benchmark');
-var suite = new Benchmark.Suite;
-var hawkejs = require('./lib/hawkejs');
+var Hawkejs = require('./index'),
+    hawkejs = new Hawkejs(),
+    Fn = __Protoblast.Bound.Function;
 
 // Prepare an extensive HAWKEJS test
 // We don't test IO
@@ -10,42 +10,16 @@ var HAWKEJStopbar = "\n<div class=\"navbar navbar-inverse navbar-fixed-top\">\n\
 var HAWKEJSindex = "\n<% expands('main') %>\n<% start('container-fluid') %>\n<p>Welcome on the index page!</p>\nTimestamp: <b><%= timestamp %></b>\n<% end('container-fluid') %>\n";
 var HAWKEJSlink = "<li><% add_link('/admin', {title: 'Dashboard', matchref: {class: 'active'}}) %></li>";
 
-hawkejs.storeTemplate("base", HAWKEJSbase);
-hawkejs.storeTemplate("main", HAWKEJSmain);
-hawkejs.storeTemplate("topbar", HAWKEJStopbar);
-hawkejs.storeTemplate("index", HAWKEJSindex);
-hawkejs.storeTemplate("link", HAWKEJSlink);
+hawkejs.compile({template_name: 'base', template: HAWKEJSbase});
+hawkejs.compile({template_name: 'main', template: HAWKEJSmain});
+hawkejs.compile({template_name: 'topbar', template: HAWKEJStopbar});
+hawkejs.compile({template_name: 'index', template: HAWKEJSindex});
+hawkejs.compile({template_name: 'link', template: HAWKEJSlink});
 
 var timestamp = new Date().getTime();
-var username = "Skerit";
+var username = 'Skerit';
 
-// add tests
-suite.add('Hawkejs (big template)', function() {
-  
-	hawkejs.render('index',
-	               {username: username,
-								  timestamp: timestamp},
-									false, function($result, ne, payload) {
-		// Receive the result object
-	});
-})
-.add('Hawkejs#add_link', function() {
-  hawkejs.render('link',
-	               {username: username,
-								  timestamp: timestamp},
-									false, function($result, ne, payload) {
-		// Receive the result object
-	});
-})
-/*.add('String#match', function() {
-  !!'Hello World!'.match(/o/);
-})*/
-// add listeners
-.on('cycle', function(event) {
-  console.log(String(event.target));
-})
-.on('complete', function() {
-  //console.log('Fastest is ' + this.filter('fastest').pluck('name'));
-})
-// run async
-.run({ 'async': true });
+// 1291/s on 2016-08-23
+Fn.benchmark(function render_template(next) {
+	hawkejs.render('index', {username: username, timestamp: timestamp}, next);
+});

@@ -4,6 +4,7 @@ var Hawkejs = require('./lib/class/hawkejs.js'),
     cache   = {},
     temp    = require('temp'),
     fs      = require('fs'),
+    Blast   = __Protoblast,
     files;
 
 // Export the Hawkejs class
