@@ -19,7 +19,12 @@ hawkejs.compile({template_name: 'link', template: HAWKEJSlink});
 var timestamp = new Date().getTime();
 var username = 'Skerit';
 
-// 1291/s on 2016-08-23
+// 400.000/s on 2016-08-23
+Fn.benchmark(function create_viewrender() {
+	hawkejs.createViewRender();
+});
+
+// 1.291/s on 2016-08-23
 Fn.benchmark(function render_template(next) {
 	hawkejs.render('index', {username: username, timestamp: timestamp}, next);
 });

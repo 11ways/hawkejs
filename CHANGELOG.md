@@ -1,4 +1,4 @@
-## 1.1.1 (WIP)
+## 1.1.1 (2016-10-04)
 
 * Stylesheet theme support
 * Client files: remove code between "//HAWKEJS START CUT" and "//HAWKEJS END CUT"
