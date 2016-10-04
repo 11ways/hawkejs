@@ -1,3 +1,5 @@
+## 1.1.2 (WIP)
+
 ## 1.1.1 (2016-10-04)
 
 * Stylesheet theme support
