@@ -1,5 +1,10 @@
 ## 1.1.2 (WIP)
 
+* Added `add_class` method to add CSS classnames to a Hawkejs element
+* `Element#reload` will now render the correct theme of template
+* Elements with the `data-update-request` attribute will only get the
+  click/change listener once
+
 ## 1.1.1 (2016-10-04)
 
 * Stylesheet theme support
