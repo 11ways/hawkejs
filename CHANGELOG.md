@@ -4,6 +4,13 @@
 * `Element#reload` will now render the correct theme of template
 * Elements with the `data-update-request` attribute will only get the
   click/change listener once
+* CustomElements will be registered once all the Hawkejs code has executed
+* Fixed calling of `CustomElement#undried`
+* Renamed CustomElements `attachments` to `assigned_data`
+* `CustomElement#attach` is now `CustomElement#assignData`
+* Added `CustomElement#emit` to emit a custom browser event
+* Added `CustomElement#connectedCallback` functionality
+* Scene view helpers will be created before scripts are requested
 
 ## 1.1.1 (2016-10-04)
 
