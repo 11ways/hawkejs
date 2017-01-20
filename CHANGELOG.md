@@ -1,3 +1,5 @@
+## 1.1.3 (WIP)
+
 ## 1.1.2 (2017-01-21)
 
 * Added `add_class` method to add CSS classnames to a Hawkejs element
