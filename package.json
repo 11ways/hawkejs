@@ -7,7 +7,7 @@
 	"main": "./lib/hawkejs.js",
 	"repository": "git@github.com:skerit/hawkejs.git",
 	"dependencies": {
-		"protoblast": "~0.3.0",
+		"protoblast": "~0.3.4",
 		"temp": "~0.8.3",
 		"useragent": "~2.1.7"
 	},

@@ -1,4 +1,4 @@
-## 1.1.2 (WIP)
+## 1.1.2 (2017-01-21)
 
 * Added `add_class` method to add CSS classnames to a Hawkejs element
 * `Element#reload` will now render the correct theme of template
@@ -11,6 +11,10 @@
 * Added `CustomElement#emit` to emit a custom browser event
 * Added `CustomElement#connectedCallback` functionality
 * Scene view helpers will be created before scripts are requested
+* `Scene#appears` now also accepts elements and array of elements
+* History url can also be changed on initial page load with exposed `redirected_to`
+* Input elements with `data-update-location` will `openUrl` on change
+* Make `wheel` and `click` listeners passive
 
 ## 1.1.1 (2016-10-04)
 
