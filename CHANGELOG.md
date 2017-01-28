@@ -1,5 +1,11 @@
 ## 1.1.3 (WIP)
 
+* Add `Templates#name` property
+* Add `assigns` property to `ViewRender#toJson()`
+* Add `Hawkejs.removeClasses`
+* `className`s set in `assign()` options will remain on the block,
+  `className`s set in a `start()` call will be removed when a new `start()` is issued
+
 ## 1.1.2 (2017-01-21)
 
 * Added `add_class` method to add CSS classnames to a Hawkejs element
