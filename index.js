@@ -268,7 +268,7 @@ Hawkejs.setMethod(function afterInit() {
  *
  * @author   Jelle De Loecker   <jelle@develry.be>
  * @since    1.0.0
- * @version  1.1.1
+ * @version  1.1.3
  *
  * @param    {Object}    options
  * @param    {Function}  callback
@@ -287,6 +287,10 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 	if (typeof options == 'function') {
 		callback = options;
 		options = {};
+	}
+
+	if (!callback) {
+		callback = Blast.Bound.Function.thrower;
 	}
 
 	if (options.useragent) {
@@ -323,8 +327,7 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 	}
 
 	if (cache[id]) {
-		if (callback) callback(null, cache[id]);
-		return;
+		return callback(null, cache[id]);
 	}
 
 	extraFiles = [];
@@ -376,8 +379,7 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 
 	if (cache[files_id]) {
 		cache[id] = cache[files_id];
-		if (callback) callback(null, cache[id]);
-		return;
+		return callback(null, cache[id]);
 	}
 
 	// Read in all the main files
@@ -476,13 +478,18 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 			}
 
 			// Write the newly generated template into the temp file
-			fs.write(info.fd, template);
+			fs.write(info.fd, template, function doneWriting(err) {
+
+				if (err) {
+					return callback(err);
+				}
+
+				callback(null, info.path);
+			});
 
 			// Store the temp path under its two ids
 			cache[id] = info.path;
 			cache[files_id] = info.path;
-
-			if (callback) callback(null, info.path);
 		});
 	});
 });

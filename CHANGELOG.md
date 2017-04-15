@@ -5,6 +5,11 @@
 * Add `Hawkejs.removeClasses`
 * `className`s set in `assign()` options will remain on the block,
   `className`s set in a `start()` call will be removed when a new `start()` is issued
+* `querySelectorAll` results don't have a `forEach` method in Edge, so fix that
+* Fix race condition in `Hawkejs#createClientFile`
+* Fix `Hawkejs#require` not honouring path property on the client side
+* Add dialog css as style element
+* Bundle client-side template requests
 
 ## 1.1.2 (2017-01-21)
 
