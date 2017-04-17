@@ -1,4 +1,4 @@
-## 1.1.3 (WIP)
+## 1.1.3 (2017-04-17)
 
 * Add `Templates#name` property
 * Add `assigns` property to `ViewRender#toJson()`
