@@ -1,5 +1,9 @@
 ## 1.1.4 (WIP)
 
+* Creating a Helper instance without a view on the server side will no longer throw an error
+* `Scene#serverResponse` will now callback with the `ViewRender` instance
+* When a dialog is closed by clicking on the wrapper "dialog_close" event will be emitted on the ViewRender instance
+
 ## 1.1.3 (2017-04-17)
 
 * Add `Templates#name` property
