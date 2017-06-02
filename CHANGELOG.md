@@ -3,6 +3,11 @@
 * Creating a Helper instance without a view on the server side will no longer throw an error
 * `Scene#serverResponse` will now callback with the `ViewRender` instance
 * When a dialog is closed by clicking on the wrapper "dialog_close" event will be emitted on the ViewRender instance
+* Catch errors made by `Scene#fetch` during `xhr#send`
+* `style` calls can now be full urls
+* Added `Scene#render` method, which applies the render results to the current scene (`Hawkejs#render` will only render them, without applying)
+* Make `js-he-form`s use the `method` attribute, instead of `type`
+* The `get` option can now also be a `FormData` instance
 
 ## 1.1.3 (2017-04-17)
 
