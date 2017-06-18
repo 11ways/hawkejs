@@ -10,6 +10,9 @@
 * The `get` option can now also be a `FormData` instance
 * `add_class` calls will now also work in blocks that have been turned into a dialog
 * Forms and links with `js-he-close-dialog` as a CSS class will close the parent dialog after their successful request
+* `Scene#render` now returns the created ViewRender instance
+* Fix: `ViewRender#beginRender` now actually waits for the emitted 'begin' events to finish. This used to cause race conditions.
+
 
 ## 1.1.3 (2017-04-17)
 
