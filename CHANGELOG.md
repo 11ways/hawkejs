@@ -8,6 +8,7 @@
 * Added `Scene#render` method, which applies the render results to the current scene (`Hawkejs#render` will only render them, without applying)
 * Make `js-he-form`s use the `method` attribute, instead of `type`
 * The `get` option can now also be a `FormData` instance
+* `add_class` calls will now also work in blocks that have been turned into a dialog
 
 ## 1.1.3 (2017-04-17)
 
