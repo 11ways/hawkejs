@@ -9,6 +9,7 @@
 * Make `js-he-form`s use the `method` attribute, instead of `type`
 * The `get` option can now also be a `FormData` instance
 * `add_class` calls will now also work in blocks that have been turned into a dialog
+* Forms and links with `js-he-close-dialog` as a CSS class will close the parent dialog after their successful request
 
 ## 1.1.3 (2017-04-17)
 
