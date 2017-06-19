@@ -13,6 +13,7 @@
 * `Scene#render` now returns the created ViewRender instance
 * Fix: `ViewRender#beginRender` now actually waits for the emitted 'begin' events to finish. This used to cause race conditions.
 * Setting a pagetitle can now be done with an object supporting `getContent` and `toHawkejsString`
+* Fix `Scene#scrollTo` not working at all
 
 ## 1.1.3 (2017-04-17)
 
