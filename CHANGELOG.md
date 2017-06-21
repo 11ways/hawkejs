@@ -14,6 +14,8 @@
 * Fix: `ViewRender#beginRender` now actually waits for the emitted 'begin' events to finish. This used to cause race conditions.
 * Setting a pagetitle can now be done with an object supporting `getContent` and `toHawkejsString`
 * Fix `Scene#scrollTo` not working at all
+* Don't scroll to anything when an openUrl call results in a dialog being made.
+* Add `ViewRender#showDialog` which can add dialogs from the server side
 
 ## 1.1.3 (2017-04-17)
 
