@@ -20,6 +20,7 @@
 * Strip HTML tags before setting the page title element
 * Dialog wrappers will now use z-index of 998, 9000 less than before
 * The client-side `doExtensions` method will now also `changeMain` block when extending
+* Client-side extensions will now also work when extending a dialog
 
 ## 1.1.3 (2017-04-17)
 
