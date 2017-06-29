@@ -1,4 +1,4 @@
-## 1.1.4 (WIP)
+## 1.2.0 (WIP)
 
 * Creating a Helper instance without a view on the server side will no longer throw an error
 * `Scene#serverResponse` will now callback with the `ViewRender` instance
@@ -21,6 +21,8 @@
 * Dialog wrappers will now use z-index of 998, 9000 less than before
 * The client-side `doExtensions` method will now also `changeMain` block when extending
 * Client-side extensions will now also work when extending a dialog
+* Hawkejs elements now can also have a "data-entry-template", indicating which templated was the original entry point
+* Bump version to 1.2.0, as there are too many breaking changes
 
 ## 1.1.3 (2017-04-17)
 
