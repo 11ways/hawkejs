@@ -16,6 +16,10 @@
 * Fix `Scene#scrollTo` not working at all
 * Don't scroll to anything when an openUrl call results in a dialog being made.
 * Add `ViewRender#showDialog` which can add dialogs from the server side
+* Call `Scene#ajaxify` after emitting the created events (so clicks can be prevented)
+* Strip HTML tags before setting the page title element
+* Dialog wrappers will now use z-index of 998, 9000 less than before
+* The client-side `doExtensions` method will now also `changeMain` block when extending
 
 ## 1.1.3 (2017-04-17)
 
