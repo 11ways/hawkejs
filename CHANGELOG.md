@@ -23,6 +23,8 @@
 * Client-side extensions will now also work when extending a dialog
 * Hawkejs elements now can also have a "data-entry-template", indicating which templated was the original entry point
 * Bump version to 1.2.0, as there are too many breaking changes
+* Also remove `h_diversion` from history urls
+* When using `Scene#scrollTo` without any parameters, just scroll to the top immediately
 
 ## 1.1.3 (2017-04-17)
 
