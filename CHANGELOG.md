@@ -23,8 +23,12 @@
 * Client-side extensions will now also work when extending a dialog
 * Hawkejs elements now can also have a "data-entry-template", indicating which templated was the original entry point
 * Bump version to 1.2.0, as there are too many breaking changes
-* Also remove `h_diversion` from history urls
+* Also remove `h_diversion` and `htop` from history urls
 * When using `Scene#scrollTo` without any parameters, just scroll to the top immediately
+* Add `Hawkejs#delayReady` which is intended to be used in "onclick" attributes
+* Fix some isVisible handling
+* Fix the `Helper#parseURL` method
+* Add simple code to get rid of dialogs when using back button (needs rework)
 
 ## 1.1.3 (2017-04-17)
 
