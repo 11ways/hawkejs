@@ -1,4 +1,4 @@
-## 1.2.0 (WIP)
+## 1.2.0 (2017-08-11)
 
 * Creating a Helper instance without a view on the server side will no longer throw an error
 * `Scene#serverResponse` will now callback with the `ViewRender` instance
