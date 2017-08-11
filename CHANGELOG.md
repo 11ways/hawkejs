@@ -30,6 +30,7 @@
 * Fix the `Helper#parseURL` method
 * Add simple code to get rid of dialogs when using back button (needs rework)
 * Added another attempt to fix scrollTo
+* The default `scrollTo` duration can be overwritten by exposing `default_scrollto_duration`
 
 ## 1.1.3 (2017-04-17)
 
