@@ -1,5 +1,8 @@
 ## 1.2.1 (WIP)
 
+* Add `Hawkejs.addAttributes(element, attributes)`
+* `Scene#fetch` and `Scene#openUrl` will no longer try to parse empty "json" responses. (This happened on Firefox, not on chrome)
+
 ## 1.2.0 (2017-08-11)
 
 * Creating a Helper instance without a view on the server side will no longer throw an error
