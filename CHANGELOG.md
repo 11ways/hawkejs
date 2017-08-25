@@ -2,6 +2,8 @@
 
 * Add `Hawkejs.addAttributes(element, attributes)`
 * `Scene#fetch` and `Scene#openUrl` will no longer try to parse empty "json" responses. (This happened on Firefox, not on chrome)
+* Cookies will use the `secure` flag by default when on a secure page
+* Fix memory leak in history implementation
 
 ## 1.2.0 (2017-08-11)
 
