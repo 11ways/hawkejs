@@ -1,4 +1,4 @@
-## 1.2.1 (WIP)
+## 1.2.1 (2017-08-27)
 
 * Add `Hawkejs.addAttributes(element, attributes)`
 * `Scene#fetch` and `Scene#openUrl` will no longer try to parse empty "json" responses. (This happened on Firefox, not on chrome)
