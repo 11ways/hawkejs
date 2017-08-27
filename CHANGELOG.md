@@ -1,3 +1,5 @@
+## 1.2.2 (WIP)
+
 ## 1.2.1 (2017-08-27)
 
 * Add `Hawkejs.addAttributes(element, attributes)`
