@@ -1,5 +1,7 @@
 ## 1.2.2 (WIP)
 
+* Make sure `registerRender` doesn't fail when there is no url
+
 ## 1.2.1 (2017-08-27)
 
 * Add `Hawkejs.addAttributes(element, attributes)`
