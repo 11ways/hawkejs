@@ -1,4 +1,5 @@
-var Hawkejs = require('./lib/class/hawkejs.js'),
+var HawkejsNS = require('./lib/class/hawkejs.js'),
+    Hawkejs   = HawkejsNS.Hawkejs,
     libpath = require('path'),
     libua   = require('useragent'),
     cache   = {},
@@ -7,8 +8,8 @@ var Hawkejs = require('./lib/class/hawkejs.js'),
     Blast   = __Protoblast,
     files;
 
-// Export the Hawkejs class
-module.exports = Hawkejs;
+// Export the Hawkejs namespace
+module.exports = HawkejsNS;
 
 // Track and cleanup files on exit
 temp.track();
@@ -131,7 +132,7 @@ Hawkejs.setMethod(function load(file_path, options) {
 	// See if this file needs to be required on the server
 	if (options.server) {
 		if (options.is_commonjs) {
-			require(file_path)(Hawkejs, Hawkejs.Blast);
+			require(file_path)(HawkejsNS, Blast);
 		} else {
 			require(file_path);
 		}
@@ -143,7 +144,6 @@ Hawkejs.setMethod(function load(file_path, options) {
 
 // The files that need to be loaded
 files = [
-	'element_builder.js',
 	'templates.js',
 	'helper.js',
 	'placeholder.js',
@@ -333,7 +333,7 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 	extraFiles = [];
 	tasks = {};
 
-	Hawkejs.Blast.Bound.Object.each(this.files, function eachFile(options, name) {
+	Blast.Bound.Object.each(this.files, function eachFile(options, name) {
 
 		var version,
 		    family,
@@ -411,7 +411,7 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 	};
 
 	// Fetch all the files
-	Hawkejs.Blast.Bound.Function.parallel(tasks, function gotAllFiles(err, result) {
+	Blast.Bound.Function.parallel(tasks, function gotAllFiles(err, result) {
 
 		var clientFiles,
 		    template,

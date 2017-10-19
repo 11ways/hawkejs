@@ -3,6 +3,7 @@
 * Make sure `registerRender` doesn't fail when there is no url
 * Fix `Hawkejs.removeClasses` and `Hawkejs.addClasses` so it doesn't crash on a class_name with only whitespace
 * Use `decodeURI` when using a `x-history-url` as new url
+* Put every class under the `Hawkejs` namespace
 
 ## 1.2.1 (2017-08-27)
 
