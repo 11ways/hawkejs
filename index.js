@@ -132,7 +132,7 @@ Hawkejs.setMethod(function load(file_path, options) {
 	// See if this file needs to be required on the server
 	if (options.server) {
 		if (options.is_commonjs) {
-			require(file_path)(HawkejsNS, Blast);
+			require(file_path)(HawkejsNS, Hawkejs.Blast);
 		} else {
 			require(file_path);
 		}
