@@ -4,6 +4,7 @@
 * Fix `Hawkejs.removeClasses` and `Hawkejs.addClasses` so it doesn't crash on a class_name with only whitespace
 * Use `decodeURI` when using a `x-history-url` as new url
 * Put every class under the `Hawkejs` namespace
+* Custom element instances created during a client side render will no longer be re-created when finally inserted into the DOM
 
 ## 1.2.1 (2017-08-27)
 
