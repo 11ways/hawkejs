@@ -80,7 +80,7 @@ Hawkejs.setMethod(function _getUniqueName(file_path, options) {
  *
  * @author   Jelle De Loecker   <jelle@develry.be>
  * @since    1.0.0
- * @version  1.1.1
+ * @version  1.2.2
  *
  * @param    {String}   file_path
  * @param    {Object}   options
@@ -117,8 +117,8 @@ Hawkejs.setMethod(function load(file_path, options) {
 		options.server = true;
 	}
 
-	if (typeof options.browser == 'undefined') {
-		options.browser = true;
+	if (typeof options.client == 'undefined') {
+		options.client = true;
 	}
 
 	// Enable commonjs support by default
@@ -186,20 +186,6 @@ Hawkejs.setMethod(function afterInit() {
 		}
 	});
 
-	// Register Weakmap Polyfill
-	this.load('lib/client/weakmap.js', {
-		server: false,
-		versions: {
-			android: {max: 4.3},
-			chrome:  {max: 35},
-			firefox: {max: 5},
-			ie:      {max: 10},
-			mobile_safari: {max: 7.0},
-			opera:   {max: 22},
-			safari:  {max: 7.0}
-		}
-	});
-
 	// Register ClassList Polyfill
 	this.load('lib/client/classlist.js', {
 		server: false,
@@ -208,6 +194,7 @@ Hawkejs.setMethod(function afterInit() {
 			chrome:  {max: 7},
 			firefox: {max: 3.5},
 			ie:      {max: 9},
+			edge:    {max: 0},
 			mobile_safari: {max: 4.3},
 			opera:   {max: 10.1},
 			safari:  {max: 5}
@@ -228,11 +215,26 @@ Hawkejs.setMethod(function afterInit() {
 		}
 	});
 
+	// Register Dataset Polyfill for IE
+	this.load('lib/client/dataset.js', {
+		server: false,
+		versions: {
+			android: {max:  0},
+			chrome:  {max:  7},
+			firefox: {max:  5},
+			ie:      {max: 10},
+			mobile_safari: {max: 0},
+			opera:   {max: 11.9},
+			safari:  {max: 5}
+		}
+	});
+
 	// Register Element Polyfill
 	this.load('lib/client/register_element.js', {
 		server: false,
 		versions: {
-			chrome:  {max: 35}
+			chrome:  {max: 35},
+			opera :  {max: 25}
 		}
 	});
 
@@ -247,6 +249,16 @@ Hawkejs.setMethod(function afterInit() {
 			mobile_safari: {max: 4.3},
 			opera:   {max: 10.1},
 			safari:  {max: 5.1}
+		}
+	});
+
+	// Register FormData Polyfill
+	this.load('lib/client/formdata.js', {
+		server: false,
+		is_commonjs: false,
+		versions: {
+			chrome:  {max: 49},
+			firefox: {max: 43}
 		}
 	});
 
@@ -268,7 +280,7 @@ Hawkejs.setMethod(function afterInit() {
  *
  * @author   Jelle De Loecker   <jelle@develry.be>
  * @since    1.0.0
- * @version  1.1.3
+ * @version  1.2.2
  *
  * @param    {Object}    options
  * @param    {Function}  callback
@@ -298,7 +310,7 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 		if (typeof options.useragent == 'object') {
 			ua = options.useragent;
 		} else {
-			ua = libua.parse(options.useragent);
+			ua = libua.lookup(options.useragent);
 		}
 
 		family = ua.family.toLowerCase();
@@ -313,12 +325,14 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 			}
 		} else if (~family.indexOf('opera')) {
 			browser = 'opera';
-		} else if (~family.indexOf('trident') || ~family.indexOf('msie')) {
+		} else if (family == 'ie' || ~family.indexOf('trident') || ~family.indexOf('msie')) {
 			browser = 'ie';
 		} else if (~family.indexOf('firefox')) {
 			browser = 'firefox';
 		} else if (~family.indexOf('android')) {
 			browser = 'android';
+		} else if (~family.indexOf('edge')) {
+			browser = 'edge';
 		}
 
 		id = browser + '-' + ua.major + '.' + ua.minor;
@@ -333,7 +347,7 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 	extraFiles = [];
 	tasks = {};
 
-	Blast.Bound.Object.each(this.files, function eachFile(options, name) {
+	Blast.Bound.Object.each(this.files, function eachFile(file_options, name) {
 
 		var version,
 		    family,
@@ -341,11 +355,11 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 		    i;
 
 		// Only allow files that are meant for the browser
-		if (options.browser) {
+		if (file_options.client) {
 
 			// See if we've been given a useragent
-			if (options.versions && browser && ua && id != 'full') {
-				if (entry = options.versions[browser]) {
+			if (file_options.versions && browser && ua && id != 'full') {
+				if (entry = file_options.versions[browser]) {
 					// Parse the version number
 					version = parseFloat(ua.major + '.' + ua.minor);
 
@@ -363,14 +377,14 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 
 				// If the paths are the same,
 				// then don't add it again
-				if (entry.path == options.path) {
+				if (entry.path == file_options.path) {
 					return;
 				}
 			}
 
 			// No duplicates found for this path,
 			// so add it
-			extraFiles.push(options);
+			extraFiles.push(file_options);
 		}
 	});
 

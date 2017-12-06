@@ -5,6 +5,17 @@
 * Use `decodeURI` when using a `x-history-url` as new url
 * Put every class under the `Hawkejs` namespace
 * Custom element instances created during a client side render will no longer be re-created when finally inserted into the DOM
+* `ViewRender#getId(prefix)` now accepts a prefix, which starts a new number sequence
+* Added `Hawkejs.elementHasBeenRegistered(name)`
+* `Hawkejs#getSource` will no longer cache template when debugging
+* Fix `Hawkejs#load` using `browser` property instead of `client`
+* Add dataset polyfill for ancient browsers
+* Fix `getFirstAvailableInternalSource` on the client not returning an object
+* Use `useragent#lookup` for faster parsing of useragents
+* The `Scene#generalView` property is created even before the document is ready
+* Custom elements now have a `hawkejs_view` property, so a ViewRender instance can always be accessed
+* Custom elements also have a `hawkejs_helpers` property
+* Tweak `isVisible` so elements in a scrollable parent element are marked as "visible" as soon as they enter the viewport, occluded or not
 
 ## 1.2.1 (2017-08-27)
 
