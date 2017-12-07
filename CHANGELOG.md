@@ -16,6 +16,7 @@
 * Custom elements now have a `hawkejs_view` property, so a ViewRender instance can always be accessed
 * Custom elements also have a `hawkejs_helpers` property
 * Tweak `isVisible` so elements in a scrollable parent element are marked as "visible" as soon as they enter the viewport, occluded or not
+* Hawkejs block elements are now identified by the 'x-hawkejs' class instead of tag name
 
 ## 1.2.1 (2017-08-27)
 
