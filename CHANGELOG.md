@@ -15,8 +15,8 @@
 * The `Scene#generalView` property is created even before the document is ready
 * Custom elements now have a `hawkejs_view` property, so a ViewRender instance can always be accessed
 * Custom elements also have a `hawkejs_helpers` property
-* Tweak `isVisible` so elements in a scrollable parent element are marked as "visible" as soon as they enter the viewport, occluded or not
 * Hawkejs block elements are now identified by the 'x-hawkejs' class instead of tag name
+* `isVisible` should now work correctly, even in nested scrolls. When no padding is given, it'll even do an occlusion check
 
 ## 1.2.1 (2017-08-27)
 
