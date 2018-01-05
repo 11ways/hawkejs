@@ -1,6 +1,7 @@
 ## 1.2.3 (WIP)
 
 * Emit `hawkejs_scene` event on the Blast object when the scene is being made
+* Emit `hawkejs_init` event with the new instance and non-undried init objects
 
 ## 1.2.2 (2018-01-05)
 
