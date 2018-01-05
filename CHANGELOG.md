@@ -1,3 +1,7 @@
+## 1.2.3 (WIP)
+
+* Emit `hawkejs_scene` event on the Blast object when the scene is being made
+
 ## 1.2.2 (2018-01-05)
 
 * Make sure `registerRender` doesn't fail when there is no url
