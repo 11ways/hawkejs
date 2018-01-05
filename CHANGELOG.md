@@ -1,4 +1,4 @@
-## 1.2.2 (WIP)
+## 1.2.2 (2018-01-05)
 
 * Make sure `registerRender` doesn't fail when there is no url
 * Fix `Hawkejs.removeClasses` and `Hawkejs.addClasses` so it doesn't crash on a class_name with only whitespace
