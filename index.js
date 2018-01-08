@@ -280,7 +280,7 @@ Hawkejs.setMethod(function afterInit() {
  *
  * @author   Jelle De Loecker   <jelle@develry.be>
  * @since    1.0.0
- * @version  1.2.2
+ * @version  1.2.3
  *
  * @param    {Object}    options
  * @param    {Function}  callback
@@ -485,7 +485,7 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 		// Remove everything between "//HAWKEJS START CUT" and "//HAWKEJS END CUT"
 		template = template.replace(/\/\/\s?HAWKEJS\s?START\s?CUT(.*\n)+?(\/\/\s?HAWKEJS\s?END\s?CUT)+?/gm, '');
 
-		temp.open(files_id, function gotTempFile(err, info) {
+		temp.open({prefix: 'hawkejs_' + files_id, suffix: '.js'}, function gotTempFile(err, info) {
 
 			if (err) {
 				return callback(err);
