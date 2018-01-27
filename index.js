@@ -80,7 +80,7 @@ Hawkejs.setMethod(function _getUniqueName(file_path, options) {
  *
  * @author   Jelle De Loecker   <jelle@develry.be>
  * @since    1.0.0
- * @version  1.2.2
+ * @version  1.2.3
  *
  * @param    {String}   file_path
  * @param    {Object}   options
@@ -113,16 +113,16 @@ Hawkejs.setMethod(function load(file_path, options) {
 
 	options.name = name;
 
-	if (typeof options.server == 'undefined') {
+	if (options.server == null) {
 		options.server = true;
 	}
 
-	if (typeof options.client == 'undefined') {
+	if (options.client == null) {
 		options.client = true;
 	}
 
 	// Enable commonjs support by default
-	if (typeof options.is_commonjs == 'undefined') {
+	if (options.is_commonjs == null) {
 		options.is_commonjs = true;
 	}
 
@@ -474,7 +474,15 @@ Hawkejs.setMethod(function createClientFile(options, callback) {
 			clientFiles.push(obj);
 
 			code += 'require.register(' + JSON.stringify(file.name) + ', function(module, exports, require){\n';
-			code += result[file.path];
+
+			if (file.make_commonjs) {
+				code += 'module.exports = function(Hawkejs, Blast) {';
+				code += result[file.path];
+				code += '};';
+			} else {
+				code += result[file.path];
+			}
+
 			code += '\n});\n';
 		});
 

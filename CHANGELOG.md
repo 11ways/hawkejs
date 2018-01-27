@@ -3,6 +3,7 @@
 * Emit `hawkejs_scene` event on the Blast object when the scene is being made
 * Emit `hawkejs_init` event with the new instance and non-undried init objects
 * The temp file created for the client file will now have a 'hawkejs_' prefix and a '.js' suffix
+* When manually adding helper files you can now pass the `make_commonjs` option, which will wrap it in a function with `Hawkejs, Blast` arguments
 
 ## 1.2.2 (2018-01-05)
 
