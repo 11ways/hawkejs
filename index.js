@@ -1,11 +1,16 @@
-var HawkejsNS = require('./lib/class/hawkejs.js'),
-    Hawkejs   = HawkejsNS.Hawkejs,
-    libpath = require('path'),
-    libua   = require('useragent'),
-    cache   = {},
-    temp    = require('temp'),
-    fs      = require('fs'),
-    Blast   = __Protoblast,
+var HawkejsNS        = require('./lib/class/hawkejs.js'),
+    Hawkejs          = HawkejsNS.Hawkejs,
+    module           = require('module'),
+    original_wrap    = module.wrap,
+    original_wrapper = module.wrapper.slice(0),
+    original_resolve = module._resolveFilename,
+    strict_wrapper   = original_wrapper[0] + '"use strict";',
+    libpath          = require('path'),
+    libua            = require('useragent'),
+    cache            = {},
+    temp             = require('temp'),
+    fs               = require('fs'),
+    Blast            = __Protoblast,
     files;
 
 // Export the Hawkejs namespace
@@ -76,6 +81,57 @@ Hawkejs.setMethod(function _getUniqueName(file_path, options) {
 });
 
 /**
+ * Make the next `require` call strict
+ *
+ * @author   Jelle De Loecker   <jelle@develry.be>
+ * @since    1.2.3
+ * @version  1.2.3
+ *
+ * @param    {Object}   options
+ *
+ * @return   {void}
+ */
+Hawkejs.setMethod(function makeNextRequireStrict(options) {
+	// Overwrite the original wrap method
+	module.wrap = function wrap(script) {
+
+		var head,
+		    bottom,
+		    result;
+
+		// Restore the original functions
+		module.wrap = original_wrap;
+		module._resolveFilename = original_resolve;
+
+		if (script[0] != 'm' && script.indexOf('module.exports') == -1) {
+			head = strict_wrapper + 'module.exports = function(Hawkejs, Blast) {';
+			bottom = '};';
+			options.make_commonjs = true;
+		} else {
+			head = strict_wrapper;
+			bottom = '';
+		}
+
+		// Add the strict wrapper for this requirement
+		result = head + script + bottom + module.wrapper[1];
+
+		return result;
+	};
+
+	// Overwrite the original _resolveFilename method
+	module._resolveFilename = function _resolveFilename(request, parent, isMain) {
+		try {
+			return original_resolve(request, parent, isMain);
+		} catch (err) {
+			module.wrap = original_wrap;
+			module._resolveFilename = original_resolve;
+			throw err;
+		}
+	};
+
+});
+
+/**
  * Load a script for use with Hawkejs across all instances
  *
  * @author   Jelle De Loecker   <jelle@develry.be>
@@ -131,6 +187,8 @@ Hawkejs.setMethod(function load(file_path, options) {
 
 	// See if this file needs to be required on the server
 	if (options.server) {
+		this.makeNextRequireStrict(options);
+
 		if (options.is_commonjs) {
 			require(file_path)(HawkejsNS, Hawkejs.Blast);
 		} else {
