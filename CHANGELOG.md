@@ -5,6 +5,8 @@
 * The temp file created for the client file will now have a 'hawkejs_' prefix and a '.js' suffix
 * When manually adding helper files you can now pass the `make_commonjs` option, which will wrap it in a function with `Hawkejs, Blast` arguments
 * `JSON-dry` can now directly undry an object, no need to stringify it first
+* You can add a `interceptOpenUrl` method on the `Scene` class to intercept open urls
+* Add client-side connection checking
 
 ## 1.2.2 (2018-01-05)
 
