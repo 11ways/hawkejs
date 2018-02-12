@@ -9,6 +9,8 @@
 * Add client-side connection checking
 * Add `use strict` to all helpers
 * Add `module.exports` headers to helpers automatically
+* Added `HTMLElement#hasAttribute` method
+* Added `HTMLElement#insertBefore` method
 
 ## 1.2.2 (2018-01-05)
 
