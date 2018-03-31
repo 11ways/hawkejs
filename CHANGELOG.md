@@ -11,6 +11,7 @@
 * Add `module.exports` headers to helpers automatically
 * Added `HTMLElement#hasAttribute` method
 * Added `HTMLElement#insertBefore` method
+* Also wait for objects that have a `whenFinishedOrTimeout` method
 
 ## 1.2.2 (2018-01-05)
 
