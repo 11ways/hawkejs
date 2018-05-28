@@ -15,6 +15,7 @@
 * `isVisible` fix: `overflow: auto` also makes a view context
 * Custom elements are now stored in the `Hawkejs.Element` namespace
 * Allow the use of custom default prefixes in custom elements, instead of "he"
+* Helpers are now stored in the `Hawkejs.Helper` namespace
 
 ## 1.2.2 (2018-01-05)
 
