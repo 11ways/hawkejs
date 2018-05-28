@@ -13,6 +13,7 @@
 * Added `HTMLElement#insertBefore` method
 * Also wait for objects that have a `whenFinishedOrTimeout` method
 * `isVisible` fix: `overflow: auto` also makes a view context
+* Custom elements are now stored in the `Hawkejs.Element` namespace
 
 ## 1.2.2 (2018-01-05)
 
