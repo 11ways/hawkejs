@@ -16,6 +16,7 @@
 * Custom elements are now stored in the `Hawkejs.Element` namespace
 * Allow the use of custom default prefixes in custom elements, instead of "he"
 * Helpers are now stored in the `Hawkejs.Helper` namespace
+* Prefer "partial" over "element", so added methods like 'ViewRender#print_partial'
 
 ## 1.2.2 (2018-01-05)
 
