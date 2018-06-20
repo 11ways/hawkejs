@@ -1,3 +1,9 @@
+## 1.2.4 (WIP)
+
+* Add `HTMLElement#isFocusable()` and `HTMLElement#isTabbable()` methods
+* Add `HTMLElement#forceFocus()` to force setting focus to an element
+* Change focus to the first created block on a page after an AJAX browse
+
 ## 1.2.3 (2018-06-18)
 
 * Emit `hawkejs_scene` event on the Blast object when the scene is being made

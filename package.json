@@ -1,13 +1,13 @@
 {
 	"name": "hawkejs",
 	"description": "Asynchronous Embedded JavaScript templates",
-	"version": "1.2.3",
+	"version": "1.2.4-alpha",
 	"author": "Jelle De Loecker <jelle@develry.be>",
 	"keywords": ["template", "engine", "ejs", "hawkejs", "view"],
 	"main": "./lib/hawkejs.js",
 	"repository": "git@github.com:skerit/hawkejs.git",
 	"dependencies": {
-		"protoblast" : "~0.5.5",
+		"protoblast" : "~0.5.6",
 		"temp"       : "~0.8.3",
 		"useragent"  : "~2.2.1"
 	},
