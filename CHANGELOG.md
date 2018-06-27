@@ -3,6 +3,7 @@
 * Add `HTMLElement#isFocusable()` and `HTMLElement#isTabbable()` methods
 * Add `HTMLElement#forceFocus()` to force setting focus to an element
 * Change focus to the first created block on a page after an AJAX browse
+* Use new `RURL` class from `protoblast` version 0.5.7
 
 ## 1.2.3 (2018-06-18)
 
