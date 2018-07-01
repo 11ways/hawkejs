@@ -1,3 +1,7 @@
+## 1.2.5 (WIP)
+
+* Set `nodeName` and `tagName` in the correct case when using `Hawkejs#createElement`
+
 ## 1.2.4 (2018-07-01)
 
 * Add `HTMLElement#isFocusable()` and `HTMLElement#isTabbable()` methods
