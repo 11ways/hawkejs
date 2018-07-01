@@ -1,4 +1,4 @@
-## 1.2.4 (WIP)
+## 1.2.4 (2018-07-01)
 
 * Add `HTMLElement#isFocusable()` and `HTMLElement#isTabbable()` methods
 * Add `HTMLElement#forceFocus()` to force setting focus to an element
