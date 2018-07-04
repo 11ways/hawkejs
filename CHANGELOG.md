@@ -1,4 +1,4 @@
-## 1.2.5 (WIP)
+## 1.2.5 (2018-07-04)
 
 * Set `nodeName` and `tagName` in the correct case when using `Hawkejs#createElement`
 
