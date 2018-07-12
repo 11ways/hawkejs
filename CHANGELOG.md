@@ -1,3 +1,8 @@
+## 1.2.6 (WIP)
+
+* Fix `Scene#serialize_form(form)` so it correctly serialize checkboxes
+* Make `Scene#fetch()` accept with FormData
+
 ## 1.2.5 (2018-07-04)
 
 * Set `nodeName` and `tagName` in the correct case when using `Hawkejs#createElement`
