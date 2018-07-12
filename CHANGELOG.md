@@ -3,6 +3,7 @@
 * Fix `Scene#serialize_form(form)` so it correctly serialize checkboxes
 * Make `Scene#fetch()` accept with FormData
 * Fix exporting the Hawkejs namespace
+* `Hawkejs#compile()` now accepts a single string with a template source again
 
 ## 1.2.5 (2018-07-04)
 
