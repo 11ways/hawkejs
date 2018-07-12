@@ -1,9 +1,9 @@
 var HawkejsNS        = require('./lib/class/hawkejs.js'),
     Hawkejs          = HawkejsNS.Hawkejs,
-    module           = require('module'),
-    original_wrap    = module.wrap,
-    original_wrapper = module.wrapper.slice(0),
-    original_resolve = module._resolveFilename,
+    libmodule        = require('module'),
+    original_wrap    = libmodule.wrap,
+    original_wrapper = libmodule.wrapper.slice(0),
+    original_resolve = libmodule._resolveFilename,
     strict_wrapper   = original_wrapper[0] + '"use strict";',
     libpath          = require('path'),
     libua            = require('useragent'),
@@ -93,15 +93,15 @@ Hawkejs.setMethod(function _getUniqueName(file_path, options) {
  */
 Hawkejs.setMethod(function makeNextRequireStrict(options) {
 	// Overwrite the original wrap method
-	module.wrap = function wrap(script) {
+	libmodule.wrap = function wrap(script) {
 
 		var head,
 		    bottom,
 		    result;
 
 		// Restore the original functions
-		module.wrap = original_wrap;
-		module._resolveFilename = original_resolve;
+		libmodule.wrap = original_wrap;
+		libmodule._resolveFilename = original_resolve;
 
 		if (script[0] != 'm' && script.indexOf('module.exports') == -1) {
 			head = strict_wrapper + 'module.exports = function(Hawkejs, Blast) {';
@@ -113,18 +113,18 @@ Hawkejs.setMethod(function makeNextRequireStrict(options) {
 		}
 
 		// Add the strict wrapper for this requirement
-		result = head + script + bottom + module.wrapper[1];
+		result = head + script + bottom + libmodule.wrapper[1];
 
 		return result;
 	};
 
 	// Overwrite the original _resolveFilename method
-	module._resolveFilename = function _resolveFilename(request, parent, isMain) {
+	libmodule._resolveFilename = function _resolveFilename(request, parent, isMain) {
 		try {
 			return original_resolve(request, parent, isMain);
 		} catch (err) {
-			module.wrap = original_wrap;
-			module._resolveFilename = original_resolve;
+			libmodule.wrap = original_wrap;
+			libmodule._resolveFilename = original_resolve;
 			throw err;
 		}
 	};
