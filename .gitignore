@@ -3,18 +3,40 @@
 *.sublime*
 .idea/
 
-# Ignore special files
+## OS specific files
 .DS_Store
+.DS_Store?
 .fuse*
 ._*
-*.bin
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# Ignore log files
+# Log files
 npm-debug.log
 v8.log
+*.cpuprofile
+callgrind*
+*.wtf-trace
 
-# Ignore node modules
-/node_modules/
+# Ignore report files
+plato/
+
+# Dependencies
+node_modules/
+
+# Coverage directory used by istanbul
+.nyc_output/
+coverage/
+
+# Coveralls contains private info
+.coveralls.yml
+
+# Locks
+package-lock.json
+npm-shrinkwrap.json
+yarn.lock
 
 # The client side file is generated on startup
 hawkejs-client-side.js
@@ -22,6 +44,3 @@ hawkejs-client-side.js
 # Test files
 scratch*
 test/css/*
-
-# Ignore coverage results
-/coverage/

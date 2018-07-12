@@ -1,22 +1,27 @@
 {
 	"name": "hawkejs",
 	"description": "Asynchronous Embedded JavaScript templates",
-	"version": "1.2.6",
+	"version": "1.2.6-alpha",
 	"author": "Jelle De Loecker <jelle@develry.be>",
 	"keywords": ["template", "engine", "ejs", "hawkejs", "view"],
 	"main": "./lib/hawkejs.js",
 	"repository": "git@github.com:skerit/hawkejs.git",
 	"dependencies": {
-		"protoblast" : "~0.5.8",
+		"protoblast" : "~0.5.10",
 		"temp"       : "~0.8.3",
 		"useragent"  : "~2.2.1"
 	},
 	"devDependencies": {
-		"matcha"          : "0.5.x",
-		"mocha"           : "1.20.x"
+		"codecov"         : "~3.0.4",
+		"nyc"             : "^12.0.2",
+		"matcha"          : "~0.7.0",
+		"mocha"           : "~5.2.0"
 	},
 	"scripts": {
-		"test": "node_modules/.bin/mocha --reporter spec"
+		"test"            : "node_modules/.bin/mocha --exit --reporter spec --bail --timeout 5000 --file test/00-init.js",
+		"appveyor"        : "node_modules/.bin/mocha --exit --reporter spec --bail --timeout 20000 --file test/00-init.js",
+		"coverage"        : "node_modules/.bin/nyc --reporter=text --reporter=lcov mocha --exit --timeout 20000 --bail --file test/00-init.js",
+		"report-coverage" : "cat ./coverage/lcov.info | codecov"
 	},
 	"license": "MIT",
 	"engines": {

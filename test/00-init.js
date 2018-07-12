@@ -2,6 +2,8 @@ var assert   = require('assert'),
     Hawkejs  = require('../index.js'),
     hawkejs;
 
+console.log('HAWKEJS:', Hawkejs);
+
 describe('Hawkejs', function() {
 
 	describe('new Hawkejs()', function() {
@@ -49,8 +51,8 @@ describe('Hawkejs', function() {
 
 			fnc = hawkejs.compile(name, src);
 
-			assert.equal('compiledView', fnc.name);
-			assert.equal(name, fnc.templateName);
+			assert.equal(fnc.name, 'compiledView');
+			assert.equal(fnc.sourceName, name);
 		});
 
 		it('should compile source without a name as "inline"', function() {
@@ -59,7 +61,9 @@ describe('Hawkejs', function() {
 
 			fnc = hawkejs.compile('this is inline <%= "code" %>');
 
-			assert.equal('compiledView', fnc.name);
+			assert.strictEqual(fnc.name, 'compiledView');
+			assert.strictEqual(fnc.sourceName, undefined);
+			assert.strictEqual(String(fnc).indexOf("timeStart(\"inline\")") > -1, true);
 		});
 
 		it('should add line information to multiline javascript', function() {
