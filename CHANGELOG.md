@@ -1,3 +1,7 @@
+## 1.2.7 (WIP)
+
+* Upgrade FormData polyfill which fixes some IE11 issues
+
 ## 1.2.6 (2018-07-12)
 
 * Fix `Scene#serialize_form(form)` so it correctly serialize checkboxes

@@ -276,6 +276,7 @@ Hawkejs.setMethod(function afterInit() {
 	// Register Dataset Polyfill for IE
 	this.load('lib/client/dataset.js', {
 		server: false,
+		is_commonjs: false,
 		versions: {
 			android: {max:  0},
 			chrome:  {max:  7},
