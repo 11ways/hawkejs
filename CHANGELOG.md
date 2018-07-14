@@ -1,4 +1,4 @@
-## 1.2.7 (WIP)
+## 1.2.7 (2018-07-14)
 
 * Upgrade FormData polyfill which fixes some IE11 issues
 
