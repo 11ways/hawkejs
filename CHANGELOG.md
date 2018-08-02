@@ -1,3 +1,7 @@
+## 1.2.8 (WIP)
+
+* Calling `CustomElement#setAttribute` method will now add itself as a constitutor
+
 ## 1.2.7 (2018-07-14)
 
 * Upgrade FormData polyfill which fixes some IE11 issues
