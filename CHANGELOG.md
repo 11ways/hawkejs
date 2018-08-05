@@ -1,6 +1,8 @@
 ## 1.2.8 (WIP)
 
 * Calling `CustomElement#setAttribute` method will now add itself as a constitutor
+* Add `Node` class, let `Element` inherit from it
+* Add `Element#queryTabbableElements`
 
 ## 1.2.7 (2018-07-14)
 

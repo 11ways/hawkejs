@@ -323,6 +323,7 @@ Hawkejs.setMethod(function afterInit() {
 
 	this.load('lib/class/hawkejs-client.js', {server: false});
 
+	this.load('lib/class/node.js', {client: false});
 	this.load('lib/class/html_class_list.js', {client: false});
 	this.load('lib/class/html_style.js', {client: false});
 	this.load('lib/class/html_element.js', {client: false});
