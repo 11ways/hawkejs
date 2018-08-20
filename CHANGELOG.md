@@ -4,6 +4,7 @@
 * Add `Node` class, let `Element` inherit from it
 * Add `Element#queryTabbableElements`
 * `hawkejs_init` will now emit with the revived variables, `hawkejs_initing` will emit with the dried variables
+* Recursively perform `getContent` on finished blocks & on HTMLElement childnodes
 
 ## 1.2.7 (2018-07-14)
 
