@@ -3,6 +3,7 @@
 * Calling `CustomElement#setAttribute` method will now add itself as a constitutor
 * Add `Node` class, let `Element` inherit from it
 * Add `Element#queryTabbableElements`
+* `hawkejs_init` will now emit with the revived variables, `hawkejs_initing` will emit with the dried variables
 
 ## 1.2.7 (2018-07-14)
 
