@@ -6,6 +6,7 @@
 * `hawkejs_init` will now emit with the revived variables, `hawkejs_initing` will emit with the dried variables
 * Recursively perform `getContent` on finished blocks & on HTMLElement childnodes
 * Fix `setAssignedProperty` replacing the wrong value when a setter is given
+* Allow element with class `js-he-unlink` to prevent a custom `js-he-link` from being fired when clicking on it
 
 ## 1.2.7 (2018-07-14)
 
