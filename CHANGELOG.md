@@ -7,6 +7,7 @@
 * Recursively perform `getContent` on finished blocks & on HTMLElement childnodes
 * Fix `setAssignedProperty` replacing the wrong value when a setter is given
 * Allow element with class `js-he-unlink` to prevent a custom `js-he-link` from being fired when clicking on it
+* Allow disabling moving browser focus by passing `move_browser_focus: false` to `Scene#openUrl`
 
 ## 1.2.7 (2018-07-14)
 
