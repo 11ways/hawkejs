@@ -1,4 +1,4 @@
-## 1.2.8 (WIP)
+## 1.2.8 (2018-08-27)
 
 * Calling `CustomElement#setAttribute` method will now add itself as a constitutor
 * Add `Node` class, let `Element` inherit from it
