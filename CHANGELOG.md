@@ -1,3 +1,8 @@
+## 1.2.9 (WIP)
+
+* Fix `CustomElement#setAssignedProperty` with custom setters not having their value set
+* Forward some errors to `Scene#handleError(err)`, if it is set
+
 ## 1.2.8 (2018-08-27)
 
 * Calling `CustomElement#setAttribute` method will now add itself as a constitutor
