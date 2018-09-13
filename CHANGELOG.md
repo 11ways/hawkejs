@@ -4,6 +4,7 @@
 * Forward some errors to `Scene#handleError(err)`, if it is set
 * Only remove custom elements from the browser store a few seconds after it has been introduced
 * Don't print whitespaces after code blocks ending with a dash, like `<% -%>`
+* Add new, additional template syntax: `{% %}`
 
 ## 1.2.8 (2018-08-27)
 
