@@ -2,6 +2,7 @@
 
 * Fix `CustomElement#setAssignedProperty` with custom setters not having their value set
 * Forward some errors to `Scene#handleError(err)`, if it is set
+* Only remove custom elements from the browser store a few seconds after it has been introduced
 
 ## 1.2.8 (2018-08-27)
 
