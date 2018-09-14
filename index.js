@@ -202,6 +202,7 @@ Hawkejs.setMethod(function load(file_path, options) {
 
 // The files that need to be loaded
 files = [
+	'tokens.js',
 	'expression.js',
 	'templates.js',
 	'helper.js',
