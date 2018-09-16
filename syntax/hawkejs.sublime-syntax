@@ -1,0 +1,147 @@
+%YAML 1.2
+---
+
+name: Hawkejs
+file_extensions: [ejs]
+first_line_match: ^\{\%
+scope: text.hawkejs
+
+variables:
+  attribute_char: (?:[^ "'>/=])
+  unquoted_attribute_value: (?:[^\s<>/''"]|/(?!>))+
+  not_equals_lookahead: (?=\s*[^\s=])
+  varpath: (?:(?:[a-zA-Z][a-zA-Z0-9]+)\.?)+
+
+contexts:
+  main:
+    - match: ''
+      push: Packages/HTML/HTML.sublime-syntax
+      with_prototype:
+        - include: hawkejs
+        - match: '<%#'
+          scope: punctuation.definition.comment.begin.ejs
+          push: comment
+        - match: '<%(?!%)[=_-]?'
+          scope: keyword.operator.delimiter.ejs, punctuation.definition.js.begin.ejs
+          push: js
+
+  hawkejs:
+    - match: '({%\=\s+)({{varpath}})\s+(%})'
+      captures:
+          1: support.constant.block.begin.hawkejs
+          2: variable.parameter.print.hawkejs
+          3: support.constant.block.end.hawkejs
+    - match: 'NOPE({%\=\s+)(snippet)(:)({{varpath}})\s+(%})'
+      captures:
+          1: support.constant.block.begin.hawkejs
+          2: keyword.control.flow.hawkejs
+          3: meta.hawkejs.colon
+          4: variable.parameter.print.hawkejs
+          5: support.constant.block.end.hawkejs
+    - match: '({%\=\s+)(snippet)(:)({{varpath}})\s+'
+      captures:
+          1: support.constant.block.begin.hawkejs
+          2: keyword.control.flow.hawkejs
+          3: meta.hawkejs.colon
+          4: variable.parameter.print.hawkejs
+      push:
+        - include: variable-assignments
+        - match: '%}'
+          scope: support.constant.block.end.hawkejs
+          pop: true
+
+    - match: '({%)\s+(?=(\w+))'
+      captures:
+          1: support.constant.block.begin.hawkejs
+          2: keyword.control.flow.hawkejs
+      push: body
+    - match: '{% \/\w+ %}'
+      scope: invalid.illegal.stray-bracket-end
+
+  body:
+    - meta_scope: meta.hawkejs.body
+    - include: branch-expressions
+    - match: '%}'
+      scope: support.constant.block.end.hawkejs
+      push: main
+      with_prototype:
+        - match: '(?={%\s+/)'
+          pop: true
+    - match: '({%) (/)(\2) (%})'
+      captures:
+        1: support.constant.closeblock.begin.hawkejs
+        2: keyword.control.flow
+        3: keyword.control.flow
+        4: support.constant.closeblock.end.hawkejs
+      pop: true
+    - match: '(?={%\s/)'
+      pop: true
+
+  branch-expressions:
+    - match: (?<=% )\bwith\b
+      scope: keyword.with.hawkejs
+      push:
+        - match: '{{varpath}}(?=\s+as)'
+          scope: variable.parameter.each.hawkejs
+        - match: as
+          scope: keyword.control.flow
+        - match: '(?:(?:[a-zA-Z][a-zA-Z0-9]+))'
+          scope: variable.parameter.each.target.hawkejs
+          pop: true
+        - match: '(?=%})'
+          pop: true
+    - match: (?<=% )\b(none|single|multiple|each|all|if)\b
+      scope: keyword.generic.hawkejs
+    - match: (?<=% )\b(break|snippet)\b
+      scope: keyword.withparam.hawkejs
+    - match: (?<=% )\b(\w+)\b
+      scope: invalid.illegal.block.name.hawkejs
+    - match: '"'
+      push: string
+    - include: variable-assignments
+
+  string:
+    - meta_scope: string.quoted.double.hawkejs
+    - match: \\.
+      scope: constant.character.escape.hawkejs
+    - match: '"'
+      pop: true
+
+  variable-assignments:
+    - match: (?={{attribute_char}}+\=)
+      scope: entity.other.attribute-name.hawkejs
+      push:
+        - equals
+        - variable-name
+
+  variable-name:
+    - meta_scope: entity.other.attribute-name.hawkejs
+    - match: (?!{{attribute_char}})
+      pop: true
+
+  equals:
+    - match: '='
+      scope: punctuation.separator.assignment.hawkejs
+      set: variable-value
+    - match: '{{not_equals_lookahead}}'
+      pop: true
+
+  variable-value:
+    - match: '"'
+      set: string
+
+  comment:
+    - meta_scope: comment.block.ejs
+    - match: '%>'
+      scope: punctuation.definition.comment.end.ejs
+      pop: true
+  js:
+    - match: '[_-]?%>'
+      scope: keyword.operator.delimiter.ejs, punctuation.definition.js.end.ejs
+      pop: true
+    - match: ''
+      push: Packages/EJS 2/JavaScript - EJS.sublime-syntax
+      with_prototype:
+        - match: '(?=[_-]?%>)'
+          scope: punctuation.definition.js.end.ejs
+          pop: true

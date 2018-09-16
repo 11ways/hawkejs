@@ -1,6 +1,7 @@
 # Ignore IDE specific files
 *.komodo*
 *.sublime*
+!*.sublime-syntax
 .idea/
 
 ## OS specific files
