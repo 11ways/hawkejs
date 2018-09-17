@@ -2,8 +2,6 @@ var assert   = require('assert'),
     Hawkejs  = require('../index.js'),
     hawkejs;
 
-console.log('HAWKEJS:', Hawkejs);
-
 describe('Hawkejs', function() {
 
 	describe('new Hawkejs()', function() {
