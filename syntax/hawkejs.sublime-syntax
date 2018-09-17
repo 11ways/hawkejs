@@ -90,7 +90,7 @@ contexts:
           pop: true
         - match: '(?=%})'
           pop: true
-    - match: (?<=% )\b(none|single|multiple|each|all|if)\b
+    - match: (?<=% )\b(none|single|multiple|each|all|if|else)\b
       scope: keyword.generic.hawkejs
     - match: (?<=% )\b(break|macro)\b
       scope: keyword.withparam.hawkejs
