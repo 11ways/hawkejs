@@ -31,13 +31,11 @@ contexts:
           1: support.constant.block.begin.hawkejs
           2: variable.parameter.print.hawkejs
           3: support.constant.block.end.hawkejs
-    - match: 'NOPE({%\=\s+)(macro)(:)({{varpath}})\s+(%})'
+    - match: '({%)\s+(else)\s+(%})'
       captures:
           1: support.constant.block.begin.hawkejs
           2: keyword.control.flow.hawkejs
-          3: meta.hawkejs.colon
-          4: variable.parameter.print.hawkejs
-          5: support.constant.block.end.hawkejs
+          3: support.constant.block.end.hawkejs
     - match: '({%\=\s+)(macro)(:)({{varpath}})\s+'
       captures:
           1: support.constant.block.begin.hawkejs
@@ -90,7 +88,7 @@ contexts:
           pop: true
         - match: '(?=%})'
           pop: true
-    - match: (?<=% )\b(none|single|multiple|each|all|if|else)\b
+    - match: (?<=% )\b(none|single|multiple|each|all|if)\b
       scope: keyword.generic.hawkejs
     - match: (?<=% )\b(break|macro)\b
       scope: keyword.withparam.hawkejs
