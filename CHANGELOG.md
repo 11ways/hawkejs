@@ -6,6 +6,7 @@
 * Don't print whitespaces after code blocks ending with a dash, like `<% -%>`
 * Add new, additional template syntax: `{% %}`
 * Prevent `CustomElement#attributeChangedCallback()` from firing twice
+* Add `Helper#createElement(name)` method
 
 ## 1.2.8 (2018-08-27)
 
