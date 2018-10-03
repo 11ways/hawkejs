@@ -9,6 +9,7 @@
 * Add `Helper#createElement(name)` method
 * Emit `opening_url` event when executing `Scene#openUrl()`
 * Handle hawkejs-client script loading before the `_initHawkejs` object is present
+* Fix `Scene#disableStyle()` to also work on Firefox
 
 ## 1.2.8 (2018-08-27)
 
