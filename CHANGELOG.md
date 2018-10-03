@@ -7,6 +7,7 @@
 * Add new, additional template syntax: `{% %}`
 * Prevent `CustomElement#attributeChangedCallback()` from firing twice
 * Add `Helper#createElement(name)` method
+* Emit `opening_url` event when executing `Scene#openUrl()`
 
 ## 1.2.8 (2018-08-27)
 
