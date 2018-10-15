@@ -10,6 +10,7 @@
 * Emit `opening_url` event when executing `Scene#openUrl()`
 * Handle hawkejs-client script loading before the `_initHawkejs` object is present
 * Fix `Scene#disableStyle()` to also work on Firefox
+* Make `Scene#serverResponse()` callback with an error if response status >= 500
 
 ## 1.2.8 (2018-08-27)
 
