@@ -30,7 +30,11 @@ describe('Expressions', function() {
 			['{% if false %}WRONG{% /if %}', ''],
 			['{% if "a" %}TRUE{% /if %}',    'TRUE'],
 			['{% if 1 %}TRUE{% /if %}',      'TRUE'],
-			['{% if none.existing.variable %}WRONG{% /if %}', '']
+			['{% if none.existing.variable %}WRONG{% /if %}', ''],
+			['{% if "" emptyhtml %}TRUE{% /if %}', 'TRUE'],
+			['{% if "<p></p>" emptyhtml %}TRUE{% /if %}', 'TRUE'],
+			['{% if "<p>a</p>" emptyhtml %}WRONG{% /if %}', ''],
+			// @TODO: ['{% if 1 emptyhtml %}WRONG{% /if %}', ''],
 		];
 
 		createTests(tests);
