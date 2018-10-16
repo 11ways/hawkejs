@@ -18,28 +18,85 @@ describe('Expressions', function() {
 			['{% if "a" eq "b" %}TRUE{% /if %}', ''],
 			['{% if empty_arr %}TRUE{% /if %}', ''],
 			['{% if empty_arr %}TRUE{% else %}ELSE{% /if %}', 'ELSE'],
-			['{% if non.existing.variable.path %}TRUE{% else %}ELSE{% /if %}', 'ELSE']
+			['{% if non.existing.variable.path %}TRUE{% else %}ELSE{% /if %}', 'ELSE'],
+			['{% if 1 eq 1 %}eq{% /if %}', 'eq'],
+			['{% if 2 gt 1 %}gt{% /if %}', 'gt'],
+			['{% if 2 lt 1 %}lt{% /if %}', ''],
+			['{% if empty_arr %}WRONG{% else %}ELSE{% /if %}', 'ELSE'],
+			['{% if full_arr %}TRUE{% /if %}', 'TRUE'],
+			['{% if empty_obj %}WRONG{% else %}ELSE{% /if %}', 'ELSE'],
+			['{% if "" %}WRONG{% /if %}',    ''],
+			['{% if 0 %}WRONG{% /if %}',     ''],
+			['{% if false %}WRONG{% /if %}', ''],
+			['{% if "a" %}TRUE{% /if %}',    'TRUE'],
+			['{% if 1 %}TRUE{% /if %}',      'TRUE'],
+			['{% if none.existing.variable %}WRONG{% /if %}', '']
 		];
 
-		for (let i = 0; i < tests.length; i++) {
-			let code = tests[i][0],
-			    result = tests[i][1];
+		createTests(tests);
+	});
 
-			it(code, function(next) {
-				test_id++;
+	describe('Else', function() {
+		var tests = [
+			['{% if false %}WRONG{% else %}ELSE{% /if %}', 'ELSE'],
+			['{% if 0 %}WRONG{% else %}ELSE{% /if %}',     'ELSE'],
+			['{% if none.existing.variable %}WRONG{% else %}ELSE{% /if %}', 'ELSE']
+		];
 
-				var compiled = hawkejs.compile('test_' + test_id, code);
+		createTests(tests);
+	});
 
-				hawkejs.render(compiled, {empty_arr: []}, function done(err, res) {
+	describe('Not', function() {
 
-					if (err) {
-						return next(err);
-					}
+		var tests = [
+			['{% if not true %}1{% else %}0{% /if %}',    '0'],
+			['{% if not false %}1{% else %}0{% /if %}',   '1'],
+			['{% if (not false) %}1{% else %}0{% /if %}', '1'],
+			['{% if 1 not eq 0 %}TRUE{% /if %}',          'TRUE'],
+			['{% if 1 not gt 0 %}WRONG{% else %}ELSE{% /if %}', 'ELSE']
+		];
 
-					assert.strictEqual(res, result);
-					next();
-				});
-			});
-		}
+		createTests(tests);
+	});
+
+	describe('Break', function() {
+
+		var tests = [
+			['{% if true %}1{% break %}WRONG{% else %}0{% /if %}', '1'],
+			['{% if false %}WRONG{% break %}WRONG{% else %}ELSE{% break %}WRONG{% /if %}', 'ELSE'],
+			['{% if true %}1{% if true %}1{% break %}WRONG{% /if %}1{% /if %}', '111'],
+		];
+
+		createTests(tests);
 	});
 });
+
+function createTests(tests) {
+	for (let i = 0; i < tests.length; i++) {
+		let code = tests[i][0],
+		    result = tests[i][1];
+
+		it(code, function(next) {
+			test_id++;
+
+			var compiled = hawkejs.compile('test_' + test_id, code),
+			    vars;
+
+			vars = {
+				empty_arr : [],
+				full_arr  : [0],
+				empty_obj : {}
+			};
+
+			hawkejs.render(compiled, vars, function done(err, res) {
+
+				if (err) {
+					return next(err);
+				}
+
+				assert.strictEqual(res, result);
+				next();
+			});
+		});
+	}
+}
