@@ -1,4 +1,4 @@
-## 1.2.9 (WIP)
+## 1.2.9 (2018-10-18)
 
 * Fix `CustomElement#setAssignedProperty` with custom setters not having their value set
 * Forward some errors to `Scene#handleError(err)`, if it is set
