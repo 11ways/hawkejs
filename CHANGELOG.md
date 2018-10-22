@@ -1,3 +1,7 @@
+## 1.3.0 (WIP)
+
+* Add support for native v1 custom-element implementation (but still prefer Chrome's `registerElement` solution)
+
 ## 1.2.9 (2018-10-18)
 
 * Fix `CustomElement#setAssignedProperty` with custom setters not having their value set
