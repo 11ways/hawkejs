@@ -2,6 +2,7 @@
 
 * Add support for native v1 custom-element implementation (but still prefer Chrome's `registerElement` solution)
 * Add `Expression.isTruthy()` method to check if a variable is truthy
+* Add `NetworkStatus` class to check if browser is online of offline
 
 ## 1.2.9 (2018-10-18)
 
