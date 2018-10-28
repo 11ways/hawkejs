@@ -4,6 +4,8 @@
 * Add `Expression.isTruthy()` method to check if a variable is truthy
 * Add `NetworkStatus` class to check if browser is online of offline
 * Also check the tab visibility in `NetworkStatus` class
+* Add `Element#createElement(tag_name)` to create any element with a hawkejs_id
+* The basic `HTMLElement` instances can now also be revived when they have a `hawkejs_id`
 
 ## 1.2.9 (2018-10-18)
 
