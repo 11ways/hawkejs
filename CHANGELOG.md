@@ -5,6 +5,7 @@
 * Add `Element#createElement(tag_name)` to create any element with a hawkejs_id
 * The basic `HTMLElement` instances can now also be revived when they have a `hawkejs_id`
 * Use Protoblast's `Request` class for `Scene#fetch` & `Scene#openUrl`
+* Add `Element#enableFocusWithinEvent` & `Element#enableHtmlChangeEvent`
 
 ## 1.2.9 (2018-10-18)
 
