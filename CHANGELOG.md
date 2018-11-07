@@ -6,6 +6,7 @@
 * The basic `HTMLElement` instances can now also be revived when they have a `hawkejs_id`
 * Use Protoblast's `Request` class for `Scene#fetch` & `Scene#openUrl`
 * Add `Element#enableFocusWithinEvent` & `Element#enableHtmlChangeEvent`
+* Fix server-side HTMLElement `value` property implementation
 
 ## 1.2.9 (2018-10-18)
 
