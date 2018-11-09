@@ -105,6 +105,38 @@ describe('Expressions', function() {
 
 		createTests(tests);
 	});
+
+	describe('With', function() {
+
+		var tests = [
+			[
+				`{% with numbers as number %}{% multiple %}{% each %}{%= number %},{% /each %}{% /multiple %}{% /with %}`,
+				'0,1,2,3,'
+			],
+			[
+				`{% with numbers as number %}{% each %}{%= number %},{% /each %}{% /with %}`,
+				'0,1,2,3,'
+			],
+			[
+				`{% with numbers as number %}{% single %}SINGLE:{% /single %}{% each %}{%= number %},{% /each %}{% /with %}`,
+				'0,1,2,3,'
+			],
+			[
+				`{% with single as number %}{% each %}{%= number %},{% /each %}{% /with %}`,
+				'0,'
+			],
+			[
+				`{% with single as number %}{% each %}{%= number %},{% /each %}{% /with %}`,
+				'0,'
+			],
+			[
+				`{% with single as number %}{% single %}SINGLE:{% /single %}{% each %}{%= number %},{% /each %}{% /with %}`,
+				'SINGLE:0,'
+			],
+		];
+
+		createTests(tests);
+	});
 });
 
 function createTests(tests) {
@@ -112,6 +144,10 @@ function createTests(tests) {
 		let code = tests[i][0],
 		    title = tests[i][0].replace(/\n/g, '\\n').replace(/\t/g, '\\t'),
 		    result = tests[i][1];
+
+		if (title.length > 74) {
+			title = title.slice(0, 70) + '...';
+		}
 
 		it(title, function(next) {
 			test_id++;
@@ -122,6 +158,8 @@ function createTests(tests) {
 			vars = {
 				empty_arr : [],
 				full_arr  : [0],
+				single    : [0],
+				numbers   : [0, 1, 2, 3],
 				empty_obj : {},
 				test      : {
 					name  : 'testname',
