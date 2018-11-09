@@ -7,6 +7,7 @@
 * Use Protoblast's `Request` class for `Scene#fetch` & `Scene#openUrl`
 * Add `Element#enableFocusWithinEvent` & `Element#enableHtmlChangeEvent`
 * Fix server-side HTMLElement `value` property implementation
+* Add `ViewRender#getBlockByName()` and `ViewRender#active_block`
 
 ## 1.2.9 (2018-10-18)
 
