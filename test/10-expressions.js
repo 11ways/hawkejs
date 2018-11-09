@@ -90,6 +90,21 @@ describe('Expressions', function() {
 
 		createTests(tests);
 	});
+
+	describe('Print', function() {
+		var tests = [
+			['Test: {%= test.name %}',              'Test: testname'],
+			['One: {%= test.one %}',                'One: 1'],
+			['Four: {%= test.two.three.four %}',    'Four: 4'],
+			['Nothing: {%= that.does.not.exist %}', 'Nothing: '],
+			['Nothing: {%= nope.nope %}{% trim %}', 'Nothing:'],
+			['Literal: {%= "literal" %}',           'Literal: literal'],
+			['Sum: {%= 1 + 1 %}',                   'Sum: 2'],
+			['Minus: {%= 1 - 1 %}',                 'Minus: 0'],
+		];
+
+		createTests(tests);
+	});
 });
 
 function createTests(tests) {
@@ -107,7 +122,16 @@ function createTests(tests) {
 			vars = {
 				empty_arr : [],
 				full_arr  : [0],
-				empty_obj : {}
+				empty_obj : {},
+				test      : {
+					name  : 'testname',
+					one   : 1,
+					two   : {
+						three: {
+							four: 4
+						}
+					}
+				}
 			};
 
 			hawkejs.render(compiled, vars, function done(err, res) {

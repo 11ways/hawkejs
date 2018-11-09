@@ -9,6 +9,7 @@
 * Fix server-side HTMLElement `value` property implementation
 * Add `ViewRender#getBlockByName()` and `ViewRender#active_block`
 * Add `trim` expression, to trim away whitespace on left and/or right side
+* Make `print` expression smarter
 
 ## 1.2.9 (2018-10-18)
 
