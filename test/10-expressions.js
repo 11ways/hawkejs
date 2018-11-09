@@ -73,14 +73,32 @@ describe('Expressions', function() {
 
 		createTests(tests);
 	});
+
+	describe('Trim', function() {
+
+		var tests = [
+			['Bla bla {% trim %} bla bla',        'Bla blabla bla'],
+			['Bla bla\t{% trim %}\nbla bla',      'Bla blabla bla'],
+			['Bla bla {% trim left %}\tbla bla',  'Bla bla\tbla bla'],
+			['Bla bla {% trim right %}\tbla bla', 'Bla bla bla bla'],
+			['Bla bla\t\t{% trim right %} {%= bla %}\n bla bla', 'Bla bla\t\tbla bla'],
+			['<p></p>{% trim blank %}',            ''],
+			[' <p> </p>{% trim blank %}',          ''],
+			[' <p id="p"> </p >{% trim blank %}',  ''],
+			['TEST<p></p>{% trim blank %}',        'TEST<p></p>'],
+		];
+
+		createTests(tests);
+	});
 });
 
 function createTests(tests) {
 	for (let i = 0; i < tests.length; i++) {
 		let code = tests[i][0],
+		    title = tests[i][0].replace(/\n/g, '\\n').replace(/\t/g, '\\t'),
 		    result = tests[i][1];
 
-		it(code, function(next) {
+		it(title, function(next) {
 			test_id++;
 
 			var compiled = hawkejs.compile('test_' + test_id, code),
