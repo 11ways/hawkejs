@@ -10,6 +10,7 @@
 * Add `ViewRender#getBlockByName()` and `ViewRender#active_block`
 * Add `trim` expression, to trim away whitespace on left and/or right side
 * Make `print` expression smarter
+* Don't add the "result" html when json-ifying Placeholder instances
 
 ## 1.2.9 (2018-10-18)
 
