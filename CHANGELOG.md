@@ -13,6 +13,7 @@
 * Don't add the "result" html when json-ifying Placeholder instances
 * If `version_info` is available, add it as a GET parameter to stylesheet & template requests
 * Use `Blast.fetch` for getting the templates on the client-side
+* Make `Scene#serverResponse()` work without an actual XHR instance
 
 ## 1.2.9 (2018-10-18)
 
