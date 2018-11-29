@@ -14,6 +14,7 @@
 * If `version_info` is available, add it as a GET parameter to stylesheet & template requests
 * Use `Blast.fetch` for getting the templates on the client-side
 * Make `Scene#serverResponse()` work without an actual XHR instance
+* Add server-side `Element#insertAdjacentElement()` and fix `appendChild` and `insertBefore` from not adding the same element twice
 
 ## 1.2.9 (2018-10-18)
 
