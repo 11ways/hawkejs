@@ -17,6 +17,7 @@
 * Add server-side `Element#insertAdjacentElement()` and fix `appendChild` and `insertBefore` from not adding the same element twice
 * Add server-side `Element#hidden` property support
 * Allow calling `CustomElement#setAssignedProperty` with only a function argument
+* The on-assigned-data method callbacks will no longer replace the value if it returns a thennable
 
 ## 1.2.9 (2018-10-18)
 
