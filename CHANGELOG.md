@@ -16,6 +16,7 @@
 * Make `Scene#serverResponse()` work without an actual XHR instance
 * Add server-side `Element#insertAdjacentElement()` and fix `appendChild` and `insertBefore` from not adding the same element twice
 * Add server-side `Element#hidden` property support
+* Allow calling `CustomElement#setAssignedProperty` with only a function argument
 
 ## 1.2.9 (2018-10-18)
 
