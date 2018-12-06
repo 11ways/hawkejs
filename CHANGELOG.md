@@ -1,6 +1,6 @@
-## 1.3.0 (WIP)
+## 1.3.0 (2018-12-06)
 
-* Add support for native v1 custom-element implementation (but still prefer Chrome's `registerElement` solution)
+* Add support for native v1 custom-element implementation
 * Add `Expression.isTruthy()` method to check if a variable is truthy
 * Add `Element#createElement(tag_name)` to create any element with a hawkejs_id
 * The basic `HTMLElement` instances can now also be revived when they have a `hawkejs_id`
