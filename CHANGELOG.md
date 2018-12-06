@@ -1,3 +1,5 @@
+## 1.3.1 (WIP)
+
 ## 1.3.0 (2018-12-06)
 
 * Add support for native v1 custom-element implementation
