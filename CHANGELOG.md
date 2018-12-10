@@ -1,5 +1,7 @@
 ## 1.3.1 (WIP)
 
+* Attempt to register the server-side render during scene initialization
+
 ## 1.3.0 (2018-12-06)
 
 * Add support for native v1 custom-element implementation
