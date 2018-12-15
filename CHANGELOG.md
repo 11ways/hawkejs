@@ -1,6 +1,7 @@
 ## 1.3.1 (WIP)
 
 * Attempt to register the server-side render during scene initialization
+* `CustomElement#emit(name, options)` now takes an option object as second argument
 
 ## 1.3.0 (2018-12-06)
 
