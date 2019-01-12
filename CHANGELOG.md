@@ -5,6 +5,7 @@
 * Add `HTMLElement#append()` method
 * Add `HTMLElement#insertAdjacentHTML()` method
 * Fix `HTMLElement#value` property
+* Fix `HTMLElement#innerText` and `HTMLElement#textContent` properties
 
 ## 1.3.0 (2018-12-06)
 

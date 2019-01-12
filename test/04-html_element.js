@@ -81,4 +81,37 @@ describe('HTMLElement', function() {
 		});
 	});
 
+	describe('#innerText', function() {
+		it('gets/sets the innerText of an element', function() {
+
+			var div = Hawkejs.Hawkejs.createElement('div');
+
+			div.append('a');
+			div.append(Hawkejs.Hawkejs.createElement('br'));
+			div.append('@');
+			div.append(Hawkejs.Hawkejs.createElement('br'));
+			div.append('€');
+			div.append(Hawkejs.Hawkejs.createElement('br'));
+
+			assert.strictEqual(div.outerHTML, '<div>a<br>@<br>&#8364;<br></div>');
+			assert.strictEqual(div.innerText, 'a\n@\n€\n');
+		});
+	});
+
+	describe('#textContent', function() {
+		it('gets/sets the textContent of an element', function() {
+
+			var div = Hawkejs.Hawkejs.createElement('div');
+
+			div.append('a');
+			div.append(Hawkejs.Hawkejs.createElement('br'));
+			div.append('@');
+			div.append(Hawkejs.Hawkejs.createElement('br'));
+			div.append('€');
+			div.append(Hawkejs.Hawkejs.createElement('br'));
+
+			assert.strictEqual(div.outerHTML, '<div>a<br>@<br>&#8364;<br></div>');
+			assert.strictEqual(div.textContent, 'a@€');
+		});
+	});
 });
