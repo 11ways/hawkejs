@@ -4,6 +4,7 @@
 * `CustomElement#emit(name, options)` now takes an option object as second argument
 * Add `HTMLElement#append()` method
 * Add `HTMLElement#insertAdjacentHTML()` method
+* Fix `HTMLElement#value` property
 
 ## 1.3.0 (2018-12-06)
 
