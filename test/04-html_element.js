@@ -114,4 +114,54 @@ describe('HTMLElement', function() {
 			assert.strictEqual(div.textContent, 'a@€');
 		});
 	});
+
+	describe('#insertAdjacentHTML(position, html)', function() {
+		it('should insert html at a specific position', function() {
+
+			var div = Hawkejs.Hawkejs.createElement('div');
+
+			div.append(Hawkejs.Hawkejs.createElement('br'));
+			div.insertAdjacentHTML('afterBegin', '<i></i>');
+			div.insertAdjacentHTML('beforeEnd', '<b></b>');
+
+			assert.strictEqual(div.outerHTML, '<div><i></i><br><b></b></div>');
+		});
+	});
+
+	describe('#hasAttribute(name)', function() {
+		it('checks if the given attribute is present on the element', function() {
+
+			var div = Hawkejs.Hawkejs.createElement('div');
+
+			assert.strictEqual(div.hasAttribute('id'), false);
+			div.id = 'test';
+			assert.strictEqual(div.hasAttribute('id'), true);
+
+			assert.strictEqual(div.outerHTML, '<div id="test"></div>');
+
+			div.removeAttribute('id');
+			assert.strictEqual(div.outerHTML, '<div></div>');
+		});
+	});
+
+	describe('#dataset', function() {
+		it('is an object with all the data attributes', function() {
+
+			var div = Hawkejs.Hawkejs.createElement('div');
+
+			assert.strictEqual(div.dataset.alpha, undefined);
+			div.dataset.alpha = '1';
+			assert.strictEqual(div.dataset.alpha, '1');
+
+			assert.strictEqual(div.hasAttribute('data-alpha'), true);
+			assert.strictEqual(div.getAttribute('data-alpha'), '1');
+
+			assert.strictEqual(div.outerHTML, '<div data-alpha="1"></div>');
+
+			div.removeAttribute('data-alpha');
+			assert.strictEqual(div.dataset.alpha, undefined);
+
+			assert.strictEqual(div.outerHTML, '<div></div>');
+		});
+	});
 });

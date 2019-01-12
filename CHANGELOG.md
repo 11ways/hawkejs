@@ -6,6 +6,7 @@
 * Add `HTMLElement#insertAdjacentHTML()` method
 * Fix `HTMLElement#value` property
 * Fix `HTMLElement#innerText` and `HTMLElement#textContent` properties
+* Fix `data-` attributes not being removed when changing `dataset` property
 
 ## 1.3.0 (2018-12-06)
 
