@@ -7,6 +7,7 @@
 * Fix `HTMLElement#value` property
 * Fix `HTMLElement#innerText` and `HTMLElement#textContent` properties
 * Fix `data-` attributes not being removed when changing `dataset` property
+* Add `HTMLElement#children` property & fix `#getSiblingByIndex()` and `#insertAfter()`
 
 ## 1.3.0 (2018-12-06)
 

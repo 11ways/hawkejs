@@ -164,4 +164,29 @@ describe('HTMLElement', function() {
 			assert.strictEqual(div.outerHTML, '<div></div>');
 		});
 	});
+
+	// HTML Element Extensions!
+
+	describe('#setIndexInParent(index)', function() {
+		it('moved the element to the given index', function() {
+
+			var div = Hawkejs.Hawkejs.createElement('div');
+
+			let i = Hawkejs.Hawkejs.createElement('i'),
+			    a = Hawkejs.Hawkejs.createElement('a'),
+			    b = Hawkejs.Hawkejs.createElement('b');
+
+			div.append(i);
+			div.append(a);
+			div.append(b);
+
+			a.setIndexInParent(0);
+			i.setIndexInParent(2);
+
+			assert.strictEqual(div.innerHTML, '<a></a><b></b><i></i>');
+
+			a.setIndexInParent(0);
+			assert.strictEqual(div.innerHTML, '<a></a><b></b><i></i>');
+		});
+	});
 });
