@@ -1,5 +1,6 @@
 var assert   = require('assert'),
     Hawkejs  = require('../index.js'),
+    fs       = require('fs'),
     hawkejs;
 
 describe('Hawkejs', function() {
@@ -120,6 +121,29 @@ describe('Hawkejs', function() {
 
 				assert.equal(null, err);
 				assert.equal('It should print out ', result);
+
+				done();
+			});
+		});
+	});
+
+	describe('#createClientFile(options, callback)', function() {
+		it('should create client file', function(done) {
+			hawkejs.createClientFile(function gotFile(err, path) {
+
+				if (err) {
+					throw err;
+				}
+
+				if (!path) {
+					throw new Error('No valid path was returned')
+				}
+
+				let source = fs.readFileSync(path, 'utf8');
+
+				if (source.indexOf('__Protoblast.doLoaded') == -1) {
+					throw new Error('Created file does not seem valid');
+				}
 
 				done();
 			});
