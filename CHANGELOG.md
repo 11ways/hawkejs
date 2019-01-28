@@ -1,3 +1,5 @@
+## 1.3.2 (WIP)
+
 ## 1.3.1 (2019-01-12)
 
 * Attempt to register the server-side render during scene initialization
