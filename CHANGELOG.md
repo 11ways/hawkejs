@@ -1,6 +1,7 @@
 ## 1.3.2 (WIP)
 
-* Fix using OR & AND in expressions
+* Fix using OR & AND operators in expressions
+* Fix adding multiple operators
 
 ## 1.3.1 (2019-01-12)
 

@@ -138,7 +138,7 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
-	describe('OR', function() {
+	describe('Or operator', function() {
 		var tests = [
 			[
 				`{%= does.not.exist || test.name %}`,
@@ -165,7 +165,7 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
-	describe('AND', function() {
+	describe('And operator', function() {
 		var tests = [
 			[
 				`{%= does.not.exist && test.name %}`,
@@ -199,6 +199,18 @@ describe('Expressions', function() {
 
 		createTests(tests);
 	});
+
+	describe('Plus operator', function() {
+		var tests = [
+			[`{%= 1 + 1 %}`, '2'],
+			[`{%= 1 + 1 + 1 %}`, '3'],
+			[`{%= 1 + 2 + 2 %}`, '5'],
+			[`{%= test.one + test.three %}`, '4'],
+			[`{%= test.one + test.three + 1 %}`, '5'],
+		];
+
+		createTests(tests);
+	});
 });
 
 function createTests(tests) {
@@ -226,6 +238,7 @@ function createTests(tests) {
 				test      : {
 					name  : 'testname',
 					one   : 1,
+					three : 3,
 					two   : {
 						three: {
 							four: 4
