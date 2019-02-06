@@ -137,6 +137,68 @@ describe('Expressions', function() {
 
 		createTests(tests);
 	});
+
+	describe('OR', function() {
+		var tests = [
+			[
+				`{%= does.not.exist || test.name %}`,
+				'testname'
+			],
+			[
+				`{%= does.not.exist || neither.does.this || "fallback" %}`,
+				'fallback'
+			],
+			[
+				`{%= test.name || neither.does.this || "fallback" %}`,
+				'testname'
+			],
+			[
+				`{% if does.not.exist || test.name %}TRUE{% /if %}`,
+				'TRUE'
+			],
+			[
+				`{% if does.not.exist || neither.does.this %}WRONG{% /if %}`,
+				''
+			]
+		];
+
+		createTests(tests);
+	});
+
+	describe('AND', function() {
+		var tests = [
+			[
+				`{%= does.not.exist && test.name %}`,
+				''
+			],
+			[
+				`{%= false && test.name %}`,
+				'false'
+			],
+			[
+				`{%= test.one && test.name %}`,
+				'testname'
+			],
+			[
+				`{%= test.one && test.name && "ALL OK" %}`,
+				'ALL OK'
+			],
+			[
+				`{% if does.not.exist && test.name %}WRONG{% /if %}`,
+				''
+			],
+			[
+				`{% if does.not.exist && neither.does.this %}WRONG{% /if %}`,
+				''
+			],
+			[
+				`{% if test.one && test.name %}TRUE{% /if %}`,
+				'TRUE'
+			]
+		];
+
+		createTests(tests);
+	});
 });
 
 function createTests(tests) {
