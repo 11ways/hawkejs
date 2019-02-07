@@ -2,6 +2,7 @@
 
 * Fix using OR & AND operators in expressions
 * Fix adding multiple operators
+* Added `HelperCollection` class: helper classes are now only initialized when they're needed
 
 ## 1.3.1 (2019-01-12)
 
