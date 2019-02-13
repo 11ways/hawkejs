@@ -5,6 +5,8 @@
 * Added `HelperCollection` class: helper classes are now only initialized when they're needed
 * `BlockBuffer` is no longer a descendant of Array, but has a `lines` array property
 * Calling multiple `start()` for the same block with `content: push` on will do as expected
+* Fix undrying elements that are not included in the dom
+* Call the `retained` method of a custom-element when it's being rendered in a view
 
 ## 1.3.1 (2019-01-12)
 
