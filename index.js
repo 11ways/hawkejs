@@ -202,8 +202,11 @@ Hawkejs.setMethod(function load(file_path, options) {
 
 // The files that need to be loaded
 files = [
-	'tokens.js',
-	'html_parser.js',
+	'parser/base_parser.js',
+	'parser/string_parser.js',
+	'parser/token_parser.js',
+	'parser/html_tokenizer.js',
+	'parser/expressions_parser.js',
 	'expression.js',
 	'templates.js',
 	'helper.js',
@@ -221,13 +224,17 @@ Hawkejs.setMethod(function afterInit() {
 	afterInit.super.call(this);
 
 	// Require all the main class files
-	files.forEach(function(classPath) {
+	files.forEach(function eachFile(path) {
 
-		if (classPath == 'hawkejs.js') {
+		if (path == 'hawkejs.js') {
 			return;
 		}
 
-		that.load('lib/class/' + classPath, {name: classPath});
+		if (path.indexOf('/') == -1) {
+			path = 'class/' + path;
+		}
+
+		that.load('lib/' + path, {name: path});
 	});
 
 	// Require these files in the browser only
