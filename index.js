@@ -205,7 +205,6 @@ files = [
 	'parser/base_parser.js',
 	'parser/string_parser.js',
 	'parser/token_parser.js',
-	'parser/html_tokenizer.js',
 	'parser/expressions_parser.js',
 	'parser/directives_parser.js',
 	'expression.js',
