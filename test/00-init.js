@@ -38,6 +38,13 @@ describe('Hawkejs', function() {
 				assert.equal(null, err, 'Problem getting template from cache');
 			});
 		});
+
+		it('should return an error if the template is not found', function(done) {
+			hawkejs.getSource('simply/nonexistingtemplate', function(err) {
+				assert.strictEqual(!!err, true);
+				done();
+			});
+		});
 	});
 
 	describe('#compile(name, source)', function() {
