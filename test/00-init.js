@@ -70,15 +70,22 @@ describe('Hawkejs', function() {
 			assert.strictEqual(fnc.name, 'compiledView');
 			assert.strictEqual(fnc.sourceName, undefined);
 			assert.strictEqual(String(fnc).indexOf("timeStart(\"inline\")") > -1, true);
+			assert.strictEqual(String(fnc).indexOf('.print("this is inline ') > -1, true, 'Print was cut off');
 		});
 
 		it('should add line information to multiline javascript', function() {
 
-			var fnc;
+			var fnc,
+			    body;
 
 			fnc = hawkejs.compile('test this js: <% i = 10;\nprint(i);%>');
+			body = String(fnc);
 
-			assert.equal(true, (fnc+'').indexOf('lineNr:0') > -1);
+			if (body.indexOf('print(vars.i)') == -1) {
+				throw new Error('The inline JS code was not added to the compiled function');
+			}
+
+			assert.equal(true, body.indexOf('lineNr:0') > -1);
 		});
 
 		it('should return an errorView function for templates containg syntax errors', function() {
