@@ -1,3 +1,7 @@
+## 1.4.0 (WIP)
+
+* Add Directives & html tokenization support
+
 ## 1.3.2 (2019-02-18)
 
 * Fix using OR & AND operators in expressions
