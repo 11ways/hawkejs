@@ -85,6 +85,7 @@ describe('Expressions', function() {
 			['<p></p>{% trim blank %}',            ''],
 			[' <p> </p>{% trim blank %}',          ''],
 			[' <p id="p"> </p >{% trim blank %}',  ''],
+			['<p id="p"><span>S</span></p >{% trim blank %}',  '<p id="p"><span>S</span></p>'],
 			['TEST<p></p>{% trim blank %}',        'TEST<p></p>'],
 		];
 
