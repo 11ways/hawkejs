@@ -1,4 +1,4 @@
-## 1.3.2 (WIP)
+## 1.3.2 (2019-02-18)
 
 * Fix using OR & AND operators in expressions
 * Fix adding multiple operators
