@@ -1,3 +1,7 @@
+## 1.3.3 (WIP)
+
+* Fix `BlockBuffer#push()` not returning the index of the pushed line
+
 ## 1.3.2 (2019-02-18)
 
 * Fix using OR & AND operators in expressions
