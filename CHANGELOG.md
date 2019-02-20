@@ -3,6 +3,7 @@
 * Fix `BlockBuffer#push()` not returning the index of the pushed line
 * Backport element attribute serialization fix from 1.4.0
 * Allow using simple expressions in templates, without print
+* Methods can now be called from within hawkejs expressions
 
 ## 1.3.2 (2019-02-18)
 
