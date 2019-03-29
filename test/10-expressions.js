@@ -102,6 +102,7 @@ describe('Expressions', function() {
 			['Literal: {%= "literal" %}',           'Literal: literal'],
 			['Sum: {%= 1 + 1 %}',                   'Sum: 2'],
 			['Minus: {%= 1 - 1 %}',                 'Minus: 0'],
+			["Single quote: {%= 'single' %}",       'Single quote: single']
 		];
 
 		createTests(tests);
@@ -212,6 +213,16 @@ describe('Expressions', function() {
 
 		createTests(tests);
 	});
+
+	describe('Method calls', function() {
+
+		var tests = [
+			[`{%= test.name.slice(0,1) %}`,    't'],
+			[`{%= test.name.toUpperCase() %}`, 'TESTNAME'],
+		];
+
+		createTests(tests);
+	});
 });
 
 function createTests(tests) {
@@ -221,7 +232,7 @@ function createTests(tests) {
 		    result = tests[i][1];
 
 		if (title.length > 74) {
-			title = title.slice(0, 70) + '...';
+			title = title.slice(0, 72) + '…';
 		}
 
 		it(title, function(next) {

@@ -1,0 +1,3 @@
+<i><% assign('text') %></i>
+
+<% implement('partials/create_text_block') %>

@@ -1,0 +1,1 @@
+<% start('test'); %>DARK TEXT_BLOCK PARTIAL<% end('test') %>

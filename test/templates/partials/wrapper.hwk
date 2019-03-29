@@ -1,0 +1,2 @@
+This is wrapper text "<%= text %>"
+<% assign('entries') %>

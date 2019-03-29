@@ -1,0 +1,11 @@
+<div class="Alfa">
+	<%= $0.getAttribute('class') %>
+	<span id="myspan">
+		<%= $0.getAttribute('id') %>
+
+		<hr>
+		<p class="Beta">
+			This <%= $0.getAttribute('class') %> is in <%= $0.parentElement.parentElement.getAttribute('class') %>
+		</p>
+	</span>
+</div>

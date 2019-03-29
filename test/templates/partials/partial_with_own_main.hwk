@@ -1,0 +1,4 @@
+<span>Partial:</span>
+<% assign('main') %>
+
+<% start('main') %>Partial Main<% end('main') %>

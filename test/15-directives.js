@@ -18,6 +18,90 @@ describe('Directives', function() {
 		createTests(tests);
 	});
 
+	describe('Expression values', function() {
+		var tests = [
+			[
+				`<span value={% date.getFullYear() %}></span>`,
+				'<span value="2019"></span>'
+			]
+		];
+
+		createTests(tests);
+	});
+
+	describe('Expressions in attribute values', function() {
+
+		var tests = [
+			[
+				`<span value="{% "test" %}"></span>`,
+				`<span value="test"></span>`
+			],
+			[
+				`<span value="A {% "B" %} C"></span>`,
+				`<span value="A B C"></span>`
+			],
+			[
+				`<span value="1 {% 1+1 %} 3"></span>`,
+				`<span value="1 2 3"></span>`
+			]
+		];
+
+		createTests(tests);
+	});
+
+	describe('Code in attribute values', function() {
+
+		var tests = [
+			[
+				`<span value="<% "test" %>"></span>`,
+				`<span value="test"></span>`
+			],
+			[
+				`<span value="A <% "B" %> C"></span>`,
+				`<span value="A B C"></span>`
+			],
+			[
+				`<span value="1 <% 1+1 %> 3"></span>`,
+				`<span value="1 2 3"></span>`
+			],
+			[
+				`<span value="1 <% print("test") %> 3"></span>`,
+				`<span value="1 test 3"></span>`
+			]
+		];
+
+		createTests(tests);
+	});
+
+	describe('Unquoted values', function() {
+		var tests = [
+			[
+				`<span value=3></span>`,
+				`<span value="3"></span>`
+			],
+			[
+				`<span value=alpha><i></i></span>`,
+				`<span value="alpha"><i></i></span>`
+			],
+			[
+				`<span value=alpha foo=bar class="test" azerty= ok><i></i></span>`,
+				`<span class="test" value="alpha" foo="bar" azerty="ok"><i></i></span>`
+			]
+		];
+
+		createTests(tests);
+	});
+
+	describe('Boolean attributes', function() {
+		var tests = [
+			[
+				`<div id="bla" hidden>Content</div>`,
+				`<div id="bla" hidden>Content</div>`
+			]
+		];
+
+		createTests(tests);
+	});
 });
 
 function createTests(tests) {
@@ -27,7 +111,7 @@ function createTests(tests) {
 		    result = tests[i][1];
 
 		if (title.length > 74) {
-			title = title.slice(0, 70) + '...';
+			title = title.slice(0, 72) + '…';
 		}
 
 		it(title, function(next) {
@@ -42,6 +126,7 @@ function createTests(tests) {
 				single    : [0],
 				numbers   : [0, 1, 2, 3],
 				empty_obj : {},
+				date      : new Date('2019-03-07'),
 				test      : {
 					name  : 'testname',
 					one   : 1,

@@ -1,0 +1,7 @@
+<div>
+<span>Printing:</span>
+<% assign('main') %>
+<% partial('partials/partial_with_own_main') %>
+</div>
+<hr>
+<% start('main') %>Printing Main<% end('main') %>

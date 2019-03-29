@@ -23,6 +23,7 @@ callgrind*
 
 # Ignore report files
 plato/
+*.0x/
 
 # Dependencies
 node_modules/

@@ -7,6 +7,7 @@ describe('HTMLElement', function() {
 
 	before(function() {
 		hawkejs = new Hawkejs();
+		hawkejs.addViewDirectory(__dirname + '/templates');
 	});
 
 	describe('#className', function() {
@@ -78,6 +79,16 @@ describe('HTMLElement', function() {
 			assert.strictEqual(input.outerHTML, '<input value="test">');
 			assert.strictEqual(area.outerHTML, '<textarea>html</textarea>');
 			assert.strictEqual(div.outerHTML, '<div></div>');
+		});
+	});
+
+	describe('#style', function() {
+		it('should set the style attribute', function() {
+
+			var div = Hawkejs.Hawkejs.createElement('div', false);
+			div.style.setProperty('display', 'none');
+
+			assert.strictEqual(div.outerHTML, '<div style="display:none;"></div>');
 		});
 	});
 
@@ -162,6 +173,27 @@ describe('HTMLElement', function() {
 			assert.strictEqual(div.dataset.alpha, undefined);
 
 			assert.strictEqual(div.outerHTML, '<div></div>');
+
+			// Setting to undefined results in an "undefined" string
+			div.dataset.alpha = undefined;
+			assert.strictEqual(div.dataset.alpha, 'undefined');
+		});
+	});
+
+	describe('#outerHTML', function() {
+		it('should prevent catastrophic recursive serialization', function(done) {
+			let renderer = hawkejs.render('nested_test', function doneTest(err, result) {
+
+				if (err) {
+					throw err;
+				}
+
+				result = result.replace(/[\n\t]/g, '');
+
+				assert.strictEqual(renderer.last._render_count, 1, 'The HTML elements were serialized more than expected!');
+				assert.strictEqual(result, `<div class="a"><div class="b"><div class="c"><div class="d"><div class="e"><div class="f"><div class="g"><div class="h"><div class="i"><div class="j"><div class="k"><div class="l"><div class="m"><div class="n"><div class="o"><div class="p"><div class="q"><div class="r"><div class="s"><div class="t"><div class="u"></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>`);
+				done();
+			});
 		});
 	});
 

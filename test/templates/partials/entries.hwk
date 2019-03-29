@@ -1,0 +1,1 @@
+<% start('entries') %>Text: <%= text %><% end('entries') %>

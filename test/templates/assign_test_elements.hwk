@@ -1,0 +1,15 @@
+<he-block data-he-name="main">Default</he-block>
+<div data-he-name="main-2">Default</div>
+<div data-he-name="main-3">Default</div>
+
+<% start('main') %>
+Replacement1
+<% end('main') %>
+
+<% start('main-2') %>
+Replacement2
+<% end('main-2') %>
+
+<% start('main-3', {append: true}) %>
+Append
+<% end('main-3') %>

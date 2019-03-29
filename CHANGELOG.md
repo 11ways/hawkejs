@@ -1,11 +1,12 @@
-## 1.4.0 (WIP)
+## 2.0.0 (WIP)
 
-* Add Directives & html tokenization support
+* Code rewrite
+* Templates are now built with a virtual dom
 
 ## 1.3.3 (WIP)
 
 * Fix `BlockBuffer#push()` not returning the index of the pushed line
-* Backport element attribute serialization fix from 1.4.0
+* Backport element attribute serialization fix from 2.0.0
 * Allow using simple expressions in templates, without print
 * Methods can now be called from within hawkejs expressions
 

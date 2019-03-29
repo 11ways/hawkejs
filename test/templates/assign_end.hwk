@@ -1,0 +1,12 @@
+<div class="a">
+	<div class="b">
+		<div class="c">
+			<label class="d">
+				<% assign('title') %>DEFAULT<% assign_end('title') %>
+			</label>
+		</div>
+	</div>
+	<div class="row">
+		
+	</div>
+</div>

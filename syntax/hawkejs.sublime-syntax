@@ -2,7 +2,7 @@
 ---
 
 name: Hawkejs
-file_extensions: [ejs]
+file_extensions: [ejs, hwk]
 first_line_match: ^\{\%
 scope: text.hawkejs
 

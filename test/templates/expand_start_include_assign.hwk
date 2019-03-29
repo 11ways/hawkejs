@@ -1,0 +1,3 @@
+<% extends('base')
+include('partials/text_block');
+start('main'); %>[<% assign('test') %>]<% end('main') %>

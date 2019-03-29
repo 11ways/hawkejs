@@ -1,0 +1,2 @@
+-<% implement('partials/text_block') %>-
+»<% assign('test') %>«

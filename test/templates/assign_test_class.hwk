@@ -1,0 +1,7 @@
+<div>
+<% assign('main') %>
+</div>
+
+<% start('main', {className: 'with-class'}) %>
+Should have class set
+<% end('main') %>

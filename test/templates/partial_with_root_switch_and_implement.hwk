@@ -1,0 +1,5 @@
+This should not be visible
+<%
+switchTemplate('partials/wrapper', {text: 'wrapper'});
+implement('partials/entries', {text: 'entries'});
+%>

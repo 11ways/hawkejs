@@ -1,0 +1,1 @@
+<% start('test'); %>TEXT_BLOCK PARTIAL<% end('test') %>

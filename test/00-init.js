@@ -21,26 +21,24 @@ describe('Hawkejs', function() {
 		it('should fetch the source of a template', function(done) {
 
 			// Start getting the source
-			hawkejs.getSource('simple/string', function(err, source) {
+			hawkejs.getSource('simple/string').done(function(err, source) {
 
 				assert.equal(null, err, 'Could not open file');
 				assert.equal('This EJS example can\'t be more simple.', source);
 
-				assert.equal(source, hawkejs.templateSourceCache['simple/string']);
-
 				done();
 			});
 
-			// There should be a hinder entry
-			assert.equal(true, !!hawkejs.templateSourceHinder['simple/string'], 'First download did not create a hinder object');
+			// There should be a pledge
+			assert.equal(true, !!hawkejs.template_source_cache['simple/string'], 'First download did not create a promise');
 
-			hawkejs.getSource('simple/string', function(err, source) {
+			hawkejs.getSource('simple/string').done(function(err, source) {
 				assert.equal(null, err, 'Problem getting template from cache');
 			});
 		});
 
 		it('should return an error if the template is not found', function(done) {
-			hawkejs.getSource('simply/nonexistingtemplate', function(err) {
+			hawkejs.getSource('simply/nonexistingtemplate').done(function(err) {
 				assert.strictEqual(!!err, true);
 				done();
 			});
@@ -51,14 +49,14 @@ describe('Hawkejs', function() {
 
 		it('should compile the given source', function() {
 
-			var src = hawkejs.templateSourceCache['simple/string'],
+			var src = 'Very simple template',
 			    name = 'mycopy',
 			    fnc;
 
 			fnc = hawkejs.compile(name, src);
 
 			assert.equal(fnc.name, 'compiledView');
-			assert.equal(fnc.sourceName, name);
+			assert.equal(fnc.source_name, name);
 		});
 
 		it('should compile source without a name as "inline"', function() {
@@ -68,8 +66,8 @@ describe('Hawkejs', function() {
 			fnc = hawkejs.compile('this is inline <%= "code" %>');
 
 			assert.strictEqual(fnc.name, 'compiledView');
-			assert.strictEqual(fnc.sourceName, undefined);
-			assert.strictEqual(String(fnc).indexOf("timeStart(\"inline\")") > -1, true);
+			assert.strictEqual(fnc.source_name.indexOf('inline'), 0);
+			assert.strictEqual(String(fnc).indexOf("timeStart(\"inline") > -1, true);
 			assert.strictEqual(String(fnc).indexOf('.print("this is inline ') > -1, true, 'Print was cut off');
 		});
 
@@ -141,9 +139,9 @@ describe('Hawkejs', function() {
 		});
 	});
 
-	describe('#createClientFile(options, callback)', function() {
+	describe('#createClientFile(options)', function() {
 		it('should create client file', function(done) {
-			hawkejs.createClientFile(function gotFile(err, path) {
+			hawkejs.createClientFile().done(function gotFile(err, path) {
 
 				if (err) {
 					throw err;
@@ -155,7 +153,7 @@ describe('Hawkejs', function() {
 
 				let source = fs.readFileSync(path, 'utf8');
 
-				if (source.indexOf('__Protoblast.doLoaded') == -1) {
+				if (source.indexOf('require.register("hawkejs/client/template') == -1) {
 					throw new Error('Created file does not seem valid');
 				}
 

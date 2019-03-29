@@ -1,0 +1,2 @@
+<% partial('partials/bold', {text: 'bold'}) %>
+<% partial('partials/italic', {text: 'italic'}) %>
