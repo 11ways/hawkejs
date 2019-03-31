@@ -230,9 +230,22 @@ This is the main content
 					throw err;
 				}
 
-				result = result.trim();
-
 				assert.strictEqual(result, 'This is wrapper text "wrapper"\n<he-block data-hid="hserverside-0" data-he-name="entries" data-he-template="partials/entries">Text: entries</he-block>');
+				done();
+			});
+		});
+	});
+
+	describe('#foundation()', function() {
+		it('should not wait for placeholders that are waiting for itself', function(done) {
+
+			let renderer = hawkejs.render('implement_with_foundation_extension', function doneImplement(err, result) {
+
+				if (err) {
+					throw err;
+				}
+
+				assert.strictEqual(__Protoblast.Bound.String.checksum(result), 4038076543);
 				done();
 			});
 		});

@@ -1,0 +1,1 @@
+<% implement('partials/extend_into_base_foundation') %>
