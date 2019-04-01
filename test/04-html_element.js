@@ -195,6 +195,39 @@ describe('HTMLElement', function() {
 				done();
 			});
 		});
+
+		it('should correctly serialize Hawkejs.RESULT entries', function(done) {
+			var HtmlResolver = function HtmlResolver(value) {
+				this.value = value;
+			};
+
+			HtmlResolver.prototype.renderHawkejsContent = function() {
+				var pledge = new __Protoblast.Classes.Pledge();
+
+				let element = Hawkejs.Hawkejs.createElement('x-text');
+				element.innerHTML = this.value;
+
+				this[Hawkejs.RESULT] = element;
+
+				pledge.resolve(element);
+
+				return pledge;
+			}
+
+			Hawkejs.Renderer.setCommand(function resolveToHtml(value) {
+				return new HtmlResolver(value);
+			});
+
+			var renderer = hawkejs.render('generic_rhc', {}, function _done(err, html) {
+
+				if (err) {
+					throw err;
+				}
+
+				assert.strictEqual(html, '<x-text>hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>');
+				done();
+			});
+		});
 	});
 
 	// HTML Element Extensions!

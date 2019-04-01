@@ -1,0 +1,4 @@
+<%= resolveToHtml('hi') %>
+<div>
+	<%= resolveToHtml('nested') %>
+</div>
