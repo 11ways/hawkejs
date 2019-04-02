@@ -245,7 +245,7 @@ This is the main content
 					throw err;
 				}
 
-				assert.strictEqual(__Protoblast.Bound.String.checksum(result), 4038076543);
+				assert.strictEqual(__Protoblast.Bound.String.checksum(result), 79506698);
 				done();
 			});
 		});
