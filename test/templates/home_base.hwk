@@ -1,0 +1,9 @@
+<html>
+	<head>
+		<title>Default title</title>
+	</head>
+	<body>
+		<% assign('old-main') %>
+		<div data-he-name="main"></div>
+	</body>
+</html>

@@ -15,7 +15,9 @@
 		"codecov"         : "~3.0.4",
 		"nyc"             : "^12.0.2",
 		"matcha"          : "~0.7.0",
-		"mocha"           : "~5.2.0"
+		"mocha"           : "~5.2.0",
+		"puppeteer"       : "~1.14.0",
+		"puppeteer-to-istanbul": "~1.2.2"
 	},
 	"scripts": {
 		"test"            : "node_modules/.bin/mocha --exit --reporter spec --bail --timeout 5000 --file test/00-init.js",

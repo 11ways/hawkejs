@@ -1,0 +1,3 @@
+<% extends('home_base') %>
+<% start('old-main') %>This is the old main<% end('old-main') %>
+<% start('main') %>This is the new main<% end('main') %>
