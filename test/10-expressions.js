@@ -34,6 +34,9 @@ describe('Expressions', function() {
 			['{% if "" emptyhtml %}TRUE{% /if %}', 'TRUE'],
 			['{% if "<p></p>" emptyhtml %}TRUE{% /if %}', 'TRUE'],
 			['{% if "<p>a</p>" emptyhtml %}WRONG{% /if %}', ''],
+			['{% if success %}SUCCESS{% /if %}', 'SUCCESS'],
+			['{% if success %}SUCCESS{% else %}NOPE{% /if %}', 'SUCCESS'],
+			['{% if error %}ERR{% /if %}', 'ERR']
 			// @TODO: ['{% if 1 emptyhtml %}WRONG{% /if %}', ''],
 		];
 
@@ -44,7 +47,8 @@ describe('Expressions', function() {
 		var tests = [
 			['{% if false %}WRONG{% else %}ELSE{% /if %}', 'ELSE'],
 			['{% if 0 %}WRONG{% else %}ELSE{% /if %}',     'ELSE'],
-			['{% if none.existing.variable %}WRONG{% else %}ELSE{% /if %}', 'ELSE']
+			['{% if none.existing.variable %}WRONG{% else %}ELSE{% /if %}', 'ELSE'],
+			['{% if falsy %}NOPE{% else %}FALSY{% /if %}', 'FALSY'],
 		];
 
 		createTests(tests);
@@ -247,6 +251,9 @@ function createTests(tests) {
 				single    : [0],
 				numbers   : [0, 1, 2, 3],
 				empty_obj : {},
+				falsy     : false,
+				success   : true,
+				error     : new Error('Some error'),
 				test      : {
 					name  : 'testname',
 					one   : 1,

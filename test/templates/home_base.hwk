@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Default title</title>
+		<% this.foundation() %>
 	</head>
 	<body>
 		<% assign('old-main') %>

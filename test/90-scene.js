@@ -3,6 +3,7 @@ var pti       = require('puppeteer-to-istanbul'),
     assert    = require('assert'),
     Hawkejs   = require('../index.js'),
     http      = require('http'),
+    fs        = require('fs'),
     Fn        = __Protoblast.Bound.Function,
     hawkejs,
     Test;
@@ -45,6 +46,25 @@ describe('Scene', function() {
 
 				req.renderer = renderer;
 				renderer.internal('url', url);
+
+				if (url.pathname == '/hawkejs/hawkejs-client.js') {
+
+					__Protoblast.getClientPath({
+						modify_prototypes: true,
+						ua: req.headers.useragent
+					}).done(function gotClientFile(err, path) {
+
+						if (err) {
+							throw err;
+						}
+
+						res.writeHead(200, {'Content-Type': 'application/javascript'});
+
+						fs.createReadStream(path).pipe(res);
+					});
+
+					return;
+				}
 
 				templates = url.pathname.slice(1);
 
@@ -93,7 +113,7 @@ describe('Scene', function() {
 
 			res = res.trim();
 
-			assert.strictEqual(res, "<he-block data-hid=\"hserverside-0\" data-he-name=\"old-main\" data-he-template=\"home\">This is the old main</he-block>\n\t\t<div data-he-name=\"main\" data-he-template=\"home\">This is the new main</div>");
+			assert.strictEqual(res, "<he-block data-hid=\"hserverside-0\" data-he-name=\"old-main\" data-he-template=\"home\" class=\"\">This is the old main</he-block>\n\t\t<div data-he-name=\"main\" data-he-template=\"home\" class=\"\">This is the new main</div>");
 		});
 	});
 
