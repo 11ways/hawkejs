@@ -196,6 +196,18 @@ describe('HTMLElement', function() {
 			});
 		});
 
+		it('should correctly render style contents', function(done) {
+			let renderer = hawkejs.render('404', function doneTest(err, result) {
+
+				if (err) {
+					throw err;
+				}
+
+				assert.strictEqual(result, "<style type=\"text/css\">\nbody {\n\tfont-family: sans-serif;\n\tfont-size: 15px;\n\tfont-weight: normal;\n\tmargin: 0;\n\tcolor: #4C4C4C;\n\tbackground-color: #EDEDED;\n}\ndiv {\n\twidth: 100vw;\n}\nh1 {\n\ttext-align: center;\n\tpadding-top: 50vh;\n}\np {\n\ttext-align: center;\n}\n</style>\n<div>\n\t<h1>404: Not found</h1>\n\t<p></p>\n</div>");
+				done();
+			});
+		});
+
 		it('should correctly serialize Hawkejs.RESULT entries', function(done) {
 			var HtmlResolver = function HtmlResolver(value) {
 				this.value = value;
