@@ -102,6 +102,37 @@ describe('Directives', function() {
 
 		createTests(tests);
 	});
+
+	describe('Code in tag openings', function() {
+
+		var tests = [
+			[
+				`<figure <% if (true) print('class="bla"') %>></figure>`,
+				`<figure class="bla"></figure>`
+			],
+			[
+				`<figure class="test" <% if (true) print('id="bla"') %>></figure>`,
+				`<figure id="bla" class="test"></figure>`
+			],
+			[
+				`<figure class="test" <% if (true) print('id="bla"') %> data-ok="ok"></figure>`,
+				`<figure id="bla" class="test" data-ok="ok"></figure>`
+			],
+			[
+				`<figure class="test" data-ok="ok" <% if (true) print('hidden') %> ></figure>`,
+				`<figure class="test" hidden data-ok="ok"></figure>`
+			],
+			[
+				`<h2
+	class="underscore m"
+	<% if (truthy) print('data-editable-name="title" data-editable-type="string"') %>
+>TEXT</h2>`,
+				`<h2 class="underscore m" data-editable-name="title" data-editable-type="string">TEXT</h2>`
+			]
+		];
+
+		createTests(tests);
+	});
 });
 
 function createTests(tests) {
@@ -117,7 +148,11 @@ function createTests(tests) {
 		it(title, function(next) {
 			test_id++;
 
-			var compiled = hawkejs.compile('test_' + test_id, code),
+			var compiled = hawkejs.compile({
+				template_name: 'test_' + test_id,
+				template: code,
+				throw_error: true
+			}),
 			    vars;
 
 			vars = {
@@ -126,6 +161,7 @@ function createTests(tests) {
 				single    : [0],
 				numbers   : [0, 1, 2, 3],
 				empty_obj : {},
+				truthy    : 'truthy',
 				date      : new Date('2019-03-07'),
 				test      : {
 					name  : 'testname',

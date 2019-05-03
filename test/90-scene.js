@@ -113,7 +113,7 @@ describe('Scene', function() {
 
 			res = res.trim();
 
-			assert.strictEqual(res, "<he-block data-hid=\"hserverside-0\" data-he-name=\"old-main\" data-he-template=\"home\" class=\"\">This is the old main</he-block>\n\t\t<div data-he-name=\"main\" data-he-template=\"home\" class=\"\">This is the new main</div>");
+			assert.strictEqual(res, "<he-block data-hid=\"hserverside-0\" data-he-name=\"old-main\" data-he-template=\"home\">This is the old main</he-block>\n\t\t<div data-he-name=\"main\" data-hid=\"hserverside-1\" data-he-template=\"home\">This is the new main</div>");
 		});
 	});
 
