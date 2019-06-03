@@ -139,6 +139,10 @@ describe('Expressions', function() {
 				`{% with single as number %}{% single %}SINGLE:{% /single %}{% each %}{%= number %},{% /each %}{% /with %}`,
 				'SINGLE:0,'
 			],
+			[
+				`{% with my_obj as value %}{% each %}{%= value %}{% /each %}{% /with %}`,
+				'abc'
+			],
 		];
 
 		createTests(tests);
@@ -254,6 +258,11 @@ function createTests(tests) {
 				falsy     : false,
 				success   : true,
 				error     : new Error('Some error'),
+				my_obj    : {
+					a: 'a',
+					b: 'b',
+					c: 'c'
+				},
 				test      : {
 					name  : 'testname',
 					one   : 1,
