@@ -148,6 +148,29 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('With ... where', function() {
+		var tests = [
+			[
+				`{% with people as person where person.gender eq "m" %}{% each %}{%= person.name %},{% /each %}{% /with %}`,
+				'Jelle,Roel,Patrick,'
+			],
+			[
+				`{% with people as person where person.gender eq "f" %}{% each %}{%= person.name %},{% /each %}{% /with %}`,
+				'Griet,'
+			],
+			[
+				`{% with people as person where person.gender %}{% each %}{%= person.name %},{% /each %}{% /with %}`,
+				'Jelle,Roel,Griet,Patrick,'
+			],
+			[
+				`{% with people as person where not person.gender %}{% each %}{%= person.name %},{% /each %}{% /with %}`,
+				'Voltorb,'
+			],
+		];
+
+		createTests(tests);
+	});
+
 	describe('Or operator', function() {
 		var tests = [
 			[
@@ -272,7 +295,29 @@ function createTests(tests) {
 							four: 4
 						}
 					}
-				}
+				},
+				people    : [
+					{
+						name   : 'Jelle',
+						gender : 'm'
+					},
+					{
+						name   : 'Roel',
+						gender : 'm'
+					},
+					{
+						name   : 'Griet',
+						gender : 'f'
+					},
+					{
+						name   : 'Patrick',
+						gender : 'm'
+					},
+					{
+						name   : 'Voltorb',
+						gender : ''
+					}
+				]
 			};
 
 			hawkejs.render(compiled, vars, function done(err, res) {
