@@ -51,7 +51,12 @@
 </div>
 
 
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fskerit%2Fhawkejs.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fskerit%2Fhawkejs?ref=badge_large)
+
 ## Installation
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fskerit%2Fhawkejs.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fskerit%2Fhawkejs?ref=badge_shield)
+
 
     $ npm install hawkejs
 
