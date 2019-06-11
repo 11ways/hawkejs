@@ -12,11 +12,11 @@
 		"useragent"  : "~2.3.0"
 	},
 	"devDependencies": {
-		"codecov"         : "~3.0.4",
-		"nyc"             : "^12.0.2",
+		"codecov"         : "~3.5.0",
+		"nyc"             : "^14.1.1",
 		"matcha"          : "~0.7.0",
-		"mocha"           : "~5.2.0",
-		"puppeteer"       : "~1.14.0",
+		"mocha"           : "~6.1.4",
+		"puppeteer"       : "~1.17.0",
 		"puppeteer-to-istanbul": "~1.2.2"
 	},
 	"scripts": {
