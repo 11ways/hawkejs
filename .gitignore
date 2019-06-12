@@ -34,6 +34,7 @@ coverage/
 
 # Coveralls contains private info
 .coveralls.yml
+codecov.yml
 
 # Locks
 package-lock.json
