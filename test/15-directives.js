@@ -128,7 +128,12 @@ describe('Directives', function() {
 	<% if (truthy) print('data-editable-name="title" data-editable-type="string"') %>
 >TEXT</h2>`,
 				`<h2 class="underscore m" data-editable-name="title" data-editable-type="string">TEXT</h2>`
-			]
+			],
+			// This can't work due to how attributes are interpreted
+			// [
+			// 	`<h2 class="test" {% if true %} my-attribute="true" {% /if %}>Test</h2>`,
+			// 	`<h2 class="test" my-attribute="true">Test</h2>`
+			// ]
 		];
 
 		createTests(tests);
