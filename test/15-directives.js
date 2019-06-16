@@ -137,6 +137,31 @@ describe('Directives', function() {
 		];
 
 		createTests(tests);
+
+		it('should correctly escape certain characters', function(next) {
+
+			var compiled = hawkejs.compile({
+				template_name : 'test_escape_1',
+				template      : `<input value="<% name %>" html="<% html %>">`,
+				throw_error   : true
+			});
+
+			var vars = {
+				name : '#hashtag',
+				html : '"<i>test</i>"',
+			};
+
+			hawkejs.render(compiled, vars, function done(err, res) {
+
+				if (err) {
+					return next(err);
+				}
+
+				assert.strictEqual(res, `<input value="&#35;hashtag" html="&#34;&#60;i&#62;test&#60;/i&#62;&#34;">`);
+
+				next();
+			});
+		});
 	});
 });
 
