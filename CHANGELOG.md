@@ -1,4 +1,4 @@
-## 1.3.3 (WIP)
+## 1.3.3 (2019-06-18)
 
 * Fix `BlockBuffer#push()` not returning the index of the pushed line
 * Backport element attribute serialization fix from 1.4.0
