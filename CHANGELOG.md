@@ -2,6 +2,7 @@
 
 * Code rewrite
 * Templates are now built with a virtual dom
+* `var`, `let` and `const` can now safely be used inside templates
 
 ## 1.3.3 (WIP)
 
