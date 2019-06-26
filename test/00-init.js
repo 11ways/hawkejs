@@ -101,6 +101,83 @@ describe('Hawkejs', function() {
 
 			assert.equal('errorView', fnc.name);
 		});
+
+		it('should correctly rename variable references', function() {
+
+			var compiled,
+			    code;
+
+			hawkejs.try_template_expressions = false;
+			hawkejs.skip_set_err = true;
+
+			compiled = hawkejs.compile(`<%
+let test = 1, bla;
+print(test);
+
+if (true) {
+	let zever = 1;
+	print(zever);
+}
+
+for (let zever = 1; zever < 2; zever++) {
+	print(zever);
+}
+
+print(zever);
+%>`);
+
+			code = String(compiled).replace(/inline_\d+/g, '').trim();
+
+			assert.strictEqual(code, `function compiledView(__render, __template, vars, helper) {
+	__render.timeStart("");
+
+let test = 1, bla;
+__render.print(test);
+
+if (true) {
+let zever = 1;
+__render.print(zever);
+}
+
+for (let zever = 1; zever < 2; zever++) {
+__render.print(zever);
+}
+
+__render.print(vars.zever);
+;
+	__render.timeEnd("");
+}`)
+
+			hawkejs.try_template_expressions = true;
+			hawkejs.skip_set_err = false;
+		});
+
+		it('should not rename scoped variables', function() {
+			var compiled,
+			    code;
+
+			hawkejs.try_template_expressions = false;
+			hawkejs.skip_set_err = true;
+
+			compiled = hawkejs.compile(`<%
+Object.each(comments,function eachPosts(post){print(post._id)})
+print(post._id)
+%>`);
+
+			code = String(compiled).replace(/inline_\d+/g, '').trim();
+
+			assert.strictEqual(code, `function compiledView(__render, __template, vars, helper) {
+	__render.timeStart("");
+
+Object.each(vars.comments,function eachPosts(post){__render.print(post._id)})
+__render.print(vars.post._id)
+;
+	__render.timeEnd("");
+}`)
+
+			hawkejs.try_template_expressions = true;
+			hawkejs.skip_set_err = false;
+		});
 	});
 
 	// Do some basic #render tests, but this will be tested in ViewRender more
