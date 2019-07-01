@@ -143,6 +143,10 @@ describe('Expressions', function() {
 				`{% with my_obj as value %}{% each %}{%= value %}{% /each %}{% /with %}`,
 				'abc'
 			],
+			[
+				`{% with people as block %}{% each %}<hr name="{% block.gender %}">{% /each %}{% /with %}`,
+				'<hr name="m"><hr name="m"><hr name="f"><hr name="m"><hr name>'
+			]
 		];
 
 		createTests(tests);
