@@ -36,7 +36,12 @@ describe('Expressions', function() {
 			['{% if "<p>a</p>" emptyhtml %}WRONG{% /if %}', ''],
 			['{% if success %}SUCCESS{% /if %}', 'SUCCESS'],
 			['{% if success %}SUCCESS{% else %}NOPE{% /if %}', 'SUCCESS'],
-			['{% if error %}ERR{% /if %}', 'ERR']
+			['{% if error %}ERR{% /if %}', 'ERR'],
+			['{% if (falsy) or (true) %}OK{% /if %}', 'OK'],
+			['{% if falsy or true %}OK{% /if %}', 'OK'],
+			['{% if (falsy) and (true) %}ERR{% /if %}', ''],
+			['{% if test.name starts with "test" %}OK{% /if %}', 'OK'],
+			['{% if test.name starts with ("nope") %}ERR{% /if %}', '']
 			// @TODO: ['{% if 1 emptyhtml %}WRONG{% /if %}', ''],
 		];
 
