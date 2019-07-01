@@ -36,12 +36,7 @@ describe('Expressions', function() {
 			['{% if "<p>a</p>" emptyhtml %}WRONG{% /if %}', ''],
 			['{% if success %}SUCCESS{% /if %}', 'SUCCESS'],
 			['{% if success %}SUCCESS{% else %}NOPE{% /if %}', 'SUCCESS'],
-			['{% if error %}ERR{% /if %}', 'ERR'],
-			['{% if (falsy) or (true) %}OK{% /if %}', 'OK'],
-			['{% if falsy or true %}OK{% /if %}', 'OK'],
-			['{% if (falsy) and (true) %}ERR{% /if %}', ''],
-			['{% if test.name starts with "test" %}OK{% /if %}', 'OK'],
-			['{% if test.name starts with ("nope") %}ERR{% /if %}', '']
+			['{% if error %}ERR{% /if %}', 'ERR']
 			// @TODO: ['{% if 1 emptyhtml %}WRONG{% /if %}', ''],
 		];
 
@@ -197,7 +192,9 @@ describe('Expressions', function() {
 			[
 				`{% if does.not.exist || neither.does.this %}WRONG{% /if %}`,
 				''
-			]
+			],
+			['{% if (falsy) or (true) %}OK{% /if %}', 'OK'],
+			['{% if falsy or true %}OK{% /if %}', 'OK'],
 		];
 
 		createTests(tests);
@@ -232,10 +229,22 @@ describe('Expressions', function() {
 			[
 				`{% if test.one && test.name %}TRUE{% /if %}`,
 				'TRUE'
-			]
+			],
+			['{% if (falsy) and (true) %}ERR{% /if %}', ''],
 		];
 
 		createTests(tests);
+	});
+
+	describe('Starts with operator', function() {
+		var test = [
+			['{% if test.name starts with "test" %}OK{% /if %}', 'OK'],
+			['{% if test.name starts with ("nope") %}ERR{% /if %}', ''],
+			['{% if does.not.exist starts with "nope" %}ERR{% /if %}', ''],
+			['{% if does.not.exist starts with "" %}ERR{% /if %}', '']
+		];
+
+		createTests(test);
 	});
 
 	describe('Plus operator', function() {
