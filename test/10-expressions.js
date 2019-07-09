@@ -146,6 +146,10 @@ describe('Expressions', function() {
 			[
 				`{% with people as block %}{% each %}<hr name="{% block.gender %}">{% /each %}{% /with %}`,
 				'<hr name="m"><hr name="m"><hr name="f"><hr name="m"><hr name>'
+			],
+			[
+				`{% with people as person %}{% each %}{% with person.children as child %}{% all %}{%= person.name %}: {% /all %}{% each %}{%= child %},{% /each %}{% all %}-{% /all %}{% /with %}{% /each %}{% /with %}`,
+				`Griet: Jelle,-Patrick: Jelle,-`
 			]
 		];
 
@@ -325,11 +329,13 @@ function createTests(tests) {
 					},
 					{
 						name   : 'Griet',
-						gender : 'f'
+						gender : 'f',
+						children : ['Jelle']
 					},
 					{
 						name   : 'Patrick',
-						gender : 'm'
+						gender : 'm',
+						children : ['Jelle']
 					},
 					{
 						name   : 'Voltorb',
