@@ -3,6 +3,9 @@
 * Code rewrite
 * Templates are now built with a virtual dom
 * `var`, `let` and `const` can now safely be used inside templates
+* Added `CustomElement#setAttributeSilent()` in order to not trigger a setter
+* Added `CustomElement#prepareRenderVariables()` which allows you to add variables before rendering the contents
+* `CustomElement#setAttribute(name)` calls will now normalize the attribute & property name
 
 ## 1.3.3 (WIP)
 
