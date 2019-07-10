@@ -155,6 +155,20 @@ describe('HTMLElement', function() {
 		});
 	});
 
+	describe('#setAttribute(name, value)', function() {
+		it('should escape the set values', function() {
+			var div = Hawkejs.Hawkejs.createElement('div');
+			div.setAttribute('test', 'my "value"');
+			assert.strictEqual(div.outerHTML, `<div test="my &#34;value&#34;"></div>`);
+
+			div = Hawkejs.Hawkejs.createElement('div');
+			div.setAttribute('data-test', 'my "value"');
+			assert.strictEqual(div.outerHTML, `<div data-test="my &#34;value&#34;"></div>`);
+			
+			
+		});
+	});
+
 	describe('#dataset', function() {
 		it('is an object with all the data attributes', function() {
 
