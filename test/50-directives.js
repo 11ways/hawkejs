@@ -164,11 +164,27 @@ describe('Directives', function() {
 		});
 	});
 
-	describe('Set properties', function() {
+	describe('Set properties using the # syntax', function() {
 		var tests = [
 			[
 				`<i #testing="ok"><%= $0.testing %></i>`,
 				`<i>ok</i>`
+			]
+		];
+
+		createTests(tests);
+	});
+
+	describe('Apply directives using the ! syntax', function() {
+
+		var tests = [
+			[
+				`<i !Test></i>`,
+				`<i id="done"></i>`
+			],
+			[
+				`<i !Test="val"></i>`,
+				`<i id="val"></i>`
 			]
 		];
 

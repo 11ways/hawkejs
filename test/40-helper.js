@@ -22,6 +22,10 @@ describe('Helper', function() {
 				this.print('something');
 			});
 
+			Test.setMethod(function applyDirective(element, value) {
+				element.setAttribute('id', value || 'done');
+			});
+
 			setTimeout(function() {
 
 				assert.strictEqual(Hawkejs.Helper.Test, Test);
