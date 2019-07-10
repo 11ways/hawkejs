@@ -163,6 +163,17 @@ describe('Directives', function() {
 			});
 		});
 	});
+
+	describe('Set properties', function() {
+		var tests = [
+			[
+				`<i #testing="ok"><%= $0.testing %></i>`,
+				`<i>ok</i>`
+			]
+		];
+
+		createTests(tests);
+	});
 });
 
 function createTests(tests) {
