@@ -276,6 +276,15 @@ describe('Expressions', function() {
 
 		createTests(tests);
 	});
+
+	describe('None existing method calls', function() {
+
+		var tests = [
+			[`{%= empty_arr.does_not_exist() or 'nope' %}`, 'nope'],
+		];
+
+		createTests(tests);
+	});
 });
 
 function createTests(tests) {
