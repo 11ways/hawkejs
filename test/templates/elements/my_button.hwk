@@ -1,0 +1,9 @@
+{%= __('direct.child.of.block.buffer') %}
+
+<span>
+	{% if self.text %}
+		{%= __('my.button.has.text') %}: {%= self.text %}
+	{% else %}
+		{%= __('my.button.no.text') %}
+	{% /if %}
+</span>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<% this.foundation({protoblast: true}) %>
+	</head>
+	<body>
+		<he-block data-he-name="main"></he-block>
+		<he-bottom></he-bottom>
+	</body>
+</html>

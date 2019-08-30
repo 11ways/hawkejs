@@ -13,6 +13,10 @@ var browser,
     page,
     port;
 
+function despace(text) {
+	return text.trim().replace(/\n/g, ' ').replace(/\s\s+/g, ' ');
+}
+
 function setLocation(path) {
 	var url = 'http://127.0.0.1:' + port + path;
 	return page.goto(url);
@@ -27,6 +31,31 @@ describe('Scene', function() {
 	before(async function() {
 		browser = await puppeteer.launch();
 		page = await browser.newPage();
+
+		page.on('console', function(msg) {
+			var pieces = ['[BROWSER]'],
+			    args = msg.args(),
+			    args;
+
+			for (arg of args) {
+				let remote = arg._remoteObject;
+
+				if (remote.type == 'string') {
+					pieces.push(remote.value);
+				} else if (remote.subtype == 'node') {
+					pieces.push('\x1b[1m\x1b[36m<' + remote.description + '>\x1b[0m');
+					//console.log(remote.preview);
+				} else if (remote.className) {
+					pieces.push('\x1b[1m\x1b[33m{' + remote.type + ' ' + remote.className + '}\x1b[0m');
+				} else if (remote.value != null) {
+					pieces.push(remote.value);
+				} else {
+					pieces.push(remote);
+				}
+			}
+
+			console.log(...pieces);
+		});
 
 		// Enable both JavaScript and CSS coverage
 		await Promise.all([
@@ -61,6 +90,35 @@ describe('Scene', function() {
 						res.writeHead(200, {'Content-Type': 'application/javascript'});
 
 						fs.createReadStream(path).pipe(res);
+					});
+
+					return;
+				}
+
+				// Serve multiple template files
+				if (url.pathname == '/hawkejs/templates') {
+
+					var names = url.param('name');
+
+					if (!names) {
+						res.status = 500;
+						return res.end('No template names have been given');
+					}
+
+					hawkejs.getFirstAvailableSource(names, function gotResult(err, result) {
+
+						if (err) {
+							res.status = 500;
+							return res.end(String(err));
+						}
+
+						if (!result || !result.name) {
+							res.status = 400;
+							return res.end('Could not find any of the given templates');
+						}
+
+						res.setHeader('content-type', 'application/json;charset=utf-8');
+						res.end(JSON.stringify(result));
 					});
 
 					return;
@@ -117,7 +175,53 @@ describe('Scene', function() {
 		});
 	});
 
+	describe('Rerender custom elements', function() {
+		it('should be able to rerender elements', async function() {
+
+			var html;
+
+			await setLocation('/rerender');
+
+			// Get the inner HTML of the main block
+			html = await evalPage(function() {
+				return document.querySelector('[data-he-name="main"]').innerHTML;
+			});
+
+			// Remove extraneous whitespaces
+			html = despace(html);
+
+			// Compare
+			assert.strictEqual(html, `This is my button:<br> <my-button><my-text data-domain="default" data-key="direct.child.of.block.buffer">SERVERTRANSLATED(default.direct.child.of.block.buffer)</my-text> <span> <my-text data-domain="default" data-key="my.button.no.text">SERVERTRANSLATED(default.my.button.no.text)</my-text> </span></my-button>`);
+
+			// And now rerender!
+			html = await evalPage(function() {
+				var main = document.querySelector('[data-he-name="main"]'),
+				    button = document.querySelector('my-button');
+
+				var promise = button.setText('Hello!'),
+				    pledge = new __Protoblast.Classes.Pledge();
+
+				promise.then(function() {
+					pledge.resolve(main.innerHTML);
+				}).catch(function(err) {
+					pledge.reject(err);
+				});
+
+				return pledge;
+			});
+
+			// Remove extraneous whitespaces
+			html = despace(html);
+
+			assert.strictEqual(html, `This is my button:<br> <my-button text="Hello!"><my-text data-domain="default" data-key="direct.child.of.block.buffer">CLIENTTRANSLATED(default.direct.child.of.block.buffer)</my-text> <span> <my-text data-domain="default" data-key="my.button.has.text">CLIENTTRANSLATED(default.my.button.has.text)</my-text>: Hello! </span></my-button>`);
+		});
+	});
+
 	after(async function() {
+
+		// Report coverage from the browser to istanbul.
+		// This won't really work of course, because the
+		// entire hawkejs codebase gets put in 1 big file
 		const [jsCoverage, cssCoverage] = await Promise.all([
 			page.coverage.stopJSCoverage(),
 			page.coverage.stopCSSCoverage(),

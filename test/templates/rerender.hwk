@@ -1,0 +1,6 @@
+<% expands('base_scene') %>
+
+<% start('main') %>
+This is my button:<br>
+<my-button></my-button>
+<% end('main') %>
