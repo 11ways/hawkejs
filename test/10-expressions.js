@@ -270,9 +270,11 @@ describe('Expressions', function() {
 	describe('Method calls', function() {
 
 		var tests = [
-			[`{%= test.name.slice(0,1) %}`,    't'],
-			[`{%= test.name.toUpperCase() %}`, 'TESTNAME'],
-			[`{%= Object.keys({a: 1, b: 1}) %}`, 'a,b']
+			[`{%= test.name.slice(0,1) %}`,      't'],
+			[`{%= test.name.toUpperCase() %}`,   'TESTNAME'],
+			[`{%= Object.keys({a: 1, b: 1}) %}`, 'a,b'],
+			[`{%= 'bla'.toUpperCase() %}`,       'BLA'],
+			[`{%= stuff.slice(2).charAt(0) %}`,  'u'],
 		];
 
 		createTests(tests);
@@ -313,6 +315,7 @@ function createTests(tests) {
 				falsy     : false,
 				success   : true,
 				error     : new Error('Some error'),
+				stuff     : 'stuff',
 				my_obj    : {
 					a: 'a',
 					b: 'b',
