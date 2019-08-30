@@ -270,11 +270,17 @@ describe('Expressions', function() {
 	describe('Method calls', function() {
 
 		var tests = [
-			[`{%= test.name.slice(0,1) %}`,      't'],
-			[`{%= test.name.toUpperCase() %}`,   'TESTNAME'],
-			[`{%= Object.keys({a: 1, b: 1}) %}`, 'a,b'],
-			[`{%= 'bla'.toUpperCase() %}`,       'BLA'],
-			[`{%= stuff.slice(2).charAt(0) %}`,  'u'],
+			[`{%= test.name.slice(0,1) %}`,                't'],
+			[`{%= test.name.toUpperCase() %}`,             'TESTNAME'],
+			[`{%= Object.keys({a: 1, b: 1}) %}`,           'a,b'],
+			[`{%= 'bla'.toUpperCase() %}`,                 'BLA'],
+			[`{%= stuff.slice(2).charAt(0) %}`,            'u'],
+			[`{%= Object.keys({a: 1, b: 1}).join('|') %}`, 'a|b'],
+			[`{%= Object.keys([0])`,                       '0'],
+			[`{%= Object.keys([0,])`,                      '0'],
+			[`{%= Object.keys([0,1])`,                     '0,1'],
+			[`{%= [1, 2, 3].join('|') %}`,                 '1|2|3'],
+			[`{%= [1, 2, 3,].join('|') %}`,                '1|2|3'],
 		];
 
 		createTests(tests);
