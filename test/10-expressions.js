@@ -272,6 +272,7 @@ describe('Expressions', function() {
 		var tests = [
 			[`{%= test.name.slice(0,1) %}`,    't'],
 			[`{%= test.name.toUpperCase() %}`, 'TESTNAME'],
+			[`{%= Object.keys({a: 1, b: 1}) %}`, 'a,b']
 		];
 
 		createTests(tests);
