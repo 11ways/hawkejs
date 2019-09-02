@@ -281,6 +281,11 @@ describe('Expressions', function() {
 			[`{%= Object.keys([0,1])`,                     '0,1'],
 			[`{%= [1, 2, 3].join('|') %}`,                 '1|2|3'],
 			[`{%= [1, 2, 3,].join('|') %}`,                '1|2|3'],
+			[`{%= [].concat(1,2,3).join('-') %}`,          '1-2-3'],
+			[`{%= [].concat(1).concat(2).concat(3).join('-') %}`,              '1-2-3'],
+			[`{%= empty_arr.concat(1).concat(2).concat(3).join('-') %}`,       '1-2-3'],
+			[`{%= empty_arr.concat(1,2).concat(3,4).concat(5,6).join('-') %}`, '1-2-3-4-5-6'],
+			[`{%= 'r'.padStart(2,'_').padEnd(4, '+').padEnd(6, '=') %}`,       '_r++=='],
 		];
 
 		createTests(tests);
