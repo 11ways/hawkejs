@@ -7,6 +7,16 @@ describe('Expressions', function() {
 
 	before(function() {
 		hawkejs = new Hawkejs();
+
+		Hawkejs.Renderer.setCommand(function __(key, param) {
+
+			if (param) {
+				key = __Protoblast.Bound.String.assign(key, param);
+			}
+
+			return key;
+		});
+
 	});
 
 	describe('If', function() {
@@ -267,6 +277,19 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('Literals', function() {
+
+		var tests = [
+			[`{%= [1, 2, 3] %}`,                           '1,2,3'],
+			[`{%= [my_obj.a, my_obj.b, my_obj.c] %}`,      'a,b,c'],
+			[`{%= [test.three, test.three + 1] %}`,        '3,4'],
+			[`{%= JSON.stringify({three: test.three}) %}`, '{"three":3}']
+		];
+
+		createTests(tests);
+
+	});
+
 	describe('Method calls', function() {
 
 		var tests = [
@@ -282,6 +305,8 @@ describe('Expressions', function() {
 			[`{%= [1, 2, 3].join('|') %}`,                 '1|2|3'],
 			[`{%= [1, 2, 3,].join('|') %}`,                '1|2|3'],
 			[`{%= [].concat(1,2,3).join('-') %}`,          '1-2-3'],
+			[`{%= __('test.{cost}', {cost: 5}) %}`,        'test.5'],
+			[`{%= __('test.{cost}', {cost: test.three}) %}`,                   'test.3'],
 			[`{%= [].concat(1).concat(2).concat(3).join('-') %}`,              '1-2-3'],
 			[`{%= empty_arr.concat(1).concat(2).concat(3).join('-') %}`,       '1-2-3'],
 			[`{%= empty_arr.concat(1,2).concat(3,4).concat(5,6).join('-') %}`, '1-2-3-4-5-6'],
