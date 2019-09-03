@@ -283,7 +283,8 @@ describe('Expressions', function() {
 			[`{%= [1, 2, 3] %}`,                           '1,2,3'],
 			[`{%= [my_obj.a, my_obj.b, my_obj.c] %}`,      'a,b,c'],
 			[`{%= [test.three, test.three + 1] %}`,        '3,4'],
-			[`{%= JSON.stringify({three: test.three}) %}`, '{"three":3}']
+			[`{%= JSON.stringify({three: test.three}) %}`,      '{"three":3}'],
+			[`{%= __('test.with.{curly}', {curly: 'test'}) %}`, 'test.with.test']
 		];
 
 		createTests(tests);
