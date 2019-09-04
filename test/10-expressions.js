@@ -160,6 +160,10 @@ describe('Expressions', function() {
 			[
 				`{% with people as person %}{% each %}{% with person.children as child %}{% all %}{%= person.name %}: {% /all %}{% each %}{%= child %},{% /each %}{% all %}-{% /all %}{% /with %}{% /each %}{% /with %}`,
 				`Griet: Jelle,-Patrick: Jelle,-`
+			],
+			[
+				`{% with people as person %}{% all %}-{% /all %}{% each %}{% if person.gender %}{%= person.name %},{% else %}-{% /if %}{% /each %}{% all %}-{% /all %}{% /with %}`,
+				`-Jelle,Roel,Griet,Patrick,--`
 			]
 		];
 
