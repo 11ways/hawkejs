@@ -269,7 +269,7 @@ MyTranslation.setMethod(function toString() {
  *
  * @return   {I18n}
  */
-Blast.Classes.Hawkejs.Renderer.setCommand(function __(domain, key, parameters) {
+Blast.Classes.Hawkejs.Renderer.setCommand(function __test(domain, key, parameters) {
 
 	var translation,
 	    options,

@@ -1,9 +1,9 @@
-{%= __('direct.child.of.block.buffer') %}
+{%= __test('direct.child.of.block.buffer') %}
 
 <span>
 	{% if self.text %}
-		{%= __('my.button.has.text') %}: {%= self.text %}
+		{%= __test('my.button.has.text') %}: {%= self.text %}
 	{% else %}
-		{%= __('my.button.no.text') %}
+		{%= __test('my.button.no.text') %}
 	{% /if %}
 </span>

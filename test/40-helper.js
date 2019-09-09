@@ -63,6 +63,27 @@ describe('Helper', function() {
 				assert.strictEqual(res, 'something');
 				done();
 			});
+		});
+
+		it('should allow the use of methods when using explicit declaration', function(done) {
+
+			var code = `<% const something = Test.saySomething() %><%= something %>`;
+
+			var compiled = hawkejs.compile('Test_test_2', code);
+
+			console.log('COMPILED:', compiled);
+
+			hawkejs.render(compiled, {}, function rendered(err, res) {
+
+				if (err) {
+					throw err;
+				}
+
+				res = res.trim();
+
+				assert.strictEqual(res, 'something');
+				done();
+			});
 
 		});
 	});
