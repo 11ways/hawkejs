@@ -64,6 +64,25 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('Elseif', function() {
+
+		var tests = [
+			[
+				'{% if c eq "a" %}A{% elseif c eq "b" %}B{% elseif c eq "1" %}1{% elseif c eq "c" %}C{% else %}ELSE{% /if %}',
+				'C'
+			],
+			[
+				'{% if str_bla eq "a" %}A{% elseif str_bla eq "b" %}B{% elseif str_bla eq "1" %}1{% elseif str_bla eq "c" %}C{% else %}ELSE{% /if %}',
+				'ELSE'
+			],
+			[
+				'{% if my_obj.b eq "a" %}A{% elseif my_obj.b eq "b" %}B{% elseif my_obj.b eq "1" %}1{% elseif my_obj.b eq "c" %}C{% else %}ELSE{% /if %}',
+				'B'
+			]
+		];
+
+	});
+
 	describe('Not', function() {
 
 		var tests = [
@@ -348,6 +367,8 @@ function createTests(tests) {
 			    vars;
 
 			vars = {
+				c         : 'c',
+				str_bla   : 'bla',
 				empty_arr : [],
 				full_arr  : [0],
 				single    : [0],
