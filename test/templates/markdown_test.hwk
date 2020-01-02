@@ -1,0 +1,17 @@
+<p>Pre-markdown-paragraph!</p>
+
+{% markdown %}
+# Test
+
+Dit is een `markdown` test, met {%= var %} ondersteuning {%= "test" %}
+
+<a href="">bla</a>
+
+<span id={% assign %}>-</span>
+
+`<span id={% blaaaaaaaaaaaaaaaaaaaaaaaa %}>escaped!</span>`
+
+## Ook?
+
+Hallo!
+{% /markdown %}

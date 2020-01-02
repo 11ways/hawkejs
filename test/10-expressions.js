@@ -46,7 +46,8 @@ describe('Expressions', function() {
 			['{% if "<p>a</p>" emptyhtml %}WRONG{% /if %}', ''],
 			['{% if success %}SUCCESS{% /if %}', 'SUCCESS'],
 			['{% if success %}SUCCESS{% else %}NOPE{% /if %}', 'SUCCESS'],
-			['{% if error %}ERR{% /if %}', 'ERR']
+			['{% if error %}ERR{% /if %}', 'ERR'],
+			['{% if my_obj.c eq "a" or my_obj.b eq "a" %}ERR{% elseif my_obj.a eq "a" and my_obj.b eq "b" %}AB{% else %}ERRTOO{% /if %}', 'AB']
 			// @TODO: ['{% if 1 emptyhtml %}WRONG{% /if %}', ''],
 		];
 
