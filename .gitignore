@@ -24,6 +24,7 @@ callgrind*
 # Ignore report files
 plato/
 *.0x/
+deoptigate/
 
 # Dependencies
 node_modules/
