@@ -319,6 +319,10 @@ describe('Expressions', function() {
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
 				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="compiledView">TESTING</he-block>`
+			],
+			[
+				`€{% if true %}€<span>€</span>{% /if %}`,
+				`€€<span>€</span>`
 			]
 		];
 
