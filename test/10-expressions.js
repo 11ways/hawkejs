@@ -311,7 +311,18 @@ describe('Expressions', function() {
 		];
 
 		createTests(tests);
+	});
 
+	describe('Block', function() {
+
+		var tests = [
+			[
+				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="compiledView">TESTING</he-block>`
+			]
+		];
+
+		createTests(tests);
 	});
 
 	describe('Method calls', function() {
