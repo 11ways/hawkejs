@@ -46,7 +46,7 @@ describe('Expressions', function() {
 			['{% if "<p>a</p>" emptyhtml %}WRONG{% /if %}', ''],
 			['{% if success %}SUCCESS{% /if %}', 'SUCCESS'],
 			['{% if success %}SUCCESS{% else %}NOPE{% /if %}', 'SUCCESS'],
-			['{% if error %}ERR{% /if %}', 'ERR']
+			['{% if error %}ERR{% /if %}', 'ERR'],
 			// @TODO: ['{% if 1 emptyhtml %}WRONG{% /if %}', ''],
 		];
 
@@ -59,6 +59,9 @@ describe('Expressions', function() {
 			['{% if 0 %}WRONG{% else %}ELSE{% /if %}',     'ELSE'],
 			['{% if none.existing.variable %}WRONG{% else %}ELSE{% /if %}', 'ELSE'],
 			['{% if falsy %}NOPE{% else %}FALSY{% /if %}', 'FALSY'],
+			['{% if true %}{% if true %}TRUE{% /if %}{% else %}ELSE{% /if %}', 'TRUE'],
+			['{% if true %}1{% if true %}2{% if true %}3{% /if %}2{% /if %}1{% else %}ELSE{% /if %}', '12321'],
+			['{% if true %}1{% if false %}FALSE{% else %}2{% if true %}3{% /if %}2{% /if %}1{% else %}ELSE{% /if %}', '12321'],
 		];
 
 		createTests(tests);
@@ -78,6 +81,14 @@ describe('Expressions', function() {
 			[
 				'{% if my_obj.b eq "a" %}A{% elseif my_obj.b eq "b" %}B{% elseif my_obj.b eq "1" %}1{% elseif my_obj.b eq "c" %}C{% else %}ELSE{% /if %}',
 				'B'
+			],
+			[
+				'{% if empty_obj.a %}A{% elseif empty_obj.b %}B{% else %}{% if true %}TRUE{% else %}ELSE{% /if %}{% /if %}',
+				'TRUE'
+			],
+			[
+				'{% if empty_obj.a %}A{% elseif empty_obj.b %}B{% else %}{% if false %}FALSE{% else %}ELSE{% /if %}{% /if %}',
+				'ELSE'
 			]
 		];
 
