@@ -194,6 +194,10 @@ describe('Expressions', function() {
 			[
 				`{% with people as person %}{% all %}-{% /all %}{% each %}{% if person.gender %}{%= person.name %},{% else %}-{% /if %}{% /each %}{% all %}-{% /all %}{% /with %}`,
 				`-Jelle,Roel,Griet,Patrick,--`
+			],
+			[
+				`{% with people as person %}A{%= $amount %}-{% if $amount le 100 %}LESS{% /if %}{% /with %}`,
+				`A5-LESS`
 			]
 		];
 
