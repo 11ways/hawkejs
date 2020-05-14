@@ -1,0 +1,29 @@
+<div>
+	<h1>This is a test</h1>
+	{%= "CODE" %}
+</div>
+
+{% block "test" %}
+	<div class="row">
+		<div class="col-xs-12">
+			<h1>Invulassistent {%= website.title %}: {%= website.url %}</h1>
+		</div>
+	</div>
+
+	<p class="u-margin-top">
+		<input
+			type="text"
+			placeholder="Naam juridische entiteit bv. Stad Antwerpen"
+			autofocus="false"
+		>
+		<%
+			test = "this is code"
+			more = "with newlines"
+			andso = "should not affect error line numbers"
+		%>
+	</p>
+
+	{% if true %}
+		<h4>This should throw an error</h5>
+	{% /if %}
+{% /block %}

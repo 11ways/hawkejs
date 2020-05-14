@@ -7,6 +7,7 @@ describe('Directives', function() {
 
 	before(function() {
 		hawkejs = new Hawkejs();
+		hawkejs.addViewDirectory(__dirname + '/templates');
 	});
 
 	describe('Empty attributes', function() {
@@ -193,6 +194,36 @@ describe('Directives', function() {
 		];
 
 		createTests(tests);
+	});
+
+	describe('Error handling', function() {
+
+		it('should throw an error when closing wrong tags', function(next) {
+
+			var message;
+
+			const old_log = console.log;
+
+			console.log = function log(msg) {
+				message = msg;
+				console.log = old_log;
+			}
+
+			hawkejs.render('template_with_error', function donePartial(err, result) {
+
+				// Restore console.log method
+				console.log = old_log;
+
+				let found_error = message.indexOf('»»»  26 | 		<h4>This should throw an error</h5>') > -1;
+
+				if (found_error) {
+					return next();
+				}
+
+				throw new Error('Got wrong error line in template_with_error');
+			});
+
+		});
 	});
 });
 
