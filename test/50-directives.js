@@ -214,11 +214,13 @@ describe('Directives', function() {
 				// Restore console.log method
 				console.log = old_log;
 
-				let found_error = message.indexOf('»»»  26 | 		<h4>This should throw an error</h5>') > -1;
+				let found_error = message.indexOf('»»»  35 | 		<h4>This should throw an error</h5>') > -1;
 
 				if (found_error) {
 					return next();
 				}
+
+				console.log(message)
 
 				throw new Error('Got wrong error line in template_with_error');
 			});

@@ -9,7 +9,12 @@
 			<h1>Invulassistent {%= website.title %}: {%= website.url %}</h1>
 		</div>
 	</div>
-
+	<p class="u-margin-top">
+		<a
+			href="http://www.ejustice.just.fgov.be/cgi/api2.pl?lg=nl&pd=2018-12-19&numac=2018032457"
+			>Vlaamse bestuursdecreet</a
+		>
+	</p>
 	<p class="u-margin-top">
 		<input
 			type="text"
@@ -21,6 +26,9 @@
 			more = "with newlines"
 			andso = "should not affect error line numbers"
 		%>
+		<input type="text"
+			class="test"
+		>
 	</p>
 
 	{% if true %}
