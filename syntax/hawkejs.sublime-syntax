@@ -10,7 +10,16 @@ variables:
   attribute_char: (?:[^ "'>/=])
   unquoted_attribute_value: (?:[^\s<>/''"]|/(?!>))+
   not_equals_lookahead: (?=\s*[^\s=])
-  varpath: (?:(?:\(?[a-zA-Z_][a-zA-Z0-9_]*\)?)\(?\)?\.?)+
+
+  # Using definitions from the JavaScript syntax
+  identifier_escape: (?:\\u(?:\h{4}|\{\h+\}))
+  identifier_start: (?:[_$\p{L}\p{Nl}]|{{identifier_escape}})
+  identifier_part: (?:[_$\p{L}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]|{{identifier_escape}})
+  identifier_break: (?!{{identifier_part}})
+  identifier: (?:{{identifier_start}}{{identifier_part}}*{{identifier_break}})
+
+  #varpath: (?:(?:\(?[a-zA-Z_][a-zA-Z0-9_]*\)?)\(?\)?\.?)+
+  varpath: (?:{{identifier}}(?:\.[0-9]*{{identifier}})*)+
 
   # HTML Variables
   ascii_space: '\t\n\f '
@@ -155,11 +164,16 @@ contexts:
     # If it's not a keyword, it's an expression
     #- match: (?<=% )\b(\w+)\b
     #  scope: invalid.illegal.block.name.hawkejs
-    - match: '{{varpath}}'
-      scope: variable.parameter.print.hawkejs
+    - include: hawkejs-expression
     - match: '"'
       push: string
     - include: variable-assignments
+
+  hawkejs-expression:
+    - match: \b(gt|lt|ge|le|ne|eq|or|and|not)\b
+      scope: keyword.generic.hawkejs
+    - match: '{{varpath}}'
+      scope: variable.parameter.hawkejs
 
   string:
     - meta_scope: string.quoted.double.hawkejs
@@ -623,7 +637,13 @@ contexts:
           pop: true
         - include: entities
 
+  tag-inline-ejs:
+    - match: '<%(?!%)[=_-]?'
+      scope: keyword.operator.delimiter.ejs, punctuation.definition.js.begin.ejs
+      push: js
+
   tag-generic-attribute:
+    - include: tag-inline-ejs
     - match: '{{attribute_name_start}}'
       push:
         - tag-generic-attribute-meta
@@ -642,6 +662,32 @@ contexts:
     - include: immediately-pop
 
   tag-generic-attribute-equals:
+    # Capture `="blabla <% %>` EJS. End quote is matched later
+    - match: '\="([^".]*?)(<%(?!%)[=_-]?)'
+      captures:
+        1: string
+        2: keyword.operator.delimiter.ejs, punctuation.definition.js.begin.ejs
+      push: js
+
+    # Look behind to find a `%>` before a ", and close it
+    - match: '(?<=\%\>).*?"'
+      pop: true
+
+    # Capture `={% varpath %}` assignments
+    - match: '\=({%\=?\s+)({{varpath}})\s+(%})'
+      captures:
+          1: support.constant.block.begin.hawkejs
+          2: variable.parameter.print.hawkejs
+          3: support.constant.block.end.hawkejs
+      pop: true
+
+    # Capture `=<% %>` EJS assignments
+    - match: '\=(<%(?!%)[=_-]?)'
+      captures:
+        1: keyword.operator.delimiter.ejs, punctuation.definition.js.begin.ejs
+      push: js
+
+    # Continue with capturing regular HTML
     - match: '='
       scope: punctuation.separator.key-value.html
       set: tag-generic-attribute-value
