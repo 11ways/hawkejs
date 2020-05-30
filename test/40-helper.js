@@ -26,6 +26,10 @@ describe('Helper', function() {
 				element.setAttribute('id', value || 'done');
 			});
 
+			Test.setProperty(function return_ok() {
+				return 'ok';
+			});
+
 			setTimeout(function() {
 
 				assert.strictEqual(Hawkejs.Helper.Test, Test);
@@ -65,13 +69,49 @@ describe('Helper', function() {
 			});
 		});
 
+		it('should allow the use of methods in Hawkejs expressions', function(done) {
+
+			var code = '{%= Test.saySomething() %}';
+
+			var compiled = hawkejs.compile('Test_test_3', code);
+
+			hawkejs.render(compiled, {}, function rendered(err, res) {
+
+				if (err) {
+					throw err;
+				}
+
+				res = res.trim();
+
+				assert.strictEqual(res, 'something');
+				done();
+			});
+		});
+
+		it('should allow the use of properties in Hawkejs expressions', function(done) {
+
+			var code = '{%= Test.return_ok %}';
+
+			var compiled = hawkejs.compile('Test_test_4', code);
+
+			hawkejs.render(compiled, {}, function rendered(err, res) {
+
+				if (err) {
+					throw err;
+				}
+
+				res = res.trim();
+
+				assert.strictEqual(res, 'ok');
+				done();
+			});
+		});
+
 		it('should allow the use of methods when using explicit declaration', function(done) {
 
 			var code = `<% const something = Test.saySomething() %><%= something %>`;
 
 			var compiled = hawkejs.compile('Test_test_2', code);
-
-			console.log('COMPILED:', compiled);
 
 			hawkejs.render(compiled, {}, function rendered(err, res) {
 
