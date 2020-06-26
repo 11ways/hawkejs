@@ -6,6 +6,7 @@
 * Added `CustomElement#setAttributeSilent()` in order to not trigger a setter
 * Added `CustomElement#prepareRenderVariables()` which allows you to add variables before rendering the contents
 * `CustomElement#setAttribute(name)` calls will now normalize the attribute & property name
+* Added `nwsapi` dependency so querying can also work on the server
 
 ## 1.3.3 (WIP)
 
