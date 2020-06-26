@@ -309,7 +309,41 @@ This is the main content
 			});
 		});
 	});
+
+	describe('#style()', function() {
+		it('should add stylesheet elements', function(done) {
+			hawkejs.render('style_test', function doneImplement(err, result) {
+
+				if (err) {
+					throw err;
+				}
+
+				let count;
+
+				count = countString(result, '<link rel="preload" href="/alpha.css" as="style">');
+				assert.strictEqual(count, 1, 'The alpha.css style should be preloaded exactly once, but it is preloaded ' + count + ' times');
+
+				count = countString(result, '<link rel="preload" href="/beta.css" as="style">')
+				assert.strictEqual(count, 1, 'The beta.css style should be preloaded exactly once, but it is preloaded ' + count + ' times');
+
+				count = countString(result, '<link href="/alpha.css" rel="stylesheet">')
+				assert.strictEqual(count, 1, 'The alpha.css style should be loaded exactly once, but it is loaded ' + count + ' times');
+
+				count = countString(result, '<link href="/beta.css" rel="stylesheet">')
+				assert.strictEqual(count, 1, 'The beta.css style should be loaded exactly once, but it is loaded ' + count + ' times');
+
+				count = countString(result, '<link rel="preload" href="/test.png" as="image">');
+				assert.strictEqual(count, 1, 'The test.png image should be preloaded exactly once, but it is preloaded ' + count + ' times');
+
+				done();
+			});
+		});
+	});
 });
+
+function countString(source, needle) {
+	return __Protoblast.Bound.String.count(source, needle);
+}
 
 function createTests(tests) {
 	for (let i = 0; i < tests.length; i++) {
