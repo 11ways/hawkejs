@@ -8,8 +8,6 @@
 	"repository": "git@github.com:skerit/hawkejs.git",
 	"dependencies": {
 		"protoblast" : "skerit/protoblast",
-		"temp"       : "~0.8.3",
-		"useragent"  : "~2.3.0",
 		"nwsapi"     : "~2.2.0"
 	},
 	"devDependencies": {

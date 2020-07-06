@@ -4,8 +4,8 @@
 </h1>
 <div align="center">
   <!-- CI - TravisCI -->
-  <a href="https://travis-ci.org/skerit/hawkejs">
-    <img src="https://travis-ci.org/skerit/hawkejs.svg?branch=master" alt="Mac/Linux Build Status" />
+  <a href="https://travis-ci.org/11ways/hawkejs">
+    <img src="https://travis-ci.org/11ways/hawkejs.svg?branch=master" alt="Mac/Linux Build Status" />
   </a>
 
   <!-- CI - AppVeyor -->
@@ -14,8 +14,8 @@
   </a>
 
   <!-- Coverage - Codecov -->
-  <a href="https://codecov.io/gh/skerit/hawkejs">
-    <img src="https://img.shields.io/codecov/c/github/skerit/hawkejs/master.svg" alt="Codecov Coverage report" />
+  <a href="https://codecov.io/gh/11ways/hawkejs">
+    <img src="https://img.shields.io/codecov/c/github/11ways/hawkejs/master.svg" alt="Codecov Coverage report" />
   </a>
 
   <!-- DM - Snyk -->
@@ -24,8 +24,8 @@
   </a>
 
   <!-- DM - David -->
-  <a href="https://david-dm.org/skerit/hawkejs">
-    <img src="https://david-dm.org/skerit/hawkejs/status.svg" alt="Dependency Status" />
+  <a href="https://david-dm.org/11ways/hawkejs">
+    <img src="https://david-dm.org/11ways/hawkejs/status.svg" alt="Dependency Status" />
   </a>
 </div>
 
@@ -36,8 +36,8 @@
   </a>
 
   <!-- License - MIT -->
-  <a href="https://github.com/skerit/hawkejs#license">
-    <img src="https://img.shields.io/github/license/skerit/hawkejs.svg" alt="Project license" />
+  <a href="https://github.com/11ways/hawkejs#license">
+    <img src="https://img.shields.io/github/license/11ways/hawkejs.svg" alt="Project license" />
   </a>
 </div>
 <br>
