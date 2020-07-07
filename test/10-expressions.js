@@ -235,9 +235,21 @@ describe('Expressions', function() {
 				`Jelle,Roel,Griet,Patrick,Voltorb,`
 			],
 			[
+				`{% each people as key, person where person.gender eq "nope" %}{%= person.name %},{% /each %}`,
+				``
+			],
+			[
+				`{% each does_not_exist as key, person %}{%= person.name %},{% /each %}`,
+				``
+			],
+			[
 				`{% each my_obj as key, val %}{%= key %}:{%= val %},{% /each %}`,
 				`a:a,b:b,c:c,`
-			]
+			],
+			[
+				`{% each deep.numbers as index, nr %}{%= index %}:{%= nr %},{% /each %}`,
+				`0:1,1:2,2:3,`
+			],
 		];
 
 		createTests(tests);
@@ -464,7 +476,12 @@ function createTests(tests) {
 						name   : 'Voltorb',
 						gender : ''
 					}
-				]
+				],
+				deep: {
+					numbers: [
+						1, 2, 3
+					]
+				}
 			};
 
 			hawkejs.render(compiled, vars, function done(err, res) {
