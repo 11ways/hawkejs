@@ -227,6 +227,22 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('Each ... as', function() {
+
+		var tests = [
+			[
+				`{% each people as key, person %}{%= person.name %},{% /each %}`,
+				`Jelle,Roel,Griet,Patrick,Voltorb,`
+			],
+			[
+				`{% each my_obj as key, val %}{%= key %}:{%= val %},{% /each %}`,
+				`a:a,b:b,c:c,`
+			]
+		];
+
+		createTests(tests);
+	});
+
 	describe('Or operator', function() {
 		var tests = [
 			[
