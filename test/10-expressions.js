@@ -89,6 +89,18 @@ describe('Expressions', function() {
 			[
 				'{% if empty_obj.a %}A{% elseif empty_obj.b %}B{% else %}{% if false %}FALSE{% else %}ELSE{% /if %}{% /if %}',
 				'ELSE'
+			],
+			[
+				`{% if 1 %}{% if 0 %}0{% elseif 2 %}2{% else %}3{% /if %}{% /if %}`,
+				`2`
+			],
+			[
+				`{% if not 0 %}{% if false %}false{% elseif my_obj.a %}A{% else %}NOPE{% /if %}{% /if %}`,
+				`A`
+			],
+			[
+				`{% if true %}{% if 0 %}0{% else %}{% with numbers as number %}{% each %}{% if 0 %}{% elseif number %},{% /if %}{%= number %}{% /each %}-{% if 0 %}0{% else %}{% if 0 %}0{% elseif 1 %}1{% else %}ELSE{% /if %}{% /if %}{% /with %}{% /if %}{% /if %}`,
+				`0,1,2,3-1`
 			]
 		];
 
