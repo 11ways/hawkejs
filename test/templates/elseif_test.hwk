@@ -1,3 +1,3 @@
-c:{% if c eq "a" %}A{% elseif c eq "b" %}B{% elseif c eq "1" %}1{% elseif c eq "c" %}C{% else %}ELSE{% /if %}
-bla:{% if bla eq "a" %}A{% elseif bla eq "b" %}B{% elseif bla eq "1" %}1{% elseif bla eq "c" %}C{% else %}ELSE{% /if %}
-{% if my_obj.b eq "a" %}A{% elseif my_obj.b eq "b" %}B{% elseif my_obj.b eq "1" %}1{% elseif my_obj.b eq "c" %}C{% else %}ELSE{% /if %}
+c:{% if c eq "a" %}A{% elseif c eq "b" %}B{% elseif c eq "1" %}1{% elseif c eq "c" %}C{% else %}ELSE{% /if %}-
+bla:{% if bla eq "a" %}A{% elseif bla eq "b" %}B{% elseif bla eq "1" %}1{% elseif bla eq "c" %}C{% else %}ELSE{% /if %}-
+{% if my_obj.b eq "a" %}A{% elseif my_obj.b eq "b" %}B{% elseif my_obj.b eq "1" %}1{% elseif my_obj.b eq "c" %}C{% else %}ELSE{% /if %}-

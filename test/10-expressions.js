@@ -7,6 +7,7 @@ describe('Expressions', function() {
 
 	before(function() {
 		hawkejs = new Hawkejs();
+		hawkejs.addViewDirectory(__dirname + '/templates');
 
 		Hawkejs.Renderer.setCommand(function __(key, param) {
 
@@ -101,8 +102,18 @@ describe('Expressions', function() {
 			[
 				`{% if true %}{% if 0 %}0{% else %}{% with numbers as number %}{% each %}{% if 0 %}{% elseif number %},{% /if %}{%= number %}{% /each %}-{% if 0 %}0{% else %}{% if 0 %}0{% elseif 1 %}1{% else %}ELSE{% /if %}{% /if %}{% /with %}{% /if %}{% /if %}`,
 				`0,1,2,3-1`
-			]
+			],
+			{
+				template: 'elseif_nested',
+				result  : '\n\t\t\t\tELSEIF\n\t\t\t\n\t\t\t\tELSEIF\n\t\t\t'
+			},
+			{
+				template: 'elseif_test',
+				result  : 'c:C-\nbla:ELSE-\nB-'
+			}
 		];
+
+		createTests(tests);
 
 	});
 
@@ -424,9 +435,22 @@ describe('Expressions', function() {
 
 function createTests(tests) {
 	for (let i = 0; i < tests.length; i++) {
-		let code = tests[i][0],
-		    title = tests[i][0].replace(/\n/g, '\\n').replace(/\t/g, '\\t'),
-		    result = tests[i][1];
+
+		let template,
+		    result,
+		    title,
+		    code,
+		    test = tests[i];
+
+		if (Array.isArray(test)) {
+			code = tests[i][0];
+			title = tests[i][0].replace(/\n/g, '\\n').replace(/\t/g, '\\t');
+			result = tests[i][1];
+		} else {
+			title = test.template;
+			template = test.template;
+			result = test.result;
+		}
 
 		if (title.length > 74) {
 			title = title.slice(0, 72) + '…';
@@ -435,10 +459,15 @@ function createTests(tests) {
 		it(title, function(next) {
 			test_id++;
 
-			var compiled = hawkejs.compile('test_' + test_id, code),
-			    vars;
+			let compiled;
 
-			vars = {
+			if (code) {
+				compiled = hawkejs.compile('test_' + test_id, code);
+			} else {
+				compiled = template;
+			}
+
+			let vars = {
 				c         : 'c',
 				str_bla   : 'bla',
 				empty_arr : [],
