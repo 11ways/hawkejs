@@ -89,6 +89,26 @@ This is the main content
 				done();
 			});
 		});
+
+		it('should be possible to use the {% extend %} expression instead', function(done) {
+
+			hawkejs.render('extend_test', function doneExpandTest(err, result) {
+
+				if (err) {
+					throw err;
+				}
+
+				assert.strictEqual(result.trim(), `<div class="main">
+	<hr>
+	<he-block data-hid="hserverside-0" data-he-name="main" data-he-template="extend_test">
+This is the main content
+</he-block>
+</div>`);
+
+				done();
+			});
+
+		});
 	});
 
 	describe('#start(name, options)', function() {
