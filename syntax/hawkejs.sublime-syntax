@@ -205,10 +205,15 @@ contexts:
     - match: '"'
       set: string
 
-  hwkcomment:
+  ejscomment:
     - meta_scope: comment.block.ejs
     - match: '%>'
       scope: punctuation.definition.comment.end.ejs
+      pop: true
+  hwkcomment:
+    - meta_scope: comment.block.hwk
+    - match: '#}'
+      scope: punctuation.definition.comment.end.hwk
       pop: true
   js:
     - match: '[_-]?%>'
@@ -240,6 +245,9 @@ contexts:
     - include: html
     - match: '<%#'
       scope: punctuation.definition.comment.begin.ejs
+      push: ejscomment
+    - match: '{#'
+      scope: punctuation.definition.comment.begin.hwk
       push: hwkcomment
     - match: '<%(?!%)[=_-]?'
       scope: keyword.operator.delimiter.ejs, punctuation.definition.js.begin.ejs
