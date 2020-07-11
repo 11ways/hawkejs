@@ -1,17 +1,19 @@
 <p>Pre-markdown-paragraph!</p>
 
 {% markdown %}
-# Test
+# Heading 1
 
-Dit is een `markdown` test, met {%= var %} ondersteuning {%= "test" %}
+<a href="#allowed">allowed html</a>
 
-<a href="">bla</a>
+`<span id="my-id">escaped html</span>`
 
-<span id={% assign %}>-</span>
+## Heading 2
 
-`<span id={% blaaaaaaaaaaaaaaaaaaaaaaaa %}>escaped!</span>`
+## {%= this.is.also.escaped %}
 
-## Ook?
-
-Hallo!
 {% /markdown %}
+
+This should be a converted variable:
+{% markdown my_markdown_string %}
+
+# This is NOT markdown!
