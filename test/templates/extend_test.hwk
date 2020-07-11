@@ -1,0 +1,5 @@
+{% extend "base" %}
+
+{% block "main" %}
+This is the main content
+{% /block %}

@@ -256,6 +256,64 @@ describe('HTMLElement', function() {
 		});
 	});
 
+	describe('#querySelector', function() {
+		it('should be possible to use the query selector on the server', function(done) {
+
+			var template = 'query_test';
+
+			var renderer = hawkejs.renderToElements(template, {}, function finished(err, elements) {
+
+				if (err) {
+					throw err;
+				}
+
+				let element = elements[0];
+
+				if (!element) {
+					throw new Error('renderToElements() did not provide elements');
+				}
+
+				let spans = element.querySelectorAll('span');
+
+				assert.strictEqual(spans.length, 2, 'Expected to find 2 spans');
+				assert.strictEqual(spans[0].outerHTML, '<span>1</span>');
+				assert.strictEqual(spans[1].outerHTML, '<span>2</span>');
+
+				let my_div = element.querySelector('.my-div');
+				assert.strictEqual(my_div.id, 'test');
+
+				let table = element.querySelector('table');
+
+				let tr_one = table.firstElementChild;
+
+				assert.strictEqual(tr_one.id, 'tr1', '#firstElementChild returned the wrong element');
+
+				let tr_two = element.querySelector('#tr2');
+
+				if (!tr_two) {
+					throw new Error('Failed to find element by its id');
+				}
+
+				assert.strictEqual(tr_two.id, 'tr2');
+
+				let even_rows = element.querySelectorAll('table tr:nth-child(even)');
+				assert.strictEqual(even_rows.length, 3, 'Expected 3 rows');
+				assert.strictEqual(even_rows[0].id, 'tr2');
+				assert.strictEqual(even_rows[1].id, 'tr4');
+				assert.strictEqual(even_rows[2].id, 'tr6');
+
+				let odd_rows = element.querySelectorAll('table tr:nth-child(odd)');
+				assert.strictEqual(odd_rows.length, 4, 'Expected 4 rows');
+				assert.strictEqual(odd_rows[0].id, 'tr1');
+				assert.strictEqual(odd_rows[1].id, 'tr3');
+				assert.strictEqual(odd_rows[2].id, 'tr5');
+				assert.strictEqual(odd_rows[3].id, 'tr7');
+
+				done();
+			});
+		});
+	});
+
 	// HTML Element Extensions!
 
 	describe('#setIndexInParent(index)', function() {

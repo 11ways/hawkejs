@@ -2,9 +2,9 @@ language: node_js
 addons:
   chrome: stable
 node_js:
-  - "8.9.0"
-  - "8.11.0"
-  - "10.6.0"
+  - "10.21.0"
+  - "12.18.2"
+  - "14.5.0"
 env:
   - TZ="Europe/Brussels"
 after_success:

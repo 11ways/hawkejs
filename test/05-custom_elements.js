@@ -153,7 +153,7 @@ describe('CustomElement', function() {
 
 					res = res.trim();
 
-					assert.strictEqual(res, '<template-test>This is the content of template-test</template-test>');
+					assert.strictEqual(res, '<template-test he-rendered="1">This is the content of template-test</template-test>');
 					done();
 				});
 
@@ -184,7 +184,7 @@ describe('CustomElement', function() {
 
 					res = res.trim();
 
-					assert.strictEqual(res, '<template-slot-test><div data-he-slot="main">This will set the content of the <b>main</b> slot</div></template-slot-test>');
+					assert.strictEqual(res, '<template-slot-test he-rendered="1"><div data-he-slot="main">This will set the content of the <b>main</b> slot</div></template-slot-test>');
 					done();
 				});
 
@@ -210,7 +210,7 @@ describe('CustomElement', function() {
 
 				res = res.trim();
 
-				assert.strictEqual(res, '<template-slot-test><div data-he-slot="main">Slot test 1</div></template-slot-test>\n<template-slot-test><div data-he-slot="main">Slot test 2</div></template-slot-test>');
+				assert.strictEqual(res, '<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 1</div></template-slot-test>\n<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 2</div></template-slot-test>');
 				done();
 			});
 

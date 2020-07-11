@@ -7,6 +7,7 @@ describe('Expressions', function() {
 
 	before(function() {
 		hawkejs = new Hawkejs();
+		hawkejs.addViewDirectory(__dirname + '/templates');
 
 		Hawkejs.Renderer.setCommand(function __(key, param) {
 
@@ -60,6 +61,9 @@ describe('Expressions', function() {
 			['{% if 0 %}WRONG{% else %}ELSE{% /if %}',     'ELSE'],
 			['{% if none.existing.variable %}WRONG{% else %}ELSE{% /if %}', 'ELSE'],
 			['{% if falsy %}NOPE{% else %}FALSY{% /if %}', 'FALSY'],
+			['{% if true %}{% if true %}TRUE{% /if %}{% else %}ELSE{% /if %}', 'TRUE'],
+			['{% if true %}1{% if true %}2{% if true %}3{% /if %}2{% /if %}1{% else %}ELSE{% /if %}', '12321'],
+			['{% if true %}1{% if false %}FALSE{% else %}2{% if true %}3{% /if %}2{% /if %}1{% else %}ELSE{% /if %}', '12321'],
 		];
 
 		createTests(tests);
@@ -79,8 +83,38 @@ describe('Expressions', function() {
 			[
 				'{% if my_obj.b eq "a" %}A{% elseif my_obj.b eq "b" %}B{% elseif my_obj.b eq "1" %}1{% elseif my_obj.b eq "c" %}C{% else %}ELSE{% /if %}',
 				'B'
-			]
+			],
+			[
+				'{% if empty_obj.a %}A{% elseif empty_obj.b %}B{% else %}{% if true %}TRUE{% else %}ELSE{% /if %}{% /if %}',
+				'TRUE'
+			],
+			[
+				'{% if empty_obj.a %}A{% elseif empty_obj.b %}B{% else %}{% if false %}FALSE{% else %}ELSE{% /if %}{% /if %}',
+				'ELSE'
+			],
+			[
+				`{% if 1 %}{% if 0 %}0{% elseif 2 %}2{% else %}3{% /if %}{% /if %}`,
+				`2`
+			],
+			[
+				`{% if not 0 %}{% if false %}false{% elseif my_obj.a %}A{% else %}NOPE{% /if %}{% /if %}`,
+				`A`
+			],
+			[
+				`{% if true %}{% if 0 %}0{% else %}{% with numbers as number %}{% each %}{% if 0 %}{% elseif number %},{% /if %}{%= number %}{% /each %}-{% if 0 %}0{% else %}{% if 0 %}0{% elseif 1 %}1{% else %}ELSE{% /if %}{% /if %}{% /with %}{% /if %}{% /if %}`,
+				`0,1,2,3-1`
+			],
+			{
+				template: 'elseif_nested',
+				result  : '\n\t\t\t\tELSEIF\n\t\t\t\n\t\t\t\tELSEIF\n\t\t\t'
+			},
+			{
+				template: 'elseif_test',
+				result  : 'c:C-\nbla:ELSE-\nB-'
+			}
 		];
+
+		createTests(tests);
 
 	});
 
@@ -184,6 +218,10 @@ describe('Expressions', function() {
 			[
 				`{% with people as person %}{% all %}-{% /all %}{% each %}{% if person.gender %}{%= person.name %},{% else %}-{% /if %}{% /each %}{% all %}-{% /all %}{% /with %}`,
 				`-Jelle,Roel,Griet,Patrick,--`
+			],
+			[
+				`{% with people as person %}A{%= $amount %}-{% if $amount le 100 %}LESS{% /if %}{% /with %}`,
+				`A5-LESS`
 			]
 		];
 
@@ -207,6 +245,34 @@ describe('Expressions', function() {
 			[
 				`{% with people as person where not person.gender %}{% each %}{%= person.name %},{% /each %}{% /with %}`,
 				'Voltorb,'
+			],
+		];
+
+		createTests(tests);
+	});
+
+	describe('Each ... as', function() {
+
+		var tests = [
+			[
+				`{% each people as key, person %}{%= person.name %},{% /each %}`,
+				`Jelle,Roel,Griet,Patrick,Voltorb,`
+			],
+			[
+				`{% each people as key, person where person.gender eq "nope" %}{%= person.name %},{% /each %}`,
+				``
+			],
+			[
+				`{% each does_not_exist as key, person %}{%= person.name %},{% /each %}`,
+				``
+			],
+			[
+				`{% each my_obj as key, val %}{%= key %}:{%= val %},{% /each %}`,
+				`a:a,b:b,c:c,`
+			],
+			[
+				`{% each deep.numbers as index, nr %}{%= index %}:{%= nr %},{% /each %}`,
+				`0:1,1:2,2:3,`
 			],
 		];
 
@@ -308,11 +374,28 @@ describe('Expressions', function() {
 			[`{%= [my_obj.a, my_obj.b, my_obj.c] %}`,      'a,b,c'],
 			[`{%= [test.three, test.three + 1] %}`,        '3,4'],
 			[`{%= JSON.stringify({three: test.three}) %}`,      '{"three":3}'],
-			[`{%= __('test.with.{curly}', {curly: 'test'}) %}`, 'test.with.test']
+			[`{%= __('test.with.{curly}', {curly: 'test'}) %}`, 'test.with.test'],
+			[`{%= JSON.stringify({a: 1,}) %}`,                  '{"a":1}'],
+			[`{%= JSON.stringify([1,]) %}`,                     '[1]'],
 		];
 
 		createTests(tests);
+	});
 
+	describe('Block', function() {
+
+		var tests = [
+			[
+				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="compiledView">TESTING</he-block>`
+			],
+			[
+				`€{% if true %}€<span>€</span>{% /if %}`,
+				`€€<span>€</span>`
+			]
+		];
+
+		createTests(tests);
 	});
 
 	describe('Method calls', function() {
@@ -341,6 +424,17 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('Comments', function() {
+
+		var tests = [
+			[`{# bla #}1`,                '1'],
+			[`{# bla #}\n{# bla #}\n1`,   '\n\n1'],
+		];
+
+		createTests(tests);
+
+	});
+
 	describe('None existing method calls', function() {
 
 		var tests = [
@@ -353,9 +447,22 @@ describe('Expressions', function() {
 
 function createTests(tests) {
 	for (let i = 0; i < tests.length; i++) {
-		let code = tests[i][0],
-		    title = tests[i][0].replace(/\n/g, '\\n').replace(/\t/g, '\\t'),
-		    result = tests[i][1];
+
+		let template,
+		    result,
+		    title,
+		    code,
+		    test = tests[i];
+
+		if (Array.isArray(test)) {
+			code = tests[i][0];
+			title = tests[i][0].replace(/\n/g, '\\n').replace(/\t/g, '\\t');
+			result = tests[i][1];
+		} else {
+			title = test.template;
+			template = test.template;
+			result = test.result;
+		}
 
 		if (title.length > 74) {
 			title = title.slice(0, 72) + '…';
@@ -364,10 +471,15 @@ function createTests(tests) {
 		it(title, function(next) {
 			test_id++;
 
-			var compiled = hawkejs.compile('test_' + test_id, code),
-			    vars;
+			let compiled;
 
-			vars = {
+			if (code) {
+				compiled = hawkejs.compile('test_' + test_id, code);
+			} else {
+				compiled = template;
+			}
+
+			let vars = {
 				c         : 'c',
 				str_bla   : 'bla',
 				empty_arr : [],
@@ -417,7 +529,12 @@ function createTests(tests) {
 						name   : 'Voltorb',
 						gender : ''
 					}
-				]
+				],
+				deep: {
+					numbers: [
+						1, 2, 3
+					]
+				}
 			};
 
 			hawkejs.render(compiled, vars, function done(err, res) {

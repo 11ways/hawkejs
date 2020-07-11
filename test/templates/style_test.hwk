@@ -1,0 +1,12 @@
+<html>
+<head>
+	<% foundation() %>
+	<% style('alpha') %>
+	<% style('beta') %>
+	<% style('alpha') %>
+</head>
+<body>
+	<img src="/test.png">
+	<img src="/test.png">
+</body>
+</html>
