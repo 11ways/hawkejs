@@ -423,6 +423,17 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('Comments', function() {
+
+		var tests = [
+			[`{# bla #}1`,                '1'],
+			[`{# bla #}\n{# bla #}\n1`,   '\n\n1'],
+		];
+
+		createTests(tests);
+
+	});
+
 	describe('None existing method calls', function() {
 
 		var tests = [
