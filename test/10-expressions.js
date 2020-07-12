@@ -274,6 +274,10 @@ describe('Expressions', function() {
 				`{% each deep.numbers as index, nr %}{%= index %}:{%= nr %},{% /each %}`,
 				`0:1,1:2,2:3,`
 			],
+			[
+				`{% each iterable as index, nr %}{%= index %}:{%= nr %},{% /each %}`,
+				`0:0,1:1,2:2,3:3,4:4,`
+			],
 		];
 
 		createTests(tests);
@@ -571,8 +575,26 @@ function createTests(tests) {
 					numbers: [
 						1, 2, 3
 					]
+				},
+			};
+
+			let iterable = {
+				records: [
+					0, 1, 2, 3, 4
+				]
+			};
+
+			iterable[Symbol.iterator] = function* iterate() {
+
+				let i;
+
+				for (i = 0; i < this.records.length; i++) {
+					yield this.records[i];
 				}
 			};
+
+			vars.iterable = iterable;
+
 
 			hawkejs.render(compiled, vars, function done(err, res) {
 
