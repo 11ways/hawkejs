@@ -18,6 +18,10 @@
 		"puppeteer"       : "~1.17.0",
 		"puppeteer-to-istanbul": "~1.2.2"
 	},
+	"files": [
+		"lib/",
+		"index.js"
+	],
 	"scripts": {
 		"test"            : "node_modules/.bin/mocha --exit --reporter spec --bail --timeout 5000 --file test/00-init.js",
 		"appveyor"        : "node_modules/.bin/mocha --exit --reporter spec --bail --timeout 20000 --file test/00-init.js",
