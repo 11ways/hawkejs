@@ -220,8 +220,6 @@ describe('Directives', function() {
 					return next();
 				}
 
-				console.log(message)
-
 				throw new Error('Got wrong error line in template_with_error');
 			});
 
