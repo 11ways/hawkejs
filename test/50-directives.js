@@ -202,19 +202,19 @@ describe('Directives', function() {
 
 			var message;
 
-			const old_log = console.log;
+			const old_error = console.error;
 
-			console.log = function log(msg) {
+			console.error = function error(msg) {
 				message = msg;
-				console.log = old_log;
+				console.error = old_error;
 			}
 
 			hawkejs.render('template_with_error', function donePartial(err, result) {
 
 				// Restore console.log method
-				console.log = old_log;
+				console.error = old_error;
 
-				let found_error = message.indexOf('»»»  35 | 		<h4>This should throw an error</h5>') > -1;
+				let found_error = message.indexOf('»»»  38 | 		<h4>This should throw an error</h5>') > -1;
 
 				if (found_error) {
 					return next();

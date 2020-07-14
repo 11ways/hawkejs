@@ -444,7 +444,12 @@ describe('Expressions', function() {
 			var template = 'markdown_test';
 
 			var vars = {
-				my_markdown_string: `# String-test\n---\n\nThis is a markdown from a **string** test!`
+				my_markdown_string: `# String-test\n---\n\nThis is a markdown from a **string** test!`,
+				multiple_md: [
+					{md_code: '`code`'},
+					{md_code: '**b**'},
+					{md_code: '_i_'}
+				]
 			};
 
 			var renderer = hawkejs.render(template, vars, function done(err, html) {
@@ -467,7 +472,12 @@ This should be a converted variable:
 <p>This is a markdown from a <strong>string</strong> test!</p>
 
 
-# This is NOT markdown!`)
+# This is NOT markdown!
+
+»<p><code>code</code></p>
+<p><strong>b</strong></p>
+<p><em>i</em></p>
+«`)
 				}
 
 				next();

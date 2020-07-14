@@ -3,35 +3,41 @@
 	{%= "CODE" %}
 </div>
 
-{% block "test" %}
-	<div class="row">
-		<div class="col-xs-12">
-			<h1>Invulassistent {%= website.title %}: {%= website.url %}</h1>
-		</div>
-	</div>
-	<p class="u-margin-top">
-		<a
-			href="http://www.ejustice.just.fgov.be/cgi/api2.pl?lg=nl&pd=2018-12-19&numac=2018032457"
-			>Vlaamse bestuursdecreet</a
-		>
-	</p>
-	<p class="u-margin-top">
-		<input
-			type="text"
-			placeholder="Naam juridische entiteit bv. Stad Antwerpen"
-			autofocus="false"
-		>
-		<%
-			test = "this is code"
-			more = "with newlines"
-			andso = "should not affect error line numbers"
-		%>
-		<input type="text"
-			class="test"
-		>
-	</p>
+{% if true %}
 
-	{% if true %}
-		<h4>This should throw an error</h5>
-	{% /if %}
-{% /block %}
+	<!-- Start Block -->
+	{% block "test" %}
+		<div class="row">
+			<div class="col-xs-12">
+				<h1>Invulassistent {%= website.title %}: {%= website.url %}</h1>
+			</div>
+		</div>
+		<p class="u-margin-top">
+			<a
+				href="http://www.ejustice.just.fgov.be/cgi/api2.pl?lg=nl&pd=2018-12-19&numac=2018032457"
+				>Vlaamse bestuursdecreet</a
+			>
+		</p>
+		<p class="u-margin-top">
+			<input
+				type="text"
+				placeholder="Naam juridische entiteit bv. Stad Antwerpen"
+				autofocus="false"
+			>
+			<%
+				test = "this is code"
+				more = "with newlines"
+				andso = "should not affect error line numbers"
+			%>
+			<input type="text"
+				class="test"
+			>
+		</p>
+
+		{% if true %}
+			<h4>This should throw an error</h5>
+		{% /if %}
+	{% /block %}
+	<!-- End Block -->
+
+{% /if %}

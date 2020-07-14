@@ -17,3 +17,10 @@ This should be a converted variable:
 {% markdown my_markdown_string %}
 
 # This is NOT markdown!
+
+{% with multiple_md as entry %}
+{% all %}»{% /all %}
+{% each %}{% if true %}{% markdown does.not.exist or entry.md_code %}{% /if %}
+{% /each %}
+{% all %}«{% /all %}
+{% /with %}
