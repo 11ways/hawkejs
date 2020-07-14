@@ -91,15 +91,15 @@ describe('Hawkejs', function() {
 		it('should return an errorView function for templates containg syntax errors', function() {
 
 			var fnc,
-			    backup = console.log;
+			    backup = console.error;
 
 			// #compile outputs using console.log, shut it up for now
-			console.log = function(){};
+			console.error = function(){};
 
 			fnc = hawkejs.compile('Parse error: <% ! %>');
 
 			// And put it back
-			console.log = backup;
+			console.error = backup;
 
 			assert.equal('errorView', fnc.name);
 		});
