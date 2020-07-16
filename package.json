@@ -11,11 +11,11 @@
 		"nwsapi"     : "~2.2.0"
 	},
 	"devDependencies": {
-		"codecov"         : "~3.6.5",
-		"nyc"             : "^14.1.1",
+		"codecov"         : "~3.7.0",
+		"nyc"             : "^15.1.0",
 		"matcha"          : "~0.7.0",
-		"mocha"           : "~6.1.4",
-		"puppeteer"       : "~1.17.0",
+		"mocha"           : "~8.0.1",
+		"puppeteer"       : "~5.1.0",
 		"puppeteer-to-istanbul": "~1.2.2"
 	},
 	"files": [
