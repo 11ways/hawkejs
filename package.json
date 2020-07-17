@@ -16,7 +16,7 @@
 		"matcha"          : "~0.7.0",
 		"mocha"           : "~8.0.1",
 		"puppeteer"       : "~5.1.0",
-		"puppeteer-to-istanbul": "~1.2.2",
+		"puppeteer-to-istanbul": "skerit/puppeteer-to-istanbul",
 		"source-map"      : "~0.7.3"
 	},
 	"files": [
@@ -26,7 +26,7 @@
 	"scripts": {
 		"test"            : "node_modules/.bin/mocha --exit --reporter spec --bail --timeout 5000 --file test/00-init.js",
 		"appveyor"        : "node_modules/.bin/mocha --exit --reporter spec --bail --timeout 20000 --file test/00-init.js",
-		"coverage"        : "node_modules/.bin/nyc --reporter=text --reporter=lcov mocha --exit --timeout 20000 --bail --file test/00-init.js",
+		"coverage"        : "node_modules/.bin/nyc --silent mocha --exit --timeout 20000 --bail --file test/00-init.js && nyc report",
 		"report-coverage" : "cat ./coverage/lcov.info | codecov"
 	},
 	"license": "MIT",
