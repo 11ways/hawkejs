@@ -16,7 +16,8 @@
 		"matcha"          : "~0.7.0",
 		"mocha"           : "~8.0.1",
 		"puppeteer"       : "~5.1.0",
-		"puppeteer-to-istanbul": "~1.2.2"
+		"puppeteer-to-istanbul": "~1.2.2",
+		"source-map"      : "~0.7.3"
 	},
 	"files": [
 		"lib/",

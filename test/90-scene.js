@@ -79,8 +79,9 @@ describe('Scene', function() {
 				if (url.pathname == '/hawkejs/hawkejs-client.js') {
 
 					__Protoblast.getClientPath({
-						modify_prototypes: true,
-						ua: req.headers.useragent
+						modify_prototypes : true,
+						ua                : req.headers.useragent,
+						create_source_map : true,
 					}).done(function gotClientFile(err, path) {
 
 						if (err) {
@@ -219,15 +220,68 @@ describe('Scene', function() {
 		});
 	});
 
+	describe('#scrollTo()', function() {
+		it('should scroll to the given element', async function() {
+
+			let scroll_top = await evalPage(function() {
+				return document.scrollingElement.scrollTop;
+			});
+
+			assert.strictEqual(scroll_top, 0, 'The originel scroll top should have been 0');
+
+			await evalPage(function() {
+
+				let button = document.querySelector('my-button'),
+				    i;
+
+				if (!button) {
+					throw new Error('Could not find <my-button> element');
+				}
+
+				// Insert a bunch of elements
+				for (i = 0; i < 400; i++) {
+					let element = document.createElement('p');
+					element.innerHTML = 'A<br>B<br>C<br>';
+					button.prepend(element);
+				}
+
+				hawkejs.scene.scrollTo('my-button');
+			});
+
+			await __Protoblast.Classes.Pledge.after(100);
+
+			scroll_top = await evalPage(function() {
+				return document.scrollingElement.scrollTop;
+			});
+
+			assert.strictEqual(scroll_top > 0, true, 'The page should have scrolled');
+		});
+	});
+
 	after(async function() {
 
 		// Report coverage from the browser to istanbul.
 		// This won't really work of course, because the
 		// entire hawkejs codebase gets put in 1 big file
-		const [jsCoverage, cssCoverage] = await Promise.all([
+		let [jsCoverage, cssCoverage] = await Promise.all([
 			page.coverage.stopJSCoverage(),
 			page.coverage.stopCSSCoverage(),
 		]);
+
+		// jsCoverage is an array of objects like this:
+		/*
+			{
+				url    : 'http://127.0.0.1/hawkejs/hawkejs-client.js',
+				text   : '<original source code>',
+				ranges : [
+					{start: 611, end: 856},
+					{start: 1119, end: 1970},
+					...
+				]
+			}
+		*/
+
+		jsCoverage = await __Protoblast.convertCoverage(jsCoverage);
 
 		pti.write(jsCoverage);
 		await browser.close()

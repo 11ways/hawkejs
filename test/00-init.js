@@ -220,7 +220,7 @@ __render.print(vars.post._id)
 
 	describe('#createClientFile(options)', function() {
 		it('should create client file', function(done) {
-			hawkejs.createClientFile().done(function gotFile(err, path) {
+			hawkejs.createClientFile({create_source_map: true}).done(function gotFile(err, path) {
 
 				if (err) {
 					throw err;
