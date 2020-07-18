@@ -12,6 +12,7 @@ let puppeteer = require('puppeteer'),
     Test;
 
 let navigations = 0,
+    do_coverage = !!global.__coverage__,
     coverage,
     browser,
     server,
@@ -34,7 +35,7 @@ async function fetchCoverage() {
 
 async function setLocation(path) {
 
-	if (navigations) {
+	if (navigations && do_coverage) {
 		await fetchCoverage;
 	}
 
@@ -283,9 +284,10 @@ describe('Scene', function() {
 
 	after(async function() {
 
-		await fetchCoverage();
-
-		fs.writeFileSync('./.nyc_output/hawkejs.json', JSON.stringify(coverage));
+		if (do_coverage) {
+			await fetchCoverage();
+			fs.writeFileSync('./.nyc_output/hawkejs.json', JSON.stringify(coverage));
+		}
 
 		await browser.close()
 	});
