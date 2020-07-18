@@ -219,8 +219,13 @@ __render.print(vars.post._id)
 	});
 
 	describe('#createClientFile(options)', function() {
+		this.timeout(70000);
+
 		it('should create client file', function(done) {
-			hawkejs.createClientFile({create_source_map: true}).done(function gotFile(err, path) {
+			hawkejs.createClientFile({
+				create_source_map: true,
+				enable_coverage  : !!global.__coverage__,
+			}).done(function gotFile(err, path) {
 
 				if (err) {
 					throw err;
@@ -232,8 +237,12 @@ __render.print(vars.post._id)
 
 				let source = fs.readFileSync(path, 'utf8');
 
+				if (source.length < 10000) {
+					throw new Error('The created client-file is too small');
+				}
+
 				if (source.indexOf('require.register("hawkejs/client/template') == -1) {
-					throw new Error('Created file does not seem valid');
+					throw new Error('Created client-file does not contain required files');
 				}
 
 				done();

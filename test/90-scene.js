@@ -1,5 +1,8 @@
-var pti       = require('puppeteer-to-istanbul'),
-    puppeteer = require('puppeteer'),
+/* istanbul ignore file */
+// Istanbul coverage is disabled for this file,
+// because it would mess up the functions sent to puppeteer
+
+let puppeteer = require('puppeteer'),
     assert    = require('assert'),
     Hawkejs   = require('../index.js'),
     http      = require('http'),
@@ -8,7 +11,9 @@ var pti       = require('puppeteer-to-istanbul'),
     hawkejs,
     Test;
 
-var browser,
+let navigations = 0,
+    coverage,
+    browser,
     server,
     page,
     port;
@@ -17,9 +22,32 @@ function despace(text) {
 	return text.trim().replace(/\n/g, ' ').replace(/\s\s+/g, ' ');
 }
 
-function setLocation(path) {
+async function fetchCoverage() {
+	let temp = await page.evaluate(function getCoverage() {
+		return window.__coverage__;
+	});
+
+	if (temp) {
+		coverage = temp;
+	}
+}
+
+async function setLocation(path) {
+
+	if (navigations) {
+		await fetchCoverage;
+	}
+
+	navigations++;
+
 	var url = 'http://127.0.0.1:' + port + path;
-	return page.goto(url);
+	await page.goto(url);
+
+	if (coverage) {
+		await page.evaluate(function setCoverage(coverage) {
+			window.__coverage__ = coverage;
+		}, coverage);
+	}
 }
 
 function evalPage(fnc) {
@@ -27,6 +55,7 @@ function evalPage(fnc) {
 }
 
 describe('Scene', function() {
+	this.timeout(60000);
 
 	before(async function() {
 		browser = await puppeteer.launch();
@@ -57,12 +86,6 @@ describe('Scene', function() {
 			console.log(...pieces);
 		});
 
-		// Enable both JavaScript and CSS coverage
-		await Promise.all([
-			page.coverage.startJSCoverage(),
-			page.coverage.startCSSCoverage()
-		]);
-
 		hawkejs = new Hawkejs();
 		hawkejs.addViewDirectory(__dirname + '/templates');
 
@@ -81,7 +104,7 @@ describe('Scene', function() {
 					__Protoblast.getClientPath({
 						modify_prototypes : true,
 						ua                : req.headers.useragent,
-						create_source_map : true,
+						enable_coverage   : !!global.__coverage__,
 					}).done(function gotClientFile(err, path) {
 
 						if (err) {
@@ -260,30 +283,10 @@ describe('Scene', function() {
 
 	after(async function() {
 
-		// Report coverage from the browser to istanbul.
-		// This won't really work of course, because the
-		// entire hawkejs codebase gets put in 1 big file
-		let [jsCoverage, cssCoverage] = await Promise.all([
-			page.coverage.stopJSCoverage(),
-			page.coverage.stopCSSCoverage(),
-		]);
+		await fetchCoverage();
 
-		// jsCoverage is an array of objects like this:
-		/*
-			{
-				url    : 'http://127.0.0.1/hawkejs/hawkejs-client.js',
-				text   : '<original source code>',
-				ranges : [
-					{start: 611, end: 856},
-					{start: 1119, end: 1970},
-					...
-				]
-			}
-		*/
+		fs.writeFileSync('./.nyc_output/hawkejs.json', JSON.stringify(coverage));
 
-		jsCoverage = await __Protoblast.convertCoverage(jsCoverage);
-
-		pti.write(jsCoverage);
 		await browser.close()
 	});
 });

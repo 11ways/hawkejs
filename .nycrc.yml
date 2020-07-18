@@ -1,0 +1,5 @@
+exclude:
+  - lib/client/formdata.js
+  - lib/client/html_shims.js
+  - lib/client/register_element.js
+  - test/
