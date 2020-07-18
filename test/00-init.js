@@ -10,12 +10,11 @@ let puppeteer = require('puppeteer'),
     hawkejs;
 
 let navigations = 0,
-    do_coverage = !!global.__coverage__,
     coverage,
     browser,
     page;
 
-global.do_coverage = do_coverage;
+global.do_coverage = !!global.__coverage__;
 
 global.fetchCoverage = async function fetchCoverage() {
 
@@ -119,7 +118,7 @@ async function loadBrowser() {
 				__Protoblast.getClientPath({
 					modify_prototypes : true,
 					ua                : req.headers.useragent,
-					enable_coverage   : !!global.__coverage__,
+					enable_coverage   : do_coverage,
 				}).done(function gotClientFile(err, path) {
 
 					if (err) {
