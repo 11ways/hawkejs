@@ -113,6 +113,11 @@ describe('Scene', function() {
 
 		if (do_coverage) {
 			let coverage = await fetchCoverage();
+
+			if (!coverage) {
+				throw new Error('The browser coverage is empty');
+			}
+
 			fs.writeFileSync('./.nyc_output/hawkejs.json', JSON.stringify(coverage));
 		}
 
