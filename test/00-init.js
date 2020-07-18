@@ -1,3 +1,7 @@
+/* istanbul ignore file */
+// Istanbul coverage is disabled for this file,
+// because it would mess up the functions sent to puppeteer
+
 let puppeteer = require('puppeteer'),
     assert    = require('assert'),
     Hawkejs   = require('../index.js'),

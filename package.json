@@ -26,7 +26,7 @@
 	"scripts": {
 		"test"            : "mocha --exit --reporter spec --bail --timeout 5000 --file test/00-init.js",
 		"appveyor"        : "mocha --exit --reporter spec --bail --timeout 20000 --file test/00-init.js",
-		"coverage"        : "nyc --reporter=text --reporter=lcov --silent mocha --exit --timeout 20000 --bail --file test/00-init.js",
+		"coverage"        : "nyc --reporter=text --reporter=lcov mocha --exit --timeout 20000 --bail --file test/00-init.js",
 		"report-coverage" : "nyc report --reporter=lcov && cat ./coverage/lcov.info | codecov"
 	},
 	"license": "MIT",

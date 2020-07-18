@@ -4,6 +4,7 @@
 
 let assert    = require('assert'),
     Hawkejs   = require('../index.js'),
+    fs        = require('fs'),
     Fn        = __Protoblast.Bound.Function,
     hawkejs,
     Test;
@@ -111,7 +112,7 @@ describe('Scene', function() {
 	after(async function() {
 
 		if (do_coverage) {
-			await fetchCoverage();
+			let coverage = await fetchCoverage();
 			fs.writeFileSync('./.nyc_output/hawkejs.json', JSON.stringify(coverage));
 		}
 
