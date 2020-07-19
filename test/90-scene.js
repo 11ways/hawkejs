@@ -109,6 +109,39 @@ describe('Scene', function() {
 		});
 	});
 
+	describe('#setPageTitle(title)', function() {
+
+		it('should set the pagetitle', async function() {
+
+			let title = await evalPage(function() {
+				hawkejs.scene.setPageTitle('My Page!');
+				return document.querySelector('head title').textContent;
+			});
+
+			assert.strictEqual(title, 'My Page!');
+		});
+
+		it('should create the title element if it does not exist', async function() {
+			let title = await evalPage(function() {
+				document.querySelector('head title').remove();
+				hawkejs.scene.setPageTitle('Other title');
+				return document.querySelector('head title').textContent;
+			});
+
+			assert.strictEqual(title, 'Other title');
+		});
+
+		it('should not set the title if an object is given', async function() {
+			let title = await evalPage(function() {
+				hawkejs.scene.setPageTitle({});
+				return document.querySelector('head title').textContent;
+			});
+
+			assert.strictEqual(title, 'Other title');
+		});
+
+	});
+
 	after(async function() {
 
 		if (do_coverage) {
