@@ -1,0 +1,6 @@
+codecov:
+  max_report_age: off
+ignore:
+  - lib/client/html_shims.js
+  - lib/client/register_element.js
+  - lib/client/formdata.js
