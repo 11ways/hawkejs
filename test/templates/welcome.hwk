@@ -1,0 +1,5 @@
+{% extend "home_base" %}
+
+{% block "main" %}
+Welcome!
+{% /block %}

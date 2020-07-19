@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<% this.foundation() %>
+		<% this.foundation({protoblast: true}) %>
 	</head>
 	<body>
 		<% assign('old-main') %>

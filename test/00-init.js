@@ -10,7 +10,7 @@ let puppeteer = require('puppeteer'),
     hawkejs;
 
 let navigations = 0,
-    coverage,
+    coverages = [],
     browser,
     page;
 
@@ -27,10 +27,10 @@ global.fetchCoverage = async function fetchCoverage() {
 	});
 
 	if (temp) {
-		coverage = temp;
+		coverages.push(temp);
 	}
 
-	return coverage;
+	return coverages;
 };
 
 global.setLocation = async function setLocation(path) {
@@ -54,12 +54,6 @@ global.setLocation = async function setLocation(path) {
 	}
 
 	await page.goto(url);
-
-	if (coverage) {
-		await page.evaluate(function setCoverage(coverage) {
-			window.__coverage__ = coverage;
-		}, coverage);
-	}
 };
 
 global.evalPage = function evalPage(fnc) {
@@ -111,6 +105,7 @@ async function loadBrowser() {
 			    templates;
 
 			req.renderer = renderer;
+			renderer.prepare(req, res);
 			renderer.internal('url', url);
 
 			if (url.pathname == '/hawkejs/hawkejs-client.js') {
@@ -124,8 +119,6 @@ async function loadBrowser() {
 					if (err) {
 						throw err;
 					}
-
-					res.writeHead(200, {'Content-Type': 'application/javascript'});
 
 					fs.createReadStream(path).pipe(res);
 				});

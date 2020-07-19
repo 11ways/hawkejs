@@ -139,19 +139,62 @@ describe('Scene', function() {
 
 			assert.strictEqual(title, 'Other title');
 		});
+	});
 
+	describe('#openUrl()', function() {
+		it('should browse to a link using ajax', async function() {
+
+			await setLocation('/home');
+
+			if (do_coverage) {
+				let has_coverage = await evalPage(function() {
+					return window.__coverage__;
+				});
+
+				if (!has_coverage) {
+					throw new Error('Puppeteer page is missing coverage after browse');
+				}
+			}
+
+			await evalPage(function() {
+				return hawkejs.scene.openUrl('/welcome');
+			});
+
+			await __Protoblast.Classes.Pledge.after(50);
+
+			let result = await evalPage(function() {
+				let main = document.querySelector('[data-he-name="main"]');
+
+				let result = {
+					name     : main.dataset.heName,
+					template : main.dataset.heTemplate,
+					text     : main.textContent
+				};
+
+				return result;
+			});
+
+			assert.strictEqual(result.name, 'main', 'Info on the "main" block should have been returned');
+			assert.strictEqual(result.template, 'welcome', 'The "main" block should now have content by the "welcome" template, but it is currently "' + result.template + '"');
+			assert.strictEqual(result.text.trim(), 'Welcome!');
+		});
 	});
 
 	after(async function() {
 
 		if (do_coverage) {
-			let coverage = await fetchCoverage();
 
-			if (!coverage) {
+			let coverages = await fetchCoverage();
+
+			if (!coverages || !coverages.length) {
 				throw new Error('The browser coverage is empty');
 			}
 
-			fs.writeFileSync('./.nyc_output/hawkejs.json', JSON.stringify(coverage));
+			let i;
+
+			for (i = 0; i < coverages.length; i++) {
+				fs.writeFileSync('./.nyc_output/hawkejs_' + i + '.json', JSON.stringify(coverages[i]));
+			}
 		}
 
 		await browser.close()
