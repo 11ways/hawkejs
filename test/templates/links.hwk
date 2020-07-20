@@ -1,0 +1,8 @@
+{% extend "home_base" %}
+
+{% block "main" %}
+<a id="link-to-welcome" href="/welcome">Go to welcome</a><br>
+<a id="link-to-welcome-without-history" href="/welcome" data-he-history="false">
+	Go to welcome without history
+</a><br>
+{% /block %}

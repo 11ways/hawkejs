@@ -56,12 +56,51 @@ global.setLocation = async function setLocation(path) {
 	await page.goto(url);
 };
 
-global.evalPage = function evalPage(fnc) {
-	return page.evaluate(fnc);
+global.clickPage = function clickPage(selector, options) {
+	return page.click(selector, options);
+};
+
+global.evalPage = function evalPage(fnc, ...args) {
+	return page.evaluate(fnc, ...args);
 };
 
 global.despace = function despace(text) {
 	return text.trim().replace(/\n/g, ' ').replace(/\s\s+/g, ' ');
+};
+
+// Click on a link & wait for hawkejs to render it
+global.clickHeLink = async function clickHeLink(selector, options) {
+
+	let wait_for_render = true;
+
+	if (!wait_for_render) {
+		return clickPage(selector, options);
+	}
+
+	let wait_for_open_url = evalPage(function() {
+		let pledge = new __Protoblast.Classes.Pledge();
+
+		hawkejs.scene.once('opened_url', function whenUrlOpened(href, err) {
+
+			if (err) {
+				return pledge.reject(err);
+			}
+
+			pledge.resolve(true);
+		});
+
+		return pledge;
+	});
+
+	await clickPage(selector, options);
+
+	await wait_for_open_url;
+}
+
+global.openHeUrl = function openHeUrl(path) {
+	return evalPage(function(path) {
+		return hawkejs.scene.openUrl(path);
+	}, path);
 };
 
 async function loadBrowser() {

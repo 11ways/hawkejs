@@ -156,9 +156,7 @@ describe('Scene', function() {
 				}
 			}
 
-			await evalPage(function() {
-				return hawkejs.scene.openUrl('/welcome');
-			});
+			await openHeUrl('/welcome');
 
 			await __Protoblast.Classes.Pledge.after(50);
 
@@ -168,7 +166,8 @@ describe('Scene', function() {
 				let result = {
 					name     : main.dataset.heName,
 					template : main.dataset.heTemplate,
-					text     : main.textContent
+					text     : main.textContent,
+					location : document.location.pathname,
 				};
 
 				return result;
@@ -177,6 +176,61 @@ describe('Scene', function() {
 			assert.strictEqual(result.name, 'main', 'Info on the "main" block should have been returned');
 			assert.strictEqual(result.template, 'welcome', 'The "main" block should now have content by the "welcome" template, but it is currently "' + result.template + '"');
 			assert.strictEqual(result.text.trim(), 'Welcome!');
+			assert.strictEqual(result.location, '/welcome');
+		});
+	});
+
+	describe('#onLinkClick(element, e)', function() {
+		it('should be used when clicking on an anchor', async function() {
+
+			await setLocation('/links');
+
+			await clickHeLink('#link-to-welcome');
+
+			let result = await evalPage(function() {
+				let main = document.querySelector('[data-he-name="main"]');
+
+				let result = {
+					name     : main.dataset.heName,
+					template : main.dataset.heTemplate,
+					text     : main.textContent,
+					location : document.location.pathname,
+				};
+
+				return result;
+			});
+
+			assert.strictEqual(result.name, 'main', 'Info on the "main" block should have been returned');
+			assert.strictEqual(result.template, 'welcome', 'The "main" block should now have content by the "welcome" template, but it is currently "' + result.template + '"');
+			assert.strictEqual(result.text.trim(), 'Welcome!');
+			assert.strictEqual(result.location, '/welcome');
+		});
+
+		it('should not change the history if the element has `data-he-history="false"`', async function() {
+
+			await openHeUrl('/links');
+
+			await clickHeLink('#link-to-welcome-without-history');
+
+			let result = await evalPage(function() {
+				let main = document.querySelector('[data-he-name="main"]');
+
+				let result = {
+					name     : main.dataset.heName,
+					template : main.dataset.heTemplate,
+					text     : main.textContent,
+					location : document.location.pathname,
+				};
+
+				return result;
+			});
+
+			assert.strictEqual(result.name, 'main', 'Info on the "main" block should have been returned');
+			assert.strictEqual(result.template, 'welcome', 'The "main" block should now have content by the "welcome" template, but it is currently "' + result.template + '"');
+			assert.strictEqual(result.text.trim(), 'Welcome!');
+
+			assert.strictEqual(result.location, '/links', 'The History API was used to change the current location, even though it should have been disabled');
+
 		});
 	});
 
