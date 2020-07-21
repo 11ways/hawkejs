@@ -252,8 +252,12 @@ describe('Hawkejs', function() {
 			// Start getting the source
 			hawkejs.getSource('simple/string').done(function(err, source) {
 
-				assert.equal(null, err, 'Could not open file');
-				assert.equal('This EJS example can\'t be more simple.', source);
+				try {
+					assert.equal(null, err, 'Could not open file');
+					assert.equal('This EJS example can\'t be more simple.', source.source);
+				} catch (err) {
+					return done(err);
+				}
 
 				done();
 			});
