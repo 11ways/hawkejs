@@ -1,4 +1,4 @@
-## 2.0.0 (WIP)
+## 2.0.0 (2020-07-21)
 
 * Code rewrite
 * Templates are now built with a virtual dom
