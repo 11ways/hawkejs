@@ -2,6 +2,7 @@
 
 * Fix `Scene#scrollTo()` always assuming the second parameter are options
 * Fix `Element#getScrollContainer()` returning the wrong scrollable container
+* Allow custom elements to define CSS with the `Element.setStylesheet()` static method
 
 ## 2.0.0 (2020-07-21)
 
