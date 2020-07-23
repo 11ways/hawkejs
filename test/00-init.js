@@ -103,6 +103,61 @@ global.openHeUrl = function openHeUrl(path) {
 	}, path);
 };
 
+global.getBlockData = async function getBlockData(name) {
+
+	if (!name) {
+		name = 'main';
+	}
+
+	let result = await evalPage(function(name) {
+		let block = document.querySelector('[data-he-name="' + name + '"]');
+
+		let result = {
+			name       : block.dataset.heName,
+			template   : block.dataset.heTemplate,
+			text       : block.textContent,
+			location   : document.location.pathname,
+			scroll_top : document.scrollingElement.scrollTop,
+		};
+
+		return result;
+	}, name);
+
+	assert.strictEqual(result.name, name);
+
+	return result;
+};
+
+global.scrollTo = async function scrollTo(selector) {
+
+	let result = await evalPage(async function(selector) {
+
+		let element = document.querySelector(selector);
+
+		if (!element) {
+			throw new Error('Could not find element by selector "' + selector + '"');
+		}
+
+		await hawkejs.scene.scrollTo(element);
+
+		let container = element.getScrollContainer();
+
+		let scroll_top = document.scrollingElement.scrollTop;
+
+		let result = {
+			container            : container.id,
+			container_tag        : container.tagName,
+			container_scroll_top : container.scrollTop,
+			main_scroll_top      : document.scrollingElement.scrollTop,
+			main_scroll_tag      : document.scrollingElement.tagName,
+		};
+
+		return result;
+	}, selector);
+
+	return result;
+};
+
 async function loadBrowser() {
 	browser = await puppeteer.launch();
 	page = await browser.newPage();

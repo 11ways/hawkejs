@@ -96,16 +96,31 @@ describe('Scene', function() {
 					button.prepend(element);
 				}
 
-				hawkejs.scene.scrollTo('my-button');
+				return hawkejs.scene.scrollTo('my-button');
 			});
-
-			await __Protoblast.Classes.Pledge.after(100);
 
 			scroll_top = await evalPage(function() {
 				return document.scrollingElement.scrollTop;
 			});
 
 			assert.strictEqual(scroll_top > 0, true, 'The page should have scrolled');
+		});
+
+		it('should not be confused by scrollable parents that don\'t actually scroll', async function() {
+
+			await setLocation('/scrolltests');
+
+			let main = await getBlockData('main');
+
+			assert.strictEqual(main.template, 'scrolltests');
+			assert.strictEqual(main.location, '/scrolltests');
+			assert.strictEqual(main.scroll_top, 0);
+
+			let scrolled = await scrollTo('#button-one');
+
+			assert.strictEqual(scrolled.container_tag, 'HTML');
+			assert.strictEqual(scrolled.main_scroll_top > 1000, true);
+			assert.strictEqual(scrolled.main_scroll_tag, 'HTML');
 		});
 	});
 
@@ -160,18 +175,7 @@ describe('Scene', function() {
 
 			await __Protoblast.Classes.Pledge.after(50);
 
-			let result = await evalPage(function() {
-				let main = document.querySelector('[data-he-name="main"]');
-
-				let result = {
-					name     : main.dataset.heName,
-					template : main.dataset.heTemplate,
-					text     : main.textContent,
-					location : document.location.pathname,
-				};
-
-				return result;
-			});
+			let result = await getBlockData('main');
 
 			assert.strictEqual(result.name, 'main', 'Info on the "main" block should have been returned');
 			assert.strictEqual(result.template, 'welcome', 'The "main" block should now have content by the "welcome" template, but it is currently "' + result.template + '"');
@@ -187,18 +191,7 @@ describe('Scene', function() {
 
 			await clickHeLink('#link-to-welcome');
 
-			let result = await evalPage(function() {
-				let main = document.querySelector('[data-he-name="main"]');
-
-				let result = {
-					name     : main.dataset.heName,
-					template : main.dataset.heTemplate,
-					text     : main.textContent,
-					location : document.location.pathname,
-				};
-
-				return result;
-			});
+			let result = await getBlockData('main');
 
 			assert.strictEqual(result.name, 'main', 'Info on the "main" block should have been returned');
 			assert.strictEqual(result.template, 'welcome', 'The "main" block should now have content by the "welcome" template, but it is currently "' + result.template + '"');
@@ -212,18 +205,7 @@ describe('Scene', function() {
 
 			await clickHeLink('#link-to-welcome-without-history');
 
-			let result = await evalPage(function() {
-				let main = document.querySelector('[data-he-name="main"]');
-
-				let result = {
-					name     : main.dataset.heName,
-					template : main.dataset.heTemplate,
-					text     : main.textContent,
-					location : document.location.pathname,
-				};
-
-				return result;
-			});
+			let result = await getBlockData('main');
 
 			assert.strictEqual(result.name, 'main', 'Info on the "main" block should have been returned');
 			assert.strictEqual(result.template, 'welcome', 'The "main" block should now have content by the "welcome" template, but it is currently "' + result.template + '"');
