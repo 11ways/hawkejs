@@ -1,3 +1,7 @@
+## 2.0.1 (WIP)
+
+* Fix `Scene#scrollTo()` always assuming the second parameter are options
+
 ## 2.0.0 (2020-07-21)
 
 * Code rewrite
