@@ -4,6 +4,7 @@
 * Fix `Element#getScrollContainer()` returning the wrong scrollable container
 * Allow custom elements to define CSS with the `Element.setStylesheet()` static method
 * Add `BlockBuffer#addInfoToElement(el)` to set block info & attributes on the given element
+* Fully serialize an element when `JSON-Dry`-ing it for a client-side render
 
 ## 2.0.0 (2020-07-21)
 
