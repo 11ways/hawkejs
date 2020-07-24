@@ -3,6 +3,7 @@
 * Fix `Scene#scrollTo()` always assuming the second parameter are options
 * Fix `Element#getScrollContainer()` returning the wrong scrollable container
 * Allow custom elements to define CSS with the `Element.setStylesheet()` static method
+* Add `BlockBuffer#addInfoToElement(el)` to set block info & attributes on the given element
 
 ## 2.0.0 (2020-07-21)
 
