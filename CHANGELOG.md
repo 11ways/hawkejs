@@ -1,4 +1,4 @@
-## 2.0.1 (WIP)
+## 2.0.1 (2020-07-24)
 
 * Fix `Scene#scrollTo()` always assuming the second parameter are options
 * Fix `Element#getScrollContainer()` returning the wrong scrollable container
