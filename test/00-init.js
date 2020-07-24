@@ -68,6 +68,19 @@ global.despace = function despace(text) {
 	return text.trim().replace(/\n/g, ' ').replace(/\s\s+/g, ' ');
 };
 
+global.respondWithRender = function respondWithRender(templates, renderer, responder) {
+	renderer.renderHTML(templates).done(function afterRender(err, html) {
+
+		if (err != null) {
+			throw err;
+		}
+
+		responder(html);
+	});
+}
+
+global.actions = {};
+
 // Click on a link & wait for hawkejs to render it
 global.clickHeLink = async function clickHeLink(selector, options) {
 
@@ -249,34 +262,43 @@ async function loadBrowser() {
 				return;
 			}
 
+			if (actions[url.pathname]) {
+				return actions[url.pathname](req, res, renderer, responder);
+			}
+
 			templates = url.pathname.slice(1);
 
 			renderer.renderHTML(templates).done(function afterRender(err, html) {
-
-				var mimetype;
 
 				if (err != null) {
 					throw err;
 				}
 
-				if (typeof html !== 'string') {
+				responder(html);
+			});
 
-					// Stringify using json-dry
-					html = __Protoblast.Bound.JSON.dry(html);
+			function responder(body, type) {
 
-					// Tell the client to expect a json-dry response
-					mimetype = 'application/json-dry';
-				} else {
-					mimetype = 'text/html';
+				if (!type) {
+					if (typeof body !== 'string') {
+
+						// Stringify using json-dry
+						body = __Protoblast.Bound.JSON.dry(body);
+
+						// Tell the client to expect a json-dry response
+						type = 'application/json-dry';
+					} else {
+						type = 'text/html';
+					}
 				}
 
 				// Only send the mimetype if it hasn't been set yet
 				if (res.getHeader('content-type') == null) {
-					res.setHeader('content-type', mimetype + ";charset=utf-8");
+					res.setHeader('content-type', type + ";charset=utf-8");
 				}
 
-				res.end(html);
-			});
+				res.end(body);
+			}
 
 		}).listen(0, '0.0.0.0', function listening() {
 			port = server.address().port;

@@ -364,6 +364,52 @@ This is the main content
 			});
 		});
 	});
+
+	describe('#showDialog(template, variables, options)', function() {
+		it('should show a dialog on the page', async function() {
+
+			actions['/dialog_test'] = function(req, res, renderer, responder) {
+
+				renderer.showDialog('dialog_test', {message: 'MyMessage'});
+
+				respondWithRender('home', renderer, responder);
+			};
+
+			await setLocation('/dialog_test');
+
+			let main = await getBlockData('main');
+
+			assert.strictEqual(main.text, 'This is the new main');
+			assert.strictEqual(main.location, '/dialog_test');
+
+			let result = await evalPage(function() {
+
+				let dialog = document.querySelector('he-dialog');
+
+				return {
+					element    : dialog,
+					html       : dialog.innerHTML,
+					is_visible : dialog.isVisible(),
+				}
+			});
+
+			assert.strictEqual(result.is_visible, true, 'The dialog is not visible, but it should be');
+			assert.strictEqual(result.html.indexOf('This is the content of the dialog: MyMessage') > -1, true, 'The dialog does not contain the expected text: ' + result.html);
+
+			result = await evalPage(function() {
+				let dialog = document.querySelector('he-dialog');
+				dialog.close();
+
+				return {
+					in_document : document.contains(dialog),
+					is_visible  : dialog.isVisible(),
+				}
+			});
+
+			assert.strictEqual(result.in_document, false, 'The dialog should no longer be in the document after closing');
+			assert.strictEqual(result.is_visible, false, 'The dialog should no longer be visible after closing');
+		});
+	});
 });
 
 function countString(source, needle) {
