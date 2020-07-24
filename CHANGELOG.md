@@ -8,6 +8,7 @@
 * Add `Hawkejs.appendChildren(target, children)` method
 * Fix Element instances with only a dried `outerHTML` value not being properly undried
 * Move the `BlockBuffer#prepareLineTasks()` logic to `Hawkejs.prepareLineTasks(lines, renderer)` so it can be re-used
+* Re-implement dialog support using custom `he-dialog` element
 
 ## 2.0.0 (2020-07-21)
 
