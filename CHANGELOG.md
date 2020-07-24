@@ -6,6 +6,7 @@
 * Add `BlockBuffer#addInfoToElement(el)` to set block info & attributes on the given element
 * Fully serialize an element when `JSON-Dry`-ing it for a client-side render
 * Add `Hawkejs.appendChildren(target, children)` method
+* Fix Element instances with only a dried `outerHTML` value not being properly undried
 
 ## 2.0.0 (2020-07-21)
 
