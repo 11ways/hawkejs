@@ -1,3 +1,8 @@
+## 2.0.2 (WIP)
+
+* Fix "back" functionality
+* Fix toggling the `Scene#allow_back_button` property
+
 ## 2.0.1 (2020-07-24)
 
 * Fix `Scene#scrollTo()` always assuming the second parameter are options

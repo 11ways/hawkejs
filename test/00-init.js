@@ -10,11 +10,10 @@ let puppeteer = require('puppeteer'),
     hawkejs;
 
 let navigations = 0,
-    coverages = [],
-    browser,
-    page;
+    coverages = [];
 
 global.do_coverage = !!global.__coverage__;
+global.page = null;
 
 global.fetchCoverage = async function fetchCoverage() {
 
@@ -172,9 +171,8 @@ global.scrollTo = async function scrollTo(selector) {
 };
 
 async function loadBrowser() {
-	browser = await puppeteer.launch();
-	page = await browser.newPage();
-	global.browser = browser;
+	global.browser = await puppeteer.launch();
+	global.page = await browser.newPage();
 
 	page.on('console', function(msg) {
 		var pieces = ['[BROWSER]'],

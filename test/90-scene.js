@@ -217,6 +217,131 @@ describe('Scene', function() {
 		});
 	});
 
+	describe('#attachHistoryListener()', function() {
+		it('should use the history API to go back', async function() {
+
+			await setLocation('/home');
+
+			await evalPage(function() {
+				window.should_still_exist = 1;
+			});
+
+			let main = await getBlockData('main');
+
+			assert.deepStrictEqual(main, {
+				name       : 'main',
+				template   : 'home',
+				text       : 'This is the new main',
+				location   : '/home',
+				scroll_top : 0
+			});
+
+			await openHeUrl('/welcome');
+
+			let result = await evalPage(function() {
+				return window.should_still_exist;
+			});
+
+			assert.strictEqual(result, 1, 'A hard navigation hapened instead of an ajax call');
+
+			main = await getBlockData('main');
+
+			assert.deepStrictEqual(main, {
+				name       : 'main',
+				template   : 'welcome',
+				text       : '\nWelcome!\n',
+				location   : '/welcome',
+				scroll_top : 0
+			});
+
+			await page.goBack();
+
+			// Wait until the page has loaded
+			await __Protoblast.Classes.Pledge.after(100);
+
+			main = await getBlockData('main');
+
+			assert.deepStrictEqual(main, {
+				name       : 'main',
+				template   : 'home',
+				text       : 'This is the new main',
+				location   : '/home',
+				scroll_top : 0
+			});
+
+			result = await evalPage(function() {
+				return window.should_still_exist;
+			});
+
+			assert.deepStrictEqual(result, 1, 'A hard back happened instead of using the History API');
+		});
+	});
+
+	describe('#allow_back_button', function() {
+		it('enables or disables back button functionality', async function() {
+
+			let main = await getBlockData('main');
+
+			assert.deepStrictEqual(main, {
+				name       : 'main',
+				template   : 'home',
+				text       : 'This is the new main',
+				location   : '/home',
+				scroll_top : 0
+			});
+
+			await openHeUrl('/welcome');
+
+			main = await getBlockData('main');
+
+			assert.deepStrictEqual(main, {
+				name       : 'main',
+				template   : 'welcome',
+				text       : '\nWelcome!\n',
+				location   : '/welcome',
+				scroll_top : 0
+			});
+
+			await evalPage(function() {
+				hawkejs.scene.allow_back_button = false;
+			});
+
+			await page.goBack();
+
+			// Make sure the page did not go back
+			await __Protoblast.Classes.Pledge.after(100);
+
+			main = await getBlockData('main');
+
+			assert.deepStrictEqual(main, {
+				name       : 'main',
+				template   : 'welcome',
+				text       : '\nWelcome!\n',
+				location   : '/welcome',
+				scroll_top : 0
+			}, 'The browser did not stay on the /welcome page');
+
+			await evalPage(function() {
+				hawkejs.scene.allow_back_button = true;
+			});
+
+			await page.goBack();
+
+			// Make sure the page went back
+			await __Protoblast.Classes.Pledge.after(100);
+
+			main = await getBlockData('main');
+
+			assert.deepStrictEqual(main, {
+				name       : 'main',
+				template   : 'home',
+				text       : 'This is the new main',
+				location   : '/home',
+				scroll_top : 0
+			});
+		});
+	});
+
 	after(async function() {
 
 		if (do_coverage) {

@@ -1,7 +1,7 @@
 {
 	"name": "hawkejs",
 	"description": "Asynchronous Embedded JavaScript templates",
-	"version": "2.0.1",
+	"version": "2.0.2-alpha",
 	"author": "Jelle De Loecker <jelle@elevenways.be>",
 	"keywords": ["template", "engine", "ejs", "hawkejs", "view"],
 	"main": "./lib/hawkejs.js",
@@ -32,5 +32,6 @@
 	"license": "MIT",
 	"engines": {
 		"node": ">=10.21.0"
-	}
+	},
+	"private": true
 }
