@@ -2,6 +2,7 @@
 
 * Fix "back" functionality
 * Fix toggling the `Scene#allow_back_button` property
+* Remove the `Hawkejs.closest()` method
 
 ## 2.0.1 (2020-07-24)
 
