@@ -3,7 +3,7 @@
 * Fix "back" functionality
 * Fix toggling the `Scene#allow_back_button` property
 * Remove the `Hawkejs.closest()` method
-* Allow safe-printing variables with single curly brackets only, like `{my_variable}`
+* Allow safe-printing variables with single curly brackets only, like `{{my_variable}}`
 
 ## 2.0.1 (2020-07-24)
 
