@@ -171,7 +171,11 @@ global.scrollTo = async function scrollTo(selector) {
 };
 
 async function loadBrowser() {
-	global.browser = await puppeteer.launch();
+
+	global.browser = await puppeteer.launch({
+		headless : true
+	});
+
 	global.page = await browser.newPage();
 
 	page.on('console', function(msg) {

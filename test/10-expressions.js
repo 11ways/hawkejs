@@ -176,6 +176,15 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('SafePrint', function() {
+		var tests = [
+			['{test.name}',       'testname'],
+			['{html}',            '&#60;p&#62;This is &#60;bold&#62;HTML&#60;/bold&#62;&#60;/p&#62;'],
+			['{"test <3"}',       'test &#60;3'],
+			['{this is not\nsp}', '{this is not\nsp}'],
+		];
+	});
+
 	describe('With', function() {
 
 		var tests = [
@@ -586,6 +595,7 @@ function createTests(tests) {
 						1, 2, 3
 					]
 				},
+				html: '<p>This is <bold>HTML</bold></p>'
 			};
 
 			let iterable = {
