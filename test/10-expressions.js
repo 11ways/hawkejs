@@ -183,6 +183,8 @@ describe('Expressions', function() {
 			['{{"test <3"}}',       'test &#60;3'],
 			['{{this is not\nsp}}', '{{this is not\nsp}}'],
 		];
+
+		createTests(tests);
 	});
 
 	describe('With', function() {
