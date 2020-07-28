@@ -413,6 +413,17 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('Options', function() {
+
+		var tests = [
+			[`{%= show(a=1 b="two" c=) %}`,         '{"a":1,"b":"two","c":null}'],
+			[`{%= show(str_bla a=1 b="two" c=) %}`, '"bla"-{"a":1,"b":"two","c":null}'],
+			[`{%= show(a=1+1 b="two" c=) %}`,       '{"a":2,"b":"two","c":null}'],
+		];
+
+		createTests(tests);
+	});
+
 	describe('Method calls', function() {
 
 		var tests = [
@@ -598,6 +609,16 @@ function createTests(tests) {
 					]
 				},
 				html: '<p>This is <bold>HTML</bold></p>'
+			};
+
+			vars.show = function show(options, two) {
+				let result = JSON.stringify(options);
+
+				if (arguments.length == 2) {
+					result += '-' + JSON.stringify(two);
+				}
+
+				return result;
 			};
 
 			let iterable = {

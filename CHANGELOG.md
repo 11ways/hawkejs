@@ -4,6 +4,7 @@
 * Fix toggling the `Scene#allow_back_button` property
 * Remove the `Hawkejs.closest()` method
 * Allow safe-printing variables with single curly brackets only, like `{{my_variable}}`
+* Implement option notation (`a="something"`) as an alternative way to make an object
 
 ## 2.0.1 (2020-07-24)
 
