@@ -1,4 +1,4 @@
-## 2.0.2 (WIP)
+## 2.0.2 (2020-10-08)
 
 * Fix "back" functionality
 * Fix toggling the `Scene#allow_back_button` property
