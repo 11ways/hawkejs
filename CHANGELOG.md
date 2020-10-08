@@ -6,6 +6,7 @@
 * Allow safe-printing variables with single curly brackets only, like `{{my_variable}}`
 * Implement option notation (`a="something"`) as an alternative way to make an object
 * Add `Scene#detectDoubleClick(request, min_duration=1000)`
+* Allow opening redirects in a popup window with `x-hawkejs-popup` header
 
 ## 2.0.1 (2020-07-24)
 
