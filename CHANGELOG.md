@@ -1,3 +1,7 @@
+## 2.0.3 (WIP)
+
+* `Scene#onFormSubmit()` will now also check for the target & data-he-link attribute
+
 ## 2.0.2 (2020-10-08)
 
 * Fix "back" functionality
