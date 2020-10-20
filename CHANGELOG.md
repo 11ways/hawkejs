@@ -1,6 +1,7 @@
 ## 2.0.3 (WIP)
 
 * `Scene#onFormSubmit()` will now also check for the target & data-he-link attribute
+* Add the `Blocks` class
 
 ## 2.0.2 (2020-10-08)
 

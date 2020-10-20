@@ -268,7 +268,7 @@ This is the main content
 				let checksum = __Protoblast.Bound.String.checksum(result);
 
 				try {
-					assert.strictEqual(checksum, 1818291047);
+					assert.strictEqual(checksum, 569233485);
 				} catch (err) {
 					return done(err);
 				}
