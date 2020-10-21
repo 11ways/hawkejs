@@ -1,3 +1,7 @@
+## 2.0.4 (WIP)
+
+* Add `Scene#render(template, variables)` to render & apply to the current scene
+
 ## 2.0.3 (2020-10-20)
 
 * `Scene#onFormSubmit()` will now also check for the target & data-he-link attribute
