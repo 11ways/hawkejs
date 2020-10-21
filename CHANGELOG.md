@@ -3,6 +3,7 @@
 * Add `Scene#render(template, variables)` to render & apply to the current scene
 * Add `Renderer#addClass(names)` command to add CSS classes to the current block
 * `Scene#getScript()` will now reject the returned promise if an error occurs
+* Custom elements now emit a `rendered` event after their template has been rendered
 
 ## 2.0.3 (2020-10-20)
 
