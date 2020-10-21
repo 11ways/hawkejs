@@ -1,6 +1,7 @@
 ## 2.0.4 (WIP)
 
 * Add `Scene#render(template, variables)` to render & apply to the current scene
+* Add `Renderer#addClass(names)` command to add CSS classes to the current block
 
 ## 2.0.3 (2020-10-20)
 
