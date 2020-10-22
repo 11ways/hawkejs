@@ -1,13 +1,13 @@
 {
 	"name": "hawkejs",
 	"description": "Asynchronous Embedded JavaScript templates",
-	"version": "2.0.4-alpha",
+	"version": "2.0.4",
 	"author": "Jelle De Loecker <jelle@elevenways.be>",
 	"keywords": ["template", "engine", "ejs", "hawkejs", "view"],
 	"main": "./lib/hawkejs.js",
 	"repository": "git@github.com:11ways/hawkejs.git",
 	"dependencies": {
-		"protoblast" : "~0.7.2",
+		"protoblast" : "~0.7.4",
 		"nwsapi"     : "~2.2.0"
 	},
 	"devDependencies": {
