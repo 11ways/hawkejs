@@ -1,3 +1,8 @@
+## 2.0.5 (WIP)
+
+* Add `Hawkejs#evaluate(source, variables)` to synchronously render a simple template
+* Parse `HTMLElement#innerHTML` assignments to actual elements on-the-fly on the server
+
 ## 2.0.4 (2020-10-22)
 
 * Add `Scene#render(template, variables)` to render & apply to the current scene
