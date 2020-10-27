@@ -162,7 +162,7 @@ describe('Directives', function() {
 					return next(err);
 				}
 
-				assert.strictEqual(res, `<input value="&#35;hashtag" html="&#34;&#60;i&#62;test&#60;/i&#62;&#34;">`);
+				assert.strictEqual(res, `<input value="#hashtag" html="&quot;&lt;i&gt;test&lt;/i&gt;&quot;">`);
 
 				next();
 			});

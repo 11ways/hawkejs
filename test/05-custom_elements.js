@@ -130,6 +130,39 @@ describe('CustomElement', function() {
 		});
 	});
 
+	describe('.setTemplate(source, is_plain_html)', function() {
+		it.skip('should set the template to render the contents', function(done) {
+
+			var SyncTemplateTest = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function SyncTemplateTest() {
+				return SyncTemplateTest.super.call(this);
+			});
+
+			SyncTemplateTest.setTemplate('<span class="test">This is a test!!</span>', true);
+
+			setTimeout(function() {
+
+				var code = `<sync-template-test></sync-template-test><sync-template-test>NOPE</sync-template-test>`;
+
+				var compiled = hawkejs.compile('template_test_2', code);
+
+				hawkejs.render(compiled, {}, function rendered(err, res) {
+
+					if (err) {
+						throw err;
+					}
+
+					res = res.trim();
+
+					assert.strictEqual(res, '<sync-template-test><span class="test">This is a test!!</span></sync-template-test><sync-template-test>NOPE</sync-template-test>');
+
+					done();
+				});
+
+			}, 4);
+
+		});
+	});
+
 	describe('.setTemplateFile(path)', function() {
 		it('should set the template to use for the content of the element', function(done) {
 

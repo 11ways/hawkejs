@@ -170,7 +170,8 @@ describe('Expressions', function() {
 			['Literal: {%= "literal" %}',           'Literal: literal'],
 			['Sum: {%= 1 + 1 %}',                   'Sum: 2'],
 			['Minus: {%= 1 - 1 %}',                 'Minus: 0'],
-			["Single quote: {%= 'single' %}",       'Single quote: single']
+			["Single quote: {%= 'single' %}",       'Single quote: single'],
+			['Inline print is unsafe by default: &euro;', 'Inline print is unsafe by default: &euro;'],
 		];
 
 		createTests(tests);
@@ -179,8 +180,8 @@ describe('Expressions', function() {
 	describe('SafePrint', function() {
 		var tests = [
 			['{{test.name}}',       'testname'],
-			['{{html}}',            '&#60;p&#62;This is &#60;bold&#62;HTML&#60;/bold&#62;&#60;/p&#62;'],
-			['{{"test <3"}}',       'test &#60;3'],
+			['{{html}}',            '&lt;p&gt;This is &lt;bold&gt;HTML&lt;/bold&gt;&lt;/p&gt;'],
+			['{{"test <3"}}',       'test &lt;3'],
 			['{{this is not\nsp}}', '{{this is not\nsp}}'],
 		];
 
@@ -406,7 +407,7 @@ describe('Expressions', function() {
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
-				`€€<span>€</span>`
+				`&euro;&euro;<span>&euro;</span>`
 			]
 		];
 
@@ -482,8 +483,8 @@ describe('Expressions', function() {
 					assert.strictEqual(html, `<p>Pre-markdown-paragraph!</p>
 
 <h1>Heading 1</h1>
-<p><a href="&#35;allowed">allowed html</a></p>
-<p><code>&lt;span id=&quot;my-id&quot;&gt;escaped html&lt;/span&gt;</code></p>
+<p><a href="#allowed">allowed html</a></p>
+<p><code>&lt;span id="my-id"&gt;escaped html&lt;/span&gt;</code></p>
 <h2>Heading 2</h2>
 <h2>{%= this.is.also.escaped %}</h2>
 
@@ -507,6 +508,8 @@ This should be a converted variable:
 
 		});
 	});
+
+	return;
 
 	describe('None existing method calls', function() {
 

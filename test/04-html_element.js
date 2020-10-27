@@ -104,7 +104,7 @@ describe('HTMLElement', function() {
 			div.append('€');
 			div.append(Hawkejs.Hawkejs.createElement('br'));
 
-			assert.strictEqual(div.outerHTML, '<div>a<br>@<br>&#8364;<br></div>');
+			assert.strictEqual(div.outerHTML, '<div>a<br>@<br>&euro;<br></div>');
 			assert.strictEqual(div.innerText, 'a\n@\n€\n');
 		});
 	});
@@ -121,7 +121,7 @@ describe('HTMLElement', function() {
 			div.append('€');
 			div.append(Hawkejs.Hawkejs.createElement('br'));
 
-			assert.strictEqual(div.outerHTML, '<div>a<br>@<br>&#8364;<br></div>');
+			assert.strictEqual(div.outerHTML, '<div>a<br>@<br>&euro;<br></div>');
 			assert.strictEqual(div.textContent, 'a@€');
 		});
 	});
@@ -159,11 +159,11 @@ describe('HTMLElement', function() {
 		it('should escape the set values', function() {
 			var div = Hawkejs.Hawkejs.createElement('div');
 			div.setAttribute('test', 'my "value"');
-			assert.strictEqual(div.outerHTML, `<div test="my &#34;value&#34;"></div>`);
+			assert.strictEqual(div.outerHTML, `<div test="my &quot;value&quot;"></div>`);
 
 			div = Hawkejs.Hawkejs.createElement('div');
 			div.setAttribute('data-test', 'my "value"');
-			assert.strictEqual(div.outerHTML, `<div data-test="my &#34;value&#34;"></div>`);
+			assert.strictEqual(div.outerHTML, `<div data-test="my &quot;value&quot;"></div>`);
 			
 			
 		});
@@ -191,6 +191,22 @@ describe('HTMLElement', function() {
 			// Setting to undefined results in an "undefined" string
 			div.dataset.alpha = undefined;
 			assert.strictEqual(div.dataset.alpha, 'undefined');
+		});
+	});
+
+	describe('#innerHTML', function() {
+		it('should parse the HTML on-the-fly', function() {
+
+			let div = Hawkejs.Hawkejs.createElement('div');
+
+			div.innerHTML = '<span class="test">This is a test!</span><bold>This too</bold>';
+
+			assert.strictEqual(div.children.length, 2);
+
+			let span = div.querySelector('span');
+
+			assert.strictEqual(span.className, 'test');
+			assert.strictEqual(span.textContent, 'This is a test!');
 		});
 	});
 
@@ -227,6 +243,10 @@ describe('HTMLElement', function() {
 				this.value = value;
 			};
 
+			HtmlResolver.prototype.toString = function() {
+				throw new Error('#toString() should not be called, renderHawkejsContent() should be!');
+			}
+
 			HtmlResolver.prototype.renderHawkejsContent = function() {
 				var pledge = new __Protoblast.Classes.Pledge();
 
@@ -234,6 +254,8 @@ describe('HTMLElement', function() {
 				element.innerHTML = this.value;
 
 				this[Hawkejs.RESULT] = element;
+
+				console.log('Resolving to:', element);
 
 				pledge.resolve(element);
 

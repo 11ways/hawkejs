@@ -3,6 +3,7 @@
 * Add `Hawkejs#evaluate(source, variables)` to synchronously render a simple template
 * Parse `HTMLElement#innerHTML` assignments to actual elements on-the-fly on the server
 * Allow plain HTML custom Element templates to be rendered synchronously upon creation
+* During a render, element options are only applied when closing the element, or the current element is accessed using `$0`
 
 ## 2.0.4 (2020-10-22)
 

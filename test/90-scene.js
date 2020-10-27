@@ -91,20 +91,26 @@ describe('Scene', function() {
 				}
 
 				// Insert a bunch of elements
-				for (i = 0; i < 400; i++) {
+				for (i = 0; i < 1000; i++) {
 					let element = document.createElement('p');
-					element.innerHTML = 'A<br>B<br>C<br>';
-					button.prepend(element);
+					element.innerHTML = 'A<br>B<br>C<br>D<br>';
+					button.insertAdjacentElement('beforebegin', element);
 				}
+
+				button.insertAdjacentHTML('beforebegin', '<br>\n<br>\n');
 
 				return hawkejs.scene.scrollTo('my-button');
 			});
 
-			scroll_top = await evalPage(function() {
-				return document.scrollingElement.scrollTop;
+			let data = await evalPage(function() {
+				return {
+					scroll_element : document.scrollingElement.nodeName,
+					scroll_top     : document.scrollingElement.scrollTop,
+					html           : document.body.innerHTML
+				};
 			});
 
-			assert.strictEqual(scroll_top > 0, true, 'The page should have scrolled');
+			assert.strictEqual(data.scroll_top > 0, true, 'The page should have scrolled, but it\'s still at ' + scroll_top);
 		});
 
 		it('should not be confused by scrollable parents that don\'t actually scroll', async function() {
