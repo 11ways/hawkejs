@@ -208,6 +208,18 @@ describe('HTMLElement', function() {
 			assert.strictEqual(span.className, 'test');
 			assert.strictEqual(span.textContent, 'This is a test!');
 		});
+
+		it('should not escape the contents of a script tag', function() {
+
+			let source = "<script>document.write('<scr' + 'ipt src=\"/test\"></scr' + 'ipt>');</script>";
+
+			let elements = hawkejs.evaluate(source);
+
+			let result = elements[0].outerHTML;
+
+			assert.strictEqual(result, source);
+
+		});
 	});
 
 	describe('#outerHTML', function() {
