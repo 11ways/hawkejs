@@ -267,8 +267,6 @@ describe('HTMLElement', function() {
 
 				this[Hawkejs.RESULT] = element;
 
-				console.log('Resolving to:', element);
-
 				pledge.resolve(element);
 
 				return pledge;
@@ -370,6 +368,41 @@ describe('HTMLElement', function() {
 
 			a.setIndexInParent(0);
 			assert.strictEqual(div.innerHTML, '<a></a><b></b><i></i>');
+		});
+	});
+
+	describe('Hawkejs.getFirstElement(entries)', function() {
+		it('should return the first HTMLElement', function() {
+
+			let hawkejs = new Hawkejs.Hawkejs();
+
+			let entries = hawkejs.evaluate(`this is text<span>First</span>`);
+
+			let first = Hawkejs.getFirstElement(entries);
+
+			assert.strictEqual(first.textContent, 'First');
+
+			entries = hawkejs.evaluate(`<div>Real first</div>this is text<span>Second</span>`);
+			first = Hawkejs.getFirstElement(entries);
+
+			assert.strictEqual(first.textContent, 'Real first');
+		});
+
+		it('should also work in the browser', async function() {
+
+			await setLocation('/home');
+
+			let result = await evalPage(function() {
+
+				let entries = hawkejs.evaluate(`this is text<span>First</span>`);
+				let first = __Protoblast.Classes.Hawkejs.getFirstElement(entries);
+
+				return {
+					first : first.textContent
+				};
+			});
+
+			assert.strictEqual(result.first, 'First');
 		});
 	});
 });
