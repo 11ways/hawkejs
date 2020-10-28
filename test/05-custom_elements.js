@@ -24,11 +24,11 @@ describe('CustomElement', function() {
 
 		it('should set assigned data', function(done) {
 
-			var AssignTest = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function AssignTest() {
-				AssignTest.super.call(this);
+			var MethodTestOnly = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function MethodTestOnly() {
+				MethodTestOnly.super.call(this);
 			});
 
-			AssignTest.setAssignedProperty(function stopped(value) {
+			MethodTestOnly.setAssignedProperty(function stopped(value) {
 				return value;
 			}, function setStoppedValue(value) {
 
@@ -41,7 +41,7 @@ describe('CustomElement', function() {
 				return value;
 			});
 
-			AssignTest.setProperty(function title_element() {
+			MethodTestOnly.setProperty(function title_element() {
 
 				if (!this.assigned_data.title_element) {
 					let element = this.createElement('div');
@@ -62,7 +62,7 @@ describe('CustomElement', function() {
 				return this.assigned_data.title_element = element
 			});
 
-			AssignTest.setAssignedProperty(function title(value) {
+			MethodTestOnly.setAssignedProperty(function title(value) {
 				return this.title_element.innerText;
 			}, function setTitle(value) {
 
@@ -127,6 +127,59 @@ describe('CustomElement', function() {
 				assert.strictEqual(res, '<div><assign-test class="stopped" data-hid="hserverside-0"><div class="title" data-hid="hserverside-1">Bla</div></assign-test></div>');
 				done();
 			});
+		});
+
+		it('should revive the assigned data when sent to the browser', async function() {
+
+			actions['/assigned_data_test'] = function(req, res, renderer, responder) {
+
+				let test_el = Hawkejs.Hawkejs.createElement('assign-test');
+
+				let url = renderer.internal('url');
+
+				test_el.title = url.param('title');
+
+				renderer.set('test_el', test_el);
+
+				let template = 'data_test';
+
+				renderer.renderHTML(template).done(function afterRender(err, html) {
+
+					if (err) {
+						throw err;
+					}
+
+					responder(html);
+				});
+			};
+
+			await setLocation('/assigned_data_test?title=First+title');
+
+			let html = await getMainHtml();
+
+			function getMainHtml() {
+				return evalPage(function() {
+
+					let data_test = document.querySelector('.data-test'),
+					    html;
+
+					if (data_test) {
+						html = data_test.innerHTML.trim();
+					} else {
+						html = document.body.innerHTML.trim();
+					}
+
+					return html;
+				});
+			}
+
+			assert.strictEqual(html, `<span tabindex="0">Element:</span> <assign-test><div class="title">First title</div></assign-test>\nTittle AD: First title`);
+
+			await openHeUrl('/assigned_data_test?title=Ajax title');
+
+			html = await getMainHtml();
+
+			assert.strictEqual(html, `<span tabindex="0">Element:</span> <assign-test><div class="title">Ajax title</div></assign-test>\nTittle AD: Ajax title`);
 		});
 	});
 

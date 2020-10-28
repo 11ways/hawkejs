@@ -1,0 +1,7 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+<div class="data-test" tabindex="0">
+<span tabindex="0">Element:</span> <%= test_el %>
+Tittle AD: <%= test_el.assigned_data.title %></div>
+{% /block %}

@@ -5,6 +5,7 @@
 * Allow plain HTML custom Element templates to be rendered synchronously upon creation
 * During a render, element options are only applied when closing the element, or the current element is accessed using `$0`
 * Fix `Hawkejs.getFirstElement(entries)` returning text nodes
+* Fix the `assigned_data` property not always being sent to the client-side
 
 ## 2.0.4 (2020-10-22)
 
