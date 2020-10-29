@@ -102,6 +102,58 @@ describe('CustomElement', function() {
 
 			assert.strictEqual(result.html, expected_html);
 		});
+
+		it('should call the constructor before the `introduced` method is executed', async function() {
+
+			let test = Hawkejs.Hawkejs.createElement('html-in-constructor');
+
+			let expected_html = '<bold data-test="47">This is a test</bold>';
+
+			// Manually call the introduced method
+			test.introduced();
+
+			assert.strictEqual(test.innerHTML, expected_html);
+
+			await setLocation('/base_scene');
+
+			let result = await evalPage(async function() {
+
+				let test = document.createElement('html-in-constructor');
+
+				document.body.append(test);
+
+				await Pledge.after(80);
+
+				return {
+					html         : test.innerHTML,
+					constructor  : test.constructor.name,
+					has_renderer : !!test.hawkejs_view,
+				}
+			});
+
+			assert.strictEqual(result.constructor, 'HtmlInConstructor');
+			assert.strictEqual(result.html, expected_html);
+			assert.strictEqual(result.has_renderer, true);
+
+			result = await evalPage(async function() {
+
+				let test = document.createElement('html-in-constructor');
+
+				let deeper = test.addDeep('deeper');
+
+				deeper.removeAttribute('data-hid');
+
+				await Pledge.after(80);
+
+				return {
+					html         : test.innerHTML,
+					constructor  : test.constructor.name,
+					has_renderer : !!test.hawkejs_view,
+				}
+			});
+
+			assert.strictEqual(result.html, '<bold>This is a test</bold><html-in-constructor my-test="47"><bold>deeper</bold></html-in-constructor>');
+		});
 	});
 
 	describe('.setAttribute(name)', function() {
@@ -149,7 +201,7 @@ describe('CustomElement', function() {
 
 				res = res.trim();
 
-				assert.strictEqual(res, '<div><assign-test class="stopped" data-hid="hserverside-0"><div class="title" data-hid="hserverside-1">Bla</div></assign-test></div>');
+				assert.strictEqual(res, '<div><assign-test class="stopped"><div class="title" data-hid="hserverside-1">Bla</div></assign-test></div>');
 				done();
 			});
 		});
