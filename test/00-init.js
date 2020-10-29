@@ -321,6 +321,7 @@ describe('Hawkejs', function() {
 		it('should register a path as a place to get view files from', function() {
 			hawkejs.addViewDirectory(__dirname + '/templates');
 			hawkejs.load(__dirname + '/helpers/assign_test.js');
+			hawkejs.load(__dirname + '/helpers/html_in_constructor.js');
 			hawkejs.load(__dirname + '/helpers/my_button.js');
 			hawkejs.load(__dirname + '/helpers/my_text.js');
 		});

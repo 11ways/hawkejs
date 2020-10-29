@@ -77,6 +77,31 @@ describe('CustomElement', function() {
 
 			setTimeout(done, 4);
 		});
+
+		it('should be possible to set the innerHTML in the constructor', async function() {
+
+			let test = Hawkejs.Hawkejs.createElement('html-in-constructor');
+
+			let expected_html = '<html-in-constructor my-test="47"><bold>This is a test</bold></html-in-constructor>';
+
+			assert.strictEqual(test.outerHTML, expected_html);
+
+			await setLocation('/base_scene');
+
+			let result = await evalPage(function() {
+
+				let test = document.createElement('html-in-constructor');
+
+				return {
+					html        : test.outerHTML,
+					constructor : test.constructor.name,
+				}
+			});
+
+			assert.strictEqual(result.constructor, 'HtmlInConstructor');
+
+			assert.strictEqual(result.html, expected_html);
+		});
 	});
 
 	describe('.setAttribute(name)', function() {
@@ -299,7 +324,6 @@ describe('CustomElement', function() {
 				assert.strictEqual(res, '<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 1</div></template-slot-test>\n<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 2</div></template-slot-test>');
 				done();
 			});
-
 		});
 	});
 
