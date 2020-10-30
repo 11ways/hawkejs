@@ -22,6 +22,67 @@ describe('CustomElement', function() {
 			setTimeout(done, 4);
 		});
 
+		it('should not call the constructor before the renderer is attached', async function() {
+
+			await setLocation('/custom_element_constructor');
+
+			await __Protoblast.Classes.Pledge.after(50);
+
+			function getHtml() {
+				return evalPage(function gettingHTML() {
+
+					let main = document.querySelector('[data-he-name="main"]'),
+					    main_html,
+					    all_html;
+
+					if (main) {
+						main_html = main.innerHTML;
+					}
+
+					let aics = document.querySelectorAll('assign-in-constructor');
+
+					let assigned_datas = [],
+					    i;
+
+					for (i = 0; i < aics.length; i++) {
+						assigned_datas.push(aics[i].assigned_data);
+					}
+
+					let html = document.querySelector('html');
+
+					return {
+						all_html  : html.innerHTML,
+						main_html : main_html,
+						datas     : assigned_datas,
+					};
+				});
+			}
+
+			let expected_main = '<assign-in-constructor created-on-server="true" data-hid="hserverside-0"></assign-in-constructor>\n' +
+								'<assign-in-constructor created-on-server="true" data-hid="hserverside-1"><assign-in-constructor created-on-server="true" data-hid="hserverside-2">child</assign-in-constructor></assign-in-constructor>\n';
+
+			let result = await getHtml();
+
+			assert.strictEqual(result.main_html, expected_main);
+
+			assert.deepStrictEqual(result.datas, [
+				{ assigned_in_constructor: 47 },
+				{ assigned_in_constructor: 47, added_child: true },
+				{ assigned_in_constructor: 47, assigned_in_addchild: 48 }
+			]);
+
+			await openHeUrl('/custom_element_constructor');
+
+			result = await getHtml();
+
+			// 'assigned_in_constructor' is not set, because that only happens on the server-side
+			assert.deepStrictEqual(result.datas, [
+				{ },
+				{ added_child: true },
+				{ assigned_in_addchild: 48 }
+			]);
+		});
+
 		it('should set assigned data', function(done) {
 
 			var MethodTestOnly = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function MethodTestOnly() {
@@ -175,7 +236,7 @@ describe('CustomElement', function() {
 
 				res = res.trim();
 
-				assert.strictEqual(res, '<he-test testval="bla" data-hid="hserverside-0"></he-test>');
+				assert.strictEqual(res, '<he-test testval="bla"></he-test>');
 				done();
 			});
 		});
@@ -201,7 +262,7 @@ describe('CustomElement', function() {
 
 				res = res.trim();
 
-				assert.strictEqual(res, '<div><assign-test class="stopped"><div class="title" data-hid="hserverside-1">Bla</div></assign-test></div>');
+				assert.strictEqual(res, '<div><assign-test class="stopped" data-hid="hserverside-0"><div class="title">Bla</div></assign-test></div>');
 				done();
 			});
 		});

@@ -1,0 +1,6 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+<assign-in-constructor></assign-in-constructor>
+<assign-in-constructor><% $0.addChild('child') %></assign-in-constructor>
+{% /block %}
