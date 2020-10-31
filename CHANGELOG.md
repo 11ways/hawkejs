@@ -6,6 +6,8 @@
 * During a render, element options are only applied when closing the element, or the current element is accessed using `$0`
 * Fix `Hawkejs.getFirstElement(entries)` returning text nodes
 * Fix the `assigned_data` property not always being sent to the client-side
+* `Hawkejs.addPreTask(element, task)` now also accepts a promise
+* Add `CustomElement#delayAssemble(task)` which will immediately start the task, but delay the assembly of the element until it finishes
 
 ## 2.0.4 (2020-10-22)
 
