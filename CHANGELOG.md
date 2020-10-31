@@ -9,6 +9,7 @@
 * `Hawkejs.addPreTask(element, task)` now also accepts a promise
 * Add `CustomElement#delayAssemble(task, delay_foundation = true)` which will immediately start the task, but delay the assembly of the element until it finishes (and also delay the "foundation" by default)
 * Added `Renderer#foundation_delays` property so it can wait on extra promises before creating the foundation
+* Allow setting multiple getters with an object in `CustomElement#addElementGetter` and `CustomElement#addElementsGetter`
 
 ## 2.0.4 (2020-10-22)
 
