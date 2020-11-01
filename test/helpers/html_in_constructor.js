@@ -52,6 +52,11 @@ SyncTemplateTest.setStylesheetFile('sync_template_test_style');
 
 SyncTemplateTest.setTemplate('<span class="test">This is a test!!</span>', true);
 
+SyncTemplateTest.setMethod(function addNumber(nr) {
+	let span = this.querySelector('span');
+	span.append(String(nr));
+});
+
 var InnerCustomTest = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function InnerCustomTest() {
 	return InnerCustomTest.super.call(this);
 });

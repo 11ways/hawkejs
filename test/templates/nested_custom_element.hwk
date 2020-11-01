@@ -2,4 +2,16 @@
 
 {% block "main" %}
 <inner-custom-test></inner-custom-test>
+<hr>
+<%
+	el = this.createElement('sync-template-test');
+	el.addNumber(5);
+	print(el);
+%>
+<hr>
+<%
+	el = this.createElement('sync-template-test');
+	el.addNumber(7);
+	print(el);
+%>
 {% /block %}

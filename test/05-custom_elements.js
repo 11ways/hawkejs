@@ -356,6 +356,19 @@ describe('CustomElement', function() {
 
 			assert.strictEqual(has_rendered_template, true, 'The <inner-custom-test> element did not render its contents');
 
+			let has_broken_render = result.html.indexOf('<sync-template-test><span class="test">This is a test!!57</span></sync-template-test>') > -1;
+
+			assert.strictEqual(has_broken_render, false, 'The 3 <sync-template-test> elements all share the same content');
+
+			let has_default_content = result.html.indexOf('<sync-template-test><span class="test">This is a test!!</span></sync-template-test>') > -1;
+			assert.strictEqual(has_default_content, true, 'One of the <sync-template-test> elements should have the default content');
+
+			let has_content_5 = result.html.indexOf('<sync-template-test><span class="test">This is a test!!5</span></sync-template-test>') > -1;
+			assert.strictEqual(has_content_5, true, 'One of the <sync-template-test> elements should have content ending with 5');
+
+			let has_content_7 = result.html.indexOf('<sync-template-test><span class="test">This is a test!!7</span></sync-template-test>') > -1;
+			assert.strictEqual(has_content_7, true, 'One of the <sync-template-test> elements should have content ending with 7');
+
 			let has_css = result.html.indexOf('sync_template_test_style.css') > -1;
 
 			assert.strictEqual(has_css, true, 'The expected CSS file was not found');
@@ -367,13 +380,26 @@ describe('CustomElement', function() {
 
 			await openHeUrl('/nested_custom_element');
 
-			await __Protoblast.Classes.Pledge.after(500);
+			await __Protoblast.Classes.Pledge.after(1000);
 
 			let result = await getHtml();
 
 			let has_rendered_template = result.html.indexOf('<inner-custom-test><sync-template-test>') > -1;
-
 			assert.strictEqual(has_rendered_template, true, 'The <inner-custom-test> element did not render its contents');
+
+			let has_broken_render = result.html.indexOf('<sync-template-test><span class="test">This is a test!!57</span></sync-template-test>') > -1;
+			assert.strictEqual(has_broken_render, false, 'The 3 <sync-template-test> elements all share the same content');
+
+			// If an error occurs here, it's probably because of the tabindex="-1" on the span
+			let has_default_content = result.html.indexOf('<sync-template-test><span class="test" tabindex="-1">This is a test!!</span></sync-template-test>') > -1;
+			assert.strictEqual(has_default_content, true, 'One of the <sync-template-test> elements should have the default content');
+
+			let has_content_5 = result.html.indexOf('<sync-template-test><span class="test">This is a test!!5</span></sync-template-test>') > -1;
+			assert.strictEqual(has_content_5, true, 'One of the <sync-template-test> elements should have content ending with 5');
+
+			let has_content_7 = result.html.indexOf('<sync-template-test><span class="test">This is a test!!7</span></sync-template-test>') > -1;
+			assert.strictEqual(has_content_7, true, 'One of the <sync-template-test> elements should have content ending with 7');
+
 
 			let has_css = result.html.indexOf('sync_template_test_style.css') > -1;
 
