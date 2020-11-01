@@ -81,7 +81,7 @@ describe('Scene', function() {
 
 			assert.strictEqual(scroll_top, 0, 'The originel scroll top should have been 0');
 
-			await evalPage(function() {
+			let result = await evalPage(async function() {
 
 				let button = document.querySelector('my-button'),
 				    i;
@@ -99,7 +99,26 @@ describe('Scene', function() {
 
 				button.insertAdjacentHTML('beforebegin', '<br>\n<br>\n');
 
-				return hawkejs.scene.scrollTo('my-button');
+				let rect = button.getBoundingClientRect();
+
+				rect = {
+					x: rect.x,
+					y: rect.y,
+					top: rect.top,
+					bottom: rect.bottom,
+					width : rect.width,
+					height: rect.height,
+				};
+
+				let sc = __Protoblast.Classes.Element.prototype.getScrollContainer.call(button);
+
+				console.log(sc);
+
+				await hawkejs.scene.scrollTo('my-button');
+
+				return {
+					rect : rect,
+				}
 			});
 
 			let data = await evalPage(function() {
@@ -125,9 +144,9 @@ describe('Scene', function() {
 
 			let scrolled = await scrollTo('#button-one');
 
-			assert.strictEqual(scrolled.container_tag, 'HTML');
+			assert.strictEqual(scrolled.container_tag, 'BODY');
 			assert.strictEqual(scrolled.main_scroll_top > 1000, true);
-			assert.strictEqual(scrolled.main_scroll_tag, 'HTML');
+			assert.strictEqual(scrolled.main_scroll_tag, 'BODY');
 		});
 	});
 
