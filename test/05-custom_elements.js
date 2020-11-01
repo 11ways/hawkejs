@@ -322,13 +322,7 @@ describe('CustomElement', function() {
 	});
 
 	describe('.setTemplate(source, is_plain_html)', function() {
-		it.skip('should set the template to render the contents', function(done) {
-
-			var SyncTemplateTest = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function SyncTemplateTest() {
-				return SyncTemplateTest.super.call(this);
-			});
-
-			SyncTemplateTest.setTemplate('<span class="test">This is a test!!</span>', true);
+		it('should set the template to render the contents', function(done) {
 
 			setTimeout(function() {
 
@@ -350,6 +344,40 @@ describe('CustomElement', function() {
 				});
 
 			}, 4);
+		});
+
+		it('should load the stylesheets of custom elements created in the sync template', async function() {
+
+			await setLocation('/nested_custom_element');
+
+			let result = await getHtml();
+
+			let has_rendered_template = result.html.indexOf('<inner-custom-test><sync-template-test>') > -1;
+
+			assert.strictEqual(has_rendered_template, true, 'The <inner-custom-test> element did not render its contents');
+
+			let has_css = result.html.indexOf('sync_template_test_style.css') > -1;
+
+			assert.strictEqual(has_css, true, 'The expected CSS file was not found');
+		});
+
+		it('should also load the stylesheets when rendered on the browser side', async function() {
+
+			await setLocation('/base_scene');
+
+			await openHeUrl('/nested_custom_element');
+
+			await __Protoblast.Classes.Pledge.after(500);
+
+			let result = await getHtml();
+
+			let has_rendered_template = result.html.indexOf('<inner-custom-test><sync-template-test>') > -1;
+
+			assert.strictEqual(has_rendered_template, true, 'The <inner-custom-test> element did not render its contents');
+
+			let has_css = result.html.indexOf('sync_template_test_style.css') > -1;
+
+			assert.strictEqual(has_css, true, 'The expected CSS file was not found');
 
 		});
 	});

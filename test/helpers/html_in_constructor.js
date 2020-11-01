@@ -43,3 +43,17 @@ AssignInConstructor.setMethod(function addChild(text) {
 
 	this.append(child);
 });
+
+var SyncTemplateTest = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function SyncTemplateTest() {
+	return SyncTemplateTest.super.call(this);
+});
+
+SyncTemplateTest.setStylesheetFile('sync_template_test_style');
+
+SyncTemplateTest.setTemplate('<span class="test">This is a test!!</span>', true);
+
+var InnerCustomTest = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function InnerCustomTest() {
+	return InnerCustomTest.super.call(this);
+});
+
+InnerCustomTest.setTemplate('<sync-template-test></sync-template-test>', true);

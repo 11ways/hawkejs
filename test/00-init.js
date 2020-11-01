@@ -170,6 +170,18 @@ global.scrollTo = async function scrollTo(selector) {
 	return result;
 };
 
+global.getHtml = async function getHtml() {
+
+	return await evalPage(function() {
+
+		let html = document.querySelector('html');
+
+		return {
+			html : html.outerHTML
+		};
+	});
+};
+
 async function loadBrowser() {
 
 	global.browser = await puppeteer.launch({
@@ -216,6 +228,11 @@ async function loadBrowser() {
 			req.renderer = renderer;
 			renderer.prepare(req, res);
 			renderer.internal('url', url);
+
+			// End stylesheet requests with a generic valid response
+			if (url.pathname.indexOf('.css') > -1) {
+				return res.end('body{color: #101010}');
+			}
 
 			if (url.pathname == '/hawkejs/hawkejs-client.js') {
 
