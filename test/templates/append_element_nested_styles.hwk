@@ -1,0 +1,8 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+<div>
+<% button = createElement('contains-styled-button') %>
+<% $0.append(button) %>
+</div>
+{% /block %}

@@ -1,0 +1,7 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+<div>
+<% $0.innerHTML = '<contains-styled-button></contains-styled-button>' %>
+</div>
+{% /block %}

@@ -1,0 +1,5 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+<contains-styled-button></contains-styled-button>
+{% /block %}

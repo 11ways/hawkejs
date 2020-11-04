@@ -404,7 +404,41 @@ describe('CustomElement', function() {
 			let has_css = result.html.indexOf('sync_template_test_style.css') > -1;
 
 			assert.strictEqual(has_css, true, 'The expected CSS file was not found');
+		});
 
+		it('should load the stylesheets of custom elements created inside other custom elements', async function() {
+
+			await setLocation('/custom_element_nested_styles');
+
+			let result = await getHtml();
+
+			let has_style = result.html.indexOf('href="/my_styled_button.css"') > -1;
+
+			assert.strictEqual(has_style, true, 'The stylesheet for <my-styled-button> is missing');
+
+			await setLocation('/append_element_nested_styles');
+
+			result = await getHtml();
+
+			has_style = result.html.indexOf('href="/my_styled_button.css"') > -1;
+
+			assert.strictEqual(has_style, true, 'The stylesheet for <my-styled-button> is missing');
+
+			await setLocation('/printed_element_nested_styles');
+
+			result = await getHtml();
+
+			has_style = result.html.indexOf('href="/my_styled_button.css"') > -1;
+
+			assert.strictEqual(has_style, true, 'The stylesheet for <my-styled-button> is missing');
+
+			await setLocation('/interpreted_element_nested_styles');
+
+			result = await getHtml();
+
+			has_style = result.html.indexOf('href="/my_styled_button.css"') > -1;
+
+			assert.strictEqual(has_style, true, 'The stylesheet for <my-styled-button> is missing');
 		});
 	});
 

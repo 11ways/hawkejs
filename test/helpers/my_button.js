@@ -38,3 +38,15 @@ MyButton.setMethod(function setText(text) {
 	this.text = text;
 	return this.rerender();
 });
+
+var ContainsStyledButton = Blast.Bound.Function.inherits('Hawkejs.Element', function ContainsStyledButton() {
+	ContainsStyledButton.super.call(this);
+});
+
+ContainsStyledButton.setTemplateFile('elements/contains_styled_button');
+
+var MyStyledButton = Blast.Bound.Function.inherits('Hawkejs.Element', function MyStyledButton() {
+	MyStyledButton.super.call(this);
+});
+
+MyStyledButton.setStylesheetFile('my_styled_button');

@@ -1,0 +1,6 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+<% button = createElement('contains-styled-button') %>
+<% print(button) %>
+{% /block %}
