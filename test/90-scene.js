@@ -44,7 +44,7 @@ describe('Scene', function() {
 			html = despace(html);
 
 			// Compare
-			assert.strictEqual(html, `This is my button:<br> <my-button he-rendered="1"><my-text data-domain="default" data-key="direct.child.of.block.buffer">SERVERTRANSLATED(default.direct.child.of.block.buffer)</my-text> <span> <my-text data-domain="default" data-key="my.button.no.text">SERVERTRANSLATED(default.my.button.no.text)</my-text> </span></my-button>`);
+			assert.strictEqual(html, `This is my button:<br> <my-button he-rendered="1" data-hid="hserverside-1"><my-text data-domain="default" data-key="direct.child.of.block.buffer">SERVERTRANSLATED(default.direct.child.of.block.buffer)</my-text> <span> <my-text data-domain="default" data-key="my.button.no.text">SERVERTRANSLATED(default.my.button.no.text)</my-text> </span></my-button>`);
 
 			// And now rerender!
 			html = await evalPage(function() {
@@ -68,7 +68,7 @@ describe('Scene', function() {
 
 			html = html.replace(/he-rendered="\d+?"/i, 'he-rendered="1"');
 
-			assert.strictEqual(html, `This is my button:<br> <my-button he-rendered="1" text="Hello!"><my-text data-domain="default" data-key="direct.child.of.block.buffer">CLIENTTRANSLATED(default.direct.child.of.block.buffer)</my-text> <span> <my-text data-domain="default" data-key="my.button.has.text">CLIENTTRANSLATED(default.my.button.has.text)</my-text>: Hello! </span></my-button>`);
+			assert.strictEqual(html, `This is my button:<br> <my-button he-rendered="1" data-hid="hserverside-1" text="Hello!"><my-text data-domain="default" data-key="direct.child.of.block.buffer">CLIENTTRANSLATED(default.direct.child.of.block.buffer)</my-text> <span> <my-text data-domain="default" data-key="my.button.has.text">CLIENTTRANSLATED(default.my.button.has.text)</my-text>: Hello! </span></my-button>`);
 		});
 	});
 
@@ -79,7 +79,7 @@ describe('Scene', function() {
 				return document.scrollingElement.scrollTop;
 			});
 
-			assert.strictEqual(scroll_top, 0, 'The originel scroll top should have been 0');
+			assert.strictEqual(scroll_top, 0, 'The original scroll top should have been 0');
 
 			let result = await evalPage(async function() {
 
@@ -111,8 +111,6 @@ describe('Scene', function() {
 				};
 
 				let sc = __Protoblast.Classes.Element.prototype.getScrollContainer.call(button);
-
-				console.log(sc);
 
 				await hawkejs.scene.scrollTo('my-button');
 

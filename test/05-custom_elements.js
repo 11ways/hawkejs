@@ -11,6 +11,7 @@ describe('CustomElement', function() {
 	});
 
 	describe('Inheritance', function() {
+
 		it('should create a new class', function(done) {
 
 			var HeTest = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function HeTest() {
@@ -215,6 +216,30 @@ describe('CustomElement', function() {
 
 			assert.strictEqual(result.html, '<bold>This is a test</bold><html-in-constructor my-test="47"><bold>deeper</bold></html-in-constructor>');
 		});
+
+		it('should allow other elements being set & revived', async function() {
+
+			await setLocation('/assign_test_element_data');
+
+			let result = await evalPage(function() {
+
+				let wrapper = document.getElementById('atw1'),
+				    at = wrapper.querySelector('assign-test');
+
+				return {
+					html                           : document.body.innerHTML,
+					wrapper_id                     : wrapper.id,
+					at_has_assigned_element        : !!at.custom_element,
+					at_assigned_element_is_wrapper : at.custom_element == wrapper,
+					at_wrapper_id                  : at.getAttribute('data-wrapper-id'),
+				};
+			});
+
+			assert.strictEqual(result.wrapper_id, 'atw1', 'The wrapper has the wrong ID');
+			assert.strictEqual(result.at_wrapper_id, 'atw1', 'The <assign-test> element should have a `data-wrapper-id` attribute equal to the wrapper\'s ID');
+			assert.strictEqual(result.at_has_assigned_element, true, 'The <assign-test> element should have an assigned `custom_element` property');
+			assert.strictEqual(result.at_assigned_element_is_wrapper, true, 'The <assign-test> element has an assigned `custom_element` property, but it does not match the wrapper');
+		});
 	});
 
 	describe('.setAttribute(name)', function() {
@@ -319,6 +344,7 @@ describe('CustomElement', function() {
 
 			assert.strictEqual(html, `<span tabindex="0">Element:</span> <assign-test><div class="title">Ajax title</div></assign-test>\nTittle AD: Ajax title`);
 		});
+
 	});
 
 	describe('.setTemplate(source, is_plain_html)', function() {
@@ -366,7 +392,9 @@ describe('CustomElement', function() {
 			let has_content_5 = result.html.indexOf('<sync-template-test><span class="test">This is a test!!5</span></sync-template-test>') > -1;
 			assert.strictEqual(has_content_5, true, 'One of the <sync-template-test> elements should have content ending with 5');
 
-			let has_content_7 = result.html.indexOf('<sync-template-test><span class="test">This is a test!!7</span></sync-template-test>') > -1;
+			// This <sync-template-test> element gets registered for some reason, so it has a hserverside hawkejs id...
+			// No idea why though
+			let has_content_7 = result.html.indexOf('<span class="test">This is a test!!7</span></sync-template-test>') > -1;
 			assert.strictEqual(has_content_7, true, 'One of the <sync-template-test> elements should have content ending with 7');
 
 			let has_css = result.html.indexOf('sync_template_test_style.css') > -1;

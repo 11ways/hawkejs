@@ -53,3 +53,12 @@ AssignTest.setAssignedProperty(function title(value) {
 
 	return this.title_element.innerText;
 });
+
+AssignTest.setAssignedProperty('custom_element');
+
+var AssignTestWrapper = __Protoblast.Bound.Function.inherits('Hawkejs.Element', 'AssignTestWrapper');
+
+AssignTestWrapper.setTemplate(`
+This is an assign test!
+<% include('partials/assign_test_wrapper', {wrapper_element: self}) %>
+`);

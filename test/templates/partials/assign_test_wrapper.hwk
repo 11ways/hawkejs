@@ -1,0 +1,4 @@
+<assign-test
+	#custom_element=<% wrapper_element %>
+	data-wrapper-id=<% wrapper_element.id %>
+></assign-test>

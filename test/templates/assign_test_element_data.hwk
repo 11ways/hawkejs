@@ -1,0 +1,5 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+<assign-test-wrapper id="atw1"></assign-test-wrapper>
+{% /block %}
