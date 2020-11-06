@@ -1,0 +1,1 @@
+<retain-wrapper><% $0.makeItWait() %><% $0.my_value = 47 %></retain-wrapper>

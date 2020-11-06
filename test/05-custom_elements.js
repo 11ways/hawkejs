@@ -10,6 +10,35 @@ describe('CustomElement', function() {
 		hawkejs.addViewDirectory(__dirname + '/templates');
 	});
 
+	describe('#retained()', function() {
+		this.timeout(50000);
+
+		it('should be called when the custom element is retained by hawkejs', async function() {
+
+			await setLocation('/retain_test_one');
+
+			let result = await evalPage(function() {
+
+				let wrapper = document.querySelector('retain-wrapper'),
+				    one = wrapper.querySelector('retain-test-one'),
+				    alpha = one.querySelector('div.alpha');
+
+				let result = {
+					foo  : one.dataset.foo,
+					val  : one.my_value,
+					html : one.outerHTML
+				};
+
+				return result;
+			});
+
+			assert.strictEqual(result.foo, 'bar', 'The foo dataset attribute should have been "bar"');
+			assert.strictEqual(result.html, '<retain-test-one he-rendered="1" data-foo="bar" data-hid="hserverside-2">Contents: bar</retain-test-one>');
+			assert.strictEqual(result.val, 48, 'The assigned my_value property should be 48');
+		});
+
+	});
+
 	describe('Inheritance', function() {
 
 		it('should create a new class', function(done) {

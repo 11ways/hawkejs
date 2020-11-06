@@ -1,0 +1,5 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+	<% include('partials/retain_wrapper') %>
+{% /block %}

@@ -341,6 +341,7 @@ describe('Hawkejs', function() {
 			hawkejs.load(__dirname + '/helpers/html_in_constructor.js');
 			hawkejs.load(__dirname + '/helpers/my_button.js');
 			hawkejs.load(__dirname + '/helpers/my_text.js');
+			hawkejs.load(__dirname + '/helpers/retain_test.js');
 		});
 	});
 
