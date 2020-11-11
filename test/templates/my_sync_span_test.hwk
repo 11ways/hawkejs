@@ -1,7 +1,6 @@
 <% extends('body') %>
 
 <% start('body') %>
-This is the new main body
 <% include('partials/dialog_test_include') %>
-<retain-test-one data-foo="bla"></retain-test-one>
+»<my-sync-span></my-sync-span>«
 <% end('body') %>

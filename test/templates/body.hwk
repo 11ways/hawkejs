@@ -1,0 +1,6 @@
+<% extends('home_base') %>
+
+<% start('main') %>
+	<% assign('body') %>
+	<retain-test-one data-foo="AfterBody"></retain-test-one>
+<% end('main') %>

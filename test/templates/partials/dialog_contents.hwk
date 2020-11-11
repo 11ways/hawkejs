@@ -1,0 +1,3 @@
+This is the content of the dialog: {%= message %}
+
+<a href="#" class="js-he-close-dialog">Close</a>

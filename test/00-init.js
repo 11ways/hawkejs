@@ -127,6 +127,7 @@ global.getBlockData = async function getBlockData(name) {
 		let result = {
 			name       : block.dataset.heName,
 			template   : block.dataset.heTemplate,
+			html       : block.outerHTML,
 			text       : block.textContent,
 			location   : document.location.pathname,
 			scroll_top : document.scrollingElement.scrollTop,
@@ -340,6 +341,7 @@ describe('Hawkejs', function() {
 			hawkejs.load(__dirname + '/helpers/assign_test.js');
 			hawkejs.load(__dirname + '/helpers/html_in_constructor.js');
 			hawkejs.load(__dirname + '/helpers/my_button.js');
+			hawkejs.load(__dirname + '/helpers/my_sync_span.js');
 			hawkejs.load(__dirname + '/helpers/my_text.js');
 			hawkejs.load(__dirname + '/helpers/retain_test.js');
 		});

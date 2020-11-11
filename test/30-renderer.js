@@ -366,20 +366,22 @@ This is the main content
 	});
 
 	describe('#showDialog(template, variables, options)', function() {
+		this.timeout(50000)
+
 		it('should show a dialog on the page', async function() {
 
 			actions['/dialog_test'] = function(req, res, renderer, responder) {
 
-				renderer.showDialog('dialog_test', {message: 'MyMessage'});
+				renderer.showDialog('partials/dialog_contents', {message: 'MyMessage'});
 
-				respondWithRender('home', renderer, responder);
+				respondWithRender('dialog_test', renderer, responder);
 			};
 
 			await setLocation('/dialog_test');
 
 			let main = await getBlockData('main');
 
-			assert.strictEqual(main.text, 'This is the new main');
+			assert.strictEqual(despace(main.text), 'This is the new main body Include Test Contents: bla Contents: AfterBody');
 			assert.strictEqual(main.location, '/dialog_test');
 
 			let result = await evalPage(function() {
@@ -408,6 +410,7 @@ This is the main content
 
 			assert.strictEqual(result.in_document, false, 'The dialog should no longer be in the document after closing');
 			assert.strictEqual(result.is_visible, false, 'The dialog should no longer be visible after closing');
+
 		});
 	});
 });
