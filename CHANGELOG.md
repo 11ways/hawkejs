@@ -1,4 +1,4 @@
-## 2.1.0 (WIP)
+## 2.1.0 (2020-11-12)
 
 * Add `Hawkejs#evaluate(source, variables)` to synchronously render a simple template
 * Parse `HTMLElement#innerHTML` assignments to actual elements on-the-fly on the server
