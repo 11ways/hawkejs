@@ -1,3 +1,7 @@
+## 2.1.1 (WIP)
+
+* Fix `Hawkejs.getTextContent()` not returning correct text value for text nodes in the browser
+
 ## 2.1.0 (2020-11-12)
 
 * Add `Hawkejs#evaluate(source, variables)` to synchronously render a simple template

@@ -413,6 +413,49 @@ This is the main content
 
 		});
 	});
+
+	describe('#renderHTML()', function() {
+
+		let devices = [
+			{label: 'One'},
+			{label: 'Two'}
+		];
+
+		it('should render a template and return the HTML', async function() {
+
+			let renderer = hawkejs.createRenderer();
+
+			let html = await renderer.renderHTML('render_to_html', {devices});
+			html = despace(html);
+
+			assert.strictEqual(html, `Render this to HTML! <div> Text </div> Device: One<br> Device: Two<br>`);
+		});
+
+		it('should also work on the browser side', async function() {
+
+			await setLocation('/base_scene');
+
+			let result = await evalPage(async function() {
+
+				let devices = [
+					{label: 'One'},
+					{label: 'Two'}
+				];
+
+				let renderer = hawkejs.createRenderer();
+
+				let html = await renderer.renderHTML('render_to_html', {devices});
+
+				return {
+					html : html
+				};
+			});
+
+			let html = despace(result.html);
+
+			assert.strictEqual(html, `Render this to HTML! <div> Text </div> Device: One<br> Device: Two<br>`);
+		});
+	});
 });
 
 function countString(source, needle) {

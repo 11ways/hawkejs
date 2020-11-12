@@ -372,6 +372,12 @@ describe('Scene', function() {
 		});
 	});
 
+	describe('#render(template, variables)', function() {
+		it.skip('should render a template in the current scene', async function() {
+
+		});
+	});
+
 	after(async function() {
 
 		if (do_coverage) {

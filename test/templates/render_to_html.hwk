@@ -1,0 +1,8 @@
+Render this to HTML!
+<div>
+	Text
+</div>
+
+{% each devices as device %}
+	Device: {{ device.label }}<br>
+{% /each %}
