@@ -252,6 +252,7 @@ describe('Scene', function() {
 			let main = await getBlockData('main');
 
 			assert.deepStrictEqual(main, {
+				html       : "<div data-he-name=\"main\" data-hid=\"hserverside-1\" data-he-template=\"home\">This is the new main</div>",
 				name       : 'main',
 				template   : 'home',
 				text       : 'This is the new main',
@@ -270,6 +271,7 @@ describe('Scene', function() {
 			main = await getBlockData('main');
 
 			assert.deepStrictEqual(main, {
+				html       : "<div data-he-name=\"main\" data-hid=\"hserverside-1\" data-he-template=\"welcome\" tabindex=\"-1\">\nWelcome!\n</div>",
 				name       : 'main',
 				template   : 'welcome',
 				text       : '\nWelcome!\n',
@@ -285,6 +287,7 @@ describe('Scene', function() {
 			main = await getBlockData('main');
 
 			assert.deepStrictEqual(main, {
+				html       : "<div data-he-name=\"main\" data-hid=\"hserverside-1\" data-he-template=\"home\" tabindex=\"-1\">This is the new main</div>",
 				name       : 'main',
 				template   : 'home',
 				text       : 'This is the new main',
@@ -306,6 +309,7 @@ describe('Scene', function() {
 			let main = await getBlockData('main');
 
 			assert.deepStrictEqual(main, {
+				html       : "<div data-he-name=\"main\" data-hid=\"hserverside-1\" data-he-template=\"home\" tabindex=\"-1\">This is the new main</div>",
 				name       : 'main',
 				template   : 'home',
 				text       : 'This is the new main',
@@ -318,6 +322,7 @@ describe('Scene', function() {
 			main = await getBlockData('main');
 
 			assert.deepStrictEqual(main, {
+				html       : "<div data-he-name=\"main\" data-hid=\"hserverside-1\" data-he-template=\"welcome\" tabindex=\"-1\">\nWelcome!\n</div>",
 				name       : 'main',
 				template   : 'welcome',
 				text       : '\nWelcome!\n',
@@ -337,6 +342,7 @@ describe('Scene', function() {
 			main = await getBlockData('main');
 
 			assert.deepStrictEqual(main, {
+				html       : "<div data-he-name=\"main\" data-hid=\"hserverside-1\" data-he-template=\"welcome\" tabindex=\"-1\">\nWelcome!\n</div>",
 				name       : 'main',
 				template   : 'welcome',
 				text       : '\nWelcome!\n',
@@ -356,6 +362,7 @@ describe('Scene', function() {
 			main = await getBlockData('main');
 
 			assert.deepStrictEqual(main, {
+				html       : "<div data-he-name=\"main\" data-hid=\"hserverside-1\" data-he-template=\"home\" tabindex=\"-1\">This is the new main</div>",
 				name       : 'main',
 				template   : 'home',
 				text       : 'This is the new main',
