@@ -376,6 +376,31 @@ describe('Scene', function() {
 		it.skip('should render a template in the current scene', async function() {
 
 		});
+
+		it('should open dialogs', async function() {
+
+			await setLocation('/base_scene');
+
+			let result = await evalPage(async function() {
+
+				await hawkejs.scene.render('make_dialog');
+
+				let dialog = document.querySelector('he-dialog'),
+				    html;
+
+				if (dialog) {
+					html = dialog.innerHTML;
+				}
+
+				return {
+					html : html
+				};
+			});
+
+			let html = despace(result.html);
+
+			assert.strictEqual(html, `<div class="he-dialog-contents" data-he-slot="main" data-he-template="make_dialog"> This should now be a dialog! <hr></div>`);
+		});
 	});
 
 	after(async function() {

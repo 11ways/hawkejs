@@ -1,0 +1,4 @@
+<% makeDialog() %>
+
+This should now be a dialog!
+<hr>
