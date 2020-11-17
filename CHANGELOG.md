@@ -3,6 +3,7 @@
 * Fix `Hawkejs.getTextContent()` not returning correct text value for text nodes in the browser
 * Fix `Renderer#makeDialog()` not working when rendering from inside the browser
 * Add the `{% include "template" %}` expression
+* Add SVG elements to the VOID_ELEMENTS object
 
 ## 2.1.0 (2020-11-12)
 
