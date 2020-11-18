@@ -4,6 +4,7 @@
 * Fix `Renderer#makeDialog()` not working when rendering from inside the browser
 * Add the `{% include "template" %}` expression
 * Add SVG elements to the VOID_ELEMENTS object
+* Stringify objects before setting them as the innerHTML
 
 ## 2.1.0 (2020-11-12)
 
