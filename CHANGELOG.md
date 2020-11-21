@@ -1,4 +1,4 @@
-## 2.1.1 (WIP)
+## 2.1.1 (2020-11-21)
 
 * Fix `Hawkejs.getTextContent()` not returning correct text value for text nodes in the browser
 * Fix `Renderer#makeDialog()` not working when rendering from inside the browser
