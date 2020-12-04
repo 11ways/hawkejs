@@ -2,6 +2,7 @@
 
 * Don't stringify function templates before rendering them in `HTMLElement#_setInnerHTML`
 * Fix `Hawkejs#rewriteVariableReferences()` triggering getters
+* Implement `Node#compareDocumentPosition(other)`
 
 ## 2.1.1 (2020-11-21)
 
