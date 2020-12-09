@@ -3,6 +3,7 @@
 * Don't stringify function templates before rendering them in `HTMLElement#_setInnerHTML`
 * Fix `Hawkejs#rewriteVariableReferences()` triggering getters
 * Implement `Node#compareDocumentPosition(other)`
+* Make EJS `<%= %>` print commands unsafe
 
 ## 2.1.1 (2020-11-21)
 
