@@ -4,6 +4,7 @@
 * Fix `Hawkejs#rewriteVariableReferences()` triggering getters
 * Implement `Node#compareDocumentPosition(other)`
 * Make EJS `<%= %>` print commands unsafe
+* Add server-side `Node#replaceChild()` and `Node#replaceWith()` implementation
 
 ## 2.1.1 (2020-11-21)
 
