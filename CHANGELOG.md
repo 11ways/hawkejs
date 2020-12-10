@@ -5,6 +5,7 @@
 * Implement `Node#compareDocumentPosition(other)`
 * Make EJS `<%= %>` print commands unsafe
 * Add server-side `Node#replaceChild()` and `Node#replaceWith()` implementation
+* Fix slots not being filled in subtemplated of custom elements
 
 ## 2.1.1 (2020-11-21)
 
