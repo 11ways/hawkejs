@@ -204,7 +204,7 @@ describe('Directives', function() {
 
 			const old_error = console.error;
 
-			console.error = function error(msg) {
+			console.error = function error(err, msg) {
 				message = msg;
 				console.error = old_error;
 			}

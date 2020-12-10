@@ -482,15 +482,15 @@ describe('Expressions', function() {
 				} else {
 					assert.strictEqual(html, `<p>Pre-markdown-paragraph!</p>
 
-<h1>Heading 1</h1>
+<h1 id="heading-1">Heading 1</h1>
 <p><a href="#allowed">allowed html</a></p>
 <p><code>&lt;span id="my-id"&gt;escaped html&lt;/span&gt;</code></p>
-<h2>Heading 2</h2>
-<h2>{%= this.is.also.escaped %}</h2>
+<h2 id="heading-2">Heading 2</h2>
+<h2 id="-thisisalsoescaped-">{%= this.is.also.escaped %}</h2>
 
 
 This should be a converted variable:
-<h1>String-test</h1>
+<h1 id="string-test">String-test</h1>
 <hr>
 <p>This is a markdown from a <strong>string</strong> test!</p>
 
