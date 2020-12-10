@@ -1,4 +1,4 @@
-## 2.1.2 (WIP)
+## 2.1.2 (2020-12-10)
 
 * Don't stringify function templates before rendering them in `HTMLElement#_setInnerHTML`
 * Fix `Hawkejs#rewriteVariableReferences()` triggering getters
