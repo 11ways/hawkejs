@@ -1,6 +1,7 @@
 ## 2.1.3 (WIP)
 
 * Add new events for debug purposes
+* Fix `<!DOCTYPE>` never having attributes
 
 ## 2.1.2 (2020-12-10)
 
