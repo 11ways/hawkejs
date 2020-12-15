@@ -1,3 +1,7 @@
+## 2.1.3 (WIP)
+
+* Add new events for debug purposes
+
 ## 2.1.2 (2020-12-10)
 
 * Don't stringify function templates before rendering them in `HTMLElement#_setInnerHTML`
