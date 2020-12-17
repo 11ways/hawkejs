@@ -4,6 +4,8 @@
 * Fix `<!DOCTYPE>` never having attributes
 * Set the `data-he-last-template` body attribute on the server-side too
 * Add `assertPropertyName(name)` function to make sure added custom element properties are allowed
+* Allow setting default custom element attribute values
+* Add `Element.setRole(value)` method
 
 ## 2.1.2 (2020-12-10)
 
