@@ -3,6 +3,7 @@
 * Add new events for debug purposes
 * Fix `<!DOCTYPE>` never having attributes
 * Set the `data-he-last-template` body attribute on the server-side too
+* Add `assertPropertyName(name)` function to make sure added custom element properties are allowed
 
 ## 2.1.2 (2020-12-10)
 
