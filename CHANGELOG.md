@@ -7,6 +7,7 @@
 * Allow setting default custom element attribute values
 * Add `Element.setRole(value)` method
 * Fix server-side `Node#compareDocumentPosition()` returning the reversed result
+* Fix the `root` option in `Scene#openUrl()`
 
 ## 2.1.2 (2020-12-10)
 
