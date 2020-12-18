@@ -8,6 +8,7 @@
 * Add `Element.setRole(value)` method
 * Fix server-side `Node#compareDocumentPosition()` returning the reversed result
 * Fix the `root` option in `Scene#openUrl()`
+* Look for a `toAttribute()` method when assigning a value to an element's attribute during render
 
 ## 2.1.2 (2020-12-10)
 
