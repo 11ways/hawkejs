@@ -9,6 +9,9 @@
 * Fix server-side `Node#compareDocumentPosition()` returning the reversed result
 * Fix the `root` option in `Scene#openUrl()`
 * Look for a `toAttribute()` method when assigning a value to an element's attribute during render
+* Add a `state` property to the `Renderer` class
+* Expressions can now check the `state` property and change their behaviour when an element is being created, for example
+* Assigning a value to an attribute will triger their `toAttributeValue` method
 
 ## 2.1.2 (2020-12-10)
 
