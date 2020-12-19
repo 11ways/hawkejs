@@ -12,6 +12,8 @@
 * Add a `state` property to the `Renderer` class
 * Expressions can now check the `state` property and change their behaviour when an element is being created, for example
 * Assigning a value to an attribute will triger their `toAttributeValue` method
+* Let the `Renderer` class keep track of the html, head & body elements
+* Add a `language` property to the `Renderer` class, which also sets the html `lang` attribute
 
 ## 2.1.2 (2020-12-10)
 
