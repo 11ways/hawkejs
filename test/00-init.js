@@ -217,6 +217,7 @@ async function loadBrowser() {
 	});
 
 	hawkejs = new Hawkejs();
+	hawkejs.parallel_task_limit = 1;
 	hawkejs.addViewDirectory(__dirname + '/templates');
 
 	await new Promise(function(resolve, reject) {
@@ -332,6 +333,7 @@ describe('Hawkejs', function() {
 	describe('new Hawkejs()', function() {
 		it('should construct a new Hawkejs instance', function() {
 			hawkejs = new Hawkejs();
+			hawkejs.parallel_task_limit = 1;
 		});
 	});
 

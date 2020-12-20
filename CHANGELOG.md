@@ -17,6 +17,7 @@
 * Fix location hash not changing when clicking a link
 * Call the deprecated `renderHawkejsContent` methods with `Hawkejs.callDeprecatedRenderContent()` so they don't get called multiple times
 * Using `Scene#openUrl()` with a specific root element will no longer interfere with the current opening url request
+* Add `Hawkejs#parallel_task_limit` property to limit amount of concurrent parallel tasks (especially needed for unit tests)
 
 ## 2.1.2 (2020-12-10)
 

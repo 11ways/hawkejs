@@ -7,6 +7,7 @@ describe('Directives', function() {
 
 	before(function() {
 		hawkejs = new Hawkejs();
+		hawkejs.parallel_task_limit = 1;
 		hawkejs.addViewDirectory(__dirname + '/templates');
 	});
 
