@@ -15,6 +15,7 @@
 * Let the `Renderer` class keep track of the html, head & body elements
 * Add a `language` property to the `Renderer` class, which also sets the html `lang` attribute
 * Fix location hash not changing when clicking a link
+* Call the deprecated `renderHawkejsContent` methods with `Hawkejs.callDeprecatedRenderContent()` so they don't get called multiple times
 
 ## 2.1.2 (2020-12-10)
 
