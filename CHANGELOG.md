@@ -18,6 +18,7 @@
 * Call the deprecated `renderHawkejsContent` methods with `Hawkejs.callDeprecatedRenderContent()` so they don't get called multiple times
 * Using `Scene#openUrl()` with a specific root element will no longer interfere with the current opening url request
 * Add `Hawkejs#parallel_task_limit` property to limit amount of concurrent parallel tasks (especially needed for unit tests)
+* Fix custom element boolean attribute setters
 
 ## 2.1.2 (2020-12-10)
 
