@@ -19,6 +19,7 @@
 * Using `Scene#openUrl()` with a specific root element will no longer interfere with the current opening url request
 * Add `Hawkejs#parallel_task_limit` property to limit amount of concurrent parallel tasks (especially needed for unit tests)
 * Fix custom element boolean attribute setters
+* `Hawkejs.recurseLineTasks()` will now also prepare printed blocks
 
 ## 2.1.2 (2020-12-10)
 
