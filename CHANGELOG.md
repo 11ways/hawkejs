@@ -20,6 +20,7 @@
 * Add `Hawkejs#parallel_task_limit` property to limit amount of concurrent parallel tasks (especially needed for unit tests)
 * Fix custom element boolean attribute setters
 * `Hawkejs.recurseLineTasks()` will now also prepare printed blocks
+* Fix setting the page title using asynchronous values on the client side
 
 ## 2.1.2 (2020-12-10)
 
