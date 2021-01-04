@@ -9,10 +9,15 @@ RetainWrapper.setAssignedProperty('my_value');
 
 RetainWrapper.setMethod(function retained() {
 
+	// Inline template is executed immediately
 	let el = this.createElement('retain-test-one');
 
+	// Set dataset
 	el.dataset.foo = 'bar';
 	el.my_value = 48;
+
+	// Rerender
+	el.rerender();
 
 	let alpha = this.querySelector('div.alpha');
 

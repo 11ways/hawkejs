@@ -397,7 +397,7 @@ This is the main content
 			});
 
 			assert.strictEqual(result.is_visible, true, 'The dialog is not visible, but it should be');
-			assert.strictEqual(result.html.indexOf('This is the content of the dialog: MyMessage') > -1, true, 'The dialog does not contain the expected text: ' + result.html);
+			assert.strictEqual(result.html.indexOf('This is the content of the dialog: MyMessage') > -1, true, 'The dialog does not contain the expected text. HTML was:\n' + result.html);
 
 			result = await evalPage(function() {
 				let dialog = document.querySelector('he-dialog');

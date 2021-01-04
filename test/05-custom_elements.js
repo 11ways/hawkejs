@@ -90,7 +90,7 @@ describe('CustomElement', function() {
 			}
 
 			let expected_main = '<assign-in-constructor created-on-server="true" data-hid="hserverside-0"></assign-in-constructor>\n' +
-								'<assign-in-constructor created-on-server="true" data-hid="hserverside-1"><assign-in-constructor created-on-server="true" data-hid="hserverside-2">child</assign-in-constructor></assign-in-constructor>\n';
+			                    '<assign-in-constructor created-on-server="true" data-hid="hserverside-1"><assign-in-constructor created-on-server="true" data-hid="hserverside-2">child</assign-in-constructor></assign-in-constructor>\n';
 
 			let result = await getHtml();
 
@@ -394,7 +394,7 @@ describe('CustomElement', function() {
 
 					res = res.trim();
 
-					assert.strictEqual(res, '<sync-template-test><span class="test">This is a test!!</span></sync-template-test><sync-template-test>NOPE</sync-template-test>');
+					assert.strictEqual(res, '<sync-template-test he-rendered="1"><span class="test">This is a test!!</span></sync-template-test><sync-template-test he-rendered="1"><span class="test">This is a test!!</span></sync-template-test>');
 
 					done();
 				});
@@ -408,7 +408,7 @@ describe('CustomElement', function() {
 
 			let result = await getHtml();
 
-			let has_rendered_template = result.html.indexOf('<inner-custom-test><sync-template-test>') > -1;
+			let has_rendered_template = result.html.indexOf('<inner-custom-test he-rendered="1"><sync-template-test') > -1;
 
 			assert.strictEqual(has_rendered_template, true, 'The <inner-custom-test> element did not render its contents');
 
@@ -416,10 +416,10 @@ describe('CustomElement', function() {
 
 			assert.strictEqual(has_broken_render, false, 'The 3 <sync-template-test> elements all share the same content');
 
-			let has_default_content = result.html.indexOf('<sync-template-test><span class="test">This is a test!!</span></sync-template-test>') > -1;
+			let has_default_content = result.html.indexOf('<sync-template-test he-rendered="1"><span class="test">This is a test!!</span></sync-template-test>') > -1;
 			assert.strictEqual(has_default_content, true, 'One of the <sync-template-test> elements should have the default content');
 
-			let has_content_5 = result.html.indexOf('<sync-template-test><span class="test">This is a test!!5</span></sync-template-test>') > -1;
+			let has_content_5 = result.html.indexOf('><span class="test">This is a test!!5</span></sync-template-test>') > -1;
 			assert.strictEqual(has_content_5, true, 'One of the <sync-template-test> elements should have content ending with 5');
 
 			// This <sync-template-test> element gets registered for some reason, so it has a hserverside hawkejs id...
