@@ -23,6 +23,7 @@
 * Fix setting the page title using asynchronous values on the client side
 * Add `Renderer#createSubRenderer()`
 * `Helper` directive methods can now return promises
+* When `async()` calls return an error, print the stacktrace instead of hanging
 
 ## 2.1.2 (2020-12-10)
 
