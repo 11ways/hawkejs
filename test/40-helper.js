@@ -25,6 +25,18 @@ describe('Helper', function() {
 
 			Test.setMethod(function applyDirective(element, value) {
 				element.setAttribute('id', value || 'done');
+
+				if (element.hasAttribute('data-delay')) {
+					let pledge = new __Protoblast.Classes.Pledge();
+					let delay = +element.getAttribute('data-delay');
+
+					setTimeout(function() {
+						element.setAttribute('data-delayed', delay);
+						pledge.resolve();
+					}, delay);
+
+					return pledge;
+				}
 			});
 
 			Test.setProperty(function return_ok() {

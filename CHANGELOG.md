@@ -22,6 +22,7 @@
 * `Hawkejs.recurseLineTasks()` will now also prepare printed blocks
 * Fix setting the page title using asynchronous values on the client side
 * Add `Renderer#createSubRenderer()`
+* `Helper` directive methods can now return promises
 
 ## 2.1.2 (2020-12-10)
 

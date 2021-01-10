@@ -191,6 +191,10 @@ describe('Directives', function() {
 			[
 				`<i !Test="val"></i>`,
 				`<i id="val"></i>`
+			],
+			[
+				`<i !Test="bla" data-delay=50></i>`,
+				`<i id="bla" data-delay="50" data-delayed="50"></i>`
 			]
 		];
 
