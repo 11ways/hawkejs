@@ -178,6 +178,29 @@ global.getHtml = async function getHtml() {
 	});
 };
 
+global.loadHawkejs = function loadHawkejs() {
+
+	if (global.hawkejs) {
+		return global.hawkejs;
+	}
+
+	global.hawkejs = new Hawkejs();
+
+	hawkejs.parallel_task_limit = 1;
+
+	let base = __dirname + '/..';
+
+	hawkejs.addViewDirectory(base + '/templates');
+	hawkejs.load(base + '/helpers/assign_test.js');
+	hawkejs.load(base + '/helpers/html_in_constructor.js');
+	hawkejs.load(base + '/helpers/my_button.js');
+	hawkejs.load(base + '/helpers/my_sync_span.js');
+	hawkejs.load(base + '/helpers/my_text.js');
+	hawkejs.load(base + '/helpers/retain_test.js');
+	hawkejs.load(base + '/helpers/html_resolver.js');
+
+}
+
 global.loadBrowser = async function loadBrowser() {
 
 	global.browser = await puppeteer.launch({
@@ -211,9 +234,7 @@ global.loadBrowser = async function loadBrowser() {
 		console.log(...pieces);
 	});
 
-	hawkejs = new Hawkejs();
-	hawkejs.parallel_task_limit = 1;
-	hawkejs.addViewDirectory(__dirname + '/../templates');
+	loadHawkejs();
 
 	await new Promise(function(resolve, reject) {
 		server = http.createServer(function onReq(req, res) {
