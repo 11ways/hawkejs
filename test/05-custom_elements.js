@@ -470,6 +470,10 @@ describe('CustomElement', function() {
 
 			let result = await getHtml();
 
+			let has_styled_button = result.html.indexOf('>Styled!</my-styled-button>') > -1;
+
+			assert.strictEqual(has_styled_button, true, 'The <my-styled-button> is missing');
+
 			let has_style = result.html.indexOf('href="/my_styled_button.css"') > -1;
 
 			assert.strictEqual(has_style, true, 'The stylesheet for <my-styled-button> is missing');

@@ -68,7 +68,7 @@ describe('Scene', function() {
 
 			html = html.replace(/he-rendered="\d+?"/i, 'he-rendered="1"');
 
-			assert.strictEqual(html, `This is my button:<br> <my-button he-rendered="1" data-hid="hserverside-1" text="Hello!"><my-text data-domain="default" data-key="direct.child.of.block.buffer">CLIENTTRANSLATED(default.direct.child.of.block.buffer)</my-text> <span> <my-text data-domain="default" data-key="my.button.has.text">CLIENTTRANSLATED(default.my.button.has.text)</my-text>: Hello! </span></my-button>`);
+			assert.strictEqual(html, `This is my button:<br> <my-button data-hid="hserverside-1" text="Hello!" he-rendered="1"><my-text data-domain="default" data-key="direct.child.of.block.buffer">CLIENTTRANSLATED(default.direct.child.of.block.buffer)</my-text> <span> <my-text data-domain="default" data-key="my.button.has.text">CLIENTTRANSLATED(default.my.button.has.text)</my-text>: Hello! </span></my-button>`);
 		});
 	});
 
