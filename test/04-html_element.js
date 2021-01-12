@@ -382,6 +382,28 @@ describe('HTMLElement', function() {
 		});
 	});
 
+	describe('#remove()', function() {
+		it('should remove the item from its parent', function() {
+
+			let div = Hawkejs.Hawkejs.createElement('div'),
+			    span = Hawkejs.Hawkejs.createElement('span');
+
+			div.append('»');
+			div.append(span);
+			div.append('«');
+
+			assert.strictEqual(div.childNodes.length, 3);
+
+			assert.strictEqual(div.outerHTML, '<div>»<span></span>«</div>');
+
+			span.remove();
+
+			assert.strictEqual(div.childNodes.length, 2);
+
+			assert.strictEqual(div.outerHTML, '<div>»«</div>');
+		});
+	});
+
 	// HTML Element Extensions!
 
 	describe('#setIndexInParent(index)', function() {
