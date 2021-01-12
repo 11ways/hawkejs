@@ -1,0 +1,5 @@
+<% expands('base_scene') %>
+
+<% start('main') %>
+<% include('generic_rhc') %>
+<% end('main') %>
