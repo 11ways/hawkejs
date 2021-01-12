@@ -263,7 +263,15 @@ This is the main content
 			let renderer = hawkejs.render('implement_with_foundation_extension', function doneImplement(err, result) {
 
 				if (err) {
-					throw err;
+					return done(err);
+				}
+
+				if (!result) {
+					return done(new Error('Render result was empty'));
+				}
+
+				if (result === 'null') {
+					return done(new Error('Render result was the string "null"'));
 				}
 
 				let checksum = __Protoblast.Bound.String.checksum(result);
