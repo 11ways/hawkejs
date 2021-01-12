@@ -260,6 +260,11 @@ describe('HTMLElement', function() {
 			}
 
 			HtmlResolver.prototype.renderHawkejsContent = function() {
+
+				console.log(' -----------------------------------------')
+				console.log(' HTMLRESOLVER')
+				console.log(' -----------------------------------------')
+
 				var pledge = new __Protoblast.Classes.Pledge();
 
 				let element = Hawkejs.Hawkejs.createElement('x-text');
