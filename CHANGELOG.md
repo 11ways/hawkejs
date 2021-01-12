@@ -24,6 +24,7 @@
 * Add `Renderer#createSubRenderer()`
 * `Helper` directive methods can now return promises
 * When `async()` calls return an error, print the stacktrace instead of hanging
+* Non-node objects are now also wrapped in a placeholder on the server-side
 
 ## 2.1.2 (2020-12-10)
 

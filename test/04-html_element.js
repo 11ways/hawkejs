@@ -3,11 +3,56 @@ var assert   = require('assert'),
     hawkejs,
     test_id = 0;
 
-describe('HTMLElement', function() {
+describe('TextNode', function() {
 
 	before(function() {
 		hawkejs = new Hawkejs();
 		hawkejs.addViewDirectory(__dirname + '/templates');
+	});
+
+	describe('#toString()', function() {
+
+		it('should return a string representation', function() {
+
+			let text = new Hawkejs.Text('test');
+
+			assert.strictEqual(text+'', '[object Text]');
+		});
+	});
+
+	describe('#nodeType', function() {
+		it('should return the number 3', function() {
+			let text = new Hawkejs.Text('test');
+
+			assert.strictEqual(text.nodeType, 3);
+		});
+	});
+
+	describe('#nodeName', function() {
+
+		it('should return #text', function() {
+			let text = new Hawkejs.Text('test');
+
+			assert.strictEqual(text.nodeName, '#text');
+		});
+	});
+});
+
+describe('HTMLElement', function() {
+
+	describe('#nodeType', function() {
+		it('should return the number 1', function() {
+			var el = Hawkejs.Hawkejs.createElement('div');
+			assert.strictEqual(el.nodeType, 1);
+		});
+	});
+
+	describe('#nodeName', function() {
+
+		it('should return the upercase tag name', function() {
+			var el = Hawkejs.Hawkejs.createElement('div');
+			assert.strictEqual(el.nodeName, 'DIV');
+		});
 	});
 
 	describe('#className', function() {
@@ -251,30 +296,6 @@ describe('HTMLElement', function() {
 		});
 
 		it('should correctly serialize Hawkejs.RESULT entries', function(done) {
-			var HtmlResolver = function HtmlResolver(value) {
-				this.value = value;
-			};
-
-			HtmlResolver.prototype.toString = function() {
-				throw new Error('#toString() should not be called, renderHawkejsContent() should be!');
-			}
-
-			HtmlResolver.prototype.renderHawkejsContent = function() {
-				var pledge = new __Protoblast.Classes.Pledge();
-
-				let element = Hawkejs.Hawkejs.createElement('x-text');
-				element.innerHTML = this.value;
-
-				this[Hawkejs.RESULT] = element;
-
-				pledge.resolve(element);
-
-				return pledge;
-			}
-
-			Hawkejs.Renderer.setCommand(function resolveToHtml(value) {
-				return new HtmlResolver(value);
-			});
 
 			var renderer = hawkejs.render('generic_rhc', {}, function _done(err, html) {
 
@@ -285,6 +306,21 @@ describe('HTMLElement', function() {
 				assert.strictEqual(html, '<x-text>hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>');
 				done();
 			});
+		});
+
+		it('should act the same in the browser', async function() {
+
+			await setLocation('/generic_rhc_based');
+
+			let block = await getBlockData('main');
+
+			assert.strictEqual(block.html, '<he-block data-he-name="main" data-hid="hserverside-0" data-he-template="generic_rhc_based">\n<x-text>hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>\n</he-block>');
+
+			await openHeUrl('/generic_rhc_based');
+
+			block = await getBlockData('main');
+
+			assert.strictEqual(block.html, '<he-block data-he-name="main" data-hid="hserverside-0" data-he-template="generic_rhc_based">\n<x-text tabindex="-1">hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>\n</he-block>');
 		});
 	});
 
