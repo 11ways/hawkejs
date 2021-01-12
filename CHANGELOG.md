@@ -26,6 +26,7 @@
 * When `async()` calls return an error, print the stacktrace instead of hanging
 * Non-node objects are now also wrapped in a placeholder on the server-side
 * Remove `Template#waitForOtherTemplates()` method, the foundation is now rendered differently
+* Add `CustomElement#rendered()` callback method
 
 ## 2.1.2 (2020-12-10)
 
