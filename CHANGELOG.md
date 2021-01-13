@@ -27,6 +27,7 @@
 * Non-node objects are now also wrapped in a placeholder on the server-side
 * Remove `Template#waitForOtherTemplates()` method, the foundation is now rendered differently
 * Add `CustomElement#rendered()` callback method
+* Fix the client-script being loaded twice
 
 ## 2.1.2 (2020-12-10)
 
