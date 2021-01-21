@@ -1,4 +1,4 @@
-## 2.1.3 (WIP)
+## 2.1.3 (2021-01-21)
 
 * Add new events for debug purposes
 * Fix `<!DOCTYPE>` never having attributes
