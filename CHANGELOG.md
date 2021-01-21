@@ -28,6 +28,7 @@
 * Remove `Template#waitForOtherTemplates()` method, the foundation is now rendered differently
 * Add `CustomElement#rendered()` callback method
 * Fix the client-script being loaded twice
+* Implement the `neq` operator
 
 ## 2.1.2 (2020-12-10)
 

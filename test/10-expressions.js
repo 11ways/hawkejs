@@ -126,7 +126,9 @@ describe('Expressions', function() {
 			['{% if not false %}1{% else %}0{% /if %}',   '1'],
 			['{% if (not false) %}1{% else %}0{% /if %}', '1'],
 			['{% if 1 not eq 0 %}TRUE{% /if %}',          'TRUE'],
-			['{% if 1 not gt 0 %}WRONG{% else %}ELSE{% /if %}', 'ELSE']
+			['{% if 1 not gt 0 %}WRONG{% else %}ELSE{% /if %}', 'ELSE'],
+			['{% if 1 neq 0 %}TRUE{% /if %}',          'TRUE'],
+			['{% if 1 neq 1 %}WRONG{% else %}ELSE{% /if %}', 'ELSE'],
 		];
 
 		createTests(tests);
@@ -404,7 +406,7 @@ describe('Expressions', function() {
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_129">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_131">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
