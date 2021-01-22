@@ -1,3 +1,7 @@
+## 2.1.4 (WIP)
+
+* Delay custom element constructor until readyState is "loaded"
+
 ## 2.1.3 (2021-01-21)
 
 * Add new events for debug purposes
