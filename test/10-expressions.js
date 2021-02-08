@@ -116,7 +116,22 @@ describe('Expressions', function() {
 		];
 
 		createTests(tests);
+	});
 
+	describe('Switch', function() {
+
+		var tests = [
+			[
+				'{% switch c %}{% case "b" %}B{% case "1" %}1{% case "c" %}C{% default %}ELSE{% /switch %}',
+				'C'
+			],
+			[
+				'{% switch c %}{% case "b" %}B{% default %}DEFAULT{% /switch %}',
+				'DEFAULT'
+			]
+		];
+
+		createTests(tests);
 	});
 
 	describe('Not', function() {
@@ -406,7 +421,7 @@ describe('Expressions', function() {
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_131">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_133">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
