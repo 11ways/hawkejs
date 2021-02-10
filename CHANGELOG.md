@@ -4,6 +4,7 @@
 * Make sure stylesheets of custom elements are loaded when rendered on the client side
 * Add `switch` expression
 * Add `transpose` option to the `markdown` expression
+* Allow using plus & minus token at the start of an expression
 
 ## 2.1.3 (2021-01-21)
 
