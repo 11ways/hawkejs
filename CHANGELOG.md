@@ -5,6 +5,7 @@
 * Add `switch` expression
 * Add `transpose` option to the `markdown` expression
 * Allow using plus & minus token at the start of an expression
+* `Hawkejs.parseHTML(html)` now also works in the browser
 
 ## 2.1.3 (2021-01-21)
 
