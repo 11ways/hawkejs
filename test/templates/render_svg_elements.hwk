@@ -1,0 +1,10 @@
+{% extend "base" %}
+
+{% block "main" %}
+<svg>
+	<g>
+		<path></path>
+	</g>
+</svg>
+<br>
+{% /block %}

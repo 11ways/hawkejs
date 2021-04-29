@@ -465,6 +465,22 @@ This is the main content
 			assert.strictEqual(html, `Render this to HTML! <div> Text </div> Device: One<br> Device: Two<br>`);
 		});
 	});
+
+	describe('#createOpenElement(name)', function() {
+
+		it('should close void elements silently', async function() {
+
+			let renderer = hawkejs.createRenderer();
+
+			let html = await renderer.renderHTML('render_svg_elements');
+			html = despace(html);
+
+			console.log(html);
+
+			assert.strictEqual(html, `<div class="main"> <hr> <he-block data-hid="hserverside-0" data-he-name="main" data-he-template="render_svg_elements"><svg> <g> <path> </g> </svg> <br> </he-block> </div>`);
+
+		});
+	});
 });
 
 function countString(source, needle) {
