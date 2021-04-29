@@ -7,6 +7,7 @@
 * Allow using plus & minus token at the start of an expression
 * `Hawkejs.parseHTML(html)` now also works in the browser
 * Use Protoblast's `Branch` class as the basis for the server-side `Node` implementation
+* Fix `preTasks` not being run before other tasks
 
 ## 2.1.3 (2021-01-21)
 

@@ -198,6 +198,7 @@ global.loadHawkejs = function loadHawkejs() {
 	hawkejs.load(base + '/helpers/my_text.js');
 	hawkejs.load(base + '/helpers/retain_test.js');
 	hawkejs.load(base + '/helpers/html_resolver.js');
+	hawkejs.load(base + '/helpers/render_after_attributes.js');
 
 }
 

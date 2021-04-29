@@ -1,0 +1,5 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+<render-after-attributes title={% delayResult("pretty-title") %} ></render-after-attributes>
+{% /block %}

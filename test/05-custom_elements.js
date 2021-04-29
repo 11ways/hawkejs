@@ -588,6 +588,46 @@ describe('CustomElement', function() {
 				done();
 			});
 		});
+
+		it('should render the contents after the attributes have been set', function(done) {
+
+			let code = `
+				<render-after-attributes title={% delayResult("pretty-title") %} ></render-after-attributes>
+			`;
+
+			var compiled = hawkejs.compile('template_test_4', code);
+
+			hawkejs.render(compiled, {}, function rendered(err, res) {
+
+				if (err) {
+					throw err;
+				}
+
+				res = res.trim();
+
+				try {
+					assert.strictEqual(res, '<render-after-attributes title="pretty-title" he-rendered="1"><span class="title">pretty-title</span></render-after-attributes>');
+				} catch (err) {
+					return done(err);
+				}
+				done();
+			});
+		});
+
+		it('should render the contents after the attribtues have been set (within extensions)', async function() {
+
+			await setLocation('/render_after_attributes');
+
+			let data = await getBlockData('main');
+
+			assert.strictEqual(data.html.indexOf('>pretty-title</span>') > -1, true);
+
+			await openHeUrl('/render_after_attributes');
+
+			data = await getBlockData('main');
+
+			assert.strictEqual(data.html.indexOf('>pretty-title</span>') > -1, true);
+		});
 	});
 
 });
