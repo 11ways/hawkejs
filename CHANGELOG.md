@@ -1,4 +1,4 @@
-## 2.1.4 (WIP)
+## 2.1.4 (2021-04-29)
 
 * Delay custom element constructor until readyState is "loaded"
 * Make sure stylesheets of custom elements are loaded when rendered on the client side
