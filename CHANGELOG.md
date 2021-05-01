@@ -1,3 +1,7 @@
+## 2.1.5 (WIP)
+
+* Renderer#closeElement() should work fine when called with no arguments
+
 ## 2.1.4 (2021-04-29)
 
 * Delay custom element constructor until readyState is "loaded"
