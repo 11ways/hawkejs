@@ -3,6 +3,7 @@
 * Renderer#closeElement() should work fine when called with no arguments
 * Calling `Blast.doLoaded()` should catch errors
 * `Scene#openUrl()` should mark source elements as not-busy after a request has been intercepted
+* Custom elements with a simple HTML template should render their contents BEFORE applying element options
 
 ## 2.1.4 (2021-04-29)
 
