@@ -1,4 +1,4 @@
-## 2.1.5 (WIP)
+## 2.1.5 (2021-06-11)
 
 * Renderer#closeElement() should work fine when called with no arguments
 * Calling `Blast.doLoaded()` should catch errors
