@@ -1,3 +1,7 @@
+## 2.1.6 (WIP)
+
+* Set custom element render variables from within the element tag using the `+` sign
+
 ## 2.1.5 (2021-06-11)
 
 * Renderer#closeElement() should work fine when called with no arguments
