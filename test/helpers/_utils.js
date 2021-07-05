@@ -10,6 +10,27 @@ let navigations = 0,
 global.do_coverage = !!global.__coverage__;
 global.page = null;
 
+let hserverside_rx = /hserverside-\d+/g,
+    hrendered_rx = /he-rendered="\d+?"/i;
+
+/**
+ * Normalize attributes that are randomly generated
+ */
+global.assertEqualHtml = function assertEqualHtml(actual, expected, message) {
+
+	actual = despace(actual);
+	expected = despace(expected);
+
+	// Normalize he-rendered attributes
+	actual = actual.replace(hrendered_rx, 'he-rendered="1"');
+	expected = expected.replace(hrendered_rx, 'he-rendered="1"');
+
+	actual = actual.replace(hserverside_rx, 'hserverside-0');
+	expected = expected.replace(hserverside_rx, 'hserverside-0');
+
+	return assert.strictEqual(actual, expected, message);
+};
+
 global.fetchCoverage = async function fetchCoverage() {
 
 	if (!page) {
