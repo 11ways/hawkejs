@@ -1,6 +1,7 @@
 ## 2.1.6 (WIP)
 
 * Set custom element render variables from within the element tag using the `+` sign
+* Apply certain element options before rendering a custom element's template synchronously
 
 ## 2.1.5 (2021-06-11)
 
