@@ -28,6 +28,7 @@ describe('Hawkejs', function() {
 			hawkejs.load(__dirname + '/helpers/retain_test.js');
 			hawkejs.load(__dirname + '/helpers/html_resolver.js');
 			hawkejs.load(__dirname + '/helpers/render_after_attributes.js');
+			hawkejs.load(__dirname + '/helpers/element_specific_variables.js');
 		});
 	});
 

@@ -201,6 +201,23 @@ describe('Directives', function() {
 		createTests(tests);
 	});
 
+	describe('Set specific variables for custom elements', function() {
+
+		var tests = [
+			[
+				`<element-specific-variables +my_specific_variable="test"></element-specific-variables>`,
+				`<element-specific-variables he-rendered="1">my_specific_variable: test</element-specific-variables>`
+			],
+			[
+				`<element-specific-variables +my_specific_variable={% 1 + 1 %}></element-specific-variables>`,
+				`<element-specific-variables he-rendered="1">my_specific_variable: 2</element-specific-variables>`
+			],
+		];
+
+		createTests(tests);
+
+	});
+
 	describe('Error handling', function() {
 
 		it('should throw an error when closing wrong tags', function(next) {
