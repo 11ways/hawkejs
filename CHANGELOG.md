@@ -1,15 +1,12 @@
-## 2.1.6 (WIP)
-
-* Set custom element render variables from within the element tag using the `+` sign
-* Apply certain element options before rendering a custom element's template synchronously
-
-## 2.1.5 (2021-06-11)
+## 2.1.5 (2021-07-10)
 
 * Renderer#closeElement() should work fine when called with no arguments
 * Calling `Blast.doLoaded()` should catch errors
 * `Scene#openUrl()` should mark source elements as not-busy after a request has been intercepted
 * Custom elements with a simple HTML template should render their contents BEFORE applying element options
 * Fix `he-placeholder` elements sometimes causing an infinite loop
+* Set custom element render variables from within the element tag using the `+` sign
+* Apply certain element options before rendering a custom element's template synchronously
 
 ## 2.1.4 (2021-04-29)
 
