@@ -630,4 +630,34 @@ describe('CustomElement', function() {
 		});
 	});
 
+	describe('#rendered()', () => {
+		it('should call back when the element has been rendered', (done) => {
+
+			let code = `
+				<rendered-counter></rendered-counter>
+			`;
+
+			var compiled = hawkejs.compile('template_test_rendered_counter', code);
+
+			hawkejs.render(compiled, {}, function rendered(err, res) {
+
+				if (err) {
+					throw err;
+				}
+
+				res = res.trim();
+
+				console.log(res);
+
+				try {
+					assert.strictEqual(res, '<rendered-counter he-rendered="1" rcount="1"></rendered-counter>');
+				} catch (err) {
+					return done(err);
+				}
+				done();
+			});
+
+		});
+	});
+
 });

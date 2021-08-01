@@ -1,3 +1,7 @@
+## 2.1.6 (WIP)
+
+* Fix `getElementContent()` still using `Blast.parseHTML()`
+
 ## 2.1.5 (2021-07-10)
 
 * Renderer#closeElement() should work fine when called with no arguments

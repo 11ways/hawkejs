@@ -1,0 +1,279 @@
+#################################################################
+## Iro
+################################################################ 
+##
+## * Press Ctrl + '+'/'-' To Zoom in
+## * Press Ctrl + S to save and recalculate... 
+## * Documents are saved to web storage.
+## * Only one save slot supported.
+## * Matches cannot span lines.
+## * Unicode chars must be defined in \u0000 to \uffff format.
+## * All matches must be contained by a single group ( ... )
+## * Look behinds not permitted, (?<= or (?<!
+## * Look forwards are permitted (?= or (?!
+## * Constants are defined as __my_const = (......)
+## * The \= format allows unescaped regular expressions
+## * Constants referenced by match \= $${__my_const}
+## * Constants can reference other constants
+## * You are free to delete all the default scopes.
+## * Twitter : ainslec , Web: http://eeyo.io/iro
+##
+################################################################
+
+name                   = javascript
+file_extensions []     = js;
+
+################################################################
+## Constants
+################################################################
+
+__MY_CONSTANT     \= (\b[a-z][a-z0-9]*)
+__ASCII_SPACE     \= \t\n\f 
+__TAG_NAME_CHAR   \= [^\t\n\f /<>]
+__TAG_NAME        \= [A-Za-z]$${__TAG_NAME_CHAR}*
+__TAG_NAME_BREAK  \= (?=[^[^\t\n\f /<>]])
+__ATTRIBUTE_NAME  \= [A-Za-z][A-Za-z0-9\-]
+__UNQUOTED_ATTR_START \= (?=[^\t\n\f =>])
+__UNQUOTED_ATTR_BREAK \= (?=[\t\f ]|/?>)
+
+################################################################
+## Styles
+################################################################
+
+styles [] {
+
+.comment : style {
+   color                 = grey
+   italic                = true
+   ace_scope             = comment
+   textmate_scope        = comment
+   pygments_scope        = Comment
+}
+
+.comment_text : style {
+   color                 = grey
+   italic                = true
+   ace_scope             = comment
+   textmate_scope        = comment
+   pygments_scope        = Comment
+}
+
+.comment_open : style {
+   color                 = grey
+   italic                = true
+   ace_scope             = comment
+   textmate_scope        = comment
+   pygments_scope        = Comment
+}
+
+.comment_close : style {
+   color                 = grey
+   italic                = true
+   ace_scope             = comment
+   textmate_scope        = comment
+   pygments_scope        = Comment
+}
+
+.comment_illegal : style {
+   color                 = white
+   background_color      = red
+   ace_scope             = invalid
+   textmate_scope        = invalid
+   pygments_scope        = Generic.Error
+}
+
+.keyword : style {
+   color     = cyan
+   ace_scope             = keyword
+   textmate_scope        = keyword
+   pygments_scope        = Keyword
+}
+
+.numeric : style {
+   color                 = gold
+   ace_scope             = constant.numeric
+   textmate_scope        = constant.numeric
+   pygments_scope        = Number
+}
+
+.punctuation : style {
+   color     = red_2
+   ace_scope             = punctuation
+   textmate_scope        = punctuation
+   pygments_scope        = Punctuation
+}
+
+.text : style {
+   color                 = brown
+   ace_scope             = text
+   textmate_scope        = text
+   pygments_scope        = String
+}
+
+.illegal : style {
+   color                 = white
+   background_color      = red
+   ace_scope             = invalid
+   textmate_scope        = invalid
+   pygments_scope        = Generic.Error
+}
+
+.tag_open : style {
+   color                 = gold
+   ace_scope             = constant.numeric
+   textmate_scope        = constant.numeric
+   pygments_scope        = Number
+}
+
+.tag_close : style {
+   color                 = gold
+   ace_scope             = constant.numeric
+   textmate_scope        = constant.numeric
+   pygments_scope        = Number
+}
+
+.tag_keyword : style {
+   color                 = gold
+   ace_scope             = constant.numeric
+   textmate_scope        = constant.numeric
+   pygments_scope        = Number
+}
+
+.string_begin : style {
+   color                 = gold
+   textmate_scope        = punctuation.definition.string.begin
+   pygments_scope        = String
+}
+
+.string_end : style {
+   color                 = gold
+   textmate_scope        = punctuation.definition.string.begin
+   pygments_scope        = String
+}
+
+.test : style {
+   color                 = purple
+   ace_scope             = constant.numeric
+   textmate_scope        = constant.numeric
+   pygments_scope        = Number
+}
+
+.attribute_name : style {
+   color                 = light_green
+   textmate_scope        = entity.other.attribute-name
+}
+
+.attribute_assignment : style {
+   color                 = white
+   textmate_scope        = punctuation.separator.key-value
+}
+
+.string_unquoted : style {
+   color                 = brown
+   textmate_scope        = string.unquoted
+}
+
+
+
+# Uncaught pops should never be visible
+.uncaught_pop : style {
+   color = grey
+}
+
+.js_keyword_new : style {
+   color           = red
+   textmate_scope  = keyword.operator.new
+}
+
+.js_storage_type : style {
+   color           = cyan
+   textmate_scope  = storage.type.js
+}
+
+.js_keyword_control_flow : style {
+   color = red
+   textmate_scope = keyword.control.flow
+}
+
+}
+
+#################################################
+## Parse contexts
+#################################################
+
+contexts [] {
+
+##############################################
+## Main Context - Entry point context
+##############################################
+
+main : context {
+   : include "root_javascript";
+}
+
+root_javascript : context {
+   : include "js_keywords";
+}
+
+js_keywords : context {
+   : include "js_keyword_new";
+   : include "js_storage_type";
+   : include "js_keyword_control_flow";
+}
+
+js_keyword_new : context {
+   : pattern {
+      regex    \= (new)\s+(?=[_$a-zA-Z][_$\w.]*)
+      styles[]  = .js_keyword_new;
+   }
+}
+
+js_storage_type : context {
+   : pattern {
+      regex     \= (?:\b)(var|let|const)(?:\b)
+      styles[]   = .js_storage_type;
+   }
+}
+
+js_keyword_control_flow : context {
+   : pattern {
+      regex     \= (?:\b)(return|yield)(?:\b)
+      styles[]   = .js_keyword_control_flow;
+   }
+}
+
+
+
+#################################################
+## End of Contexts
+#################################################
+
+###########################################
+## Numeric Context
+###########################################
+
+numeric : context {
+   : pattern {
+      regex          \= (\b\d+)
+      styles []       = .numeric;
+   }
+}
+
+###########################################
+## Multi Line Comment Context
+###########################################
+
+multi_line_comment : context {
+   description        = multiline
+   : inline_push {
+      regex          \= (/\*)
+      styles []       = .comment;
+      default_style   = .comment
+      : pop {
+         regex       \= (\*/)
+         styles []    = .comment;
+      }
+   }
+}
+   
+}
