@@ -416,12 +416,30 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('Set', function() {
+
+		var tests = [
+			[`{% set my_string = "alpha" %}{{ my_string }}`, 'alpha'],
+			[
+				`{% if false %}
+					{% set my_val = "if" %}
+				{% else %}
+					{% set my_val = "else" %}
+				{% /if %}
+				{{ my_val }}`,
+				'else'
+			]
+		];
+
+		createTests(tests);
+	});
+
 	describe('Block', function() {
 
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_133">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_135">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
@@ -666,7 +684,7 @@ function createTests(tests) {
 					return next(err);
 				}
 
-				assert.strictEqual(res, result);
+				assert.strictEqual(res.trim(), result.trim());
 				next();
 			});
 		});

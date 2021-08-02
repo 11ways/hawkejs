@@ -1,6 +1,7 @@
 ## 2.1.6 (WIP)
 
 * Fix `getElementContent()` still using `Blast.parseHTML()`
+* Add `set` expression
 
 ## 2.1.5 (2021-07-10)
 
