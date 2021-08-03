@@ -2,6 +2,7 @@
 
 * Fix `getElementContent()` still using `Blast.parseHTML()`
 * Add `set` expression
+* Do not use `xhr` property of a `Develry.Request` instance
 
 ## 2.1.5 (2021-07-10)
 
