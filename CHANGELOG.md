@@ -3,6 +3,7 @@
 * Fix `getElementContent()` still using `Blast.parseHTML()`
 * Add `set` expression
 * Do not use `xhr` property of a `Develry.Request` instance
+* Put the static exposed variables in a temporary javascript file
 
 ## 2.1.5 (2021-07-10)
 
