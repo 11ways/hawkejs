@@ -6,7 +6,7 @@ var assert   = require('assert'),
 describe('TextNode', function() {
 
 	before(function() {
-		hawkejs = new Hawkejs();
+		hawkejs = createHawkejsInstance();
 		hawkejs.addViewDirectory(__dirname + '/templates');
 	});
 
@@ -432,7 +432,7 @@ describe('HTMLElement', function() {
 	describe('Hawkejs.getFirstElement(entries)', function() {
 		it('should return the first HTMLElement', function() {
 
-			let hawkejs = new Hawkejs.Hawkejs();
+			let hawkejs = createHawkejsInstance();
 
 			let entries = hawkejs.evaluate(`this is text<span>First</span>`);
 

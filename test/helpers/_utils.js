@@ -13,6 +13,16 @@ global.page = null;
 let hserverside_rx = /hserverside-\d+/g,
     hrendered_rx = /he-rendered="\d+?"/i;
 
+global.createHawkejsInstance = function createHawkejsInstance() {
+
+	let hawkejs = new Hawkejs();
+
+	// Disable the exposed static variables being loaded via separate js file
+	hawkejs.exposed_path = null;
+
+	return hawkejs;
+};
+
 /**
  * Normalize attributes that are randomly generated
  */
@@ -205,7 +215,7 @@ global.loadHawkejs = function loadHawkejs() {
 		return global.hawkejs;
 	}
 
-	global.hawkejs = new Hawkejs();
+	global.hawkejs = createHawkejsInstance();
 
 	hawkejs.parallel_task_limit = 1;
 

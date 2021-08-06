@@ -12,7 +12,8 @@ describe('Hawkejs', function() {
 
 	describe('new Hawkejs()', function() {
 		it('should construct a new Hawkejs instance', function() {
-			global.hawkejs = new Hawkejs();
+			global.hawkejs = createHawkejsInstance();
+
 			hawkejs.parallel_task_limit = 1;
 		});
 	});
