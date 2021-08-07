@@ -90,7 +90,7 @@ global.evalPage = function evalPage(fnc, ...args) {
 };
 
 global.despace = function despace(text) {
-	return text.trim().replace(/\n/g, ' ').replace(/\s\s+/g, ' ');
+	return text.trim().replace(/\r\n/g, ' ').replace(/\n/g, ' ').replace(/\s\s+/g, ' ');
 };
 
 global.respondWithRender = function respondWithRender(templates, renderer, responder) {
