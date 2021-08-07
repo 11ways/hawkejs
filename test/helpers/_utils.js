@@ -89,8 +89,15 @@ global.evalPage = function evalPage(fnc, ...args) {
 	return page.evaluate(fnc, ...args);
 };
 
-global.despace = function despace(text) {
-	return text.trim().replace(/\r\n/g, ' ').replace(/\n/g, ' ').replace(/\s\s+/g, ' ');
+global.despace = function despace(text, replacement) {
+
+	if (replacement == null) {
+		replacement = ' ';
+	}
+
+	let result = text.trim().replace(/\r\n/g, replacement).replace(/\n/g, replacement).replace(/\s\s+/g, replacement);
+
+	return result;
 };
 
 global.respondWithRender = function respondWithRender(templates, renderer, responder) {

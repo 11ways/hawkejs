@@ -275,10 +275,10 @@ describe('HTMLElement', function() {
 					throw err;
 				}
 
-				result = result.replace(/[\n\t]/g, '');
+				result = despace(result, '');
 
 				assert.strictEqual(renderer.last._render_count, 1, 'The HTML elements were serialized more than expected!');
-				assert.strictEqual(result, `<div class="a"><div class="b"><div class="c"><div class="d"><div class="e"><div class="f"><div class="g"><div class="h"><div class="i"><div class="j"><div class="k"><div class="l"><div class="m"><div class="n"><div class="o"><div class="p"><div class="q"><div class="r"><div class="s"><div class="t"><div class="u"></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>`);
+				assert.strictEqual(result, `<div class="a">\t<div class="b"><div class="c"><div class="d"><div class="e"><div class="f"><div class="g"><div class="h"><div class="i"><div class="j"><div class="k"><div class="l"><div class="m"><div class="n"><div class="o"><div class="p"><div class="q"><div class="r"><div class="s"><div class="t"><div class="u"></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>\t</div></div>`);
 				done();
 			});
 		});

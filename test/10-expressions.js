@@ -568,7 +568,7 @@ function createTests(tests) {
 
 		if (Array.isArray(test)) {
 			code = tests[i][0];
-			title = tests[i][0].replace(/\n/g, '\\n').replace(/\t/g, '\\t');
+			title = tests[i][0].replace(/\r\n/g, '\\n').replace(/\n/g, '\\n').replace(/\t/g, '\\t');
 			result = tests[i][1];
 		} else {
 			title = test.template;

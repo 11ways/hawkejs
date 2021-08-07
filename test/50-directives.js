@@ -252,7 +252,7 @@ describe('Directives', function() {
 function createTests(tests) {
 	for (let i = 0; i < tests.length; i++) {
 		let code = tests[i][0],
-		    title = tests[i][0].replace(/\n/g, '\\n').replace(/\t/g, '\\t'),
+		    title = tests[i][0].replace(/\r\n/g, '\\n').replace(/\n/g, '\\n').replace(/\t/g, '\\t'),
 		    result = tests[i][1];
 
 		if (title.length > 74) {
