@@ -516,7 +516,7 @@ describe('Expressions', function() {
 				if (err) {
 					throw err;
 				} else {
-					assert.strictEqual(html, `<p>Pre-markdown-paragraph!</p>
+					assertEqualHtml(html, `<p>Pre-markdown-paragraph!</p>
 
 <h1 id="heading-1">Heading 1</h1>
 <p><a href="#allowed">allowed html</a></p>
@@ -684,7 +684,7 @@ function createTests(tests) {
 					return next(err);
 				}
 
-				assert.strictEqual(despace(res), despace(result));
+				assertEqualHtml(res, result);
 				next();
 			});
 		});

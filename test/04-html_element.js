@@ -61,7 +61,7 @@ describe('HTMLElement', function() {
 			el.classList.add('a');
 			el.classList.add('b');
 
-			assert.strictEqual(el.outerHTML, '<div class="a b"></div>');
+			assertEqualHtml(el.outerHTML, '<div class="a b"></div>');
 		});
 	});
 
@@ -72,7 +72,7 @@ describe('HTMLElement', function() {
 
 			el.id = 'test';
 
-			assert.strictEqual(el.outerHTML, '<div id="test"></div>');
+			assertEqualHtml(el.outerHTML, '<div id="test"></div>');
 		});
 	});
 
@@ -83,7 +83,7 @@ describe('HTMLElement', function() {
 
 			el.name = 'test';
 
-			assert.strictEqual(el.outerHTML, '<div name="test"></div>');
+			assertEqualHtml(el.outerHTML, '<div name="test"></div>');
 		});
 	});
 
@@ -94,7 +94,7 @@ describe('HTMLElement', function() {
 
 			el.tabIndex = 1;
 
-			assert.strictEqual(el.outerHTML, '<div tabindex="1"></div>');
+			assertEqualHtml(el.outerHTML, '<div tabindex="1"></div>');
 		});
 	});
 
@@ -119,11 +119,11 @@ describe('HTMLElement', function() {
 			assert.strictEqual(area.value, 'test');
 
 			// Setting a textarea's value breaks the link with the innerText
-			assert.strictEqual(area.innerHTML, 'html');
+			assertEqualHtml(area.innerHTML, 'html');
 
-			assert.strictEqual(input.outerHTML, '<input value="test">');
-			assert.strictEqual(area.outerHTML, '<textarea>html</textarea>');
-			assert.strictEqual(div.outerHTML, '<div></div>');
+			assertEqualHtml(input.outerHTML, '<input value="test">');
+			assertEqualHtml(area.outerHTML, '<textarea>html</textarea>');
+			assertEqualHtml(div.outerHTML, '<div></div>');
 		});
 	});
 
@@ -149,7 +149,7 @@ describe('HTMLElement', function() {
 			div.append('€');
 			div.append(Hawkejs.Hawkejs.createElement('br'));
 
-			assert.strictEqual(div.outerHTML, '<div>a<br>@<br>&euro;<br></div>');
+			assertEqualHtml(div.outerHTML, '<div>a<br>@<br>&euro;<br></div>');
 			assert.strictEqual(div.innerText, 'a\n@\n€\n');
 		});
 	});
@@ -180,7 +180,7 @@ describe('HTMLElement', function() {
 			div.insertAdjacentHTML('afterBegin', '<i></i>');
 			div.insertAdjacentHTML('beforeEnd', '<b></b>');
 
-			assert.strictEqual(div.outerHTML, '<div><i></i><br><b></b></div>');
+			assertEqualHtml(div.outerHTML, '<div><i></i><br><b></b></div>');
 		});
 	});
 
@@ -193,10 +193,10 @@ describe('HTMLElement', function() {
 			div.id = 'test';
 			assert.strictEqual(div.hasAttribute('id'), true);
 
-			assert.strictEqual(div.outerHTML, '<div id="test"></div>');
+			assertEqualHtml(div.outerHTML, '<div id="test"></div>');
 
 			div.removeAttribute('id');
-			assert.strictEqual(div.outerHTML, '<div></div>');
+			assertEqualHtml(div.outerHTML, '<div></div>');
 		});
 	});
 
@@ -204,13 +204,11 @@ describe('HTMLElement', function() {
 		it('should escape the set values', function() {
 			var div = Hawkejs.Hawkejs.createElement('div');
 			div.setAttribute('test', 'my "value"');
-			assert.strictEqual(div.outerHTML, `<div test="my &quot;value&quot;"></div>`);
+			assertEqualHtml(div.outerHTML, `<div test="my &quot;value&quot;"></div>`);
 
 			div = Hawkejs.Hawkejs.createElement('div');
 			div.setAttribute('data-test', 'my "value"');
-			assert.strictEqual(div.outerHTML, `<div data-test="my &quot;value&quot;"></div>`);
-			
-			
+			assertEqualHtml(div.outerHTML, `<div data-test="my &quot;value&quot;"></div>`);
 		});
 	});
 
@@ -231,7 +229,7 @@ describe('HTMLElement', function() {
 			div.removeAttribute('data-alpha');
 			assert.strictEqual(div.dataset.alpha, undefined);
 
-			assert.strictEqual(div.outerHTML, '<div></div>');
+			assertEqualHtml(div.outerHTML, '<div></div>');
 
 			// Setting to undefined results in an "undefined" string
 			div.dataset.alpha = undefined;
@@ -262,7 +260,7 @@ describe('HTMLElement', function() {
 
 			let result = elements[0].outerHTML;
 
-			assert.strictEqual(result, source);
+			assertEqualHtml(result, source);
 
 		});
 	});

@@ -192,7 +192,7 @@ describe('CustomElement', function() {
 
 			assert.strictEqual(result.constructor, 'HtmlInConstructor');
 
-			assert.strictEqual(result.html, expected_html);
+			assertEqualHtml(result.html, expected_html);
 		});
 
 		it('should call the constructor before the `introduced` method is executed', async function() {
