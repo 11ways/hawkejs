@@ -19,7 +19,6 @@
 	"devDependencies": {
 		"codecov"                 : "~3.8.3",
 		"istanbul-lib-instrument" : "~4.0.3",
-		"matcha"                  : "~0.7.0",
 		"mocha"                   : "~8.0.1",
 		"nyc"                     : "^15.1.0",
 		"puppeteer"               : "~10.2.0",
@@ -30,10 +29,9 @@
 		"index.js"
 	],
 	"scripts": {
-		"appveyor"        : "mocha --exit --reporter spec --bail --timeout 20000 --file test/00-init.js",
-		"coverage"        : "nyc --reporter=text --reporter=lcov mocha --exit --timeout 20000 --bail --file test/00-init.js",
+		"coverage"        : "nyc --reporter=text --reporter=lcov mocha --exit --timeout 25000 --bail --file test/00-init.js",
 		"report-coverage" : "codecov",
-		"test"            : "mocha --exit --reporter spec --bail --timeout 5000 --file test/00-init.js"
+		"test"            : "mocha --exit --reporter spec --bail --timeout 15000 --file test/00-init.js"
 	},
 	"license": "MIT",
 	"engines": {
