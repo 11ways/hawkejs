@@ -684,7 +684,7 @@ function createTests(tests) {
 					return next(err);
 				}
 
-				assert.strictEqual(res.trim(), result.trim());
+				assert.strictEqual(despace(res), despace(result));
 				next();
 			});
 		});

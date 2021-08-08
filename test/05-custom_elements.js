@@ -34,7 +34,7 @@ describe('CustomElement', function() {
 			});
 
 			assert.strictEqual(result.foo, 'bar', 'The foo dataset attribute should have been "bar"');
-			assert.strictEqual(result.html, '<retain-test-one he-rendered="1" data-foo="bar" data-hid="hserverside-2">Contents: bar</retain-test-one>');
+			assertEqualHtml(result.html, '<retain-test-one he-rendered="1" data-foo="bar" data-hid="hserverside-2">Contents: bar</retain-test-one>');
 			assert.strictEqual(result.val, 48, 'The assigned my_value property should be 48');
 		});
 
@@ -94,7 +94,7 @@ describe('CustomElement', function() {
 
 			let result = await getHtml();
 
-			assert.strictEqual(result.main_html, expected_main);
+			assertEqualHtml(result.main_html, expected_main);
 
 			assert.deepStrictEqual(result.datas, [
 				{ assigned_in_constructor: 47 },
@@ -176,7 +176,7 @@ describe('CustomElement', function() {
 
 			let expected_html = '<html-in-constructor my-test="47"><bold>This is a test</bold></html-in-constructor>';
 
-			assert.strictEqual(test.outerHTML, expected_html);
+			assertEqualHtml(test.outerHTML, expected_html);
 
 			await setLocation('/base_scene');
 
@@ -204,7 +204,7 @@ describe('CustomElement', function() {
 			// Manually call the introduced method
 			test.introduced();
 
-			assert.strictEqual(test.innerHTML, expected_html);
+			assertEqualHtml(test.innerHTML, expected_html);
 
 			await setLocation('/base_scene');
 
@@ -224,7 +224,7 @@ describe('CustomElement', function() {
 			});
 
 			assert.strictEqual(result.constructor, 'HtmlInConstructor');
-			assert.strictEqual(result.html, expected_html);
+			assertEqualHtml(result.html, expected_html);
 			assert.strictEqual(result.has_renderer, true);
 
 			result = await evalPage(async function() {
@@ -244,7 +244,7 @@ describe('CustomElement', function() {
 				}
 			});
 
-			assert.strictEqual(result.html, '<bold>This is a test</bold><html-in-constructor my-test="47"><bold>deeper</bold></html-in-constructor>');
+			assertEqualHtml(result.html, '<bold>This is a test</bold><html-in-constructor my-test="47"><bold>deeper</bold></html-in-constructor>');
 		});
 
 		it('should allow other elements being set & revived', async function() {
@@ -291,7 +291,7 @@ describe('CustomElement', function() {
 
 				res = res.trim();
 
-				assert.strictEqual(res, '<he-test testval="bla"></he-test>');
+				assertEqualHtml(res, '<he-test testval="bla"></he-test>');
 				done();
 			});
 		});
@@ -317,7 +317,7 @@ describe('CustomElement', function() {
 
 				res = res.trim();
 
-				assert.strictEqual(res, '<div><assign-test class="stopped" data-hid="hserverside-0"><div class="title">Bla</div></assign-test></div>');
+				assertEqualHtml(res, '<div><assign-test class="stopped" data-hid="hserverside-0"><div class="title">Bla</div></assign-test></div>');
 				done();
 			});
 		});
@@ -366,13 +366,13 @@ describe('CustomElement', function() {
 				});
 			}
 
-			assert.strictEqual(html, `<span tabindex="0">Element:</span> <assign-test><div class="title">First title</div></assign-test>\nTittle AD: First title`);
+			assertEqualHtml(html, `<span tabindex="0">Element:</span> <assign-test><div class="title">First title</div></assign-test>\nTittle AD: First title`);
 
 			await openHeUrl('/assigned_data_test?title=Ajax title');
 
 			html = await getMainHtml();
 
-			assert.strictEqual(html, `<span tabindex="0">Element:</span> <assign-test><div class="title">Ajax title</div></assign-test>\nTittle AD: Ajax title`);
+			assertEqualHtml(html, `<span tabindex="0">Element:</span> <assign-test><div class="title">Ajax title</div></assign-test>\nTittle AD: Ajax title`);
 		});
 
 	});
@@ -394,7 +394,7 @@ describe('CustomElement', function() {
 
 					res = res.trim();
 
-					assert.strictEqual(res, '<sync-template-test he-rendered="1"><span class="test">This is a test!!</span></sync-template-test><sync-template-test he-rendered="1"><span class="test">This is a test!!</span></sync-template-test>');
+					assertEqualHtml(res, '<sync-template-test he-rendered="1"><span class="test">This is a test!!</span></sync-template-test><sync-template-test he-rendered="1"><span class="test">This is a test!!</span></sync-template-test>');
 
 					done();
 				});
@@ -527,7 +527,7 @@ describe('CustomElement', function() {
 
 					res = res.trim();
 
-					assert.strictEqual(res, '<template-test he-rendered="1">This is the content of template-test</template-test>');
+					assertEqualHtml(res, '<template-test he-rendered="1">This is the content of template-test</template-test>');
 					done();
 				});
 
@@ -558,7 +558,7 @@ describe('CustomElement', function() {
 
 					res = res.trim();
 
-					assert.strictEqual(res, '<template-slot-test he-rendered="1"><div data-he-slot="main">This will set the content of the <b>main</b> slot</div></template-slot-test>');
+					assertEqualHtml(res, '<template-slot-test he-rendered="1"><div data-he-slot="main">This will set the content of the <b>main</b> slot</div></template-slot-test>');
 					done();
 				});
 
@@ -584,7 +584,7 @@ describe('CustomElement', function() {
 
 				res = res.trim();
 
-				assert.strictEqual(res, '<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 1</div></template-slot-test>\n<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 2</div></template-slot-test>');
+				assertEqualHtml(res, '<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 1</div></template-slot-test>\n<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 2</div></template-slot-test>');
 				done();
 			});
 		});
@@ -606,7 +606,7 @@ describe('CustomElement', function() {
 				res = res.trim();
 
 				try {
-					assert.strictEqual(res, '<render-after-attributes title="pretty-title" he-rendered="1"><span class="title">pretty-title</span></render-after-attributes>');
+					assertEqualHtml(res, '<render-after-attributes title="pretty-title" he-rendered="1"><span class="title">pretty-title</span></render-after-attributes>');
 				} catch (err) {
 					return done(err);
 				}
@@ -650,7 +650,7 @@ describe('CustomElement', function() {
 				console.log(res);
 
 				try {
-					assert.strictEqual(res, '<rendered-counter he-rendered="1" rcount="1"></rendered-counter>');
+					assertEqualHtml(res, '<rendered-counter he-rendered="1" rcount="1"></rendered-counter>');
 				} catch (err) {
 					return done(err);
 				}

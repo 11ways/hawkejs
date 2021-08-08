@@ -278,7 +278,7 @@ describe('HTMLElement', function() {
 				result = despace(result, '');
 
 				assert.strictEqual(renderer.last._render_count, 1, 'The HTML elements were serialized more than expected!');
-				assert.strictEqual(result, `<div class="a">\t<div class="b"><div class="c"><div class="d"><div class="e"><div class="f"><div class="g"><div class="h"><div class="i"><div class="j"><div class="k"><div class="l"><div class="m"><div class="n"><div class="o"><div class="p"><div class="q"><div class="r"><div class="s"><div class="t"><div class="u"></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>\t</div></div>`);
+				assertEqualHtml(result, `<div class="a">\t<div class="b"><div class="c"><div class="d"><div class="e"><div class="f"><div class="g"><div class="h"><div class="i"><div class="j"><div class="k"><div class="l"><div class="m"><div class="n"><div class="o"><div class="p"><div class="q"><div class="r"><div class="s"><div class="t"><div class="u"></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>\t</div></div>`);
 				done();
 			});
 		});
@@ -290,7 +290,7 @@ describe('HTMLElement', function() {
 					throw err;
 				}
 
-				assert.strictEqual(result, "<style type=\"text/css\">\nbody {\n\tfont-family: sans-serif;\n\tfont-size: 15px;\n\tfont-weight: normal;\n\tmargin: 0;\n\tcolor: #4C4C4C;\n\tbackground-color: #EDEDED;\n}\ndiv {\n\twidth: 100vw;\n}\nh1 {\n\ttext-align: center;\n\tpadding-top: 50vh;\n}\np {\n\ttext-align: center;\n}\n</style>\n<div>\n\t<h1>404: Not found</h1>\n\t<p></p>\n</div>");
+				assertEqualHtml(result, "<style type=\"text/css\">\nbody {\n\tfont-family: sans-serif;\n\tfont-size: 15px;\n\tfont-weight: normal;\n\tmargin: 0;\n\tcolor: #4C4C4C;\n\tbackground-color: #EDEDED;\n}\ndiv {\n\twidth: 100vw;\n}\nh1 {\n\ttext-align: center;\n\tpadding-top: 50vh;\n}\np {\n\ttext-align: center;\n}\n</style>\n<div>\n\t<h1>404: Not found</h1>\n\t<p></p>\n</div>");
 				done();
 			});
 		});
@@ -303,7 +303,7 @@ describe('HTMLElement', function() {
 					throw err;
 				}
 
-				assert.strictEqual(html, '<x-text>hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>');
+				assertEqualHtml(html, '<x-text>hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>');
 				done();
 			});
 		});
@@ -314,13 +314,13 @@ describe('HTMLElement', function() {
 
 			let block = await getBlockData('main');
 
-			assert.strictEqual(block.html, '<he-block data-he-name="main" data-hid="hserverside-0" data-he-template="generic_rhc_based">\n<x-text>hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>\n</he-block>');
+			assertEqualHtml(block.html, '<he-block data-he-name="main" data-hid="hserverside-0" data-he-template="generic_rhc_based">\n<x-text>hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>\n</he-block>');
 
 			await openHeUrl('/generic_rhc_based');
 
 			block = await getBlockData('main');
 
-			assert.strictEqual(block.html, '<he-block data-he-name="main" data-hid="hserverside-0" data-he-template="generic_rhc_based">\n<x-text tabindex="-1">hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>\n</he-block>');
+			assertEqualHtml(block.html, '<he-block data-he-name="main" data-hid="hserverside-0" data-he-template="generic_rhc_based">\n<x-text tabindex="-1">hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>\n</he-block>');
 		});
 	});
 
@@ -344,8 +344,8 @@ describe('HTMLElement', function() {
 				let spans = element.querySelectorAll('span');
 
 				assert.strictEqual(spans.length, 2, 'Expected to find 2 spans');
-				assert.strictEqual(spans[0].outerHTML, '<span>1</span>');
-				assert.strictEqual(spans[1].outerHTML, '<span>2</span>');
+				assertEqualHtml(spans[0].outerHTML, '<span>1</span>');
+				assertEqualHtml(spans[1].outerHTML, '<span>2</span>');
 
 				let my_div = element.querySelector('.my-div');
 				assert.strictEqual(my_div.id, 'test');
@@ -394,13 +394,13 @@ describe('HTMLElement', function() {
 
 			assert.strictEqual(div.childNodes.length, 3);
 
-			assert.strictEqual(div.outerHTML, '<div>»<span></span>«</div>');
+			assertEqualHtml(div.outerHTML, '<div>»<span></span>«</div>');
 
 			span.remove();
 
 			assert.strictEqual(div.childNodes.length, 2);
 
-			assert.strictEqual(div.outerHTML, '<div>»«</div>');
+			assertEqualHtml(div.outerHTML, '<div>»«</div>');
 		});
 	});
 
@@ -422,10 +422,10 @@ describe('HTMLElement', function() {
 			a.setIndexInParent(0);
 			i.setIndexInParent(2);
 
-			assert.strictEqual(div.innerHTML, '<a></a><b></b><i></i>');
+			assertEqualHtml(div.innerHTML, '<a></a><b></b><i></i>');
 
 			a.setIndexInParent(0);
-			assert.strictEqual(div.innerHTML, '<a></a><b></b><i></i>');
+			assertEqualHtml(div.innerHTML, '<a></a><b></b><i></i>');
 		});
 	});
 

@@ -46,7 +46,7 @@ describe('Renderer', function() {
 					throw err;
 				}
 
-				assert.strictEqual(result.trim(), `<div>
+				assertEqualHtml(result.trim(), `<div>
 <he-block data-hid="hserverside-0" data-he-name="main" data-he-template="assign_test">
 This is the internally set main
 </he-block>
@@ -65,7 +65,7 @@ This is the internally set main
 					throw err;
 				}
 
-				assert.strictEqual(result.trim(), '<div class="a">\n\t<div class="b">\n\t\t<div class="c">\n\t\t\t<label class="d">\n\t\t\t\t<he-block data-hid="hserverside-0" data-he-name="title">DEFAULT</he-block>\n\t\t\t</label>\n\t\t</div>\n\t</div>\n\t<div class="row">\n\t\t\n\t</div>\n</div>');
+				assertEqualHtml(result.trim(), '<div class="a">\n\t<div class="b">\n\t\t<div class="c">\n\t\t\t<label class="d">\n\t\t\t\t<he-block data-hid="hserverside-0" data-he-name="title">DEFAULT</he-block>\n\t\t\t</label>\n\t\t</div>\n\t</div>\n\t<div class="row">\n\t\t\n\t</div>\n</div>');
 
 				done();
 			});
@@ -80,7 +80,7 @@ This is the internally set main
 					throw err;
 				}
 
-				assert.strictEqual(result.trim(), `<div class="main">
+				assertEqualHtml(result.trim(), `<div class="main">
 	<hr>
 	<he-block data-hid="hserverside-0" data-he-name="main" data-he-template="expand_test">
 This is the main content
@@ -99,7 +99,7 @@ This is the main content
 					throw err;
 				}
 
-				assert.strictEqual(result.trim(), `<div class="main">
+				assertEqualHtml(result.trim(), `<div class="main">
 	<hr>
 	<he-block data-hid="hserverside-0" data-he-name="main" data-he-template="extend_test">
 This is the main content
@@ -121,7 +121,7 @@ This is the main content
 					throw err;
 				}
 
-				assert.strictEqual(result.trim(), '<div>\n<he-block class="with-class" data-hid="hserverside-0" data-he-name="main" data-he-template="assign_test_class">\nShould have class set\n</he-block>\n</div>');
+				assertEqualHtml(result.trim(), '<div>\n<he-block class="with-class" data-hid="hserverside-0" data-he-name="main" data-he-template="assign_test_class">\nShould have class set\n</he-block>\n</div>');
 				done();
 			});
 
@@ -136,7 +136,7 @@ This is the main content
 					throw err;
 				}
 
-				assert.strictEqual(result, `S: This EJS example can't be more simple.-`);
+				assertEqualHtml(result, `S: This EJS example can't be more simple.-`);
 				done();
 			});
 		});
@@ -150,7 +150,7 @@ This is the main content
 
 				result = result.trim();
 
-				assert.strictEqual(result, `--
+				assertEqualHtml(result, `--
 »<he-block data-hid="hserverside-0" data-he-name="test" data-he-template="partials/text_block">TEXT_BLOCK PARTIAL</he-block>«`);
 				done();
 			});
@@ -165,7 +165,7 @@ This is the main content
 
 				result = result.trim();
 
-				assert.strictEqual(result, `<div class="main">
+				assertEqualHtml(result, `<div class="main">
 	<hr>
 	<he-block data-hid="hserverside-1" data-he-name="main" data-he-template="expand_start_implement_assign">[<he-block data-hid="hserverside-0" data-he-name="test" data-he-template="partials/text_block">TEXT_BLOCK PARTIAL</he-block>]</he-block>\n</div>`);
 				done();
@@ -183,7 +183,7 @@ This is the main content
 
 				result = result.trim();
 
-				assert.strictEqual(result, `<div class="main">
+				assertEqualHtml(result, `<div class="main">
 	<hr>
 	<he-block data-hid="hserverside-1" data-he-name="main" data-he-template="expand_start_include_assign">[<he-block data-hid="hserverside-0" data-he-name="test"></he-block>]</he-block>\n</div>`);
 				done();
@@ -201,7 +201,7 @@ This is the main content
 
 				result = result.trim();
 
-				assert.strictEqual(result, `<div>
+				assertEqualHtml(result, `<div>
 <span>Printing:</span>
 <he-block data-hid="hserverside-0" data-he-name="main" data-he-template="print_partial">Printing Main</he-block>
 <span>Partial:</span>
@@ -223,7 +223,7 @@ This is the main content
 
 				result = result.trim();
 
-				assert.strictEqual(result, "<b><he-block data-hid=\"hserverside-0\" data-he-name=\"text\" data-he-template=\"partials/create_text_block\">TEXT: bold</he-block></b>\n\n\n<i><he-block data-hid=\"hserverside-1\" data-he-name=\"text\" data-he-template=\"partials/create_text_block\">TEXT: italic</he-block></i>");
+				assertEqualHtml(result, "<b><he-block data-hid=\"hserverside-0\" data-he-name=\"text\" data-he-template=\"partials/create_text_block\">TEXT: bold</he-block></b>\n\n\n<i><he-block data-hid=\"hserverside-1\" data-he-name=\"text\" data-he-template=\"partials/create_text_block\">TEXT: italic</he-block></i>");
 				done();
 			});
 		});
@@ -239,7 +239,7 @@ This is the main content
 
 				result = result.trim();
 
-				assert.strictEqual(result, '<span><he-block data-hid="hserverside-0" data-he-name="text" data-he-template="partials/switch_bold"><b>bold</b></he-block></span>');
+				assertEqualHtml(result, '<span><he-block data-hid="hserverside-0" data-he-name="text" data-he-template="partials/switch_bold"><b>bold</b></he-block></span>');
 				done();
 			});
 		});
@@ -251,7 +251,7 @@ This is the main content
 					throw err;
 				}
 
-				assert.strictEqual(result, 'This is wrapper text "wrapper"\n<he-block data-hid="hserverside-0" data-he-name="entries" data-he-template="partials/entries">Text: entries</he-block>');
+				assertEqualHtml(result, 'This is wrapper text "wrapper"\n<he-block data-hid="hserverside-0" data-he-name="entries" data-he-template="partials/entries">Text: entries</he-block>');
 				done();
 			});
 		});
@@ -274,10 +274,12 @@ This is the main content
 					return done(new Error('Render result was the string "null"'));
 				}
 
+				result = despace(result);
+
 				let checksum = __Protoblast.Bound.String.checksum(result);
 
 				try {
-					assert.strictEqual(checksum, 2597404698);
+					assert.strictEqual(checksum, 3852679327);
 				} catch (err) {
 					return done(err);
 				}
@@ -296,7 +298,7 @@ This is the main content
 					throw err;
 				}
 
-				assert.strictEqual(result, `--\n»<he-block data-hid="hserverside-0" data-he-name="test" data-he-template="partials/text_block" data-theme="dark">DARK TEXT_BLOCK PARTIAL</he-block>«`);
+				assertEqualHtml(result, `--\n»<he-block data-hid="hserverside-0" data-he-name="test" data-he-template="partials/text_block" data-theme="dark">DARK TEXT_BLOCK PARTIAL</he-block>«`);
 				done();
 			});
 
@@ -311,7 +313,7 @@ This is the main content
 					throw err;
 				}
 
-				assert.strictEqual(result, `<div class="main dark">\n\t<hr>\n\t<he-block data-hid="hserverside-0" data-he-name="main" data-he-template="expand_test" data-theme="dark">\nThis is the main content\n</he-block>\n</div>`);
+				assertEqualHtml(result, `<div class="main dark">\n\t<hr>\n\t<he-block data-hid="hserverside-0" data-he-name="main" data-he-template="expand_test" data-theme="dark">\nThis is the main content\n</he-block>\n</div>`);
 				done();
 			});
 
@@ -328,7 +330,7 @@ This is the main content
 					throw err;
 				}
 
-				assert.strictEqual(result, `<div class="Alfa">
+				assertEqualHtml(result, `<div class="Alfa">
 	Alfa
 	<span id="myspan">
 		myspan
@@ -390,7 +392,7 @@ This is the main content
 
 			let main = await getBlockData('main');
 
-			assert.strictEqual(despace(main.text), 'This is the new main body Include Test Contents: bla Contents: AfterBody');
+			assertEqualHtml(main.text, 'This is the new main body Include Test Contents: bla Contents: AfterBody');
 			assert.strictEqual(main.location, '/dialog_test');
 
 			let result = await evalPage(function() {
@@ -437,7 +439,7 @@ This is the main content
 			let html = await renderer.renderHTML('render_to_html', {devices});
 			html = despace(html);
 
-			assert.strictEqual(html, `Render this to HTML! <div> Text </div> Device: One<br> Device: Two<br>`);
+			assertEqualHtml(html, `Render this to HTML! <div> Text </div> Device: One<br> Device: Two<br>`);
 		});
 
 		it('should also work on the browser side', async function() {
@@ -460,9 +462,7 @@ This is the main content
 				};
 			});
 
-			let html = despace(result.html);
-
-			assert.strictEqual(html, `Render this to HTML! <div> Text </div> Device: One<br> Device: Two<br>`);
+			assertEqualHtml(result.html, `Render this to HTML! <div> Text </div> Device: One<br> Device: Two<br>`);
 		});
 	});
 
@@ -473,12 +473,8 @@ This is the main content
 			let renderer = hawkejs.createRenderer();
 
 			let html = await renderer.renderHTML('render_svg_elements');
-			html = despace(html);
 
-			console.log(html);
-
-			assert.strictEqual(html, `<div class="main"> <hr> <he-block data-hid="hserverside-0" data-he-name="main" data-he-template="render_svg_elements"><svg> <g> <path> </g> </svg> <br> </he-block> </div>`);
-
+			assertEqualHtml(html, `<div class="main"> <hr> <he-block data-hid="hserverside-0" data-he-name="main" data-he-template="render_svg_elements"><svg> <g> <path> </g> </svg> <br> </he-block> </div>`);
 		});
 	});
 });
@@ -528,7 +524,7 @@ function createTests(tests) {
 					return next(err);
 				}
 
-				assert.strictEqual(res, result);
+				assertEqualHtml(res, result);
 				next();
 			});
 		});

@@ -389,9 +389,7 @@ describe('Scene', function() {
 				};
 			});
 
-			let html = despace(result.html);
-
-			assert.strictEqual(html, `<div class="he-dialog-contents" data-he-slot="main" data-he-template="make_dialog"> This should now be a dialog! <hr></div>`);
+			assertEqualHtml(result.html, `<div class="he-dialog-contents" data-he-slot="main" data-he-template="make_dialog"> This should now be a dialog! <hr></div>`);
 		});
 	});
 

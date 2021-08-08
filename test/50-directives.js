@@ -163,7 +163,7 @@ describe('Directives', function() {
 					return next(err);
 				}
 
-				assert.strictEqual(res, `<input value="#hashtag" html="&quot;&lt;i&gt;test&lt;/i&gt;&quot;">`);
+				assertEqualHtml(res, `<input value="#hashtag" html="&quot;&lt;i&gt;test&lt;/i&gt;&quot;">`);
 
 				next();
 			});
@@ -295,7 +295,7 @@ function createTests(tests) {
 					return next(err);
 				}
 
-				assert.strictEqual(res, result);
+				assertEqualHtml(res, result);
 				next();
 			});
 		});
