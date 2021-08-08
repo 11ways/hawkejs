@@ -169,6 +169,14 @@ global.getBlockData = async function getBlockData(name) {
 		return result;
 	}, name);
 
+	let key;
+
+	for (key in result) {
+		if (typeof result[key] == 'string') {
+			result[key] = result[key].replace(/\r\n/g, '\n');
+		}
+	}
+
 	assert.strictEqual(result.name, name);
 
 	return result;
@@ -211,7 +219,7 @@ global.getHtml = async function getHtml() {
 		let html = document.querySelector('html');
 
 		return {
-			html : html.outerHTML
+			html : html.outerHTML.replace(/\r\n/g, '\n')
 		};
 	});
 };
