@@ -14,8 +14,8 @@
   </a>
 
   <!-- DM - Snyk -->
-  <a href="https://snyk.io/test/github/skerit/hawkejs?targetFile=package.json">
-    <img src="https://snyk.io/test/github/skerit/hawkejs/badge.svg?targetFile=package.json" alt="Known Vulnerabilities" />
+  <a href="https://snyk.io/test/github/11ways/hawkejs?targetFile=package.json">
+    <img src="https://snyk.io/test/github/11ways/hawkejs/badge.svg?targetFile=package.json" alt="Known Vulnerabilities" />
   </a>
 
   <!-- DM - David -->
