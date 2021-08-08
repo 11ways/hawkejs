@@ -3,14 +3,9 @@
   <b>Hawkejs</b>
 </h1>
 <div align="center">
-  <!-- CI - TravisCI -->
-  <a href="https://travis-ci.org/11ways/hawkejs">
-    <img src="https://travis-ci.org/11ways/hawkejs.svg?branch=master" alt="Mac/Linux Build Status" />
-  </a>
-
-  <!-- CI - AppVeyor -->
-  <a href="https://ci.appveyor.com/project/skerit/hawkejs">
-    <img src="https://img.shields.io/appveyor/ci/skerit/hawkejs/master.svg?label=Windows" alt="Windows Build status" />
+  <!-- CI - Github Actions -->
+  <a href="https://github.com/11ways/hawkejs/actions/workflows/unit_test.yaml">
+    <img src="https://github.com/11ways/hawkejs/actions/workflows/unit_test.yaml/badge.svg" alt="Node.js CI (Linux, MacOS, Windows)" />
   </a>
 
   <!-- Coverage - Codecov -->
