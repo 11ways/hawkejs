@@ -545,6 +545,39 @@ This should be a converted variable:
 		});
 	});
 
+	describe('Multiline expressions', function() {
+		var tests = [
+			[`<span>
+	»
+	{%
+		print(1);
+		print(2);
+		print(3);
+		print(4);
+	%}
+	«
+	</span>`, '<span> » 1234 « </span>'],
+			[
+				`<span>»{% print(1); print(2); print(3); %}«</span>`,
+				`<span>»123«</span>`
+			],
+			[
+				`<span>»{% print(1); print(2); print(3); %}«</span>
+					{% markdown %}
+						**cool**
+					{% /markdown %}
+					{%
+						print('-')
+						print('-')
+					%}
+				`,
+				`<span>»123«</span> <p><strong>cool</strong></p> --`
+			]
+		];
+
+		createTests(tests);
+	});
+
 	return;
 
 	describe('None existing method calls', function() {

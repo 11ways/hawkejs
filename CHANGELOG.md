@@ -4,6 +4,7 @@
 * Add `set` expression
 * Do not use `xhr` property of a `Develry.Request` instance
 * Put the static exposed variables in a temporary javascript file
+* A single Hawkejs syntax block can now contain multiple expressions, separated by either a newline or a semicolon
 
 ## 2.1.5 (2021-07-10)
 
