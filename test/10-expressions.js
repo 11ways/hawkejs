@@ -411,6 +411,12 @@ describe('Expressions', function() {
 			[`{%= __('test.with.{curly}', {curly: 'test'}) %}`, 'test.with.test'],
 			[`{%= JSON.stringify({a: 1,}) %}`,                  '{"a":1}'],
 			[`{%= JSON.stringify([1,]) %}`,                     '[1]'],
+			['{%= JSON.stringify({a: 1, b: 2, c: 3}) %}', '{"a":1,"b":2,"c":3}'],
+			[`{%= JSON.stringify({
+				a: 1,
+				b: 2,
+				c: 3
+			}) %}`, '{"a":1,"b":2,"c":3}'],
 		];
 
 		createTests(tests);
@@ -439,7 +445,7 @@ describe('Expressions', function() {
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_135">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_137">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
