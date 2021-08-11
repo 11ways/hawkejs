@@ -434,6 +434,22 @@ describe('Expressions', function() {
 				{% /if %}
 				{{ my_val }}`,
 				'else'
+			],
+			[
+				`{%
+					if false
+						set my_val = "if"
+					else
+						set my_val = "else"
+					/if
+
+					print(my_val)
+				%}`,
+				'else'
+			],
+			[
+				`{% if false; set my_val = "if"; else; set my_val = "else"; /if; print(my_val); %}`,
+				'else'
 			]
 		];
 
@@ -445,7 +461,7 @@ describe('Expressions', function() {
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_137">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_139">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
