@@ -236,13 +236,70 @@ describe('Directives', function() {
 				// Restore console.log method
 				console.error = old_error;
 
-				let found_error = message.indexOf('»»»  38 | 		<h4>This should throw an error</h5>') > -1;
+				let found_error = message.indexOf('»»»  46 | 		<h4>This should throw an error</h5>') > -1;
 
 				if (found_error) {
 					return next();
 				}
 
+				console.log(message);
+
 				throw new Error('Got wrong error line in template_with_error');
+			});
+		});
+
+		it('should give the correct line number when the template was compiled inline', function(next) {
+
+			let source = `<h4>ERROR</h5>`;
+			let compiled = hawkejs.compile(source);
+			let message;
+
+			const old_error = console.error;
+
+			console.error = function error(err, msg) {
+				message = msg;
+				console.error = old_error;
+			}
+
+			hawkejs.render(compiled, {}, function done(err, html) {
+				let found_error = message.indexOf('»»»   1 | <h4>ERROR</h5>') > -1;
+
+				if (found_error) {
+					return next();
+				}
+
+				console.log(message);
+
+				throw new Error('Got wrong error line in inlined template');
+			});
+
+		});
+
+		it('should give the correct line number even when handling markdown content', function(next) {
+
+			var message;
+
+			const old_error = console.error;
+
+			console.error = function error(err, msg) {
+				message = msg;
+				console.error = old_error;
+			}
+
+			hawkejs.render('template_with_error_markdown', function donePartial(err, result) {
+
+				// Restore console.log method
+				console.error = old_error;
+
+				let found_error = message.indexOf('»»»  9 | <h4>This will throw an error</h5>') > -1;
+
+				if (found_error) {
+					return next();
+				}
+
+				console.log(message);
+
+				throw new Error('Got wrong error line in template_with_error_markdown');
 			});
 
 		});

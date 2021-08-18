@@ -5,6 +5,14 @@
 
 {% if true %}
 
+	{% block "ignored" %}
+		{% if true %}
+
+		{% else %}
+
+		{% /if %}
+	{% /block %}
+
 	<!-- Start Block -->
 	{% block "test" %}
 		<div class="row">
