@@ -1,0 +1,9 @@
+{% markdown %}
+# Markdown test
+
+Lines
+lines
+lines
+{% /markdown %}
+
+<h4>This will throw an error</h5>
