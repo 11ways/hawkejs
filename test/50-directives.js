@@ -301,6 +301,49 @@ describe('Directives', function() {
 
 				throw new Error('Got wrong error line in template_with_error_markdown');
 			});
+		});
+
+		it('should give the correct line number when errors happen inside ejs code', function(next) {
+
+			let source = `{#
+
+				#}
+				<a
+				></a>
+				<%
+				// Allowed
+				/*
+				multiline
+				*/
+				"test";
+				throw new Error("HERE!");
+			%>`
+
+			let compiled = hawkejs.compile(source);
+			let message;
+
+			const old_error = console.error;
+
+			console.error = function error(err, msg) {
+				message = msg;
+				console.error = old_error;
+			}
+
+			let renderer = hawkejs.render(compiled, {}, function done(err, html) {
+
+				// Restore console.log method
+				console.error = old_error;
+
+				let found_error = message.indexOf('»»»  12 | 	throw new Error("HERE!");') > -1;
+
+				if (found_error) {
+					return next();
+				}
+
+				console.log(message);
+
+				throw new Error('Got wrong error line in ejs code test');
+			});
 
 		});
 	});
