@@ -291,7 +291,7 @@ describe('Directives', function() {
 				// Restore console.log method
 				console.error = old_error;
 
-				let found_error = message.indexOf('»»»  9 | <h4>This will throw an error</h5>') > -1;
+				let found_error = message.indexOf('»»»   9 | <h4>This will throw an error</h5>') > -1;
 
 				if (found_error) {
 					return next();
