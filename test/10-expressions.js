@@ -555,7 +555,7 @@ This should be a converted variable:
 
 # This is NOT markdown!
 
-»<p><code>code</code></p>
+» <p><code>code</code></p>
 <p><strong>b</strong></p>
 <p><em>i</em></p>
 «`)

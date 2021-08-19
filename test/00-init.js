@@ -106,7 +106,7 @@ describe('Hawkejs', function() {
 				throw new Error('The inline JS code was not added to the compiled function');
 			}
 
-			assert.equal(true, body.indexOf('lineNr:0') > -1);
+			assert.equal(true, body.indexOf('source_line_nr:0') > -1, 'Source line number hints were not found');
 		});
 
 		it('should return an errorView function for templates containg syntax errors', function() {
@@ -153,6 +153,7 @@ print(zever);
 
 			assert.strictEqual(code, `function compiledView(__render, __template, vars, helper) {
 	__render.timeStart("");
+/*source_line_nr:0:start*/;
 
 let test = 1, bla;
 __render.print(test);
@@ -168,6 +169,7 @@ __render.print(zever);
 
 __render.print(vars.zever);
 ;
+/*source_line_nr:14:end*/;
 	__render.timeEnd("");
 }`)
 
@@ -191,10 +193,12 @@ print(post._id)
 
 			assert.strictEqual(code, `function compiledView(__render, __template, vars, helper) {
 	__render.timeStart("");
+/*source_line_nr:0:start*/;
 
 Object.each(vars.comments,function eachPosts(post){__render.print(post._id)})
 __render.print(vars.post._id)
 ;
+/*source_line_nr:3:end*/;
 	__render.timeEnd("");
 }`)
 

@@ -5,5 +5,22 @@ Lines
 lines
 lines
 {% /markdown %}
+<!--
+	Multiline
+	HTML
+	Comment
+-->
+
+{#
+	Multiline
+	Hawkejs
+	Comment
+#}
+
+{%
+	set a = 1;
+	set b = 2;
+	set c = 3;
+%}
 
 <h4>This will throw an error</h5>
