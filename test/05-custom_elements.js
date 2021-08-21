@@ -21,17 +21,28 @@ describe('CustomElement', function() {
 			let result = await evalPage(function() {
 
 				let wrapper = document.querySelector('retain-wrapper'),
-				    one = wrapper.querySelector('retain-test-one'),
-				    alpha = one.querySelector('div.alpha');
+				    alpha,
+				    one;
+
+				if (wrapper) {
+					one = wrapper.querySelector('retain-test-one');
+				}
+
+				if (one) {
+					alpha = one.querySelector('div.alpha');
+				}
 
 				let result = {
-					foo  : one.dataset.foo,
-					val  : one.my_value,
-					html : one.outerHTML
+					found_rto : !!one,
+					foo  : one && one.dataset.foo,
+					val  : one && one.my_value,
+					html : one && one.outerHTML
 				};
 
 				return result;
 			});
+
+			assert.ok(result.found_rto, 'Did not find the retain-test-one element, did the block get assigned?');
 
 			assert.strictEqual(result.foo, 'bar', 'The foo dataset attribute should have been "bar"');
 			assertEqualHtml(result.html, '<retain-test-one he-rendered="1" data-foo="bar" data-hid="hserverside-2">Contents: bar</retain-test-one>');
@@ -254,16 +265,25 @@ describe('CustomElement', function() {
 			let result = await evalPage(function() {
 
 				let wrapper = document.getElementById('atw1'),
-				    at = wrapper.querySelector('assign-test');
+				    at;
+
+				if (wrapper) {
+					at = wrapper.querySelector('assign-test');
+				}
 
 				return {
+					has_at                         : !!at,
 					html                           : document.body.innerHTML,
-					wrapper_id                     : wrapper.id,
-					at_has_assigned_element        : !!at.custom_element,
-					at_assigned_element_is_wrapper : at.custom_element == wrapper,
-					at_wrapper_id                  : at.getAttribute('data-wrapper-id'),
+					wrapper_id                     : wrapper && wrapper.id,
+					at_has_assigned_element        : at && !!at.custom_element,
+					at_assigned_element_is_wrapper : at && at.custom_element == wrapper,
+					at_wrapper_id                  : at && at.getAttribute('data-wrapper-id'),
 				};
 			});
+
+			assert.ok(result.wrapper_id == 'atw1', 'The #atw1 wrapper was not found');
+
+			assert.ok(result.has_at, 'The assign-test element was not found inside #atw1');
 
 			assert.strictEqual(result.wrapper_id, 'atw1', 'The wrapper has the wrong ID');
 			assert.strictEqual(result.at_wrapper_id, 'atw1', 'The <assign-test> element should have a `data-wrapper-id` attribute equal to the wrapper\'s ID');
