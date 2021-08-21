@@ -23,6 +23,16 @@ global.createHawkejsInstance = function createHawkejsInstance() {
 	return hawkejs;
 };
 
+global.assertContains = function assertContains(actual, expected, message) {
+	let index = actual.indexOf(expected);
+
+	if (index == -1 && !message) {
+		message = 'Expected to find `' + expected + '`';
+	}
+
+	assert.ok(index > -1, message);
+};
+
 /**
  * Normalize attributes that are randomly generated
  */
