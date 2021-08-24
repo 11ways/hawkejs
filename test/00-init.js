@@ -88,8 +88,6 @@ describe('Hawkejs', function() {
 
 			let code = String(fnc);
 
-			console.log(code)
-
 			assert.strictEqual(fnc.name, 'compiledView');
 			assert.strictEqual(fnc.source_name.indexOf('inline'), 0);
 			assert.strictEqual(code.indexOf('.printUnsafe("this is inline ') > -1, true, 'Print was cut off');

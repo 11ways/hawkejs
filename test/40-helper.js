@@ -82,6 +82,30 @@ describe('Helper', function() {
 			});
 		});
 
+		it('should work inside blocks', function(done) {
+
+			let code = `<div data-he-name="main"></div>
+			{% block "main" %}
+				<%= Test.saySomething() %>
+			{% /block %}
+			`;
+
+			let compiled = hawkejs.compile('Test_test_5', code);
+
+			hawkejs.render(compiled, {}, function rendered(err, res) {
+
+				if (err) {
+					throw err;
+				}
+
+				res = res.trim();
+
+				assertEqualHtml(res, '<div data-he-name="main" data-hid="hserverside-0" data-he-template="Test_test_5"> something </div>');
+				done();
+			});
+
+		});
+
 		it('should allow the use of methods in Hawkejs expressions', function(done) {
 
 			var code = '{%= Test.saySomething() %}';

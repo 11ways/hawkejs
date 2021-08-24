@@ -45,7 +45,11 @@ describe('Directives', function() {
 			[
 				`<span value="1 {% 1+1 %} 3"></span>`,
 				`<span value="1 2 3"></span>`
-			]
+			],
+			[
+				`<a href="{{ link }}">{{ link }}</a>`,
+				`<a href="#hello">#hello</a>`
+			],
 		];
 
 		createTests(tests);
@@ -244,7 +248,7 @@ describe('Directives', function() {
 
 				console.log(message);
 
-				throw new Error('Got wrong error line in template_with_error');
+				next(new Error('Got wrong error line in template_with_error'));
 			});
 		});
 
@@ -270,7 +274,7 @@ describe('Directives', function() {
 
 				console.log(message);
 
-				throw new Error('Got wrong error line in inlined template');
+				next(new Error('Got wrong error line in inlined template'));
 			});
 
 		});
@@ -299,7 +303,7 @@ describe('Directives', function() {
 
 				console.log(message);
 
-				throw new Error('Got wrong error line in template_with_error_markdown');
+				next(new Error('Got wrong error line in template_with_error_markdown'));
 			});
 		});
 
@@ -342,7 +346,7 @@ describe('Directives', function() {
 
 				console.log(message);
 
-				throw new Error('Got wrong error line in ejs code test');
+				next(new Error('Got wrong error line in ejs code test'));
 			});
 
 		});
@@ -386,7 +390,8 @@ function createTests(tests) {
 							four: 4
 						}
 					}
-				}
+				},
+				link: '#hello',
 			};
 
 			hawkejs.render(compiled, vars, function done(err, res) {

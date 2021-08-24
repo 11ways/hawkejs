@@ -160,6 +160,22 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('Include', function() {
+
+		let tests = [
+			[
+				`{% include "partials/template_slot_test" %}`,
+				`<div data-he-slot="main">Default main slot</div>`
+			],
+			[
+				`{% include "partials/print_title_var" title="Test" %}`,
+				`Test-Test`
+			]
+		];
+
+		createTests(tests);
+	});
+
 	describe('Trim', function() {
 
 		var tests = [
@@ -308,6 +324,19 @@ describe('Expressions', function() {
 				`{% each iterable as index, nr %}{%= index %}:{%= nr %},{% /each %}`,
 				`0:0,1:1,2:2,3:3,4:4,`
 			],
+			[
+				`{% each clients as client where client.visible_as_case and client.image %}
+	<span>
+		<% if (client.color) $0.style.setProperty('background-color', client.color) %>
+		{{ client.name }}
+	</span>
+{% /each %}`,
+				`<span style="background-color:red;"> 1 </span> <span style="background-color:green;"> 2 </span> <span style="background-color:blue;"> 3 </span> `
+			],
+			[
+				`{% each entries as entry %}<a href="#{% entry.id %}">{{ entry.title }}</a>{% /each %}`,
+				`<a href="#a">A</a>`
+			]
 		];
 
 		createTests(tests);
@@ -461,7 +490,7 @@ describe('Expressions', function() {
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_139">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_143">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
@@ -702,7 +731,41 @@ function createTests(tests) {
 						1, 2, 3
 					]
 				},
-				html: '<p>This is <bold>HTML</bold></p>'
+				html: '<p>This is <bold>HTML</bold></p>',
+				clients : [
+					{
+						visible_as_case : false,
+						image           : true,
+						name            : 'HIDDEN',
+					},
+					{
+						visible_as_case : true,
+						image           : true,
+						name            : '1',
+						color           : 'red',
+					},
+					{
+						visible_as_case : true,
+						image           : false,
+						name            : 'HIDDEN',
+						color           : 'red',
+					},
+					{
+						visible_as_case : true,
+						image           : true,
+						name            : '2',
+						color           : 'green',
+					},
+					{
+						visible_as_case : true,
+						image           : true,
+						name            : '3',
+						color           : 'blue',
+					},
+				],
+				entries: [
+					{id: 'a', title: 'A'}
+				],
 			};
 
 			vars.show = function show(options, two) {
