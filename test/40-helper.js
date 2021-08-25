@@ -86,7 +86,7 @@ describe('Helper', function() {
 
 			let code = `<div data-he-name="main"></div>
 			{% block "main" %}
-				<%= Test.saySomething() %>
+				<b><%= Test.saySomething() %></b>
 			{% /block %}
 			`;
 
@@ -100,7 +100,7 @@ describe('Helper', function() {
 
 				res = res.trim();
 
-				assertEqualHtml(res, '<div data-he-name="main" data-hid="hserverside-0" data-he-template="Test_test_5"> something </div>');
+				assertEqualHtml(res, '<div data-he-name="main" data-hid="hserverside-0" data-he-template="Test_test_5"> <b>something</b> </div>');
 				done();
 			});
 
