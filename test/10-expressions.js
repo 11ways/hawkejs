@@ -640,6 +640,16 @@ This should be a converted variable:
 				`{% if true %}<p>{% else %}<div>{% /if %}<span>P or div?</span>{% if true %}</p>{% else %}</div>{% /if %}`,
 				`<p><span>P or div?</span></p>`
 			],
+			[
+				`{% with people as person %}
+{% all %}<all>{% /all %}
+<div>
+{% each %}<each>{{ person.name }}</each>{% /each %}
+{% all %}</all>{% /all %}
+</div>
+{% /with %}`,
+				`<all> <div> <each>Jelle</each><each>Roel</each><each>Griet</each><each>Patrick</each><each>Voltorb</each> </div> </all>`
+			],
 		]
 
 	});
