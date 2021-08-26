@@ -629,6 +629,21 @@ This should be a converted variable:
 		createTests(tests);
 	});
 
+	describe('Overlapping elements & statements', function() {
+
+		let tests = [
+			[
+				`{% if false %}<p>{% else %}<div>{% /if %}<span>P or div?</span>{% if false %}</p>{% else %}</div>{% /if %}`,
+				`<div><span>P or div?</span></div>`
+			],
+			[
+				`{% if true %}<p>{% else %}<div>{% /if %}<span>P or div?</span>{% if true %}</p>{% else %}</div>{% /if %}`,
+				`<p><span>P or div?</span></p>`
+			],
+		]
+
+	});
+
 	return;
 
 	describe('None existing method calls', function() {
