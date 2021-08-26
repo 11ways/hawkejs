@@ -77,6 +77,14 @@ describe('Directives', function() {
 			[
 				`<span value="1 <%= String("test" || '').toUpperCase() %> 3"></span>`,
 				`<span value="1 TEST 3"></span>`
+			],
+			[
+				`<span id="<%="test"%>"></span>`,
+				`<span id="test"></span>`
+			],
+			[
+				`<span id="<%= "test" %>"></span>`,
+				`<span id="test"></span>`
 			]
 		];
 
