@@ -268,6 +268,39 @@ describe('Expressions', function() {
 			[
 				`{% with people as person %}A{%= $amount %}-{% if $amount le 100 %}LESS{% /if %}{% /with %}`,
 				`A5-LESS`
+			],
+			[
+				`{% if 1 %}
+	IF1
+	{% if 2 %}
+		IF2
+
+		{% with people as person %}
+			{% each %}
+				{{ person.name }}
+
+				{% if false %}
+					NO
+				{% elseif true %}
+					YES
+				{% else %}
+					NO
+				{% /if %}
+
+				{% if false %}
+					NO
+				{% elseif false %}
+					NO
+				{% else %}
+					YES
+				{% /if %}
+			{% /each %}
+		{% /with %}
+	{% /if %}
+{% else %}
+NO
+{% /if %}`,
+				`IF1 IF2 Jelle YES YES Roel YES YES Griet YES YES Patrick YES YES Voltorb YES YES`
 			]
 		];
 
@@ -490,7 +523,7 @@ describe('Expressions', function() {
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_143">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_144">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
