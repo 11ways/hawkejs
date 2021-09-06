@@ -211,6 +211,20 @@ print(post._id)
 				done();
 			});
 		});
+
+		it('should have a reference to the Hawkejs variable', function(done) {
+
+			let source = `<div><p></p><% Hawkejs.replaceChildren($0, []) %></div>`;
+
+			let compiled = hawkejs.compile(source);
+
+			hawkejs.render(compiled, {}, function doneVariable(err, result) {
+				assert.equal(null, err);
+				assert.equal('<div></div>', result);
+				done();
+			});
+
+		});
 	});
 
 	describe('#createClientFile(options)', function() {
