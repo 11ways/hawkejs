@@ -124,6 +124,27 @@ describe('Hawkejs', function() {
 			assert.equal('errorView', fnc.name);
 		});
 
+		it('should accept open EJS code blocks', function(done) {
+
+			let fnc = hawkejs.compile('<% print("this is fine")');
+
+			if (fnc.name == 'errorView') {
+				return done(new Error('Failed to parse code with open EJS code blocks'));
+			}
+
+			hawkejs.render(fnc, function doneSimple(err, result) {
+
+				try {
+					assert.equal(null, err);
+					assert.equal('this is fine', result);
+				} catch (err) {
+					return done(err);
+				}
+
+				done();
+			});
+		});
+
 		it('should correctly rename variable references', function() {
 
 			var compiled,
