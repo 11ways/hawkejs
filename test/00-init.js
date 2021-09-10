@@ -121,7 +121,7 @@ describe('Hawkejs', function() {
 			// And put it back
 			console.error = backup;
 
-			assert.equal('errorView', fnc.name);
+			assert.equal(fnc.name, 'errorView');
 		});
 
 		it('should accept open EJS code blocks', function(done) {
@@ -136,13 +136,37 @@ describe('Hawkejs', function() {
 
 				try {
 					assert.equal(null, err);
-					assert.equal('this is fine', result);
+					assert.equal(result, 'this is fine');
 				} catch (err) {
 					return done(err);
 				}
 
 				done();
 			});
+		});
+
+		it('should use the same global objects', function(done) {
+
+			let fnc = hawkejs.compile('<%= "a".makeItPretty() %>');
+
+			String.prototype.makeItPretty = function makeItPretty() {
+				return "»" + this.toUpperCase() + "«";
+			};
+
+			assert.strictEqual('a'.makeItPretty(), '»A«');
+
+			hawkejs.render(fnc, function doneSimple(err, result) {
+
+				try {
+					assert.equal(null, err);
+					assert.equal(result, '»A«');
+				} catch (err) {
+					return done(err);
+				}
+
+				done();
+			});
+
 		});
 
 		it('should correctly rename variable references', function() {
