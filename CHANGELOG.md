@@ -1,4 +1,6 @@
-## 2.2.0 (WIP)
+## 2.2.0 (2021-09-12)
+
+* Change the way templates are compiled (part of the "variable references" work)
 
 ## 2.1.6 (WIP)
 
