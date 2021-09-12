@@ -1,3 +1,5 @@
+## 2.2.0 (WIP)
+
 ## 2.1.6 (WIP)
 
 * Fix `getElementContent()` still using `Blast.parseHTML()`
