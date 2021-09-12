@@ -314,6 +314,10 @@ describe('HTMLElement', function() {
 
 			assertEqualHtml(block.html, '<he-block data-he-name="main" data-hid="hserverside-0" data-he-template="generic_rhc_based">\n<x-text>hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>\n</he-block>');
 
+			let html = await getHtml();
+
+			assertContains(html.html, '<!-- Static hawkejs variables -->', 'The foundation was not found');
+
 			await openHeUrl('/generic_rhc_based');
 
 			block = await getBlockData('main');

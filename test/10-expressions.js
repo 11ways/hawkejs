@@ -160,6 +160,22 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('Include', function() {
+
+		let tests = [
+			[
+				`{% include "partials/template_slot_test" %}`,
+				`<div data-he-slot="main">Default main slot</div>`
+			],
+			[
+				`{% include "partials/print_title_var" title="Test" %}`,
+				`Test-Test`
+			]
+		];
+
+		createTests(tests);
+	});
+
 	describe('Trim', function() {
 
 		var tests = [
@@ -252,6 +268,39 @@ describe('Expressions', function() {
 			[
 				`{% with people as person %}A{%= $amount %}-{% if $amount le 100 %}LESS{% /if %}{% /with %}`,
 				`A5-LESS`
+			],
+			[
+				`{% if 1 %}
+	IF1
+	{% if 2 %}
+		IF2
+
+		{% with people as person %}
+			{% each %}
+				{{ person.name }}
+
+				{% if false %}
+					NO
+				{% elseif true %}
+					YES
+				{% else %}
+					NO
+				{% /if %}
+
+				{% if false %}
+					NO
+				{% elseif false %}
+					NO
+				{% else %}
+					YES
+				{% /if %}
+			{% /each %}
+		{% /with %}
+	{% /if %}
+{% else %}
+NO
+{% /if %}`,
+				`IF1 IF2 Jelle YES YES Roel YES YES Griet YES YES Patrick YES YES Voltorb YES YES`
 			]
 		];
 
@@ -308,6 +357,19 @@ describe('Expressions', function() {
 				`{% each iterable as index, nr %}{%= index %}:{%= nr %},{% /each %}`,
 				`0:0,1:1,2:2,3:3,4:4,`
 			],
+			[
+				`{% each clients as client where client.visible_as_case and client.image %}
+	<span>
+		<% if (client.color) $0.style.setProperty('background-color', client.color) %>
+		{{ client.name }}
+	</span>
+{% /each %}`,
+				`<span style="background-color:red;"> 1 </span> <span style="background-color:green;"> 2 </span> <span style="background-color:blue;"> 3 </span> `
+			],
+			[
+				`{% each entries as entry %}<a href="#{% entry.id %}">{{ entry.title }}</a>{% /each %}`,
+				`<a href="#a">A</a>`
+			]
 		];
 
 		createTests(tests);
@@ -461,7 +523,7 @@ describe('Expressions', function() {
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_139">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_144">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
@@ -600,6 +662,31 @@ This should be a converted variable:
 		createTests(tests);
 	});
 
+	describe('Overlapping elements & statements', function() {
+
+		let tests = [
+			[
+				`{% if false %}<p>{% else %}<div>{% /if %}<span>P or div?</span>{% if false %}</p>{% else %}</div>{% /if %}`,
+				`<div><span>P or div?</span></div>`
+			],
+			[
+				`{% if true %}<p>{% else %}<div>{% /if %}<span>P or div?</span>{% if true %}</p>{% else %}</div>{% /if %}`,
+				`<p><span>P or div?</span></p>`
+			],
+			[
+				`{% with people as person %}
+{% all %}<all>{% /all %}
+<div>
+{% each %}<each>{{ person.name }}</each>{% /each %}
+{% all %}</all>{% /all %}
+</div>
+{% /with %}`,
+				`<all> <div> <each>Jelle</each><each>Roel</each><each>Griet</each><each>Patrick</each><each>Voltorb</each> </div> </all>`
+			],
+		]
+
+	});
+
 	return;
 
 	describe('None existing method calls', function() {
@@ -702,7 +789,41 @@ function createTests(tests) {
 						1, 2, 3
 					]
 				},
-				html: '<p>This is <bold>HTML</bold></p>'
+				html: '<p>This is <bold>HTML</bold></p>',
+				clients : [
+					{
+						visible_as_case : false,
+						image           : true,
+						name            : 'HIDDEN',
+					},
+					{
+						visible_as_case : true,
+						image           : true,
+						name            : '1',
+						color           : 'red',
+					},
+					{
+						visible_as_case : true,
+						image           : false,
+						name            : 'HIDDEN',
+						color           : 'red',
+					},
+					{
+						visible_as_case : true,
+						image           : true,
+						name            : '2',
+						color           : 'green',
+					},
+					{
+						visible_as_case : true,
+						image           : true,
+						name            : '3',
+						color           : 'blue',
+					},
+				],
+				entries: [
+					{id: 'a', title: 'A'}
+				],
 			};
 
 			vars.show = function show(options, two) {

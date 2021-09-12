@@ -77,7 +77,7 @@ describe('Hawkejs', function() {
 			fnc = hawkejs.compile(name, src);
 
 			assert.equal(fnc.name, 'compiledView');
-			assert.equal(fnc.source_name, name);
+			assert.equal(fnc.source_name, name, 'The compiled function should have the source name as a property');
 		});
 
 		it('should compile source without a name as "inline"', function() {
@@ -90,7 +90,6 @@ describe('Hawkejs', function() {
 
 			assert.strictEqual(fnc.name, 'compiledView');
 			assert.strictEqual(fnc.source_name.indexOf('inline'), 0);
-			assert.strictEqual(code.indexOf("timeStart(\"inline") > -1, true);
 			assert.strictEqual(code.indexOf('.printUnsafe("this is inline ') > -1, true, 'Print was cut off');
 		});
 
@@ -122,7 +121,52 @@ describe('Hawkejs', function() {
 			// And put it back
 			console.error = backup;
 
-			assert.equal('errorView', fnc.name);
+			assert.equal(fnc.name, 'errorView');
+		});
+
+		it('should accept open EJS code blocks', function(done) {
+
+			let fnc = hawkejs.compile('<% print("this is fine")');
+
+			if (fnc.name == 'errorView') {
+				return done(new Error('Failed to parse code with open EJS code blocks'));
+			}
+
+			hawkejs.render(fnc, function doneSimple(err, result) {
+
+				try {
+					assert.equal(null, err);
+					assert.equal(result, 'this is fine');
+				} catch (err) {
+					return done(err);
+				}
+
+				done();
+			});
+		});
+
+		it('should use the same global objects', function(done) {
+
+			let fnc = hawkejs.compile('<%= "a".makeItPretty() %>');
+
+			String.prototype.makeItPretty = function makeItPretty() {
+				return "»" + this.toUpperCase() + "«";
+			};
+
+			assert.strictEqual('a'.makeItPretty(), '»A«');
+
+			hawkejs.render(fnc, function doneSimple(err, result) {
+
+				try {
+					assert.equal(null, err);
+					assert.equal(result, '»A«');
+				} catch (err) {
+					return done(err);
+				}
+
+				done();
+			});
+
 		});
 
 		it('should correctly rename variable references', function() {
@@ -137,41 +181,20 @@ describe('Hawkejs', function() {
 let test = 1, bla;
 print(test);
 
-if (true) {
-	let zever = 1;
-	print(zever);
-}
+if (true) {let zever = 1; print(zever);}
 
-for (let zever = 1; zever < 2; zever++) {
-	print(zever);
-}
+for (let zever = 1; zever < 2; zever++) {print(zever);}
 
 print(zever);
 %>`);
 
 			code = String(compiled).replace(/inline_\d+/g, '').trim();
 
-			assert.strictEqual(code, `function compiledView(__render, __template, vars, helper) {
-	__render.timeStart("");
-/*source_line_nr:0:start*/;
+			assertContains(code, 'print(test)');
+			assertContains(code, 'let zever = 1; __render.print(zever);');
 
-let test = 1, bla;
-__render.print(test);
-
-if (true) {
-let zever = 1;
-__render.print(zever);
-}
-
-for (let zever = 1; zever < 2; zever++) {
-__render.print(zever);
-}
-
-__render.print(vars.zever);
-;
-/*source_line_nr:14:end*/;
-	__render.timeEnd("");
-}`)
+			assertContains(code, '{__render.print(zever);}');
+			assertContains(code, '__render.print(vars.zever)');
 
 			hawkejs.try_template_expressions = true;
 			hawkejs.skip_set_err = false;
@@ -191,16 +214,8 @@ print(post._id)
 
 			code = String(compiled).replace(/inline_\d+/g, '').trim();
 
-			assert.strictEqual(code, `function compiledView(__render, __template, vars, helper) {
-	__render.timeStart("");
-/*source_line_nr:0:start*/;
+			assertContains(code, '__render.print(post._id)');
 
-Object.each(vars.comments,function eachPosts(post){__render.print(post._id)})
-__render.print(vars.post._id)
-;
-/*source_line_nr:3:end*/;
-	__render.timeEnd("");
-}`)
 
 			hawkejs.try_template_expressions = true;
 			hawkejs.skip_set_err = false;
@@ -240,6 +255,20 @@ __render.print(vars.post._id)
 
 				done();
 			});
+		});
+
+		it('should have a reference to the Hawkejs variable', function(done) {
+
+			let source = `<div><p></p><% Hawkejs.replaceChildren($0, []) %></div>`;
+
+			let compiled = hawkejs.compile(source);
+
+			hawkejs.render(compiled, {}, function doneVariable(err, result) {
+				assert.equal(null, err);
+				assert.equal('<div></div>', result);
+				done();
+			});
+
 		});
 	});
 
