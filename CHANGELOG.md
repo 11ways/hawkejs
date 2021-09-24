@@ -1,3 +1,7 @@
+## 2.2.1 (WIP)
+
+* `Hawkejs.handleError()` will now pass previously handled errors without changing them
+
 ## 2.2.0 (2021-09-12)
 
 * Change the way templates are compiled (part of the "variable references" work)
