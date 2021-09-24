@@ -1,6 +1,7 @@
 ## 2.2.1 (WIP)
 
 * `Hawkejs.handleError()` will now pass previously handled errors without changing them
+* Don't throw an error when trying to close a void tag
 
 ## 2.2.0 (2021-09-12)
 

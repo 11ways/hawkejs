@@ -261,7 +261,17 @@ describe('HTMLElement', function() {
 			let result = elements[0].outerHTML;
 
 			assertEqualHtml(result, source);
+		});
 
+		it('should not throw an error when trying to close a void tag', function() {
+
+			let source = '<div>1<br></br>2</div>';
+
+			let elements = hawkejs.evaluate(source);
+
+			let result = elements[0].innerHTML;
+
+			assertEqualHtml(result, '1<br><br>2');
 		});
 	});
 
