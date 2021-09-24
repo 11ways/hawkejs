@@ -273,6 +273,16 @@ describe('HTMLElement', function() {
 
 			assertEqualHtml(result, '1<br><br>2');
 		});
+
+		it('should not throw an error when trying to close a tag that is not present', function() {
+
+			let div = Hawkejs.Hawkejs.createElement('div');
+
+			div.innerHTML = 'bla</p>';
+			let result = div.innerHTML;
+
+			assertEqualHtml(result, 'bla<p></p>');
+		});
 	});
 
 	describe('#outerHTML', function() {
