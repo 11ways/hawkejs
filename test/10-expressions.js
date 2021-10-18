@@ -581,6 +581,23 @@ NO
 		createTests(tests);
 	});
 
+	
+	describe('HTML Comments', function() {
+
+		let tests = [
+			[
+				`<span>TEXT<!-- Comment --></span>`,
+				`<span>TEXT</span>`,
+			],
+			[
+				`<span>TEXT<!-- {{ "Comment" }} --></span>`,
+				`<span>TEXT</span>`,
+			]
+		];
+
+		createTests(tests);
+	});
+
 	describe('Markdown', function() {
 		it('should accept markdown in a template or as a variable', function(next) {
 

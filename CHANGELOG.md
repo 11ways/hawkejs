@@ -3,6 +3,7 @@
 * `Hawkejs.handleError()` will now pass previously handled errors without changing them
 * Don't throw an error when trying to close a void tag
 * Closing wrong tags in html-only mode should not throw an error
+* Do not render code inside HTML comments
 
 ## 2.2.0 (2021-09-12)
 
