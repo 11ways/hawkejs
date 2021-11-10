@@ -1,6 +1,7 @@
 ## 2.1.7 (2021-11-10)
 
 * Fix expressions in attribute values not being parsed correctly
+* Fix code blocks without a closing EJS tag throwing errors
 
 ## 2.1.6 (2021-09-12)
 

@@ -125,6 +125,31 @@ describe('Hawkejs', function() {
 			assert.equal('errorView', fnc.name);
 		});
 
+		it('should accept code blocks without closing tag', function() {
+
+			var compiled,
+			    code;
+
+			hawkejs.try_template_expressions = false;
+			hawkejs.skip_set_err = true;
+
+			compiled = hawkejs.compile(`<% print("test")`);
+
+			code = String(compiled).replace(/inline_\d+/g, '').trim();
+
+			assert.strictEqual(code, `function compiledView(__render, __template, vars, helper) {
+	__render.timeStart("");
+/*source_line_nr:0:start*/;
+__render.print("test");
+/*source_line_nr:0:end*/;
+	__render.timeEnd("");
+}`)
+
+			hawkejs.try_template_expressions = true;
+			hawkejs.skip_set_err = false;
+
+		});
+
 		it('should correctly rename variable references', function() {
 
 			var compiled,
