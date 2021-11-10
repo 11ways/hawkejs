@@ -45,6 +45,18 @@ describe('Directives', function() {
 			[
 				`<span value="1 {% 1+1 %} 3"></span>`,
 				`<span value="1 2 3"></span>`
+			],
+			[
+				`<span value="1 {% 0 or 2 %} {% 3 or 0 %}"></span>`,
+				`<span value="1 2 3"></span>`
+			],
+			[
+				`<span value={% 0 or 1 %}></span>`,
+				`<span value="1"></span>`
+			],
+			[
+				`<span value={% 1 or 0 %}></span>`,
+				`<span value="1"></span>`
 			]
 		];
 
