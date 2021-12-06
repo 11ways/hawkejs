@@ -4,6 +4,7 @@
 * Don't throw an error when trying to close a void tag
 * Closing wrong tags in html-only mode should not throw an error
 * Do not render code inside HTML comments
+* Do not parse hawkejs code when setting innerText/innerHTML of an element
 
 ## 2.2.0 (2021-09-12)
 

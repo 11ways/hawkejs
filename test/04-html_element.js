@@ -152,6 +152,34 @@ describe('HTMLElement', function() {
 			assertEqualHtml(div.outerHTML, '<div>a<br>@<br>&euro;<br></div>');
 			assert.strictEqual(div.innerText, 'a\n@\n€\n');
 		});
+
+		it('should not break on Hawkejs code', function() {
+
+			let source = '\n' +
+			'Error inside »inline_0« template\n' +
+			'Error: Could not find conduit, alchemy resource will not be fetched\n' +
+			'----------------------------------------------\n' +
+			'      17 | \n' +
+			'      18 | \t\t\tnext(null, result);\n' +
+			'      19 | \t\t});\n' +
+			' »»»  20 | \t}) %&gt;\n' +
+			'      21 | {% /block %}\n' +
+			'----------------------------------------------\n' +
+			'       3 | {% block "kak" %}\n' +
+			'       4 | \t&lt;% this.async(function getResource(next) {\n' +
+			'       5 | \t\tdelayedError(next);\n' +
+			' »»»   6 | \t}) %&gt;\n' +
+			'       7 | {% /block %}\n' +
+			'       8 | \n' +
+			'       9 | &lt;% assign("kak") %&gt;\n';
+
+			let div = Hawkejs.Hawkejs.createElement('div');
+			div.innerText = source;
+
+			let index = div.innerText.indexOf('9 | &lt;% assign("kak") %&gt;');
+
+			assert.strictEqual(index > -1, true);
+		});
 	});
 
 	describe('#textContent', function() {
