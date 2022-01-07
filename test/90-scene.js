@@ -391,6 +391,33 @@ describe('Scene', function() {
 
 			assertEqualHtml(result.html, `<div class="he-dialog-contents" data-he-slot="main" data-he-template="make_dialog"> This should now be a dialog! <hr></div>`);
 		});
+
+		it('should update blocks', async function() {
+
+			await setLocation('/block_update_base');
+
+			let main = await getBlockData('main'),
+			    first = await getBlockData('my-first-block'),
+			    form_empty = await getBlockData('form-no-inputs'),
+			    form_inputs = await getBlockData('form-with-inputs');
+
+			assert.strictEqual(main.text.trim(), 'Default\n\tDefault\n\t\n\t\t\n\t\t\tDefault label');
+			assert.strictEqual(first.text, 'Default');
+			assert.strictEqual(form_empty.text, 'Default');
+			assert.strictEqual(form_inputs.text.trim(), 'Default label');
+
+			await openHeUrl('/block_update_implementation');
+
+			main = await getBlockData('main');
+			first = await getBlockData('my-first-block');
+			form_empty = await getBlockData('form-no-inputs');
+			form_inputs = await getBlockData('form-with-inputs');
+
+			assert.strictEqual(main.text.trim(), 'MFBUpdate\n\tFNIUpdate\n\tFWIUpdate');
+			assert.strictEqual(first.text, 'MFBUpdate');
+			assert.strictEqual(form_empty.text, 'FNIUpdate');
+			assert.strictEqual(form_inputs.text.trim(), 'FWIUpdate');
+		});
 	});
 
 	after(async function() {

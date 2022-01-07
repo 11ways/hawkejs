@@ -1,0 +1,3 @@
+{% block "my-first-block" %}MFBUpdate{% /block %}
+{% block "form-no-inputs" %}FNIUpdate{% /block %}
+{% block "form-with-inputs" %}FWIUpdate{% /block %}

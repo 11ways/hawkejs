@@ -1,0 +1,15 @@
+<% extends('base_scene') %>
+
+{% block "main" %}
+
+	<he-block data-he-name="my-first-block">Default</he-block>
+	<form data-he-name="form-no-inputs">Default</form>
+	<form data-he-name="form-with-inputs">
+		<label>
+			Default label
+			<input type="text" name="test">
+		</label>
+		<input type="password" name="passtest">
+	</form>
+
+{% /block %}
