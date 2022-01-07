@@ -1,4 +1,4 @@
-## 2.2.1 (WIP)
+## 2.2.1 (2022-01-07)
 
 * `Hawkejs.handleError()` will now pass previously handled errors without changing them
 * Don't throw an error when trying to close a void tag
@@ -11,7 +11,7 @@
 
 * Change the way templates are compiled (part of the "variable references" work)
 
-## 2.1.6 (WIP)
+## 2.1.6 (2021-09-12)
 
 * Fix `getElementContent()` still using `Blast.parseHTML()`
 * Add `set` expression
