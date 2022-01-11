@@ -1,4 +1,4 @@
-## 2.2.2 (WIP)
+## 2.2.2 (2022-01-11)
 
 * Make the template wait for `implement` calls when switching to a different template
 
