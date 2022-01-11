@@ -1,3 +1,7 @@
+## 2.1.8 (WIP)
+
+* Make the template wait for `implement` calls when switching to a different template
+
 ## 2.1.7 (2021-11-10)
 
 * Fix expressions in attribute values not being parsed correctly
