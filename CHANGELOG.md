@@ -1,3 +1,7 @@
+## 2.2.2 (WIP)
+
+* Make the template wait for `implement` calls when switching to a different template
+
 ## 2.2.1 (2022-01-07)
 
 * `Hawkejs.handleError()` will now pass previously handled errors without changing them
