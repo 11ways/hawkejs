@@ -1,3 +1,7 @@
+## 2.2.3 (2022-02-20)
+
+* Fix pushing null values to a BlockBuffer throwing an error
+
 ## 2.2.2 (2022-01-11)
 
 * Make the template wait for `implement` calls when switching to a different template
@@ -14,6 +18,10 @@
 ## 2.2.0 (2021-09-12)
 
 * Change the way templates are compiled (part of the "variable references" work)
+
+## 2.1.8 (2022-01-11)
+
+* Make the template wait for `implement` calls when switching to a different template
 
 ## 2.1.6 (2021-09-12)
 
