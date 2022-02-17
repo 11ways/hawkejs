@@ -1,5 +1,7 @@
 ## 2.1.9 (WIP)
 
+* Pushing null objects to a BlockBuffer should not throw an erorr
+
 ## 2.1.8 (2022-01-11)
 
 * Make the template wait for `implement` calls when switching to a different template
