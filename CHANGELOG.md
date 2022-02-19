@@ -1,4 +1,4 @@
-## 2.2.3 (2022-02-20)
+## 2.2.3 (WIP)
 
 * Fix pushing null values to a BlockBuffer throwing an error
 
