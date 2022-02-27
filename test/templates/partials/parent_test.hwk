@@ -1,0 +1,1 @@
+<span>The parent of this span is "<%= $0.parentElement.nodeName %>"<% console.log('SPAN:', $0, $0.parentElement.nodeName) %></span>

@@ -189,6 +189,22 @@ This is the main content
 				done();
 			});
 		});
+
+		it('should set the correct ancestor element', function(done) {
+
+			hawkejs.render('include_parent_test', function doneImplement(err, result) {
+
+				if (err) {
+					throw err;
+				}
+
+				result = result.trim();
+
+				assertEqualHtml(result, `<div><span>The parent of this span is "DIV"</span></div>`);
+				done();
+			});
+
+		});
 	});
 
 	describe('#partial(name)', function() {

@@ -2,6 +2,7 @@
 
 * Fix pushing null values to a BlockBuffer throwing an error
 * Add `Renderer#current_variables` property which always point to the current active variables
+* Set the correct ancestor element for root elements in partials
 
 ## 2.2.2 (2022-01-11)
 
