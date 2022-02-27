@@ -1,6 +1,7 @@
 ## 2.2.3 (WIP)
 
 * Fix pushing null values to a BlockBuffer throwing an error
+* Add `Renderer#current_variables` property which always point to the current active variables
 
 ## 2.2.2 (2022-01-11)
 
