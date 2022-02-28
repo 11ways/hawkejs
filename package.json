@@ -21,7 +21,7 @@
 		"istanbul-lib-instrument" : "~4.0.3",
 		"mocha"                   : "~8.0.1",
 		"nyc"                     : "^15.1.0",
-		"puppeteer"               : "~10.2.0",
+		"puppeteer"               : "~13.4.0",
 		"source-map"              : "~0.7.3"
 	},
 	"files": [
