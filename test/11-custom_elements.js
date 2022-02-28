@@ -6,9 +6,7 @@ var assert   = require('assert'),
 describe('CustomElement', function() {
 
 	before(function() {
-		hawkejs = createHawkejsInstance();
-		hawkejs.parallel_task_limit = 1;
-		hawkejs.addViewDirectory(__dirname + '/templates');
+		hawkejs = loadHawkejs();
 	});
 
 	describe('#retained()', function() {
@@ -614,7 +612,7 @@ describe('CustomElement', function() {
 			});
 		});
 
-		it('should render the contents after the attribtues have been set (within extensions)', async function() {
+		it('should render the contents after the attributes have been set (within extensions)', async function() {
 
 			await setLocation('/render_after_attributes');
 
@@ -627,6 +625,37 @@ describe('CustomElement', function() {
 			data = await getBlockData('main');
 
 			assert.strictEqual(data.html.indexOf('>pretty-title</span>') > -1, true);
+		});
+
+		it('should set the corrent $0 variable inside the template', function(done) {
+
+			let code = `
+				<span><parent-element-sync-test></parent-element-sync-test></span>
+				<div><parent-element-async-test></parent-element-async-test></div>
+			`;
+
+			var compiled = hawkejs.compile('template_parent-element-test', code);
+
+			hawkejs.render(compiled, {}, function rendered(err, res) {
+
+				if (err) {
+					throw err;
+				}
+
+				res = res.trim();
+
+				try {
+					assertEqualHtml(res, `
+						<span><parent-element-sync-test he-rendered="1">Self: PARENT-ELEMENT-SYNC-TEST - Parent: SPAN</parent-element-sync-test></span>
+						<div><parent-element-async-test he-rendered="1">Self: PARENT-ELEMENT-ASYNC-TEST - Parent: DIV</parent-element-async-test></div>
+					`);
+				} catch (err) {
+					return done(err);
+				}
+				done();
+			});
+
+
 		});
 	});
 
@@ -646,8 +675,6 @@ describe('CustomElement', function() {
 				}
 
 				res = res.trim();
-
-				console.log(res);
 
 				try {
 					assertEqualHtml(res, '<rendered-counter he-rendered="1" rcount="1"></rendered-counter>');
