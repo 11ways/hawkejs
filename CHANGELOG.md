@@ -4,6 +4,7 @@
 * Add `Renderer#current_variables` property which always point to the current active variables
 * Set the correct ancestor element for root elements in partials
 * Render custom element contents as soon as it's being queried
+* Don't load hawkejs-client file via javascript when debugging to fix sourcemap issues
 
 ## 2.2.2 (2022-01-11)
 
