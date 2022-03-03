@@ -369,6 +369,25 @@ describe('Scene', function() {
 
 		});
 
+		it('should print correct error lines', async function() {
+
+			await setLocation('/welcome');
+
+			let res = await openHeUrlCaptureError('/template_with_thrower');
+
+			if (res.messages && res.messages.length) {
+				let message = res.messages[1];
+
+				if (message && message.indexOf(' »»»   7 | \t<error-thrower\n') > -1) {
+					return;
+				}
+
+				console.log(message);
+			}
+
+			throw new Error('The error message was not printed correctly');
+		});
+
 		it('should open dialogs', async function() {
 
 			await setLocation('/base_scene');

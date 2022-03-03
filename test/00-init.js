@@ -32,6 +32,7 @@ describe('Hawkejs', function() {
 			hawkejs.load(__dirname + '/helpers/element_specific_variables.js');
 			hawkejs.load(__dirname + '/helpers/rendered_counter.js');
 			hawkejs.load(__dirname + '/helpers/parent_element_test.js');
+			hawkejs.load(__dirname + '/helpers/error_thrower.js');
 		});
 	});
 

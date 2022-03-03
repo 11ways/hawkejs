@@ -1,0 +1,12 @@
+{% extend "home_base" %}
+
+{% block "main" %}
+	<div class="test">
+		<span></span>
+
+		<error-thrower
+			#value=1
+		></error-thrower>
+
+	</div>
+{% /block %}

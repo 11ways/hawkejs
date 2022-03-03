@@ -272,62 +272,44 @@ describe('Directives', function() {
 			});
 		});
 
-		it('should give the correct line number when the template was compiled inline', function(next) {
+		it('should give the correct line number when the template was compiled inline', async function() {
 
 			let source = `<h4>ERROR</h5>`;
 			let compiled = hawkejs.compile(source);
-			let message;
 
-			const old_error = console.error;
+			let result = await renderAndCaptureErrorMessage(compiled);
 
-			console.error = function error(err, msg) {
-				message = msg;
-				console.error = old_error;
-			}
-
-			hawkejs.render(compiled, {}, function done(err, html) {
-				let found_error = message.indexOf('»»»   1 | <h4>ERROR</h5>') > -1;
+			if (result.message) {
+				let found_error = result.message.indexOf('»»»   1 | <h4>ERROR</h5>') > -1;
 
 				if (found_error) {
-					return next();
+					return;
 				}
 
-				console.log(message);
-
-				next(new Error('Got wrong error line in inlined template'));
-			});
-
-		});
-
-		it('should give the correct line number even when handling markdown content', function(next) {
-
-			var message;
-
-			const old_error = console.error;
-
-			console.error = function error(err, msg) {
-				message = msg;
-				console.error = old_error;
+				console.log(result.message);
 			}
 
-			hawkejs.render('template_with_error_markdown', function donePartial(err, result) {
-
-				// Restore console.log method
-				console.error = old_error;
-
-				let found_error = message.indexOf('»»»  26 | <h4>This will throw an error</h5>') > -1;
-
-				if (found_error) {
-					return next();
-				}
-
-				console.log(message);
-
-				next(new Error('Got wrong error line in template_with_error_markdown'));
-			});
+			throw new Error('Got wrong error line in inlined template');
 		});
 
-		it('should give the correct line number when errors happen inside ejs code', function(next) {
+		it('should give the correct line number even when handling markdown content', async function() {
+
+			let result = await renderAndCaptureErrorMessage('template_with_error_markdown');
+
+			if (result.message) {
+				let found_error = result.message.indexOf('»»»  26 | <h4>This will throw an error</h5>') > -1;
+
+				if (found_error) {
+					return;
+				}
+
+				console.log(result.message);
+			}
+
+			throw new Error('Got wrong error line in template_with_error_markdown');
+		});
+
+		it('should give the correct line number when errors happen inside ejs code', async function() {
 
 			let source = `{#
 
@@ -344,31 +326,49 @@ describe('Directives', function() {
 			%>`
 
 			let compiled = hawkejs.compile(source);
-			let message;
 
-			const old_error = console.error;
+			let result = await renderAndCaptureErrorMessage(compiled);
 
-			console.error = function error(err, msg) {
-				message = msg;
-				console.error = old_error;
-			}
-
-			let renderer = hawkejs.render(compiled, {}, function done(err, html) {
-
-				// Restore console.log method
-				console.error = old_error;
-
-				let found_error = message.indexOf('»»»  12 | 	throw new Error("HERE!");') > -1;
+			if (result.message) {
+				let found_error = result.message.indexOf('»»»  12 | 	throw new Error("HERE!");') > -1;
 
 				if (found_error) {
-					return next();
+					return;
 				}
 
-				console.log(message);
+				console.log(result.message);
+			}
 
-				next(new Error('Got wrong error line in ejs code test'));
-			});
+			throw new Error('Got wrong error line in ejs code test');
+		});
 
+		it('should give the correct line number when CustomElement throws error', async function() {
+
+			let source = `
+				<div
+					class="test"
+				>
+					<error-thrower
+						#value="value"
+					></error-thrower>
+				</div>
+			`
+
+			let compiled = hawkejs.compile(source);
+
+			let result = await renderAndCaptureErrorMessage(compiled);
+
+			if (result.message) {
+				let found_error = result.message.indexOf('»»»   5 | \t<error-thrower\n') > -1;
+
+				if (found_error) {
+					return;
+				}
+
+				console.log(result.message);
+			}
+
+			throw new Error('Got wrong error line for ErrorThrower test');
 		});
 	});
 });

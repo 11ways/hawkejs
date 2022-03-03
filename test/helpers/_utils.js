@@ -152,10 +152,66 @@ global.clickHeLink = async function clickHeLink(selector, options) {
 	await wait_for_open_url;
 }
 
-global.openHeUrl = function openHeUrl(path) {
-	return evalPage(function(path) {
-		return hawkejs.scene.openUrl(path);
-	}, path);
+global.openHeUrlCaptureError = async function openHeUrlCaptureError(path) {
+
+	let result;
+
+	try {
+		result = await evalPage(async function(path) {
+
+			const console_error = console.error;
+			const console_warn = console.warn;
+
+			let warnings;
+			let messages;
+			let result = {};
+			let opened;
+
+			console.error = function(...args) {
+				messages = args;
+				console.error = console_error;
+			};
+
+			console.warn = function(...args) {
+				warnings = args;
+				console.warn = console_warn;
+			};
+
+			try {
+				opened = await hawkejs.scene.openUrl(path);
+			} catch (err) {
+				result.error = err;
+			}
+
+			result.opened = opened;
+			result.messages = messages;
+			result.warnings = warnings;
+
+			console.error = console_error;
+			console.warn = console_warn;
+
+			return result;
+		}, path);
+	} catch (err) {
+		throw err;
+	}
+
+	return result;
+};
+
+global.openHeUrl = async function openHeUrl(path) {
+
+	let result;
+
+	try {
+		result = await evalPage(function(path) {
+			return hawkejs.scene.openUrl(path);
+		}, path);
+	} catch (err) {
+		throw err;
+	}
+
+	return result;
 };
 
 global.getBlockData = async function getBlockData(name) {
@@ -256,7 +312,44 @@ global.loadHawkejs = function loadHawkejs() {
 	hawkejs.load(base + '/helpers/html_resolver.js');
 	hawkejs.load(base + '/helpers/render_after_attributes.js');
 	hawkejs.load(base + '/helpers/parent_element_test.js');
+	hawkejs.load(base + '/helpers/error_thrower.js');
 }
+
+const console_error = console.error;
+const console_warn = console.warn;
+
+global.renderAndCaptureErrorMessage = async function renderAndCaptureErrorMessage(template, data) {
+
+	let pledge = new __Protoblast.Classes.Pledge(),
+	    message,
+		warnings;
+
+	console.error = function captureError(err, msg) {
+		message = msg;
+		console.error = console_error;
+	};
+
+	console.warn = function ignoreWarning(...args) {
+		warnings = args;
+	};
+
+	hawkejs.render(template, data, (err, html) => {
+
+		let result = {
+			warnings : warnings,
+			message  : message,
+			error    : err,
+			htmm     : html,
+		};
+
+		console.warn = console_warn;
+		console.error = console_error;
+
+		pledge.resolve(result);
+	});
+
+	return pledge;
+};
 
 global.loadBrowser = async function loadBrowser() {
 
@@ -278,9 +371,11 @@ global.loadBrowser = async function loadBrowser() {
 				pieces.push(remote.value);
 			} else if (remote.subtype == 'node') {
 				pieces.push('\x1b[1m\x1b[36m<' + remote.description + '>\x1b[0m');
-				//console.log(remote.preview);
 			} else if (remote.className) {
 				pieces.push('\x1b[1m\x1b[33m{' + remote.type + ' ' + remote.className + '}\x1b[0m');
+				if (remote.preview) {
+					pieces.push(remote.preview);
+				}
 			} else if (remote.value != null) {
 				pieces.push(remote.value);
 			} else {
