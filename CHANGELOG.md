@@ -5,6 +5,8 @@
 * Set the correct ancestor element for root elements in partials
 * Render custom element contents as soon as it's being queried
 * Don't load hawkejs-client file via javascript when debugging to fix sourcemap issues
+* Make callbacks scheduled with `afterRender` call immediately if already rendered
+* Store the URL being opened on the `Scene#opening_url` pledge
 
 ## 2.2.2 (2022-01-11)
 
