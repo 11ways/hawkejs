@@ -7,6 +7,7 @@
 * Don't load hawkejs-client file via javascript when debugging to fix sourcemap issues
 * Make callbacks scheduled with `afterRender` call immediately if already rendered
 * Store the URL being opened on the `Scene#opening_url` pledge
+* Fix SVG void elements not closing properly
 
 ## 2.2.2 (2022-01-11)
 
