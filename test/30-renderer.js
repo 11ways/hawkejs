@@ -490,7 +490,7 @@ This is the main content
 
 			let html = await renderer.renderHTML('render_svg_elements');
 
-			assertEqualHtml(html, `<div class="main"> <hr> <he-block data-hid="hserverside-0" data-he-name="main" data-he-template="render_svg_elements"> <svg> <g> <path> </g> </svg> <br> </he-block> </div>`);
+			assertEqualHtml(html, `<div class="main"> <hr> <he-block data-hid="hserverside-0" data-he-name="main" data-he-template="render_svg_elements"> <svg> <g> <path/> </g> </svg> <br> </he-block> </div>`);
 		});
 	});
 });
