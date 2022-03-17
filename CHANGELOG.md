@@ -1,3 +1,7 @@
+## 2.2.4 (WIP)
+
+* Make `macro` expression work again, add `run` expression to use it
+
 ## 2.2.3 (2022-03-16)
 
 * Fix pushing null values to a BlockBuffer throwing an error
