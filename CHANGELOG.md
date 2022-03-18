@@ -1,6 +1,7 @@
 ## 2.2.4 (WIP)
 
 * Make `macro` expression work again, add `run` expression to use it
+* Do not re-render a CustomElement's synchronous template if it has already been rendered
 
 ## 2.2.3 (2022-03-16)
 
