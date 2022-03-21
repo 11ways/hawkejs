@@ -1,7 +1,8 @@
-## 2.2.5 
+## 2.2.5 (WIP)
 
 * Throw an error when an open tag isn't valid
 * Make assigning `undefined` to an element's `innerHTML` property behave the same was as in the browser
+* Fix evaluated code in print commands breaking the current render
 
 ## 2.2.4 (2022-03-19)
 
