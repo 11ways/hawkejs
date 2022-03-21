@@ -1,4 +1,4 @@
-## 2.2.5 (WIP)
+## 2.2.5 (2022-03-21)
 
 * Throw an error when an open tag isn't valid
 * Make assigning `undefined` to an element's `innerHTML` property behave the same was as in the browser
