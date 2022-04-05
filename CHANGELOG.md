@@ -1,3 +1,7 @@
+## 2.2.6 (WIP)
+
+* Fix undeclared variable in `Templates#themes` setter
+
 ## 2.2.5 (2022-03-21)
 
 * Throw an error when an open tag isn't valid
