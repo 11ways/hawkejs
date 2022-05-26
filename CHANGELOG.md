@@ -1,6 +1,7 @@
 ## 2.2.6 (WIP)
 
 * Fix undeclared variable in `Templates#themes` setter
+* Make sure inlined custom-element css has been added
 
 ## 2.2.5 (2022-03-21)
 
