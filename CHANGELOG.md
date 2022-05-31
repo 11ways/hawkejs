@@ -5,6 +5,7 @@
 * Add `CustomElement#waitForTasks()` to wait for the element to have finished all rendering tasks
 * Make sure custom elements with inlined, plain html templates do not render twice
 * Fix expressions sometimes not finding correct variable to work with
+* Add `<he-context-menu>` element
 
 ## 2.2.5 (2022-03-21)
 
