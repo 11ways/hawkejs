@@ -1,3 +1,5 @@
+## 2.2.7 (WIP)
+
 ## 2.2.6 (2022-05-31)
 
 * Fix undeclared variable in `Templates#themes` setter
