@@ -439,6 +439,7 @@ describe('CustomElement', function() {
 			await __Protoblast.Classes.Pledge.after(1000);
 
 			let result = await getHtml();
+			result.html = simplifyHtml(result.html);
 
 			let has_rendered_template = result.html.indexOf('<inner-custom-test><sync-template-test>') > -1;
 			assert.strictEqual(has_rendered_template, true, 'The <inner-custom-test> element did not render its contents');

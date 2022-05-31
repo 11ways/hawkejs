@@ -110,6 +110,24 @@ global.despace = function despace(text, replacement) {
 	return result;
 };
 
+global.simplifyHtml = function simplifyHtml(html) {
+
+	if (!html) {
+		return '';
+	}
+
+	// Remove the "he-rendered" attributes
+	html = html.replace(/he\-rendered="\d*?"/g, '');
+
+	// Remove double spaces
+	html = despace(html);
+
+	// Remove spaces before ending tags
+	html = html.replace(/\s+\>/g, '>');
+
+	return html;
+}
+
 global.respondWithRender = function respondWithRender(templates, renderer, responder) {
 	renderer.renderHTML(templates).done(function afterRender(err, html) {
 
