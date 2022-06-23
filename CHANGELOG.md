@@ -1,6 +1,7 @@
 ## 2.2.7 (WIP)
 
 * Make `Element#moveAfterElement` and `Element#moveBeforeElement` work for non-siblings too
+* Make context menus fit on the screen
 
 ## 2.2.6 (2022-05-31)
 
