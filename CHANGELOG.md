@@ -1,4 +1,4 @@
-## 2.2.8 (WIP)
+## 2.2.8 (2022-06-29)
 
 * Also register custom elements when `assignData()` method is used
 * Fix interpreted templates also being executed as an event handler
