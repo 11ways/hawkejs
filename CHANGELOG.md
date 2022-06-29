@@ -1,3 +1,7 @@
+## 2.2.8 (WIP)
+
+* Also register custom elements when `assignData()` method is used
+
 ## 2.2.7 (2022-06-23)
 
 * Make `Element#moveAfterElement` and `Element#moveBeforeElement` work for non-siblings too
