@@ -48,6 +48,9 @@ global.assertEqualHtml = function assertEqualHtml(actual, expected, message) {
 	actual = actual.replace(hserverside_rx, 'hserverside-0');
 	expected = expected.replace(hserverside_rx, 'hserverside-0');
 
+	//actual = actual.replace(/hextrinsic_\d+-\d+/g, 'hserverside-0');
+	//expected = expected.replace(/hextrinsic_\d+-\d+/g, 'hserverside-0');
+
 	return assert.strictEqual(actual, expected, message);
 };
 
@@ -331,6 +334,8 @@ global.loadHawkejs = function loadHawkejs() {
 	hawkejs.load(base + '/helpers/render_after_attributes.js');
 	hawkejs.load(base + '/helpers/parent_element_test.js');
 	hawkejs.load(base + '/helpers/error_thrower.js');
+
+	addActions();
 }
 
 const console_error = console.error;
@@ -406,6 +411,8 @@ global.loadBrowser = async function loadBrowser() {
 
 	loadHawkejs();
 
+	let listen_port = global.listen_port || 0;
+
 	await new Promise(function(resolve, reject) {
 		server = http.createServer(function onReq(req, res) {
 
@@ -420,6 +427,10 @@ global.loadBrowser = async function loadBrowser() {
 			// End stylesheet requests with a generic valid response
 			if (url.pathname.indexOf('.css') > -1) {
 				return res.end('body{color: #101010}');
+			}
+
+			if (url.pathname.indexOf('favicon.ico') > -1) {
+				return res.end();
 			}
 
 			if (url.pathname == '/hawkejs/hawkejs-client.js') {
@@ -507,9 +518,34 @@ global.loadBrowser = async function loadBrowser() {
 				res.end(body);
 			}
 
-		}).listen(0, '0.0.0.0', function listening() {
+		}).listen(listen_port, '0.0.0.0', function listening() {
 			port = server.address().port;
+			global.hawkejs_server = server;
 			resolve();
 		});
 	});
+}
+
+function addActions() {
+	actions['/assigned_data_test'] = function(req, res, renderer, responder) {
+
+		let test_el = Hawkejs.Hawkejs.createElement('assign-test');
+
+		let url = renderer.internal('url');
+
+		test_el.title = url.param('title');
+
+		renderer.set('test_el', test_el);
+
+		let template = 'data_test';
+
+		renderer.renderHTML(template).done(function afterRender(err, html) {
+
+			if (err) {
+				throw err;
+			}
+
+			responder(html);
+		});
+	};
 }

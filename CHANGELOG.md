@@ -8,6 +8,7 @@
 * Move the `createElement` method to the main Hawkejs class
 * Add `Renderer#ensureHawkejsRenderer()` which will always return a valid renderer
 * Make a renderer "adopt" elements coming from another renderer
+* Allow running the unit test server on a specific port
 
 ## 2.2.8 (2022-06-29)
 

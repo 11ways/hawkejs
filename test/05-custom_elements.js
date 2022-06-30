@@ -344,28 +344,6 @@ describe('CustomElement', function() {
 
 		it('should revive the assigned data when sent to the browser', async function() {
 
-			actions['/assigned_data_test'] = function(req, res, renderer, responder) {
-
-				let test_el = Hawkejs.Hawkejs.createElement('assign-test');
-
-				let url = renderer.internal('url');
-
-				test_el.title = url.param('title');
-
-				renderer.set('test_el', test_el);
-
-				let template = 'data_test';
-
-				renderer.renderHTML(template).done(function afterRender(err, html) {
-
-					if (err) {
-						throw err;
-					}
-
-					responder(html);
-				});
-			};
-
 			await setLocation('/assigned_data_test?title=First+title');
 
 			let html = await getMainHtml();
