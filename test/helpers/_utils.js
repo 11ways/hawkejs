@@ -51,6 +51,9 @@ global.assertEqualHtml = function assertEqualHtml(actual, expected, message) {
 	//actual = actual.replace(/hextrinsic_\d+-\d+/g, 'hserverside-0');
 	//expected = expected.replace(/hextrinsic_\d+-\d+/g, 'hserverside-0');
 
+	actual = actual.replace(/data-hid="h\d+-\d+"/g, 'data-hid="h0-0"');
+	expected = expected.replace(/data-hid="h\d+-\d+"/g, 'data-hid="h0-0"');
+
 	return assert.strictEqual(actual, expected, message);
 };
 
@@ -381,6 +384,8 @@ global.loadBrowser = async function loadBrowser() {
 	});
 
 	global.page = await browser.newPage();
+
+	addActions();
 
 	page.on('console', function(msg) {
 		var pieces = ['[BROWSER]'],

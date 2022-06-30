@@ -364,13 +364,13 @@ describe('CustomElement', function() {
 				});
 			}
 
-			assertEqualHtml(html, `<span tabindex="0">Element:</span> <assign-test><div class="title">First title</div></assign-test>\nTittle AD: First title`);
+			assertEqualHtml(html, `<span tabindex="0">Element:</span> <assign-test data-hid="hserverside-0"><div class="title" data-hid="hserverside-0">First title</div></assign-test> Tittle AD: First title`);
 
 			await openHeUrl('/assigned_data_test?title=Ajax title');
 
 			html = await getMainHtml();
 
-			assertEqualHtml(html, `<span tabindex="0">Element:</span> <assign-test><div class="title">Ajax title</div></assign-test>\nTittle AD: Ajax title`);
+			assertEqualHtml(html, `<span tabindex="0">Element:</span> <assign-test data-hid="h0-0"><div class="title">Ajax title</div></assign-test> Tittle AD: Ajax title`);
 		});
 
 	});
