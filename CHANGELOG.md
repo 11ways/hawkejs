@@ -3,6 +3,7 @@
 * Add `Hawkejs.getInstance()` so hawkejs can be worked with as a singleton
 * Define custom elements in the browser after the `requiring` event insted of `hawkejs_init`
 * Add `Hawkejs.isCustomElement(input)` to check if something is a custom element
+* Fix not calling custom element constructors when created with `Hawkej.createElement()`
 
 ## 2.2.8 (2022-06-29)
 
