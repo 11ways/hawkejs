@@ -6,6 +6,7 @@
 * Fix not calling custom element constructors when created with `Hawkej.createElement()`
 * Make new renderer instances get the main hawkejs instance as a fallback
 * Move the `createElement` method to the main Hawkejs class
+* Add `Renderer#ensureHawkejsRenderer()` which will always return a valid renderer
 
 ## 2.2.8 (2022-06-29)
 
