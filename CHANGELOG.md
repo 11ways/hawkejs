@@ -5,6 +5,7 @@
 * Add `Hawkejs.isCustomElement(input)` to check if something is a custom element
 * Fix not calling custom element constructors when created with `Hawkej.createElement()`
 * Make new renderer instances get the main hawkejs instance as a fallback
+* Move the `createElement` method to the main Hawkejs class
 
 ## 2.2.8 (2022-06-29)
 
