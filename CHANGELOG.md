@@ -1,3 +1,7 @@
+## 2.2.9 (WIP)
+
+* Add `Hawkejs.getInstance()` so hawkejs can be worked with as a singleton
+
 ## 2.2.8 (2022-06-29)
 
 * Also register custom elements when `assignData()` method is used
