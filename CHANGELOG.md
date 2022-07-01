@@ -10,6 +10,7 @@
 * Make a renderer "adopt" elements coming from another renderer
 * Allow running the unit test server on a specific port
 * Make sure custom elements created outside of a renderer are properly constructed
+* Don't capture clicks when holding down ctrl or meta key
 
 ## 2.2.8 (2022-06-29)
 
