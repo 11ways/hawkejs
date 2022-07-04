@@ -12,6 +12,7 @@
 * Make sure custom elements created outside of a renderer are properly constructed
 * Don't capture clicks when holding down ctrl or meta key
 * Wait for elements to be fully constructed before calling connected callbacks
+* Also clone variables fetched via `prepareRenderVariables` before rendering
 
 ## 2.2.8 (2022-06-29)
 
