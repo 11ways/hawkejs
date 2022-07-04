@@ -1,4 +1,4 @@
-## 2.2.9 (WIP)
+## 2.2.9 (2022-07-04)
 
 * Add `Hawkejs.getInstance()` so hawkejs can be worked with as a singleton
 * Define custom elements in the browser as soon as they have been fully constituted
