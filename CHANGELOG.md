@@ -11,6 +11,7 @@
 * Allow running the unit test server on a specific port
 * Make sure custom elements created outside of a renderer are properly constructed
 * Don't capture clicks when holding down ctrl or meta key
+* Wait for elements to be fully constructed before calling connected callbacks
 
 ## 2.2.8 (2022-06-29)
 
