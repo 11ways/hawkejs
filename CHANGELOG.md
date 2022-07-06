@@ -8,6 +8,7 @@
 * Use grouped versions `Blast.nextGroupedTick()` and `Blast.nextGroupedImmediate()`
 * Add `Hawkejs.series()` and `Hawkejs.parallel()` which uses a grouped-queue to minimize async overhead
 * Use new Hawkejs function flow methods for remaining calls that couldn't be synchronized
+* Replace all remaining `Fn.parallel` and `Fn.series` calls with the Hawkejs equivalent
 
 ## 2.2.9 (2022-07-04)
 
