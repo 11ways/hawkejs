@@ -4,6 +4,7 @@
 * Try to use as few true-async `Function.parallel` and `Function.series` calls as possible
 * Remove some `nextTick` calls too to get more speed
 * Call `Element#attributeChangedCallback()` later if the scene instance isn't ready
+* Use much faster checksum to cache client-side use of `getFirstAvailableInternalSource()`
 
 ## 2.2.9 (2022-07-04)
 
