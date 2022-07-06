@@ -3,6 +3,7 @@
 * Use fixed version for `nwsapi` dependency because latest minor version update is broken
 * Try to use as few true-async `Function.parallel` and `Function.series` calls as possible
 * Remove some `nextTick` calls too to get more speed
+* Call `Element#attributeChangedCallback()` later if the scene instance isn't ready
 
 ## 2.2.9 (2022-07-04)
 
