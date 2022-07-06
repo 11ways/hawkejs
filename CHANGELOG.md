@@ -1,4 +1,4 @@
-## 2.2.10 (WIP)
+## 2.2.10 (2022-07-06)
 
 * Use fixed version for `nwsapi` dependency because latest minor version update is broken
 * Try to use as few true-async `Function.parallel` and `Function.series` calls as possible
