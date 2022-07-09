@@ -1,6 +1,7 @@
 ## 2.2.11 (WIP)
 
 * Fix custom element styles sometimes not being loaded when rendering element in the browser
+* Fix `Renderer` sometimes causing an infinite loop when being cloned
 
 ## 2.2.10 (2022-07-06)
 
