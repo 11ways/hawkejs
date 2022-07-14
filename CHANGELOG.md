@@ -1,3 +1,7 @@
+## 2.2.12 (WIP)
+
+* Add `has_finished` property to `Renderer` so (inline) styles don't get added to dormant renderers
+
 ## 2.2.11 (2022-07-09)
 
 * Fix custom element styles sometimes not being loaded when rendering element in the browser
