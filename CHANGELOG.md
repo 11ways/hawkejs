@@ -1,4 +1,4 @@
-## 2.2.12 (WIP)
+## 2.2.12 (2022-07-23)
 
 * Add `has_finished` property to `Renderer` so (inline) styles don't get added to dormant renderers
 * Fix template names not getting deduplicated when requesting sources from the server
