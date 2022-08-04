@@ -1,3 +1,7 @@
+## 2.2.13 (WIP)
+
+* Fix `Template#source_name` property being set to empty string after serializing
+
 ## 2.2.12 (2022-07-23)
 
 * Add `has_finished` property to `Renderer` so (inline) styles don't get added to dormant renderers
