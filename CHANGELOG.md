@@ -1,6 +1,7 @@
 ## 2.2.13 (WIP)
 
 * Fix `Template#source_name` property being set to empty string after serializing
+* Don't re-use stale `Variables` clones
 
 ## 2.2.12 (2022-07-23)
 
