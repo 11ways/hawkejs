@@ -2,6 +2,7 @@
 
 * Fix `Template#source_name` property being set to empty string after serializing
 * Don't re-use stale `Variables` clones
+* Don't ignore error in `Scene#openUrl()`
 
 ## 2.2.12 (2022-07-23)
 
