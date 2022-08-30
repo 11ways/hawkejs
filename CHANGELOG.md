@@ -1,3 +1,7 @@
+## 2.2.14 (WIP)
+
+* Revert early error throwing in `Scene#openUrl()`
+
 ## 2.2.13 (2022-08-25)
 
 * Fix `Template#source_name` property being set to empty string after serializing
