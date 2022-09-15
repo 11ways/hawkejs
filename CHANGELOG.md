@@ -1,6 +1,7 @@
 ## 2.2.14 (WIP)
 
 * Revert early error throwing in `Scene#openUrl()`
+* Make sure variables are prepared before rendering a subtemplate
 
 ## 2.2.13 (2022-08-25)
 
