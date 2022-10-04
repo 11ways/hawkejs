@@ -1,3 +1,7 @@
+## 2.2.15 (WIP)
+
+* Add support for elements that can optionally be closed
+
 ## 2.2.14 (2022-10-02)
 
 * Revert early error throwing in `Scene#openUrl()`
