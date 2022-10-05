@@ -3,6 +3,7 @@
 * Add support for elements that can optionally be closed
 * Make custom-element slots work with synchronous & plain-html templates
 * Use a higher `parallel_task_limit` in the browser
+* Make client-side style loading a bit more performant
 
 ## 2.2.14 (2022-10-02)
 
