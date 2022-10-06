@@ -1,3 +1,7 @@
+## 2.2.16 (WIP)
+
+* Make `ClassList#add()` and `ClassList#remove()` behave the same way as in the browser
+
 ## 2.2.15 (2022-10-06)
 
 * Add support for elements that can optionally be closed
