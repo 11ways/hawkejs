@@ -1,4 +1,4 @@
-## 2.2.15 (WIP)
+## 2.2.15 (2022-10-06)
 
 * Add support for elements that can optionally be closed
 * Make custom-element slots work with synchronous & plain-html templates
