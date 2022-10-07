@@ -1,6 +1,7 @@
 ## 2.2.16 (WIP)
 
 * Make `ClassList#add()` and `ClassList#remove()` behave the same way as in the browser
+* Add `Renderer#is_root_renderer` getter
 
 ## 2.2.15 (2022-10-06)
 
