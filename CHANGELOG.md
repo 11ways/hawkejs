@@ -3,6 +3,7 @@
 * Make `ClassList#add()` and `ClassList#remove()` behave the same way as in the browser
 * Add `Renderer#is_root_renderer` getter
 * Add `Renderer#is_follower_renderer` getter
+* Try to group certain parallel operations together in the browser
 
 ## 2.2.15 (2022-10-06)
 
