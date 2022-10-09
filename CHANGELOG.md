@@ -1,3 +1,7 @@
+## 2.2.17 (WIP)
+
+* Improve context-menu behaviour
+
 ## 2.2.16 (2022-10-08)
 
 * Make `ClassList#add()` and `ClassList#remove()` behave the same way as in the browser
