@@ -611,9 +611,12 @@ NO
 			],
 			[
 				`<ul><li><p>1<p>2<li>3</ul>`,
-				// This is actually wrong (browser closes the second p before opening the <li>3 one)
-				`<ul><li><p>1</p><p>2<li>3</li></p></li></ul>`,
-			]
+				`<ul><li><p>1</p><p>2</p></li><li>3</li></ul>`,
+			],
+			[
+				`<ul><li><p>1<p>2<li>3</ul>`,
+				`<ul><li><p>1</p><p>2</p></li><li>3</li></ul>`,
+			],
 		];
 
 		createTests(tests);

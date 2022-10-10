@@ -2,6 +2,7 @@
 
 * Improve context-menu behaviour
 * Fix optionally-closed elements never being able to be nested
+* Make `LI` element placement when used near other optionally closed elements
 
 ## 2.2.16 (2022-10-08)
 
