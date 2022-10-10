@@ -1,6 +1,7 @@
 ## 2.2.17 (WIP)
 
 * Improve context-menu behaviour
+* Fix optionally-closed elements never being able to be nested
 
 ## 2.2.16 (2022-10-08)
 

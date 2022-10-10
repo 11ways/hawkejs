@@ -598,6 +598,28 @@ NO
 		createTests(tests);
 	});
 
+	describe('Optionally closing HTML elements', function() {
+
+		let tests = [
+			[
+				`<ul><li>1<li>2<li>3</ul>`,
+				`<ul><li>1</li><li>2</li><li>3</li></ul>`,
+			],
+			[
+				`<ul><li>1<li>2<li><ul><li>3</li><li>4<li>5</ul></ul>`,
+				`<ul><li>1</li><li>2</li><li><ul><li>3</li><li>4</li><li>5</li></ul></li></ul>`,
+			],
+			[
+				`<ul><li><p>1<p>2<li>3</ul>`,
+				// This is actually wrong (browser closes the second p before opening the <li>3 one)
+				`<ul><li><p>1</p><p>2<li>3</li></p></li></ul>`,
+			]
+		];
+
+		createTests(tests);
+
+	});
+
 	describe('Markdown', function() {
 		it('should accept markdown in a template or as a variable', function(next) {
 
