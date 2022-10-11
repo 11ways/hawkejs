@@ -3,6 +3,7 @@
 * Improve context-menu behaviour
 * Fix optionally-closed elements never being able to be nested
 * Make `LI` element placement when used near other optionally closed elements
+* Add `Node#contains(other_node)` method to the server-side DOM implementation
 
 ## 2.2.16 (2022-10-08)
 
