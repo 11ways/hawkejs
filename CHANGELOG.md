@@ -4,6 +4,7 @@
 * Fix optionally-closed elements never being able to be nested
 * Make `LI` element placement when used near other optionally closed elements
 * Add `Node#contains(other_node)` method to the server-side DOM implementation
+* Fix false-y default attribute values never being set
 
 ## 2.2.16 (2022-10-08)
 
