@@ -6,6 +6,7 @@
 * Add `Node#contains(other_node)` method to the server-side DOM implementation
 * Fix false-y default attribute values never being set
 * Fix error because styles try to load before scene is created
+* Allow setting a custom tag name manually on a custom element
 
 ## 2.2.16 (2022-10-08)
 
