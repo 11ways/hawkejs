@@ -7,6 +7,7 @@
 * Fix false-y default attribute values never being set
 * Fix error because styles try to load before scene is created
 * Allow setting a custom tag name manually on a custom element
+* Fix `Element.addObservedAttribute()` attributes not inheriting properly
 
 ## 2.2.16 (2022-10-08)
 
