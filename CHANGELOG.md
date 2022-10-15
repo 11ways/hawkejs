@@ -8,6 +8,7 @@
 * Fix error because styles try to load before scene is created
 * Allow setting a custom tag name manually on a custom element
 * Fix `Element.addObservedAttribute()` attributes not inheriting properly
+* Add `Element#addIntervalListener()` to add an interval listener that will only run while the element is connected
 
 ## 2.2.16 (2022-10-08)
 
