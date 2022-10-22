@@ -9,6 +9,7 @@
 * Allow setting a custom tag name manually on a custom element
 * Fix `Element.addObservedAttribute()` attributes not inheriting properly
 * Add `Element#addIntervalListener()` to add an interval listener that will only run while the element is connected
+* Ignore history change when `renderer.history` is explicitly false
 
 ## 2.2.16 (2022-10-08)
 
