@@ -10,6 +10,7 @@
 * Fix `Element.addObservedAttribute()` attributes not inheriting properly
 * Add `Element#addIntervalListener()` to add an interval listener that will only run while the element is connected
 * Ignore history change when `renderer.history` is explicitly false
+* Fix `Scene#enableStyle()` creating too many pledges
 
 ## 2.2.16 (2022-10-08)
 
