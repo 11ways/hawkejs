@@ -378,11 +378,11 @@ describe('Scene', function() {
 			if (res.messages && res.messages.length) {
 				let message = res.messages[1];
 
-				if (message && message.indexOf(' »»»   7 | \t<error-thrower\n') > -1) {
+				if (message && message.indexOf(' »»»   7 | \t<error-thrower') > -1) {
 					return;
 				}
 
-				console.log(message);
+				console.log('Error message was:', message);
 			}
 
 			throw new Error('The error message was not printed correctly');
