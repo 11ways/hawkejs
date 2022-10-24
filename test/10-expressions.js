@@ -176,6 +176,28 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('Macro', function() {
+
+		let tests = [];
+
+		tests.push([
+			`{% macro testMe %}Simple macro{% /macro %}:{% run testMe %}:`,
+			`:Simple macro:`
+		]);
+
+		tests.push([
+			`{% macro withDef nr=1 %}Number={{ nr }}{% /macro %}-{% run withDef %}-{% run withDef nr=2 %}`,
+			`-Number=1-Number=2`
+		]);
+
+		tests.push([
+			`{% macro withDef nr=1 %}Number={{ nr }}{% /macro %}-{% run withDef %}-{% run withDef nr=2+2 %}`,
+			`-Number=1-Number=4`
+		]);
+
+		createTests(tests);
+	});
+
 	describe('Trim', function() {
 
 		var tests = [
