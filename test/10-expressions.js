@@ -157,6 +157,42 @@ describe('Expressions', function() {
 			['{% if true %}1{% if true %}1{% break %}WRONG{% /if %}1{% /if %}', '111'],
 		];
 
+		tests.push([
+			`{% each deep.numbers as number %}{% if number %}{{ number }}{% break %}{{ number }}{% /if %}{% /each %}`,
+			`123`,
+		]);
+
+		tests.push([
+			`{% each deep.numbers as number %}{% if number %}{{ number }}{% break 2 %}{{ number }}{% /if %}{% /each %}`,
+			`1`,
+		]);
+
+		
+		tests.push([
+			`{% if true %}-{% if true %}{% break 2 %}{% /if %}NOPE{% /if %}`,
+			`-`,
+		]);
+
+		tests.push([
+			`{% if true %}1{% if true %}2{% if true %}33{% /if %}2{% /if %}1{% /if %}`,
+			`123321`,
+		]);
+
+		tests.push([
+			`{% if true %}1{% if true %}2{% if true %}3{% break 1 %}3{% /if %}2{% /if %}1{% /if %}`,
+			`12321`,
+		]);
+
+		tests.push([
+			`{% if true %}1{% if true %}2{% if true %}3{% break 2 %}3{% /if %}2{% /if %}1{% /if %}`,
+			`1231`,
+		]);
+
+		tests.push([
+			`{% if true %}1{% if true %}2{% if true %}3{% break 3 %}3{% /if %}2{% /if %}1{% /if %}`,
+			`123`,
+		]);
+
 		createTests(tests);
 	});
 
@@ -545,7 +581,7 @@ NO
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_144">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_154">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
