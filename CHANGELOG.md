@@ -12,6 +12,7 @@
 * Ignore history change when `renderer.history` is explicitly false
 * Fix `Scene#enableStyle()` creating too many pledges
 * Make `break number` actually work as expected
+* Ensure custom element css only once per request
 
 ## 2.2.16 (2022-10-08)
 
