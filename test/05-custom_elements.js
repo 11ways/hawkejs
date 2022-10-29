@@ -61,6 +61,14 @@ describe('CustomElement', function() {
 
 			HeTest.setAttribute('testval');
 
+			HeTest.setAttribute('my-tokens', {type: 'token_list'});
+			HeTest.setAttribute('my-boolean', {type: 'boolean'});
+			HeTest.setAttribute('my-number', {type: 'number'});
+
+			HeTest.setAttribute('default-tokens', {type: 'token_list', default: 'a b c'});
+			HeTest.setAttribute('default-boolean', {type: 'boolean', default: true});
+			HeTest.setAttribute('default-number', {type: 'number', default: 47});
+
 			setTimeout(done, 4);
 		});
 
@@ -311,9 +319,40 @@ describe('CustomElement', function() {
 
 				res = res.trim();
 
-				assertEqualHtml(res, '<he-test testval="bla"></he-test>');
+				assertEqualHtml(res, '<he-test default-tokens="a b c" default-boolean="true" default-number="47" testval="bla"></he-test>');
 				done();
 			});
+		});
+
+		it('supports custom DOMTokenList', function() {
+
+			let element = hawkejs.createElement('he-test');
+			let tokens = element.default_tokens;
+
+			assert.strictEqual(element.default_tokens.value, 'a b c');
+
+			element.default_tokens.value = 'd e f';
+			assert.strictEqual(element.default_tokens+'', 'd e f');
+			assert.strictEqual(element.getAttribute('default-tokens'), 'd e f');
+
+			element.default_tokens.add('g', 'h');
+			assert.strictEqual(element.getAttribute('default-tokens'), 'd e f g h');
+
+			element.removeAttribute('default-tokens');
+			assert.strictEqual(element.default_tokens.value, '', 'Token list was not cleared after removal');
+
+			tokens.add('new');
+			assert.strictEqual(element.getAttribute('default-tokens'), 'new');
+		});
+
+		it('supports default values', function() {
+
+			let element = hawkejs.createElement('he-test');
+
+			assert.strictEqual(element.default_boolean, true);
+			assert.strictEqual(element.default_number, 47);
+			assert.strictEqual(element.getAttribute('default-boolean'), 'true');
+			assert.strictEqual(element.getAttribute('default-number'), '47');
 		});
 	});
 
