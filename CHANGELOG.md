@@ -1,4 +1,4 @@
-## 2.2.18 (WIP)
+## 2.2.18 (2022-10-29)
 
 * Ensure custom element css only once per request
 * Position the `he-bottom` element as fixed
