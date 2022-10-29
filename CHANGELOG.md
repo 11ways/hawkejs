@@ -4,6 +4,7 @@
 * Position the `he-bottom` element as fixed
 * Allow creating `DOMTokenList` instances on the fly with `Hawkejs.DOMTokenList`
 * Also call `attributeChangedCallback` after removing an attribute on the server side
+* Add some missing methods & properties to the server-side `DOMTokenList` implementation
 
 ## 2.2.17 (2022-10-22)
 
