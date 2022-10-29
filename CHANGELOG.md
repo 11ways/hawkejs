@@ -3,6 +3,7 @@
 * Ensure custom element css only once per request
 * Position the `he-bottom` element as fixed
 * Allow creating `DOMTokenList` instances on the fly with `Hawkejs.DOMTokenList`
+* Also call `attributeChangedCallback` after removing an attribute on the server side
 
 ## 2.2.17 (2022-10-22)
 
