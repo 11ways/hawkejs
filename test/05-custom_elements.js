@@ -343,6 +343,19 @@ describe('CustomElement', function() {
 
 			tokens.add('new');
 			assert.strictEqual(element.getAttribute('default-tokens'), 'new');
+
+			tokens = element.my_tokens;
+
+			if (!tokens) {
+				throw new Error('The my-tokens is not a valid token list');
+			}
+
+			tokens.add('test');
+			assert.strictEqual(element.getAttribute('my-tokens'), 'test');
+
+			element.removeAttribute('my-tokens');
+			assert.strictEqual(element.my_tokens.value, '');
+			
 		});
 
 		it('supports default values', function() {
