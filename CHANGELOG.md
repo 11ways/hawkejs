@@ -1,3 +1,7 @@
+## 2.2.19 (WIP)
+
+* Fix issue in error handler when `code` is a number
+
 ## 2.2.18 (2022-10-29)
 
 * Ensure custom element css only once per request
