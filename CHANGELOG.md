@@ -1,4 +1,4 @@
-## 2.2.19 (WIP)
+## 2.2.19 (2022-12-03)
 
 * Fix issue in error handler when `code` is a number
 * Fix css_styles not being set for client-side added elements that do not have a template
