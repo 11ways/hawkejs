@@ -1,5 +1,4 @@
-const Classes = Blast.Classes,
-      Hawkejs = Classes.Hawkejs;
+const Hawkejs = Classes.Hawkejs;
 
 /**
  * My-text custom element
