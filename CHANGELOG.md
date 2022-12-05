@@ -2,7 +2,7 @@
 
 * Do not automatically scroll when opening a URL without history
 * Use `toDryObject` instead of `dry` for storing history states
-
+* Remember & restore scroll position when using the history api
 
 ## 2.2.19 (2022-12-03)
 
