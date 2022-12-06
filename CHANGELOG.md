@@ -4,6 +4,7 @@
 * Use `toDryObject` instead of `dry` for storing history states
 * Remember & restore scroll position when using the history api
 * Fix the initial server-side render not being able to be re-rendered by the history api
+* Fix issue where assigning something other than a string to `className` caused an error
 
 ## 2.2.19 (2022-12-03)
 
