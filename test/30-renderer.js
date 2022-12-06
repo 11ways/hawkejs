@@ -289,13 +289,15 @@ This is the main content
 				if (result === 'null') {
 					return done(new Error('Render result was the string "null"'));
 				}
-
+				
 				result = despace(result);
+
+				// Should be <title></title> <link rel="preload" href="/hawkejs/hawkejs-client.js" as="script"> <!-- Static hawkejs variables --> <script>window._hawkejs_static_expose = JSON.parse('{}');</script> <!-- Request specific variables --> <script>window._initHawkejs = JSON.parse('[{},{"script_path":"","style_path":"","app_version":""},{"value":{"variables":"~0","expose_to_scene":{},"blocks":{"value":{"entries":[["implement_with_foundation_extension__main__",{"value":{"name":"implement_with_foundation_extension__main__","origin":{"value":{"name":"implement_with_foundation_extension","theme":"","source_name":"implement_with_foundation_extension"},"namespace":"Hawkejs","dry_class":"Template","dry":"toDry","drypath":["2","value","blocks","value","entries","0","1","value","origin"]},"variables":"~0","options":{"start_call":true},"block_id":"block-0"},"namespace":"Hawkejs","dry_class":"BlockBuffer","dry":"toDry","drypath":["2","value","blocks","value","entries","0","1"]}],["partials/extend_into_base_foundation__main__1",{"value":{"name":"partials/extend_into_base_foundation__main__1","origin":{"value":{"name":"partials/extend_into_base_foundation","theme":"","source_name":"partials/extend_into_base_foundation"},"namespace":"Hawkejs","dry_class":"Template","dry":"toDry","drypath":["2","value","blocks","value","entries","1","1","value","origin"]},"variables":{},"options":{"start_call":true},"block_id":"block-1"},"namespace":"Hawkejs","dry_class":"BlockBuffer","dry":"toDry","drypath":["2","value","blocks","value","entries","1","1"]}],["base_with_foundation__main__",{"value":{"name":"base_with_foundation__main__","origin":{"value":{"name":"base_with_foundation","theme":"","source_name":"base_with_foundation"},"namespace":"Hawkejs","dry_class":"Template","dry":"toDry","drypath":["2","value","blocks","value","entries","2","1","value","origin"]},"variables":"~2~value~blocks~value~entries~1~1~value~variables","options":{"start_call":true},"block_id":"block-2"},"namespace":"Hawkejs","dry_class":"BlockBuffer","dry":"toDry","drypath":["2","value","blocks","value","entries","2","1"]}]]},"namespace":"Hawkejs","dry_class":"Blocks","dry":"toDry","drypath":["2","value","blocks"]},"last_template":"~2~value~blocks~value~entries~2~1~value~origin","focus_block":null,"assigns":{},"theme":"","queued_templates":[{"value":{"templates":["~2~value~blocks~value~entries~0~1~value~origin"],"active":"~2~value~queued_templates~0~value~templates~0","options":{},"theme":""},"namespace":"Hawkejs","dry_class":"Templates","dry":"toDry","drypath":["2","value","queued_templates","0"]}],"dialogs":[],"base_id":"serverside","scripts":null,"styles":null,"is_for_client_side":null},"namespace":"Hawkejs","dry_class":"Renderer","dry":"toDry","drypath":["2"]}]');</script> <script>if (typeof _initHawkejsFunction == "function") {window.hawkejs = _initHawkejsFunction()}</script> <script src="/hawkejs/hawkejs-client.js"></script>
 
 				let checksum = __Protoblast.Bound.String.checksum(result);
 
 				try {
-					assert.strictEqual(checksum, 3852679327);
+					assert.strictEqual(checksum, 1788944084);
 				} catch (err) {
 					return done(err);
 				}
