@@ -1,4 +1,4 @@
-## 2.2.20 (WIP)
+## 2.2.20 (2022-12-06)
 
 * Do not automatically scroll when opening a URL without history
 * Use `toDryObject` instead of `dry` for storing history states
