@@ -1,3 +1,7 @@
+## 2.2.21 (WIP)
+
+* Fix server-side `Node#replaceWith()` method failing when the node has no next siblings
+
 ## 2.2.20 (2022-12-06)
 
 * Do not automatically scroll when opening a URL without history
