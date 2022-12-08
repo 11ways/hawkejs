@@ -1,6 +1,7 @@
 ## 2.2.21 (WIP)
 
 * Fix server-side `Node#replaceWith()` method failing when the node has no next siblings
+* Use fast custom method to check for `data-` attributes server-side
 
 ## 2.2.20 (2022-12-06)
 
