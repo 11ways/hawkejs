@@ -2,6 +2,7 @@
 
 * Fix server-side `Node#replaceWith()` method failing when the node has no next siblings
 * Use fast custom method to check for `data-` attributes server-side
+* Add 'Hawkejs.logError()` methods, which will not get culled by minifying
 
 ## 2.2.20 (2022-12-06)
 
