@@ -3,7 +3,8 @@
 * Fix server-side `Node#replaceWith()` method failing when the node has no next siblings
 * Use fast custom method to check for `data-` attributes server-side
 * Add 'Hawkejs.logError()` methods, which will not get culled by minifying
-* Fix server-side `DOMStringMap` class accepting dasherized keys, when it should throw an error 
+* Fix server-side `DOMStringMap` class accepting dasherized keys, when it should throw an error
+* Link the `role` property to the `role` attribute for custom elements
 
 ## 2.2.20 (2022-12-06)
 
