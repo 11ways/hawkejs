@@ -5,6 +5,7 @@
 * Add 'Hawkejs.logError()` methods, which will not get culled by minifying
 * Fix server-side `DOMStringMap` class accepting dasherized keys, when it should throw an error
 * Link the `role` property to the `role` attribute for custom elements
+* Fix bug where `delayed_elements` (like the foundation content) were actually rendered in the first sub-renderer
 
 ## 2.2.20 (2022-12-06)
 
