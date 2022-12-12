@@ -1,3 +1,7 @@
+## 2.2.22 (WIP)
+
+* Ignore setting `Renderer` instances on custom elements that have not been undried yet
+
 ## 2.2.21 (2022-12-09)
 
 * Fix server-side `Node#replaceWith()` method failing when the node has no next siblings
