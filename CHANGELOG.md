@@ -1,3 +1,7 @@
+## 2.2.23 (WIP)
+
+* Prefer heading elements when a readable element should be focused
+
 ## 2.2.22 (2022-12-14)
 
 * Ignore setting `Renderer` instances on custom elements that have not been undried yet
