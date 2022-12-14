@@ -2,6 +2,7 @@
 
 * Ignore setting `Renderer` instances on custom elements that have not been undried yet
 * Ignore attribute name errors during rendering
+* Wait for the document to be queryable before initing Hawkejs on the browser
 
 ## 2.2.21 (2022-12-09)
 
