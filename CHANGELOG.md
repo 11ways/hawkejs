@@ -1,4 +1,4 @@
-## 2.2.22 (WIP)
+## 2.2.22 (2022-12-14)
 
 * Ignore setting `Renderer` instances on custom elements that have not been undried yet
 * Ignore attribute name errors during rendering
