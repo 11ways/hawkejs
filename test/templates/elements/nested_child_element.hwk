@@ -1,0 +1,12 @@
+<% count = self.count || 1 %>
+<% counts = []; %>
+<% for (i = 0; i < count; i++) counts.push(i) %>
+
+{% if true %}
+	{% each counts as entry %}
+		<nested-async data-index={% entry %}></nested-async>
+
+		<!-- This tests wether elements with an empty RENDER_CONTENT method will hold up the render -->
+		<nested-empty></nested-empty>
+	{% /each %}
+{% /if %}

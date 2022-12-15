@@ -1,0 +1,5 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+<nested-root count=1></nested-root>
+{% /block %}

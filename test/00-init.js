@@ -18,6 +18,31 @@ describe('Hawkejs', function() {
 		});
 	});
 
+	describe('.doNext(promise, callback)', function() {
+		it('should execute the callback when given null promises', function(done) {
+			Hawkejs.doNext(null, done);
+		});
+
+		it('should execute the callback when given undefined promises', function(done) {
+			Hawkejs.doNext(undefined, done);
+		});
+
+		it('should execute promises that finish syncrhonously', function(done) {
+
+			let tasks = [
+				function(next) {
+					Hawkejs.doNext(null, next);
+				},
+				function(next) {
+					Hawkejs.doNext(undefined, next);
+				}
+			];
+
+			let promise = __Protoblast.Bound.Function.parallel(false, tasks);
+			Hawkejs.doNext(promise, done);
+		});
+	});
+
 	describe('#addViewDirectory(path, weight)', function() {
 		it('should register a path as a place to get view files from', function() {
 			hawkejs.addViewDirectory(__dirname + '/templates');
@@ -33,6 +58,7 @@ describe('Hawkejs', function() {
 			hawkejs.load(__dirname + '/helpers/rendered_counter.js');
 			hawkejs.load(__dirname + '/helpers/parent_element_test.js');
 			hawkejs.load(__dirname + '/helpers/error_thrower.js');
+			hawkejs.load(__dirname + '/helpers/nested_template_elements.js');
 		});
 	});
 

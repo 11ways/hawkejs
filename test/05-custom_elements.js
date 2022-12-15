@@ -679,6 +679,91 @@ describe('CustomElement', function() {
 
 			assert.strictEqual(data.html.indexOf('>pretty-title</span>') > -1, true);
 		});
+
+		it('should render nested custom elements', async function() {
+
+			if (!Hawkejs.Element.NestedRootElement) {
+				throw new Error('Failed to find the NestedRootElement class')
+			}
+
+			await setLocation('/nested_async_elements');
+
+			let data = await getBlockData('main');
+
+			let has_done = data.html.indexOf('nested-async data-index="0">DONE<') > -1;
+
+			assert.strictEqual(has_done, true, 'The nested elements did not render fully');
+
+			let pledge = new __Protoblast.Classes.Pledge();
+
+			hawkejs.render('nested_async_elements', {}, (err, res) => {
+				
+				if (err) {
+					return pledge.reject(err);
+				}
+
+				let has_done = res.indexOf('nested-async data-index="0">DONE<') > -1;
+
+				if (!has_done) {
+					return pledge.reject(new Error('The nested elements did not render fully'));
+				}
+
+				pledge.resolve();
+			});
+
+			return pledge;
+		});
+
+		it('should render looped nested custom elements', async function() {
+
+			await setLocation('/nested_loop_async_elements');
+
+			let data = await getBlockData('main');
+
+			let has_done = data.html.indexOf('nested-async data-index="3">DONE<') > -1;
+
+			assert.strictEqual(has_done, true, 'The nested elements did not render fully');
+		});
+
+		it('should render nested elements in a subrender', async function() {
+
+			await setLocation('/nested_sub_render_element');
+
+			let data = await getBlockData('main');
+
+			let text = despace(data.text);
+			assert.strictEqual(text, 'DONE DONE DONE DONE');
+		});
+
+		it('should render nested subrenders', async function() {
+
+			await setLocation('/nested_sub_renders');
+
+			let data = await getBlockData('main');
+
+			let text = despace(data.text);
+
+			assert.strictEqual(text, 'DONE DONE DONE DONE DONE DONE DONE DONE');
+
+			let pledge = new __Protoblast.Classes.Pledge();
+
+			hawkejs.render('nested_sub_renders', {}, (err, res) => {
+				
+				if (err) {
+					return pledge.reject(err);
+				}
+
+				let has_done = res.indexOf('nested-async data-index="1">DONE<') > -1;
+
+				if (!has_done) {
+					return pledge.reject(new Error('The nested elements did not render fully'));
+				}
+
+				pledge.resolve();
+			});
+
+			return pledge;
+		});
 	});
 
 	describe('#rendered()', () => {
@@ -697,8 +782,6 @@ describe('CustomElement', function() {
 				}
 
 				res = res.trim();
-
-				console.log(res);
 
 				try {
 					assertEqualHtml(res, '<rendered-counter he-rendered="1" rcount="1"></rendered-counter>');

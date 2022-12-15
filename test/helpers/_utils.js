@@ -337,6 +337,7 @@ global.loadHawkejs = function loadHawkejs() {
 	hawkejs.load(base + '/helpers/render_after_attributes.js');
 	hawkejs.load(base + '/helpers/parent_element_test.js');
 	hawkejs.load(base + '/helpers/error_thrower.js');
+	hawkejs.load(base + '/helpers/nested_template_elements.js');
 
 	addActions();
 }

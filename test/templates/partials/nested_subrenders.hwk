@@ -1,0 +1,5 @@
+{% if true %}
+<nested-sub-render>
+	<% $0.renderSubTemplate("partials/nested_elements") %>
+</nested-sub-render>
+{% /if %}
