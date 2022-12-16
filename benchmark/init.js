@@ -1,5 +1,4 @@
-var Benchmark = require('benchmark'),
-    Hawkejs = require('../index.js'),
+var Hawkejs = require('../index.js'),
     hawkejs = new Hawkejs(),
     libpath = require('path');
 
@@ -40,9 +39,10 @@ function createTestVariables() {
 	return result;
 };
 
+global.hawkejs = hawkejs;
+global.Hawkejs = Hawkejs;
+
 module.exports = {
-	Benchmark : Benchmark,
-	Suite     : Benchmark.Suite,
 	Hawkejs   : Hawkejs,
 	hawkejs   : hawkejs,
 	createTestVariables

@@ -1,5 +1,4 @@
-var bench = require('./init.js'),
-    suite = new bench.Suite();
+var main = require('./init.js');
 
 var source = `
 	<div>
@@ -8,13 +7,8 @@ var source = `
 		<%= a + "1" %>
 	</div>`;
 
-suite.add('Hawkejs#compile(source)', {
-	fn: function() {
-		bench.hawkejs.compile(source);
-	},
-	onComplete: function(event) {
-		console.log(String(event.target));
-	}
+suite('Hawkejs', function() {
+	bench('#compile(source)', function() {
+		hawkejs.compile(source);
+	});
 });
-
-suite.run();
