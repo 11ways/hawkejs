@@ -146,11 +146,23 @@ describe('HTMLElement', function() {
 			div.append(Hawkejs.Hawkejs.createElement('br'));
 			div.append('@');
 			div.append(Hawkejs.Hawkejs.createElement('br'));
-			div.append('€');
+			div.append('€&');
 			div.append(Hawkejs.Hawkejs.createElement('br'));
 
-			assertEqualHtml(div.outerHTML, '<div>a<br>@<br>&euro;<br></div>');
-			assert.strictEqual(div.innerText, 'a\n@\n€\n');
+			assertEqualHtml(div.outerHTML, '<div>a<br>@<br>&euro;&amp;<br></div>');
+			assert.strictEqual(div.innerText, 'a\n@\n€&\n');
+		});
+
+		it('should correctly escape html', function() {
+
+			let source = '<div>&lt;%</div>';
+
+			let div = Hawkejs.Hawkejs.createElement('div');
+			div.innerText = source;
+
+			console.log(div.innerHTML)
+
+			assert.strictEqual(div.innerText, source);
 		});
 
 		it('should not break on Hawkejs code', function() {
