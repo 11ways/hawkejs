@@ -2,6 +2,7 @@
 
 * Prefer heading elements when a readable element should be focused
 * Improve performance of setting/setting text content
+* Add `LinkedTokenList#contains(value)` method
 
 ## 2.2.22 (2022-12-14)
 
