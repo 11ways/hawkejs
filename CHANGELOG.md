@@ -1,3 +1,5 @@
+## 2.2.24 (WIP)
+
 ## 2.2.23 (2022-12-23)
 
 * Prefer heading elements when a readable element should be focused
