@@ -1,6 +1,7 @@
 ## 2.3.0 (WIP)
 
 * Upgrade to Protoblast v0.8.0
+* Upgrade Marked to v4.2.12
 
 ## 2.2.23 (2022-12-23)
 
