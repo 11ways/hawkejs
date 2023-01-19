@@ -275,6 +275,8 @@ describe('Expressions', function() {
 			['{{html}}',            '&lt;p&gt;This is &lt;bold&gt;HTML&lt;/bold&gt;&lt;/p&gt;'],
 			['{{"test <3"}}',       'test &lt;3'],
 			['{{this is not\nsp}}', '{{this is not\nsp}}'],
+			['{{ internal("string") }}', 'internal string'],
+			['{{ internal("test").nested.value }}', 'test'],
 		];
 
 		createTests(tests);
@@ -581,7 +583,7 @@ NO
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_154">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_156">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
@@ -834,6 +836,8 @@ function createTests(tests) {
 			}
 
 			let vars = {
+				__string  : 'internal string',
+				__test    : {nested: {value: 'test'}},
 				c         : 'c',
 				str_bla   : 'bla',
 				empty_arr : [],

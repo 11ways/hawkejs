@@ -1,3 +1,7 @@
+## 2.3.1 (WIP)
+
+* Allow paths to begin with a function call
+
 ## 2.3.0 (2023-01-14)
 
 * Upgrade to Protoblast v0.8.0
