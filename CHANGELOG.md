@@ -5,6 +5,7 @@
 * Optimize the `Hawkejs.normalizeChildren(element)` method
 * Optimize `HTMLElement#innerHTML` property
 * Optimize `Hawkejs.recurseLineTasks()`
+* Optimize by letting the `_initHawkejs` value be an object again
 
 ## 2.3.0 (2023-01-14)
 
