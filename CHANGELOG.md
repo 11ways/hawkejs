@@ -6,6 +6,7 @@
 * Optimize `HTMLElement#innerHTML` property
 * Optimize `Hawkejs.recurseLineTasks()`
 * Optimize by letting the `_initHawkejs` value be an object again
+* Add the `RenderTasks` class
 
 ## 2.3.0 (2023-01-14)
 
