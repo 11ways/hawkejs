@@ -1,6 +1,7 @@
 ## 2.3.1 (WIP)
 
 * Allow paths to begin with a function call
+* Optimize server-side `HTMLElement`'s `children` property implementation
 
 ## 2.3.0 (2023-01-14)
 
