@@ -4,6 +4,7 @@
 * Optimize server-side `HTMLElement`'s `children` property implementation
 * Optimize the `Hawkejs.normalizeChildren(element)` method
 * Optimize `HTMLElement#innerHTML` property
+* Optimize `Hawkejs.recurseLineTasks()`
 
 ## 2.3.0 (2023-01-14)
 
