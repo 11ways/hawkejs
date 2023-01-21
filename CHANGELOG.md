@@ -2,6 +2,7 @@
 
 * Allow paths to begin with a function call
 * Optimize server-side `HTMLElement`'s `children` property implementation
+* Optimize the `Hawkejs.normalizeChildren(element)` method
 
 ## 2.3.0 (2023-01-14)
 
