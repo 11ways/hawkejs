@@ -397,6 +397,17 @@ This is the main content
 	describe('#showDialog(template, variables, options)', function() {
 		this.timeout(50000)
 
+		it('should work without dialogs', async function() {
+
+			// Make sure the template itself works without the dialog stuff
+			await setLocation('/dialog_test');
+
+			let main = await getBlockData('main');
+
+			assertEqualHtml(main.text, 'This is the new main body Include Test Contents: bla Contents: AfterBody');
+			assert.strictEqual(main.location, '/dialog_test');
+		});
+
 		it('should show a dialog on the page', async function() {
 
 			actions['/dialog_test'] = function(req, res, renderer, responder) {

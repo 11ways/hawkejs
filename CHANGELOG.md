@@ -7,6 +7,7 @@
 * Optimize `Hawkejs.recurseLineTasks()`
 * Optimize by letting the `_initHawkejs` value be an object again
 * Add the `RenderTasks` class
+* Make `Hawkejs.recurseLineTasks()` method skip elements that are certain to be finished already
 
 ## 2.3.0 (2023-01-14)
 
