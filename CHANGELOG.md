@@ -9,6 +9,7 @@
 * Add the `RenderTasks` class
 * Make `Hawkejs.recurseLineTasks()` method skip elements that are certain to be finished already
 * Don't let `BlockBuffer#makeNode(line)` return strings
+* Don't loop over every element when informing them of assembly
 
 ## 2.3.0 (2023-01-14)
 
