@@ -465,6 +465,54 @@ describe('HTMLElement', function() {
 		});
 	});
 
+	describe('#insertBefore()', function() {
+		it('should set the corrent parent', function() {
+
+			let wrapper = Hawkejs.Hawkejs.createElement('main'),
+			    div = Hawkejs.Hawkejs.createElement('div'),
+			    span = Hawkejs.Hawkejs.createElement('span');
+			
+			wrapper.append(div);
+			wrapper.insertBefore(span, div);
+
+			assert.strictEqual(span.parentElement, wrapper);
+			assert.strictEqual(div.parentElement, wrapper);
+
+			// Sorry, this is now turning into a "dirty" test
+			let async_span_1 = Hawkejs.Hawkejs.createElement('span');
+			assert.strictEqual(Hawkejs.canBeMarkedAsDirty(async_span_1), false);
+
+			async_span_1.onHawkejsAssemble = () => {};
+			assert.strictEqual(Hawkejs.canBeMarkedAsDirty(async_span_1), true);
+
+			let dirty_info = async_span_1[Hawkejs.DIRTY_INFO];
+
+			// DIRTY_LINE_NEEDS_ASSEMBLY
+			assert.strictEqual(dirty_info, 4);
+
+			async_span_1 = Hawkejs.Hawkejs.createElement('span');
+			async_span_1.onHawkejsAssemble = () => {};
+			dirty_info = async_span_1[Hawkejs.DIRTY_INFO];
+
+			assert.strictEqual(dirty_info, undefined);
+
+			wrapper.append(async_span_1);
+			dirty_info = async_span_1[Hawkejs.DIRTY_INFO];
+
+			// DIRTY_LINE_NEEDS_ASSEMBLY | DIRTY_LINE_NEEDS_RENDER
+			assert.strictEqual(dirty_info, 5);
+
+			async_span_1 = Hawkejs.Hawkejs.createElement('span');
+			async_span_1.onHawkejsAssemble = () => {};
+
+			wrapper.insertBefore(async_span_1, div);
+			dirty_info = async_span_1[Hawkejs.DIRTY_INFO];
+
+			// DIRTY_LINE_NEEDS_ASSEMBLY | DIRTY_LINE_NEEDS_RENDER
+			assert.strictEqual(dirty_info, 5);
+		});
+	});
+
 	// HTML Element Extensions!
 
 	describe('#setIndexInParent(index)', function() {

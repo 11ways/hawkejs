@@ -1,3 +1,7 @@
+## 2.3.2 (WIP)
+
+* Fix elements being added with `insertBefore()` and `insertAfter()` not being marked as dirty
+
 ## 2.3.1 (2023-01-23)
 
 * Allow paths to begin with a function call
