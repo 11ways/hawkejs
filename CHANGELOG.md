@@ -1,4 +1,4 @@
-## 2.3.1 (WIP)
+## 2.3.1 (2023-01-23)
 
 * Allow paths to begin with a function call
 * Optimize server-side `HTMLElement`'s `children` property implementation
