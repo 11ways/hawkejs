@@ -1,6 +1,7 @@
 ## 2.3.2 (WIP)
 
 * Fix elements being added with `insertBefore()` and `insertAfter()` not being marked as dirty
+* Wrap `pushState` calls in a try-catch block
 
 ## 2.3.1 (2023-01-23)
 
