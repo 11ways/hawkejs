@@ -1,3 +1,7 @@
+## 2.3.3 (WIP)
+
+* Force move the focus when clicking on anchor links
+
 ## 2.3.2 (2023-01-24)
 
 * Fix elements being added with `insertBefore()` and `insertAfter()` not being marked as dirty
