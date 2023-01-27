@@ -2,6 +2,7 @@
 
 * Force move the focus when clicking on anchor links
 * Let `Scene#pushToHistory(data, url)` normalize the url value first
+* Allow keywords as property names
 
 ## 2.3.2 (2023-01-24)
 
