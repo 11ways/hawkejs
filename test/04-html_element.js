@@ -314,6 +314,17 @@ describe('HTMLElement', function() {
 			assertEqualHtml(result, '1<br><br>2');
 		});
 
+		it('should not throw an error when creating badly formed self-closing tags', function() {
+
+			let source = '<div><br><br /><br/></div>';
+
+			let elements = hawkejs.evaluate(source);
+
+			let result = elements[0].innerHTML;
+
+			assertEqualHtml(result, '<br><br><br>');
+		});
+
 		it('should not throw an error when trying to close a tag that is not present', function() {
 
 			let div = Hawkejs.Hawkejs.createElement('div');
