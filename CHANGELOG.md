@@ -1,4 +1,4 @@
-## 2.3.3 (WIP)
+## 2.3.3 (2023-01-30)
 
 * Force move the focus when clicking on anchor links
 * Let `Scene#pushToHistory(data, url)` normalize the url value first
