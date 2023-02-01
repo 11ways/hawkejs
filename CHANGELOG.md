@@ -1,3 +1,7 @@
+## 2.3.4 (WIP)
+
+* Extract some functionality from the `HTMLElement` class and put it into the new parent `Element` class
+
 ## 2.3.3 (2023-01-30)
 
 * Force move the focus when clicking on anchor links
