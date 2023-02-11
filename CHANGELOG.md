@@ -1,4 +1,4 @@
-## 2.3.4 (WIP)
+## 2.3.4 (2023-02-11)
 
 * Extract some functionality from the `HTMLElement` class and put it into the new parent `Element` class
 * Add the `Hawkejs.Builder` class to easily create HTML & XML trees programmatically
