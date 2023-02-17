@@ -1,6 +1,7 @@
 ## 2.3.5 (WIP)
 
 * Fix `isDataString()` method not working in the `Element` base class
+* Upgrade dependencies
 
 ## 2.3.4 (2023-02-11)
 
