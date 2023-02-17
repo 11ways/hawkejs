@@ -1,3 +1,7 @@
+## 2.3.5 (WIP)
+
+* Fix `isDataString()` method not working in the `Element` base class
+
 ## 2.3.4 (2023-02-11)
 
 * Extract some functionality from the `HTMLElement` class and put it into the new parent `Element` class
