@@ -1,7 +1,7 @@
 {
 	"name": "hawkejs",
 	"description": "Asynchronous Embedded JavaScript templates",
-	"version": "2.3.5",
+	"version": "2.3.6-alpha",
 	"author": "Jelle De Loecker <jelle@elevenways.be>",
 	"keywords": [
 		"template",
