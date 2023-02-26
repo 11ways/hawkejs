@@ -1,4 +1,4 @@
-## 2.3.6 (WIP)
+## 2.3.6 (2023-02-26)
 
 * Fix History API issues
 
