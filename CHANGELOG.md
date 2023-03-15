@@ -1,3 +1,7 @@
+## 2.3.7 (WIP)
+
+* Add more `ElementInternals` property getters to the server-side `HTMLElement` implementation
+
 ## 2.3.6 (2023-02-26)
 
 * Fix History API issues
