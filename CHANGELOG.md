@@ -1,6 +1,8 @@
 ## 2.3.7 (WIP)
 
 * Add more `ElementInternals` property getters to the server-side `HTMLElement` implementation
+* Add the `Element#hideForAssistiveTechnology(value)` method
+* Add the `Element#hideForEveryone(value)` method, which will set both `hidden` and `aria-hidden`
 
 ## 2.3.6 (2023-02-26)
 
