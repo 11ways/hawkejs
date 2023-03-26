@@ -5,6 +5,7 @@
 * Add the `Element#hideForEveryone(value)` method, which will set both `hidden` and `aria-hidden`
 * Implement the server-side `Style#removeProperty(name)` method
 * Let the `Builder` keep track of the original source code
+* Also use custom variables defined on an element (using `+`) inside the template
 
 ## 2.3.6 (2023-02-26)
 

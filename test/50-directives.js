@@ -239,7 +239,37 @@ describe('Directives', function() {
 		];
 
 		createTests(tests);
+	});
 
+	describe('Make variables part of the element inner scope', function() {
+		var tests = [
+			[
+				`<div +new_variable="NEW">{{new_variable}}</div>`,
+				`<div>NEW</div>`
+			],
+			[
+				`<div>{{def_string}}</div>`,
+				`<div>default</div>`
+			],
+			[
+				`<div +new_variable="NEW">{{def_string}}</div>`,
+				`<div>default</div>`
+			],
+			[
+				`<div +new_variable="NEW">{{def_string}} {{new_variable}}</div>`,
+				`<div>default NEW</div>`,
+			],
+			[
+				`<div +def_string="NOPE">{{def_string}}</div><div>{{def_string}}</div>`,
+				`<div>NOPE</div><div>default</div>`
+			],
+			[
+				`<div +def_string="NOPE">{{def_string}}-<div +def_string="SECOND">{{def_string}}</div>-<div>{{def_string}}</div></div>`,
+				`<div>NOPE-<div>SECOND</div>-<div>NOPE</div></div>`
+			],
+		];
+
+		createTests(tests);
 	});
 
 	describe('Error handling', function() {
@@ -401,6 +431,7 @@ function createTests(tests) {
 				empty_obj : {},
 				truthy    : 'truthy',
 				date      : new Date('2019-03-07'),
+				def_string: 'default',
 				test      : {
 					name  : 'testname',
 					one   : 1,
