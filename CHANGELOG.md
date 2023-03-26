@@ -8,6 +8,7 @@
 * Also use custom variables defined on an element (using `+`) inside the template
 * Also serialize a custom element's custom variables
 * Always set the `Hawkejs.APPLIED_OPTIONS` symbol before rerendering a custom element
+* Add the `setVariable` and `getVariable` methods to the custom element class
 
 ## 2.3.6 (2023-02-26)
 
