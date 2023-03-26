@@ -4,6 +4,7 @@
 * Add the `Element#hideForAssistiveTechnology(value)` method
 * Add the `Element#hideForEveryone(value)` method, which will set both `hidden` and `aria-hidden`
 * Implement the server-side `Style#removeProperty(name)` method
+* Let the `Builder` keep track of the original source code
 
 ## 2.3.6 (2023-02-26)
 
