@@ -9,6 +9,7 @@
 * Also serialize a custom element's custom variables
 * Always set the `Hawkejs.APPLIED_OPTIONS` symbol before rerendering a custom element
 * Add the `setVariable` and `getVariable` methods to the custom element class
+* Add the `<he-dynamic>` element, which remembers its original content source as its template
 
 ## 2.3.6 (2023-02-26)
 
