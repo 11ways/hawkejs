@@ -11,6 +11,7 @@
 * Add the `setVariable` and `getVariable` methods to the custom element class
 * Add the `<he-dynamic>` element, which remembers its original content source as its template
 * Try to get the `scene_id` from the exposed variables before creating a new one
+* Fix variables not being passed to subtemplates properly
 
 ## 2.3.6 (2023-02-26)
 

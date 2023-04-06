@@ -1,0 +1,19 @@
+ROOT:
+alfa: {{ alfa }}
+name: {{ name }}
+extra: {{ extra }}
+count: {{ count }}
+
+<% count++ %>
+FIRST:
+<% include('partials/included_variables') %>
+
+<% count++ %>
+SECOND:
+<% include('partials/included_variables', {name: 'included', extra: 1}) %>
+
+ROOT FINAL:
+alfa: {{ alfa }}
+name: {{ name }}
+extra: {{ extra }}
+count: {{ count }}

@@ -1,0 +1,4 @@
+alfa: {{ alfa }}
+name: {{ name }}
+extra: {{ extra }}
+count: {{ count }}

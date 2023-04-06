@@ -203,6 +203,52 @@ This is the main content
 				assertEqualHtml(result, `<div><span>The parent of this span is "DIV"</span></div>`);
 				done();
 			});
+		});
+
+		it('should pass through the variables', function(done) {
+
+			let root_variables = {
+				alfa  : 'ALFA',
+				name  : 'root',
+				count : 0,
+			};
+
+			hawkejs.render('include_with_variables', root_variables, function doneImplement(err, result) {
+
+				if (err) {
+					throw err;
+				}
+
+				result = result.trim();
+
+				assertEqualHtml(result, `ROOT:
+				alfa: ALFA
+				name: root
+				extra:
+				count: 0
+				
+				
+				FIRST:
+				alfa: ALFA
+				name: root
+				extra:
+				count: 1
+				
+				
+				SECOND:
+				alfa: ALFA
+				name: included
+				extra: 1
+				count: 2
+				
+				ROOT FINAL:
+				alfa: ALFA
+				name: root
+				extra:
+				count: 2`);
+
+				done();
+			});
 
 		});
 	});
