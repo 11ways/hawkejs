@@ -1,4 +1,4 @@
-## 2.3.7 (WIP)
+## 2.3.7 (2023-04-06)
 
 * Add more `ElementInternals` property getters to the server-side `HTMLElement` implementation
 * Add the `Element#hideForAssistiveTechnology(value)` method
