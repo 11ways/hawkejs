@@ -10,6 +10,7 @@
 * Always set the `Hawkejs.APPLIED_OPTIONS` symbol before rerendering a custom element
 * Add the `setVariable` and `getVariable` methods to the custom element class
 * Add the `<he-dynamic>` element, which remembers its original content source as its template
+* Try to get the `scene_id` from the exposed variables before creating a new one
 
 ## 2.3.6 (2023-02-26)
 
