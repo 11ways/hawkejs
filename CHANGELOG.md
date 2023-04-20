@@ -1,3 +1,7 @@
+## 2.3.8 (WIP)
+
+* Allow using expressions for dynamic element tag names
+
 ## 2.3.7 (2023-04-06)
 
 * Add more `ElementInternals` property getters to the server-side `HTMLElement` implementation

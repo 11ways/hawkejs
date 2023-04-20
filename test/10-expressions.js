@@ -658,6 +658,21 @@ NO
 		createTests(tests);
 	});
 
+	describe('Dynamic HTML tags', function() {
+		let tests = [
+			[
+				`<{% "div" %}>TEST</{% "div" %}>`,
+				`<div>TEST</div>`,
+			],
+			[
+				`<span><{% "div" %}><span>TEST</span></{% "div" %}></span>`,
+				`<span><div><span>TEST</span></div></span>`,
+			],
+		];
+
+		createTests(tests);
+	});
+
 	describe('Optionally closing HTML elements', function() {
 
 		let tests = [
