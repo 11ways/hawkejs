@@ -1,4 +1,4 @@
-## 2.3.8 (WIP)
+## 2.3.8 (2023-04-20)
 
 * Allow using expressions for dynamic element tag names
 
