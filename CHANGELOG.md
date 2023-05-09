@@ -1,3 +1,7 @@
+## 2.3.9 (WIP)
+
+* Fix programatically added head tags not having their custom attributes set
+
 ## 2.3.8 (2023-04-20)
 
 * Allow using expressions for dynamic element tag names
