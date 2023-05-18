@@ -1,3 +1,7 @@
+## 2.3.10 (WIP)
+
+* Fix deadlock in browser-side `Renderer#doTasksGrouped()` method
+
 ## 2.3.9 (2023-05-09)
 
 * Fix programatically added head tags not having their custom attributes set
