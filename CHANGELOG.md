@@ -1,4 +1,4 @@
-## 2.3.10 (WIP)
+## 2.3.10 (2023-05-22)
 
 * Fix deadlock in browser-side `Renderer#doTasksGrouped()` method
 
