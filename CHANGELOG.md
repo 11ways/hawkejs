@@ -1,3 +1,7 @@
+## 2.3.11 (WIP)
+
+* Fix infinite loop due to overriden ancestor element
+
 ## 2.3.10 (2023-05-22)
 
 * Fix deadlock in browser-side `Renderer#doTasksGrouped()` method
