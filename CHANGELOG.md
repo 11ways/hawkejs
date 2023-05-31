@@ -1,6 +1,7 @@
 ## 2.3.11 (WIP)
 
 * Fix infinite loop due to overriden ancestor element
+* Handle printed promises as expected
 
 ## 2.3.10 (2023-05-22)
 
