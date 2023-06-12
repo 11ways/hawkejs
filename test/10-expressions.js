@@ -21,6 +21,18 @@ describe('Expressions', function() {
 
 	});
 
+	describe('Elements', function() {
+
+		let tests = [
+			[
+				'<ul><li><ol><% for(var i=0; i < 5; i++) { %><li></li><% } %></ol></li></ul>',
+				'<ul><li><ol><li></li><li></li><li></li><li></li><li></li></ol></li></ul>'
+			],
+		];
+
+		createTests(tests);
+	});
+
 	describe('If', function() {
 		var tests = [
 			['{% if true %}TRUE{% /if %}', 'TRUE'],
@@ -583,7 +595,7 @@ NO
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_156">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_157">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,

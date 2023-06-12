@@ -2,6 +2,7 @@
 
 * Fix infinite loop due to overriden ancestor element
 * Handle printed promises as expected
+* Fix `li` elements not being seen as valid child elements of an `ol`
 
 ## 2.3.10 (2023-05-22)
 
