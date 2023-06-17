@@ -1,4 +1,4 @@
-## 2.3.11 (WIP)
+## 2.3.11 (2023-06-17)
 
 * Fix infinite loop due to overriden ancestor element
 * Handle printed promises as expected
