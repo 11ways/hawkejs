@@ -1,6 +1,7 @@
 ## 2.3.12 (WIP)
 
 * Make `Renderer#getId(prefix)` check for existing elements on the browser first
+* Make the getters of boolean attributes of custom elements always return a boolean instead of null
 
 ## 2.3.11 (2023-06-17)
 
