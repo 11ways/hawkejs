@@ -1,3 +1,7 @@
+## 2.3.12 (WIP)
+
+* Make `Renderer#getId(prefix)` check for existing elements on the browser first
+
 ## 2.3.11 (2023-06-17)
 
 * Fix infinite loop due to overriden ancestor element
