@@ -1,3 +1,7 @@
+## 2.3.13 (WIP)
+
+* Fix elements being added to another element directly not being marked as dirty on the browser side, and thus not running the `onHawkejsAssemble` and `retained` method
+
 ## 2.3.12 (2023-10-04)
 
 * Make `Renderer#getId(prefix)` check for existing elements on the browser first
