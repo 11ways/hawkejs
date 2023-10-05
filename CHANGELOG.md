@@ -1,3 +1,7 @@
+## 2.3.14 (WIP)
+
+* Fix `he-context` elements always having scrollbars
+
 ## 2.3.13 (2023-10-04)
 
 * Fix elements being added to another element directly not being marked as dirty on the browser side, and thus not running the `onHawkejsAssemble` and `retained` method
