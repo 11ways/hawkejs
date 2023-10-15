@@ -1,4 +1,4 @@
-## 2.3.14 (WIP)
+## 2.3.14 (2023-10-15)
 
 * Fix `he-context` elements always having scrollbars
 * Add more popup options when receiving a `openUrl()` response
