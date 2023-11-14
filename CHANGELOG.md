@@ -1,6 +1,7 @@
 ## 2.3.15 (WIP)
 
 * Cancel previous render when a new one is started of a custom element
+* Implement bracket notation property accessor
 
 ## 2.3.14 (2023-10-15)
 

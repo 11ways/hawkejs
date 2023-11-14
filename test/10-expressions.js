@@ -289,6 +289,10 @@ describe('Expressions', function() {
 			['{{this is not\nsp}}', '{{this is not\nsp}}'],
 			['{{ internal("string") }}', 'internal string'],
 			['{{ internal("test").nested.value }}', 'test'],
+			['{{ numbers[0] }}-{{ numbers[1] }}', '0-1'],
+			['{{ people[0]["name"] }}', 'Jelle'],
+			['{{ people.0.name }}', 'Jelle'],
+			['{{ people.0["name"] }}', 'Jelle'],
 		];
 
 		createTests(tests);
@@ -595,7 +599,7 @@ NO
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_157">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_161">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
