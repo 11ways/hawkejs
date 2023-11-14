@@ -1,3 +1,7 @@
+## 2.3.15 (WIP)
+
+* Cancel previous render when a new one is started of a custom element
+
 ## 2.3.14 (2023-10-15)
 
 * Fix `he-context` elements always having scrollbars
