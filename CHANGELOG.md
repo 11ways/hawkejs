@@ -2,6 +2,7 @@
 
 * Cancel previous render when a new one is started of a custom element
 * Implement bracket notation property accessor
+* If an `openUrl()` call receives an object with a `render` proeprty set to false, no render will be performed
 
 ## 2.3.14 (2023-10-15)
 
