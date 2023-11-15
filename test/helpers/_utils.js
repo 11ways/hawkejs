@@ -338,8 +338,27 @@ global.loadHawkejs = function loadHawkejs() {
 	hawkejs.load(base + '/helpers/parent_element_test.js');
 	hawkejs.load(base + '/helpers/error_thrower.js');
 	hawkejs.load(base + '/helpers/nested_template_elements.js');
+	hawkejs.load(base + '/helpers/render_looper.js');
 
 	addActions();
+}
+
+const times = {};
+
+global.timeLog = function timeLog(name) {
+
+	let previous = times[name];
+	let now = times[name] = Date.now();
+
+	let past;
+
+	if (previous) {
+		past = now - previous;
+	} else {
+		past = 0;
+	}
+
+	console.log(name, past);
 }
 
 const console_error = console.error;

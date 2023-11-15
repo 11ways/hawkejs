@@ -1,0 +1,4 @@
+<% for (i = 0; i < amount_to_render; i++) { %>
+	<% this.printElement(element_to_render) %>
+	<% this.closeElement(element_to_render) %>
+<% } %>
