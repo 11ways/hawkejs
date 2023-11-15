@@ -4,6 +4,7 @@
 * Implement bracket notation property accessor
 * If an `openUrl()` call receives an object with a `render` proeprty set to false, no render will be performed
 * Improve performance by creating less promises when possible
+* Fix `Renderer#_emitBegin()` slowing to a crawl the more subrenders start
 
 ## 2.3.14 (2023-10-15)
 
