@@ -1,0 +1,5 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+<span class="empty"></span>
+{% /block %}

@@ -563,20 +563,41 @@ describe('CustomElement', function() {
 
 			await setLocation('/custom_element_render_loop');
 
-			let result = await queryElements('render-looper');
+			async function testRenderLoopResult(is_server) {
 
-			assert.strictEqual(result.length, 2);
+				let result = await queryElements('render-looper');
 
-			let loop_three = result[0],
-			    loop_one = result[1];
+				assert.strictEqual(result.length, 2);
 
-			// The sub custom-elements should be there
-			assert.strictEqual(Bound.String.count(loop_three.html, '<my-button'), 3);
-			assert.strictEqual(Bound.String.count(loop_one.html, '<my-button'), 1);
+				let loop_three = result[0],
+					loop_one = result[1];
 
-			// And those sub elements have other custom elements too
-			assert.strictEqual(Bound.String.count(loop_three.html, '<my-text'), 6);
-			assert.strictEqual(Bound.String.count(loop_one.html, '<my-text'), 2);
+				if (is_server) {
+					assert.strictEqual(loop_three.html.indexOf('SERVERTRANSLATED') > -1, true);
+				} else {
+					assert.strictEqual(loop_three.html.indexOf('CLIENTTRANSLATED') > -1, true);
+				}
+
+				// The sub custom-elements should be there
+				assert.strictEqual(Bound.String.count(loop_three.html, '<my-button'), 3);
+				assert.strictEqual(Bound.String.count(loop_one.html, '<my-button'), 1);
+
+				// And those sub elements have other custom elements too
+				assert.strictEqual(Bound.String.count(loop_three.html, '<my-text'), 6);
+				assert.strictEqual(Bound.String.count(loop_one.html, '<my-text'), 2);
+			}
+
+			await testRenderLoopResult(true);
+
+			await openHeUrl('/empty_base_scene');
+
+			let result = await getBlockData('main');
+
+			assert.strictEqual(result.html.indexOf('class="empty"') > -1, true);
+
+			await openHeUrl('/custom_element_render_loop');
+
+			await testRenderLoopResult(false);
 		});
 	});
 
