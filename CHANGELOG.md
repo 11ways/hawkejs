@@ -7,6 +7,7 @@
 * Fix `Renderer#_emitBegin()` slowing to a crawl the more subrenders start
 * Make sure getting template sources stay within the allowed paths
 * Automatically set the `force_async` option of the `Hawkejs.series` method to false
+* Use as many Swift pledges as possible
 
 ## 2.3.14 (2023-10-15)
 
