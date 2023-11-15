@@ -1,0 +1,6 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+<render-looper element-to-render="my-button" amount="3"></render-looper>
+<render-looper element-to-render="my-button" amount="1"></render-looper>
+{% /block %}

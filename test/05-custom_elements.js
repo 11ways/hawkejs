@@ -3,12 +3,17 @@ var assert   = require('assert'),
     hawkejs,
     test_id = 0;
 
+let Blast,
+    Bound;
+
 describe('CustomElement', function() {
 
 	before(function() {
 		hawkejs = createHawkejsInstance();
 		hawkejs.parallel_task_limit = 1;
 		hawkejs.addViewDirectory(__dirname + '/templates');
+		Blast = __Protoblast;
+		Bound = Blast.Bound;
 	});
 
 	describe('#retained()', function() {
@@ -552,6 +557,26 @@ describe('CustomElement', function() {
 			has_style = result.html.indexOf('href="/my_styled_button.css"') > -1;
 
 			assert.strictEqual(has_style, true, 'The stylesheet for <my-styled-button> is missing');
+		});
+
+		it('should allow nested custom elements', async function() {
+
+			await setLocation('/custom_element_render_loop');
+
+			let result = await queryElements('render-looper');
+
+			assert.strictEqual(result.length, 2);
+
+			let loop_three = result[0],
+			    loop_one = result[1];
+
+			// The sub custom-elements should be there
+			assert.strictEqual(Bound.String.count(loop_three.html, '<my-button'), 3);
+			assert.strictEqual(Bound.String.count(loop_one.html, '<my-button'), 1);
+
+			// And those sub elements have other custom elements too
+			assert.strictEqual(Bound.String.count(loop_three.html, '<my-text'), 6);
+			assert.strictEqual(Bound.String.count(loop_one.html, '<my-text'), 2);
 		});
 	});
 

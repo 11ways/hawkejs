@@ -238,6 +238,42 @@ global.openHeUrl = async function openHeUrl(path) {
 	return result;
 };
 
+global.queryElements = async function queryElements(selector) {
+
+	let result = await evalPage(function(selector) {
+		let elements = document.querySelectorAll(selector),
+		    result = [];
+
+		for (let i = 0; i < elements.length; i++) {
+			let block = elements[i];
+
+			let entry = {
+				name       : block.dataset.heName,
+				template   : block.dataset.heTemplate,
+				html       : block.outerHTML,
+				text       : block.textContent,
+			};
+
+			result.push(entry);
+		}
+
+		return result;
+	}, selector);
+
+	for (let entry of result) {
+
+		let key;
+
+		for (key in entry) {
+			if (typeof entry[key] == 'string') {
+				entry[key] = entry[key].replace(/\r\n/g, '\n');
+			}
+		}
+	}
+
+	return result;
+};
+
 global.getBlockData = async function getBlockData(name) {
 
 	if (!name) {
