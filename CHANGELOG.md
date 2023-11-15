@@ -8,6 +8,7 @@
 * Make sure getting template sources stay within the allowed paths
 * Automatically set the `force_async` option of the `Hawkejs.series` method to false
 * Use as many Swift pledges as possible
+* Improve performance of enabling styles/scripts in the browser
 
 ## 2.3.14 (2023-10-15)
 
