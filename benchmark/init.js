@@ -2,8 +2,6 @@ var Hawkejs = require('../index.js'),
     hawkejs = new Hawkejs(),
     libpath = require('path');
 
-hawkejs.addViewDirectory(libpath.resolve(__dirname, '..', 'test', 'templates'));
-
 function createTestVariables() {
 	var result = {
 		a: 'a',
@@ -41,6 +39,8 @@ function createTestVariables() {
 
 global.hawkejs = hawkejs;
 global.Hawkejs = Hawkejs;
+
+require('../test/helpers/_load.js')(hawkejs);
 
 module.exports = {
 	Hawkejs   : Hawkejs,

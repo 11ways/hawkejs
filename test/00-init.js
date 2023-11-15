@@ -45,20 +45,7 @@ describe('Hawkejs', function() {
 
 	describe('#addViewDirectory(path, weight)', function() {
 		it('should register a path as a place to get view files from', function() {
-			hawkejs.addViewDirectory(__dirname + '/templates');
-			hawkejs.load(__dirname + '/helpers/assign_test.js');
-			hawkejs.load(__dirname + '/helpers/html_in_constructor.js');
-			hawkejs.load(__dirname + '/helpers/my_button.js');
-			hawkejs.load(__dirname + '/helpers/my_sync_span.js');
-			hawkejs.load(__dirname + '/helpers/my_text.js');
-			hawkejs.load(__dirname + '/helpers/retain_test.js');
-			hawkejs.load(__dirname + '/helpers/html_resolver.js');
-			hawkejs.load(__dirname + '/helpers/render_after_attributes.js');
-			hawkejs.load(__dirname + '/helpers/element_specific_variables.js');
-			hawkejs.load(__dirname + '/helpers/rendered_counter.js');
-			hawkejs.load(__dirname + '/helpers/parent_element_test.js');
-			hawkejs.load(__dirname + '/helpers/error_thrower.js');
-			hawkejs.load(__dirname + '/helpers/nested_template_elements.js');
+			require('./helpers/_load.js')(hawkejs);
 		});
 	});
 
