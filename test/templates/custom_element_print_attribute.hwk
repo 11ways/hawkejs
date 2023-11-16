@@ -1,0 +1,16 @@
+{% extend "base_scene" %}
+
+{% block "main" %}
+
+	{% if rerender %}
+		<print-attribute
+			text="RERENDER"
+			do-rerender="true"
+		></print-attribute>
+		<print-attribute text="Hello Again"></print-attribute>
+	{% else %}
+		<print-attribute text="Hello World"></print-attribute>
+		<print-attribute text="Hello Again"></print-attribute>
+	{% /if %}
+
+{% /block %}

@@ -485,6 +485,12 @@ global.loadBrowser = async function loadBrowser() {
 			renderer.prepare(req, res);
 			renderer.internal('url', url);
 
+			let query = url.query;
+
+			for (let key in query) {
+				renderer.set(key, query[key]);
+			}
+
 			// End stylesheet requests with a generic valid response
 			if (url.pathname.indexOf('.css') > -1) {
 				return res.end('body{color: #101010}');

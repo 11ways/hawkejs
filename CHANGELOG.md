@@ -10,6 +10,7 @@
 * Use as many Swift pledges as possible
 * Improve performance of enabling styles/scripts in the browser
 * Fix performance issue when rendering hundreds of custom elements
+* Fix deadlock when rerendering an element during a render
 
 ## 2.3.14 (2023-10-15)
 

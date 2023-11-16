@@ -1,0 +1,9 @@
+{{ self.text }}
+
+{% if self.do_rerender %}
+	<%
+		self.do_rerender = false;
+		self.text = 'Rerendered';
+		let pledge = self.rerender();
+	%>
+{% /if %}

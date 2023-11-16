@@ -53,7 +53,28 @@ describe('CustomElement', function() {
 			assertEqualHtml(result.html, '<retain-test-one he-rendered="1" data-foo="bar" data-hid="hserverside-2">Contents: bar</retain-test-one>');
 			assert.strictEqual(result.val, 48, 'The assigned my_value property should be 48');
 		});
+	});
 
+	describe('#rerender()', () => {
+		it('should not break rendering', async () => {
+
+			await setLocation('/custom_element_print_attribute');
+
+			let result = await queryElements('print-attribute');
+
+			assert.strictEqual(result.length, 2);
+
+			assert.strictEqual(result[0].text.trim(), 'Hello World');
+			assert.strictEqual(result[1].text.trim(), 'Hello Again');
+
+			await setLocation('/custom_element_print_attribute?rerender=1');
+			result = await queryElements('print-attribute');
+
+			assert.strictEqual(result.length, 2);
+
+			assert.strictEqual(result[0].text.trim(), 'Rerendered');
+			assert.strictEqual(result[1].text.trim(), 'Hello Again');
+		});
 	});
 
 	describe('Inheritance', function() {
