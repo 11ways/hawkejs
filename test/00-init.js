@@ -310,7 +310,7 @@ print(post._id)
 					throw new Error('The created client-file is too small');
 				}
 
-				if (source.indexOf('require.register("hawkejs/client/template') == -1) {
+				if (source.indexOf('"hawkejs/client/template') == -1) {
 					throw new Error('Created client-file does not contain required files');
 				}
 
