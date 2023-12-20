@@ -1,3 +1,7 @@
+## 2.3.16 (WIP)
+
+* Trigger `HePlaceholder` render when made & inserted in the DOM manually
+
 ## 2.3.15 (2023-11-27)
 
 * Cancel previous render when a new one is started of a custom element
