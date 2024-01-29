@@ -2,6 +2,7 @@
 
 * Trigger `HePlaceholder` render when made & inserted in the DOM manually
 * Improve printed error messages during rendering
+* Actually update the `hawkejs.scene.exposed` values after receiving new data from the server
 
 ## 2.3.15 (2023-11-27)
 
