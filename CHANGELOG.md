@@ -1,6 +1,7 @@
 ## 2.3.16 (WIP)
 
 * Trigger `HePlaceholder` render when made & inserted in the DOM manually
+* Improve printed error messages during rendering
 
 ## 2.3.15 (2023-11-27)
 
