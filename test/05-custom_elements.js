@@ -833,6 +833,34 @@ describe('CustomElement', function() {
 		});
 	});
 
+	describe('#prepareRenderVariables()', () => {
+		it('should be called before rendering the template', (done) => {
+
+			let code = `
+				<with-prepared-variables></with-prepared-variables>
+			`;
+
+			var compiled = hawkejs.compile('template_test_with_prepared_variables', code);
+
+			hawkejs.render(compiled, {}, function rendered(err, res) {
+
+				if (err) {
+					throw err;
+				}
+
+				res = res.trim();
+
+				try {
+					assertEqualHtml(res, '<with-prepared-variables he-rendered="1"><table class="main-table"> <thead> <tr> <th>1</th> <th>2</th> <th>3</th> </tr> </thead> </table></with-prepared-variables>');
+				} catch (err) {
+					return done(err);
+				}
+				done();
+			});
+
+		});
+	});
+
 	describe('#rendered()', () => {
 		it('should call back when the element has been rendered', (done) => {
 

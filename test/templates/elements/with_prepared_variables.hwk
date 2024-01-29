@@ -1,0 +1,9 @@
+<table class="main-table">
+	<thead>
+		<tr>
+			{% each numbers as nr %}
+				<th>{{ nr }}</th>
+			{% /each %}
+		</tr>
+	</thead>
+</table>

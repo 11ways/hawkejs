@@ -17,4 +17,5 @@ module.exports = function loadHawkejs(hawkejs) {
 	hawkejs.load(test_base + '/helpers/nested_template_elements.js');
 	hawkejs.load(test_base + '/helpers/render_looper.js');
 	hawkejs.load(test_base + '/helpers/print_attribute.js');
+	hawkejs.load(test_base + '/helpers/with_prepared_variables.js');
 }
