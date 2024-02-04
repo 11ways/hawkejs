@@ -4,6 +4,7 @@
 * Improve printed error messages during rendering
 * Actually update the `hawkejs.scene.exposed` values after receiving new data from the server
 * Fix custom-element render issue with overlaying variable instances
+* Fix setting `value` not working server-side on `<textarea>` elements
 
 ## 2.3.15 (2023-11-27)
 
