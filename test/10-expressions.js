@@ -575,13 +575,13 @@ NO
 			],
 			[
 				`{%
-					if false
-						set my_val = "if"
-					else
-						set my_val = "else"
-					/if
+					if false;
+						set my_val = "if";
+					else;
+						set my_val = "else";
+					/if;
 
-					print(my_val)
+					print(my_val);
 				%}`,
 				'else'
 			],
@@ -784,8 +784,8 @@ This should be a converted variable:
 						**cool**
 					{% /markdown %}
 					{%
-						print('-')
-						print('-')
+						print('-');
+						print('-');
 					%}
 				`,
 				`<span>»123«</span> <p><strong>cool</strong></p> --`

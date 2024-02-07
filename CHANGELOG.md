@@ -6,6 +6,7 @@
 * Fix custom-element render issue with overlaying variable instances
 * Fix setting `value` not working server-side on `<textarea>` elements
 * Add `Renderer#handleError()` method
+* Newlines are no longer an expression delimiter, only semicolons are
 
 ## 2.3.15 (2023-11-27)
 
