@@ -118,11 +118,12 @@ describe('HTMLElement', function() {
 			area.value = 'test';
 			assert.strictEqual(area.value, 'test');
 
-			// Setting a textarea's value breaks the link with the innerText
-			assertEqualHtml(area.innerHTML, 'html');
+			// Even though setting a textarea's value does not change the "innerHTML"
+			// value on the browser, it does on the server
+			assertEqualHtml(area.innerHTML, 'test');
 
 			assertEqualHtml(input.outerHTML, '<input value="test">');
-			assertEqualHtml(area.outerHTML, '<textarea>html</textarea>');
+			assertEqualHtml(area.outerHTML, '<textarea>test</textarea>');
 			assertEqualHtml(div.outerHTML, '<div></div>');
 		});
 	});
