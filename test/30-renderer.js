@@ -2,6 +2,19 @@ var assert   = require('assert'),
     Hawkejs  = require('../index.js'),
     hawkejs;
 
+const Blast = __Protoblast;
+
+const RENDER = (done, ...render_args) => {
+	let callback = render_args.pop();
+	return hawkejs.render(...render_args, (...args) => {
+		try {
+			callback(...args);
+		} catch (err) {
+			done(err);
+		}
+	});
+}
+
 describe('Renderer', function() {
 
 	before(function() {
@@ -23,7 +36,7 @@ describe('Renderer', function() {
 
 			var compiled = hawkejs.compile('async_test_1', code);
 
-			hawkejs.render(compiled, {}, function rendered(err, res) {
+			RENDER(done, compiled, {}, function rendered(err, res) {
 
 				if (err) {
 					throw err;
@@ -40,7 +53,7 @@ describe('Renderer', function() {
 	describe('#assign(name)', function() {
 		it('sets the wanted block content', function(done) {
 
-			hawkejs.render('assign_test', function doneAssignTest(err, result) {
+			RENDER(done, 'assign_test', function doneAssignTest(err, result) {
 
 				if (err) {
 					throw err;
@@ -59,7 +72,7 @@ This is the internally set main
 
 	describe('#assign_end()', function() {
 		it('should claim the siblings', function(done) {
-			hawkejs.render('assign_end', function doneAssignTest(err, result) {
+			RENDER(done, 'assign_end', function doneAssignTest(err, result) {
 
 				if (err) {
 					throw err;
@@ -74,7 +87,7 @@ This is the internally set main
 
 	describe('#expands(template)', function() {
 		it('expands into the given template', function(done) {
-			hawkejs.render('expand_test', function doneExpandTest(err, result) {
+			RENDER(done, 'expand_test', function doneExpandTest(err, result) {
 
 				if (err) {
 					throw err;
@@ -93,7 +106,7 @@ This is the main content
 
 		it('should be possible to use the {% extend %} expression instead', function(done) {
 
-			hawkejs.render('extend_test', function doneExpandTest(err, result) {
+			RENDER(done, 'extend_test', function doneExpandTest(err, result) {
 
 				if (err) {
 					throw err;
@@ -115,7 +128,7 @@ This is the main content
 	describe('#start(name, options)', function() {
 		it('should add block classes if given', function(done) {
 
-			hawkejs.render('assign_test_class', function doneExpandTest(err, result) {
+			RENDER(done, 'assign_test_class', function doneExpandTest(err, result) {
 
 				if (err) {
 					throw err;
@@ -128,9 +141,50 @@ This is the main content
 		});
 	});
 
+	describe('#addSubTemplate(template, options)', () => {
+		it('should correctly convert the variables', (done) => {
+
+			let CloneTestClass = Blast.Collection.Function.inherits(null, function CloneTestClass(value) {
+				this.value = value;
+			});
+
+			CloneTestClass.setMethod(function toHawkejs() {
+				return new CloneTestClass(this.value + '!!!');
+			});
+
+			let value = new CloneTestClass('test');
+
+			let renderer = hawkejs.createRenderer();
+			renderer.set('test_instance', value);
+
+			let source = `The value is: "<%= test_instance.value %>"`;
+
+			let compiled = hawkejs.compile(source);
+			let placeholder = renderer.addSubtemplate(compiled, {print: false});
+
+			//let cloned = Blast.Bound.JSON.clone(value, 'toHawkejs')
+
+			placeholder.getContent(function gotContent(err, block_buffer) {
+
+				if (err) {
+					return done(err);
+				}
+
+				try {
+					assert.strictEqual(block_buffer.toHTML(), 'The value is: "test!!!"');
+				} catch (err) {
+					return done(err);
+				}
+
+				done();
+			});
+
+		});
+	});
+
 	describe('#implement(name)', function() {
 		it('should print the given element', function(done) {
-			hawkejs.render('implement_test', function doneImplement(err, result) {
+			RENDER(done, 'implement_test', function doneImplement(err, result) {
 
 				if (err) {
 					throw err;
@@ -142,7 +196,7 @@ This is the main content
 		});
 
 		it('should include assignments', function(done) {
-			hawkejs.render('implement_blocks', function doneImplement(err, result) {
+			RENDER(done, 'implement_blocks', function doneImplement(err, result) {
 
 				if (err) {
 					throw err;
@@ -157,7 +211,7 @@ This is the main content
 		});
 
 		it('should work on assignments', function(done) {
-			hawkejs.render('expand_start_implement_assign', function doneImplement(err, result) {
+			RENDER(done, 'expand_start_implement_assign', function doneImplement(err, result) {
 
 				if (err) {
 					throw err;
@@ -175,7 +229,7 @@ This is the main content
 
 	describe('#include(name)', function() {
 		it('should only be executed if in a used block', function(done) {
-			hawkejs.render('expand_start_include_assign', function doneImplement(err, result) {
+			RENDER(done, 'expand_start_include_assign', function doneImplement(err, result) {
 
 				if (err) {
 					throw err;
@@ -192,7 +246,7 @@ This is the main content
 
 		it('should set the correct ancestor element', function(done) {
 
-			hawkejs.render('include_parent_test', function doneImplement(err, result) {
+			RENDER(done, 'include_parent_test', function doneImplement(err, result) {
 
 				if (err) {
 					throw err;
@@ -213,7 +267,7 @@ This is the main content
 				count : 0,
 			};
 
-			hawkejs.render('include_with_variables', root_variables, function doneImplement(err, result) {
+			RENDER(done, 'include_with_variables', root_variables, function doneImplement(err, result) {
 
 				if (err) {
 					throw err;
@@ -255,7 +309,7 @@ This is the main content
 
 	describe('#partial(name)', function() {
 		it('should render a partial in a new scope', function(done) {
-			hawkejs.render('print_partial', function donePartial(err, result) {
+			RENDER(done, 'print_partial', function donePartial(err, result) {
 
 				if (err) {
 					throw err;
@@ -277,7 +331,7 @@ This is the main content
 		});
 
 		it('should allow using scoped blocks with implements', function(done) {
-			hawkejs.render('partial_with_implements', function donePartial(err, result) {
+			RENDER(done, 'partial_with_implements', function donePartial(err, result) {
 
 				if (err) {
 					throw err;
@@ -293,7 +347,7 @@ This is the main content
 
 	describe('Template#switchTemplate(name, variables)', function() {
 		it('should allow using scoped blocks that switch target blocks', function(done) {
-			hawkejs.render('partial_with_switch_template', function donePartial(err, result) {
+			RENDER(done, 'partial_with_switch_template', function donePartial(err, result) {
 
 				if (err) {
 					throw err;
@@ -307,7 +361,7 @@ This is the main content
 		});
 
 		it('should allow switching to another template in the start template', function(done) {
-			hawkejs.render('partial_with_root_switch_and_implement', function donePartial(err, result) {
+			RENDER(done, 'partial_with_root_switch_and_implement', function donePartial(err, result) {
 
 				if (err) {
 					throw err;
@@ -322,7 +376,7 @@ This is the main content
 	describe('#foundation()', function() {
 		it('should not wait for placeholders that are waiting for itself', function(done) {
 
-			let renderer = hawkejs.render('implement_with_foundation_extension', function doneImplement(err, result) {
+			let renderer = RENDER(done, 'implement_with_foundation_extension', function doneImplement(err, result) {
 
 				if (err) {
 					return done(err);
@@ -356,7 +410,7 @@ This is the main content
 	describe('#setTheme(name)', function() {
 		it('should set the theme to use for partials', function(done) {
 
-			let renderer = hawkejs.render('implement_blocks', function doneImplement(err, result) {
+			let renderer = RENDER(done, 'implement_blocks', function doneImplement(err, result) {
 
 				if (err) {
 					throw err;
@@ -371,7 +425,7 @@ This is the main content
 
 		it('should set the theme to use for extensions', function(done) {
 
-			let renderer = hawkejs.render('expand_test', function doneImplement(err, result) {
+			let renderer = RENDER(done, 'expand_test', function doneImplement(err, result) {
 
 				if (err) {
 					throw err;
@@ -388,7 +442,7 @@ This is the main content
 	describe('#$0', function() {
 		it('is a local property that refers to the current element', function(done) {
 
-			let renderer = hawkejs.render('local_property_test', function doneTest(err, result) {
+			let renderer = RENDER(done, 'local_property_test', function doneTest(err, result) {
 
 				if (err) {
 					throw err;
@@ -412,7 +466,7 @@ This is the main content
 
 	describe('#style()', function() {
 		it('should add stylesheet elements', function(done) {
-			hawkejs.render('style_test', function doneImplement(err, result) {
+			RENDER(done, 'style_test', function doneImplement(err, result) {
 
 				if (err) {
 					throw err;

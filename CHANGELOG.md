@@ -7,6 +7,7 @@
 * Fix setting `value` not working server-side on `<textarea>` elements
 * Add `Renderer#handleError()` method
 * Newlines are no longer an expression delimiter, only semicolons are
+* Fix `Renderer#addSubtemplate(template, variables)` not preparing variables properly
 
 ## 2.3.15 (2023-11-27)
 
