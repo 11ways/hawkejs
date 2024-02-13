@@ -3,6 +3,7 @@ var assert   = require('assert'),
     hawkejs;
 
 const Blast = __Protoblast;
+let CloneTestClass;
 
 const RENDER = (done, ...render_args) => {
 	let callback = render_args.pop();
@@ -21,6 +22,14 @@ describe('Renderer', function() {
 		hawkejs = createHawkejsInstance();
 		hawkejs.parallel_task_limit = 1;
 		hawkejs.addViewDirectory(__dirname + '/templates');
+
+		CloneTestClass = Blast.Collection.Function.inherits(null, function CloneTestClass(value) {
+			this.value = value;
+		});
+
+		CloneTestClass.setMethod(function toHawkejs() {
+			return new CloneTestClass('!!!' + this.value + '!!!');
+		});
 	});
 
 	describe('#async(fnc)', function() {
@@ -47,6 +56,62 @@ describe('Renderer', function() {
 				assert.strictEqual(res, 'text');
 				done();
 			});
+		});
+
+		it('should correctly serialize variables', function(done) {
+
+			let value = new CloneTestClass('value_to_clone');
+
+			let source = `<% this.doAsyncTest() %>`;
+			let compiled = hawkejs.compile(source);
+
+			let renderer = RENDER(done, compiled, {bla: value}, function finished(err, html) {
+
+				if (err) {
+					throw err;
+				}
+
+				assert.strictEqual(html, 'The value is: "!!!value_to_clone!!!"');
+
+				let dried = Blast.Bound.JSON.dry(renderer);
+
+				let has_cloned_value = dried.indexOf('"!!!value_to_clone!!!"') > -1;
+				let has_uncloned_value = dried.indexOf('"value_to_clone"') > -1;
+
+				assert.strictEqual(has_uncloned_value, false, 'The uncloned value was found in the serialized Renderer');
+				assert.strictEqual(has_cloned_value, true, 'The cloned value was not found in the serialized Renderer');
+
+				done();
+			});
+
+			renderer.set('unused', value);
+
+			renderer.doAsyncTest = function doAsyncTest() {
+
+				return this.async((next) => {
+					let source = `The value is: "<%= test_instance.value %>"`;
+					let compiled = hawkejs.compile(source);
+
+					let other_renderer = renderer.createSubRenderer();
+					other_renderer.set('test_instance', value);
+					other_renderer.set('test_instance_2', value);
+
+					let placeholder = other_renderer.addSubtemplate(compiled, {print: false});
+
+					placeholder.getContent((err, block) => {
+
+						if (err) {
+							return next(err);
+						}
+
+						try {
+							next(null, Blast.Bound.JSON.clone(block, 'toHawkejs'));
+						} catch (err) {
+							next(err);
+						}
+					});
+				});
+			};
 		});
 	});
 
@@ -144,23 +209,19 @@ This is the main content
 	describe('#addSubTemplate(template, options)', () => {
 		it('should correctly convert the variables', (done) => {
 
-			let CloneTestClass = Blast.Collection.Function.inherits(null, function CloneTestClass(value) {
-				this.value = value;
-			});
-
-			CloneTestClass.setMethod(function toHawkejs() {
-				return new CloneTestClass('!!!' + this.value + '!!!');
-			});
-
 			let value = new CloneTestClass('value_to_clone');
 
 			let renderer = hawkejs.createRenderer();
 			renderer.set('test_instance', value);
+			renderer.set('test_instance_2', value);
+
+			let sub_renderer = renderer.createSubRenderer();
+			sub_renderer.set('test_instance', value);
 
 			let source = `The value is: "<%= test_instance.value %>"`;
 
 			let compiled = hawkejs.compile(source);
-			let placeholder = renderer.addSubtemplate(compiled, {print: false});
+			let placeholder = sub_renderer.addSubtemplate(compiled, {print: false});
 
 			//let cloned = Blast.Bound.JSON.clone(value, 'toHawkejs')
 
@@ -171,7 +232,17 @@ This is the main content
 				}
 
 				try {
+
+					let dried = Blast.Bound.JSON.dry(block_buffer);
+
+					let has_cloned_value = dried.indexOf('"!!!value_to_clone!!!"') > -1;
+					let has_uncloned_value = dried.indexOf('"value_to_clone"') > -1;
+
+					assert.strictEqual(has_uncloned_value, false, 'The uncloned value was found in the serialized BlockBuffer');
+					assert.strictEqual(has_cloned_value, true, 'The cloned value was not found in the serialized BlockBuffer');
+
 					assert.strictEqual(block_buffer.toHTML(), 'The value is: "!!!value_to_clone!!!"');
+
 				} catch (err) {
 					return done(err);
 				}
@@ -181,24 +252,47 @@ This is the main content
 
 			async function testFoundation() {
 
+				let dried = Blast.Bound.JSON.dry(renderer);
+
+				let has_cloned_value = dried.indexOf('"!!!value_to_clone!!!"') > -1;
+				let has_uncloned_value = dried.indexOf('"value_to_clone"') > -1;
+
+				try {
+					assert.strictEqual(has_uncloned_value, false, 'The uncloned value was found in the serialized Renderer');
+					assert.strictEqual(has_cloned_value, true, 'The cloned value was not found in the serialized Renderer');
+				} catch (err) {
+					return done(err);
+				}
+
+				dried = Blast.Bound.JSON.dry(sub_renderer);
+
+				has_cloned_value = dried.indexOf('"!!!value_to_clone!!!"') > -1;
+				has_uncloned_value = dried.indexOf('"value_to_clone"') > -1;
+
+				try {
+					assert.strictEqual(has_uncloned_value, false, 'The uncloned value was found in the serialized sub-Renderer');
+					assert.strictEqual(has_cloned_value, true, 'The cloned value was not found in the serialized sub-Renderer');
+				} catch (err) {
+					return done(err);
+				}
+
 				let foundation = renderer.foundation();
 
 				let content = await foundation.getContent();
 				//console.log('Content:', content)
 
-				let has_cloned_value = content.indexOf('"!!!value_to_clone!!!"') > -1;
-				let has_uncloned_value = content.indexOf('"value_to_clone"') > -1;
+				has_cloned_value = content.indexOf('"!!!value_to_clone!!!"') > -1;
+				has_uncloned_value = content.indexOf('"value_to_clone"') > -1;
 
 				try {
-					assert.strictEqual(has_cloned_value, true, 'The cloned value was not found in the content');
-					assert.strictEqual(has_uncloned_value, false, 'The uncloned value was found in the content');
+					assert.strictEqual(has_uncloned_value, false, 'The uncloned value was found in the foundation content');
+					assert.strictEqual(has_cloned_value, true, 'The cloned value was not found in the foundation content');
 				} catch (err) {
 					return done(err);
 				}
 
 				done();
 			}
-
 		});
 	});
 
