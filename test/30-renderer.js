@@ -149,10 +149,10 @@ This is the main content
 			});
 
 			CloneTestClass.setMethod(function toHawkejs() {
-				return new CloneTestClass(this.value + '!!!');
+				return new CloneTestClass('!!!' + this.value + '!!!');
 			});
 
-			let value = new CloneTestClass('test');
+			let value = new CloneTestClass('value_to_clone');
 
 			let renderer = hawkejs.createRenderer();
 			renderer.set('test_instance', value);
@@ -171,13 +171,33 @@ This is the main content
 				}
 
 				try {
-					assert.strictEqual(block_buffer.toHTML(), 'The value is: "test!!!"');
+					assert.strictEqual(block_buffer.toHTML(), 'The value is: "!!!value_to_clone!!!"');
+				} catch (err) {
+					return done(err);
+				}
+
+				testFoundation();
+			});
+
+			async function testFoundation() {
+
+				let foundation = renderer.foundation();
+
+				let content = await foundation.getContent();
+				//console.log('Content:', content)
+
+				let has_cloned_value = content.indexOf('"!!!value_to_clone!!!"') > -1;
+				let has_uncloned_value = content.indexOf('"value_to_clone"') > -1;
+
+				try {
+					assert.strictEqual(has_cloned_value, true, 'The cloned value was not found in the content');
+					assert.strictEqual(has_uncloned_value, false, 'The uncloned value was found in the content');
 				} catch (err) {
 					return done(err);
 				}
 
 				done();
-			});
+			}
 
 		});
 	});
