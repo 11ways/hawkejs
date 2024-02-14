@@ -405,8 +405,10 @@ describe('HTMLElement', function() {
 			var renderer = hawkejs.renderToElements(template, {}, function finished(err, elements) {
 
 				if (err) {
-					throw err;
+					return done(err);
 				}
+
+				try {
 
 				let element = elements[0];
 
@@ -451,6 +453,10 @@ describe('HTMLElement', function() {
 				assert.strictEqual(odd_rows[3].id, 'tr7');
 
 				done();
+
+				} catch(err) {
+					done(err);
+				}
 			});
 		});
 	});
