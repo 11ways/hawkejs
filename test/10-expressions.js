@@ -839,6 +839,22 @@ This should be a converted variable:
 				`<%= is_null ?? my_obj?.a %>`,
 				`a`
 			],
+			[
+				`<% obj = {[str_bla]: test.name} %><%= obj.bla %>`,
+				`testname`
+			],
+			[
+				`<% obj = {str_bla: test.name} %><%= obj.bla %>`,
+				``
+			],
+			[
+				`<% obj = {str_bla: test.name} %><%= obj.str_bla %>`,
+				`testname`
+			],
+			[
+				`<% obj = {[str_bla]: test.name, [my_obj.a]: "test", ["__" + my_obj.a]: "a2", [my_obj.c + '_' + my_obj.a]: 9} %><%= JSON.stringify(obj) %>`,
+				`{"bla":"testname","a":"test","__a":"a2","c_a":9}`
+			],
 		];
 
 		createTests(tests);
@@ -1020,7 +1036,12 @@ function createTests(tests) {
 					return next(err);
 				}
 
-				assertEqualHtml(res, result);
+				try {
+					assertEqualHtml(res, result);
+				} catch (e) {
+					return next(e);
+				}
+
 				next();
 			});
 		});
