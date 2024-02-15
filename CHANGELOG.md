@@ -1,3 +1,7 @@
+## 2.3.17 (WIP)
+
+* Fix optional chaining not working in EJS code
+
 ## 2.3.16 (2024-02-15)
 
 * Trigger `HePlaceholder` render when made & inserted in the DOM manually

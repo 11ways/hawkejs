@@ -820,6 +820,30 @@ This should be a converted variable:
 
 	});
 
+	describe('EJS', function() {
+
+		let tests = [
+			[
+				`<% if (bla?.bla?.bla) { %>BLA<% } else { %>NO BLA<% } %>`,
+				`NO BLA`
+			],
+			[
+				`<%= test?.two?.three?.four %>`,
+				`4`
+			],
+			[
+				`<%= test?.two?.doesnotexist ?? my_obj?.a %>`,
+				`a`
+			],
+			[
+				`<%= is_null ?? my_obj?.a %>`,
+				`a`
+			],
+		];
+
+		createTests(tests);
+	});
+
 	return;
 
 	describe('None existing method calls', function() {
@@ -871,6 +895,7 @@ function createTests(tests) {
 				__test    : {nested: {value: 'test'}},
 				c         : 'c',
 				str_bla   : 'bla',
+				is_null   : null,
 				empty_arr : [],
 				full_arr  : [0],
 				single    : [0],
