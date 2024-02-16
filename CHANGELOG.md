@@ -2,6 +2,8 @@
 
 * Fix optional chaining not working in EJS code
 * Use original slot elements when re-rendering a custom element
+* Set `data-he-rerendering` attribute while rerendering a custom element
+* Make custom element keep width & height while rerendering
 
 ## 2.3.16 (2024-02-15)
 
