@@ -239,6 +239,28 @@ describe('HTMLElement', function() {
 			div.removeAttribute('id');
 			assertEqualHtml(div.outerHTML, '<div></div>');
 		});
+
+		it('should also work with data attributes', function() {
+
+			var div = Hawkejs.Hawkejs.createElement('div');
+
+			assert.strictEqual(div.hasAttribute('data-test'), false);
+			div.setAttribute('data-test', '');
+			assert.strictEqual(div.hasAttribute('data-test'), true);
+
+			assertEqualHtml(div.outerHTML, '<div data-test></div>');
+
+			div.removeAttribute('data-test');
+			assertEqualHtml(div.outerHTML, '<div></div>');
+
+			div.setAttribute('data-he-test', '');
+			assert.strictEqual(div.hasAttribute('data-he-test'), true);
+
+			div.setAttribute('data-he-test', '1');
+			assert.strictEqual(div.hasAttribute('data-he-test'), true);
+
+			assert.strictEqual(div.dataset.heTest, '1');
+		});
 	});
 
 	describe('#setAttribute(name, value)', function() {
@@ -250,6 +272,23 @@ describe('HTMLElement', function() {
 			div = Hawkejs.Hawkejs.createElement('div');
 			div.setAttribute('data-test', 'my "value"');
 			assertEqualHtml(div.outerHTML, `<div data-test="my &quot;value&quot;"></div>`);
+		});
+	});
+
+	describe('#removeAttribute(name)', function() {
+		it('should remove data attributes too', () => {
+
+			let div = Hawkejs.Hawkejs.createElement('div');
+
+			div.setAttribute('data-bla', '');
+			div.removeAttribute('data-bla');
+			assertEqualHtml(div.outerHTML, `<div></div>`);
+
+			div = Hawkejs.Hawkejs.createElement('div');
+			div.setAttribute('data-he-bla', '');
+			div.removeAttribute('data-he-bla');
+
+			assertEqualHtml(div.outerHTML, `<div></div>`);
 		});
 	});
 
