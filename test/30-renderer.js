@@ -668,6 +668,18 @@ This is the main content
 		});
 	});
 
+	describe('#makeDialog()', () => {
+		it('should create dialogs', async () => {
+
+			let renderer = hawkejs.createRenderer();
+
+			let html = await renderer.renderHTML('render_dialog_with_custom_element');
+			html = despace(html);
+
+			assertEqualHtml(html, `<print-attribute text="Hello World" he-rendered="1">Hello World </print-attribute>`);
+		});
+	});
+
 	describe('#renderHTML()', function() {
 
 		let devices = [

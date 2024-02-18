@@ -5,6 +5,7 @@
 * Set `data-he-rerendering` attribute while rerendering a custom element
 * Make custom element keep width & height while rerendering
 * Fix server-side `HTMLElement#removeAttribute()` not removing dataset attributes with dashes
+* Make custom elements use a new renderer scope when it's being rendered in a dialog
 
 ## 2.3.16 (2024-02-15)
 

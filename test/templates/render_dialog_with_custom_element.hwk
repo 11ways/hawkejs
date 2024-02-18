@@ -1,0 +1,4 @@
+<% makeDialog() %>
+<% addClass('test-dialog-class') %>
+
+<print-attribute text="Hello World"></print-attribute>
