@@ -1,4 +1,4 @@
-## 2.3.17 (WIP)
+## 2.3.17 (2024-02-19)
 
 * Fix optional chaining not working in EJS code
 * Use original slot elements when re-rendering a custom element
