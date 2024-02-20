@@ -1,3 +1,7 @@
+## 2.3.18 (WIP)
+
+* Add `setGlobal`, `getGlobal` and `hasGlobal` methods to the `Hawkejs` class, for setting "global" variables that are available to all templates
+
 ## 2.3.17 (2024-02-19)
 
 * Fix optional chaining not working in EJS code
