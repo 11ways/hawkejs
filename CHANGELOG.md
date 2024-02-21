@@ -2,6 +2,7 @@
 
 * Add `setGlobal`, `getGlobal` and `hasGlobal` methods to the `Hawkejs` class, for setting "global" variables that are available to all templates
 * Allow Hawkejs syntax operators to be uppercased
+* Allow `Hawkejs.RESULT` properties to be functions
 
 ## 2.3.17 (2024-02-19)
 
