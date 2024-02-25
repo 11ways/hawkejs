@@ -1,4 +1,4 @@
-## 2.3.18 (WIP)
+## 2.3.18 (2024-02-25)
 
 * Add `setGlobal`, `getGlobal` and `hasGlobal` methods to the `Hawkejs` class, for setting "global" variables that are available to all templates
 * Allow Hawkejs syntax operators to be uppercased
