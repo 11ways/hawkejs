@@ -5,6 +5,7 @@
 * Allow `Hawkejs.RESULT` properties to be functions
 * Add `Element.setStylesheetHandler(fnc)` to add custom stylesheet handling of custom elements
 * Don't apply the custom-element options twice when a sync render is requested
+* Support all form submission methods
 
 ## 2.3.17 (2024-02-19)
 
