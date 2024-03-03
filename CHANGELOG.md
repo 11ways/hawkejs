@@ -1,3 +1,7 @@
+## 2.3.19 (WIP)
+
+* Fix setting `value` property on a `<select>` item not changing the selected option
+
 ## 2.3.18 (2024-02-25)
 
 * Add `setGlobal`, `getGlobal` and `hasGlobal` methods to the `Hawkejs` class, for setting "global" variables that are available to all templates
