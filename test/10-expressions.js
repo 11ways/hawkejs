@@ -445,6 +445,42 @@ NO
 			[
 				`{% each entries as entry %}<a href="#{% entry.id %}">{{ entry.title }}</a>{% /each %}`,
 				`<a href="#a">A</a>`
+			],
+			[
+				`{% each iterators.custom_list as entry %}{{ entry }}{% /each %}`,
+				`ABC`,
+			],
+			[
+				`{% each iterators.set_list as entry %}{{ entry }}{% /each %}`,
+				`ABC`,
+			],
+			[
+				`{% each iterators.simple_map as entry %}{{ entry }}{% /each %}`,
+				`ABC`,
+			],
+			[
+				`{% each iterators.simple_map as key, entry %}{{ key}}{{ entry }}{% /each %}`,
+				`aAbBcC`,
+			],
+			[
+				`{% each iterators.my_deck as value %}{{ value }}{% /each %}`,
+				`XYZ`,
+			],
+			[
+				`{% each iterators.my_deck as key, value %}{{key}}{{ value }}{% /each %}`,
+				`xXyY_pushed_2Z`,
+			],
+			[
+				`{% each iterators.simple_map as key, value where value eq "C" %}{{key}}{{ value }}{% /each %}`,
+				`cC`,
+			],
+			[
+				`{% each iterators.simple_map as key, value where key eq "a" and value eq "C" %}{{key}}{{ value }}{% /each %}`,
+				``,
+			],
+			[
+				`{% each iterators.simple_map as key, value where key eq "a" or value eq "C" %}{{key}}{{ value }}{% /each %}`,
+				`aAcC`,
 			]
 		];
 
@@ -599,7 +635,7 @@ NO
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_161">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_170">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
@@ -873,6 +909,24 @@ This should be a converted variable:
 });
 
 function createTests(tests) {
+
+	const CustomList = function CustomList(records) {
+		this.should_not_be_visible = 'nope';
+		this.records = records;
+	};
+	CustomList.prototype[Symbol.iterator] = function* iterate() {
+		var i;
+
+		for (i = 0; i < this.records.length; i++) {
+			yield this.records[i];
+		}
+	};
+
+	let my_deck = new __Protoblast.Classes.Deck();
+	my_deck.set('x', 'X');
+	my_deck.set('y', 'Y');
+	my_deck.push('Z');
+
 	for (let i = 0; i < tests.length; i++) {
 
 		let template,
@@ -1000,6 +1054,12 @@ function createTests(tests) {
 				entries: [
 					{id: 'a', title: 'A'}
 				],
+				iterators: {
+					custom_list: new CustomList(['A', 'B', 'C']),
+					set_list: new Set(['A', 'B', 'C']),
+					simple_map: new Map([['a', 'A'], ['b', 'B'], ['c', 'C']]),
+					my_deck,
+				},
 			};
 
 			vars.show = function show(options, two) {
