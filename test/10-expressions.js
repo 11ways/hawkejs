@@ -302,6 +302,10 @@ describe('Expressions', function() {
 
 		var tests = [
 			[
+				`{% with str_bla.split('') as c %}{% each %}{{c}}-{% /each %}{% /with %}`,
+				'b-l-a-',
+			],
+			[
 				`{% with numbers as number %}{% multiple %}{% each %}{%= number %},{% /each %}{% /multiple %}{% /with %}`,
 				'0,1,2,3,'
 			],
@@ -409,6 +413,10 @@ NO
 	describe('Each ... as', function() {
 
 		var tests = [
+			[
+				`{% each str_bla.split('') as c %}{{c}}-{% /each %}`,
+				'b-l-a-',
+			],
 			[
 				`{% each people as key, person %}{%= person.name %},{% /each %}`,
 				`Jelle,Roel,Griet,Patrick,Voltorb,`
@@ -635,7 +643,7 @@ NO
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_170">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_172">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
