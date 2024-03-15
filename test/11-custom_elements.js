@@ -660,6 +660,30 @@ describe('CustomElement', function() {
 		});
 	});
 
+	describe('.addElementGetter(name, selector)', () => {
+		it('should return the correct element', async () => {
+
+			let custom_element = Hawkejs.Hawkejs.createElement('my-sync-span');
+			await custom_element.rerender();
+
+			assert.strictEqual(custom_element.innerHTML, '<span class="test">Test this sync template!</span>');
+
+			let main_span = custom_element.main_span;
+
+			assert.strictEqual(main_span.tagName, 'SPAN');
+
+			main_span.textContent = 'Changed!';
+
+			assert.strictEqual(custom_element.innerHTML, '<span class="test">Changed!</span>');
+
+			await custom_element.rerender();
+			assert.strictEqual(custom_element.innerHTML, '<span class="test">Test this sync template!</span>');
+
+			main_span = custom_element.main_span;
+			assert.strictEqual(main_span.innerHTML, 'Test this sync template!');
+		});
+	});
+
 	describe('#rendered()', () => {
 		it('should call back when the element has been rendered', (done) => {
 

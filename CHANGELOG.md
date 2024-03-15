@@ -4,6 +4,7 @@
 * Make the `each` expression handle `Map`-like instances correctly
 * Fix `each` expression not supporting function calls
 * Don't render manually created custom element on initial attachment to the DOM if it has already been manually rendered
+* Clear `addElementGetter` and `addElementsGetter` cache when rendering
 
 ## 2.3.18 (2024-02-25)
 
