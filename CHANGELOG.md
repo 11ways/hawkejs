@@ -1,4 +1,4 @@
-## 2.3.19 (WIP)
+## 2.3.19 (2024-04-13)
 
 * Fix setting `value` property on a `<select>` item not changing the selected option
 * Make the `each` expression handle `Map`-like instances correctly
