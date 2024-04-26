@@ -1,4 +1,4 @@
-## 2.3.20 (WIP)
+## 2.4.0 (WIP)
 
 * Use shorter compiled function body ids when not on development environment
 
