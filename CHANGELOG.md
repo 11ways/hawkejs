@@ -1,3 +1,7 @@
+## 2.3.20 (WIP)
+
+* Use shorter compiled function body ids when not on development environment
+
 ## 2.3.19 (2024-04-13)
 
 * Fix setting `value` property on a `<select>` item not changing the selected option
