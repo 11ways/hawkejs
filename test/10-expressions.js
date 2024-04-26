@@ -3,9 +3,12 @@ var assert   = require('assert'),
     hawkejs,
     test_id = 0;
 
+let Blast;
+
 describe('Expressions', function() {
 
 	before(function() {
+		Blast = __Protoblast;
 		hawkejs = createHawkejsInstance();
 		hawkejs.parallel_task_limit = 1;
 		hawkejs.addViewDirectory(__dirname + '/templates');
@@ -61,7 +64,9 @@ describe('Expressions', function() {
 			['{% if success %}SUCCESS{% /if %}', 'SUCCESS'],
 			['{% if success %}SUCCESS{% else %}NOPE{% /if %}', 'SUCCESS'],
 			['{% if error %}ERR{% /if %}', 'ERR'],
-			['{% if my_obj.c eq "a" or my_obj.b eq "a" %}ERR{% elseif my_obj.a eq "a" and my_obj.b eq "b" %}AB{% else %}ERRTOO{% /if %}', 'AB']
+			['{% if my_obj.c eq "a" or my_obj.b eq "a" %}ERR{% elseif my_obj.a eq "a" and my_obj.b eq "b" %}AB{% else %}ERRTOO{% /if %}', 'AB'],
+			['{% if opt_str %}{{ opt_str }}{% /if %}', 'truthy'],
+			['{% if opt_empty %}OOPS{% /if %}', ''],
 			// @TODO: ['{% if 1 emptyhtml %}WRONG{% /if %}', ''],
 		];
 
@@ -643,7 +648,7 @@ NO
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_172">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_174">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
@@ -983,6 +988,8 @@ function createTests(tests) {
 				success   : true,
 				error     : new Error('Some error'),
 				stuff     : 'stuff',
+				opt_str   : new Blast.Classes.Develry.Optional('truthy'),
+				opt_empty : new Blast.Classes.Develry.Optional(),
 				my_obj    : {
 					a: 'a',
 					b: 'b',

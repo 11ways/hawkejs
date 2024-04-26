@@ -1,6 +1,7 @@
 ## 2.4.0 (WIP)
 
 * Use shorter compiled function body ids when not on development environment
+* Add basic `Optional` value-wrapper class support
 
 ## 2.3.19 (2024-04-13)
 
