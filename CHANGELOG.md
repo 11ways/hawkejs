@@ -4,6 +4,7 @@
 * Add basic `Optional` value-wrapper class support
 * Make sure variables are always cast to a `Variables` instance
 * Add `Variables#get(key)` & `Variables#setFromTemplate(key, value)` method
+* Don't let `Hawkejs.doNextSync(promise)` swallow errors
 
 ## 2.3.19 (2024-04-13)
 
