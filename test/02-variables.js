@@ -28,7 +28,7 @@ describe('Variables', () => {
 		it('should allow variables to be set via a setter', () => {
 
 			let vars = renderer.prepareVariables({});
-			vars.bla = 47;
+			vars.getProxy().bla = 47;
 
 			assert.strictEqual(vars.get('bla'), 47);
 		});
@@ -39,8 +39,8 @@ describe('Variables', () => {
 			let vars = renderer.prepareVariables({alpha: 47, beta: 100});
 			assert.strictEqual(vars.length, 2);
 
-			vars.beta = 48;
-			vars.gamma = 49;
+			vars.getProxy().beta = 48;
+			vars.getProxy().gamma = 49;
 			assert.strictEqual(vars.length, 3);
 		});
 
@@ -51,7 +51,7 @@ describe('Variables', () => {
 
 			assert.strictEqual(overlay.length, 1);
 
-			overlay.alpha = 47;
+			overlay.getProxy().alpha = 47;
 			assert.strictEqual(overlay.length, 2);
 		});
 	});
