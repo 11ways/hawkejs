@@ -904,6 +904,10 @@ This should be a converted variable:
 				`<% obj = {[str_bla]: test.name, [my_obj.a]: "test", ["__" + my_obj.a]: "a2", [my_obj.c + '_' + my_obj.a]: 9} %><%= JSON.stringify(obj) %>`,
 				`{"bla":"testname","a":"test","__a":"a2","c_a":9}`
 			],
+			[
+				`<% i = 1 %><% i++ %><% i+=1 %><% i*=2 %><% i|=402 %><%= i /* 406 */ %><% i-- %><% i**=2 %>,<%= i /* 164025 */ %><% i >>>= 1 %>,<%= i /* 82012 */ %>`,
+				`406,164025,82012`
+			]
 		];
 
 		createTests(tests);
