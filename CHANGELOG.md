@@ -2,6 +2,7 @@
 
 * Use shorter compiled function body ids when not on development environment
 * Add basic `Optional` value-wrapper class support
+* Make sure variables are always cast to a `Variables` instance
 
 ## 2.3.19 (2024-04-13)
 
