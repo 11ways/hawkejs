@@ -405,15 +405,44 @@ describe('HTMLElement', function() {
 
 		it('should correctly serialize Hawkejs.RESULT entries', function(done) {
 
-			var renderer = hawkejs.render('generic_rhc', {}, function _done(err, html) {
+			__Protoblast.Bound.Function.parallel((done) => {
+				let renderer = hawkejs.render('generic_rhc', {}, function _done(err, html) {
 
-				if (err) {
-					throw err;
-				}
+					if (err) {
+						return done(err);
+					}
 
-				assertEqualHtml(html, '<x-text>hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>');
-				done();
-			});
+					try {
+						assertEqualHtml(html, '<x-text>hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>');
+					} catch (err) {
+						return done(err);
+					}
+
+					done();
+				});
+			}, (done) => {
+
+				let renderer = hawkejs.render('generic_rhc_based', {}, function _done(err, html) {
+
+					if (err) {
+						return done(err);
+					}
+
+					try {
+						let index = html.indexOf('<x-text>hi</x-text>\n<div>\n\t<x-text>nested</x-text>\n</div>');
+
+						if (index === -1) {
+							throw new Error('Included partials were not rendered in `generic_rhc_based` template');
+						}
+
+					} catch (err) {
+						return done(err);
+					}
+
+					done();
+				});
+
+			}, done);
 		});
 
 		it('should act the same in the browser', async function() {
