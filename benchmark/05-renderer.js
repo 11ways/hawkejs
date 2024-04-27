@@ -42,6 +42,9 @@ const createRawVariables = () => {
 	return {...RAW_VARIABLES};
 };
 
+const PREPARED_VARIABLES = RENDERER.prepareVariables(createRawVariables());
+const LAYERED_VARIABLES = PREPARED_VARIABLES.overlay({e_object: {a: 10}});
+
 //RENDERER.renderHTML(VARIABLE_TEST_TEMPLATE, createRawVariables()).done((err, result) => console.log(err, result))
 //console.log();
 
@@ -74,3 +77,22 @@ suite('Renderer', function() {
 	});
 });
 
+suite('Variables', () => {
+
+	bench('get(key)', () => {
+		let nr = PREPARED_VARIABLES.get('a_number');
+		nr += PREPARED_VARIABLES.get('e_object').a;
+		
+		if (nr !== 15) {
+			throw new Error('Invalid result: ' + nr);
+		}
+
+		let overlayed_nr = LAYERED_VARIABLES.get('a_number');
+		overlayed_nr += LAYERED_VARIABLES.get('e_object').a;
+
+		if (overlayed_nr !== 24) {
+			throw new Error('Invalid result: ' + overlayed_nr);
+		}
+	});
+
+});

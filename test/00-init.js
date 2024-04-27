@@ -116,7 +116,7 @@ describe('Hawkejs', function() {
 			fnc = hawkejs.compile('test this js: <% i = 10;\nprint(i);%>');
 			body = String(fnc);
 
-			if (body.indexOf('print(vars.i)') == -1) {
+			if (body.indexOf('print(vars.get("i"))') == -1) {
 				throw new Error('The inline JS code was not added to the compiled function');
 			}
 
@@ -209,7 +209,7 @@ print(zever);
 			assertContains(code, 'let zever = 1; __render.print(zever);');
 
 			assertContains(code, '{__render.print(zever);}');
-			assertContains(code, '__render.print(vars.zever)');
+			assertContains(code, '__render.print(vars.get("zever"))');
 
 			hawkejs.try_template_expressions = true;
 			hawkejs.skip_set_err = false;
