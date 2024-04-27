@@ -10,50 +10,67 @@ var source = `
 `;
 
 var compiled = hawkejs.compile('test', source);
-function onComplete(event) {
-	console.log(String(event.target));
-}
 
-var renderer;
-var variables;
+const RENDERER = hawkejs.createRenderer();
+__Protoblast.Bound.JSON.toDryObject(RENDERER);
 
-renderer = hawkejs.createRenderer();
-__Protoblast.Bound.JSON.toDryObject(renderer);
+const VARIABLE_TEST_TEMPLATE = hawkejs.compile('variable_test', `
+NUMBER: {{ a_number }}
+STRING: {{ b_string }}
+BOOL: {{ c_boolean }}
+ARR: {{ d_array.join('-') }}
+MAP: {{ e_object.map.get('a') }}
+DATE: {{ f_date }}
+`);
 
-suite('Renderer()', function() {
+const RAW_VARIABLES = {
+	a_number  : 14,
+	b_string  : 'A string',
+	c_boolean : true,
+	d_array   : [1, 2, 3],
+	e_object  : {
+		a: 1,
+		b: 2,
+		c: 3,
+		rx: /regex/,
+		map: new Map([['a', 1], ['b', 2]]),
+	},
+	f_date     : new Date('2024-04-27 14:33:01'),
+};
+
+const createRawVariables = () => {
+	return {...RAW_VARIABLES};
+};
+
+//RENDERER.renderHTML(VARIABLE_TEST_TEMPLATE, createRawVariables()).done((err, result) => console.log(err, result))
+//console.log();
+
+suite('Renderer', function() {
+
 	bench('new', function() {
 		hawkejs.createRenderer();
 	});
 
-	bench('renderHTML()', function() {
-		renderer = hawkejs.createRenderer();
+	bench('prepareVariables()', () => {
+		let raw_variables = createRawVariables();
+		let prepared = RENDERER.prepareVariables(raw_variables);
+	});
+
+	bench('renderHTML() (Nested element test)', function() {
+		let renderer = hawkejs.createRenderer();
 		return renderer.renderHTML('nested_test');
 	});
 
-	bench('toDry()', function() {
-		renderer = hawkejs.createRenderer();
-		variables = main.createTestVariables();
-		renderer.variables = variables;
-		__Protoblast.Bound.JSON.toDryObject(renderer)
+	bench('renderHTML() (Variable test)', function() {
+		let renderer = hawkejs.createRenderer();
+		return renderer.renderHTML(VARIABLE_TEST_TEMPLATE, createRawVariables());
 	});
 
-	bench('prepareVariables()', () => {
-
-		let raw_variables = {
-			a_number  : 14,
-			b_string  : 'A string',
-			c_boolean : true,
-			d_array   : [1, 2, 3],
-			e_object  : {
-				a: 1,
-				b: 2,
-				c: 3,
-				rx: /regex/,
-				map: new Map([['a', 1], ['b', 2]]),
-			}
-		};
-
-		let prepared = renderer.prepareVariables(raw_variables);
+	bench('toDry()', function() {
+		let renderer = hawkejs.createRenderer();
+		let variables = main.createTestVariables();
+		renderer.variables = variables;
+		__Protoblast.Bound.JSON.toDryObject(renderer)
 	});
 });
 
