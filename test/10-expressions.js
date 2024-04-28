@@ -939,6 +939,10 @@ function createTests(tests) {
 		}
 	};
 
+	CustomList.prototype.toHawkejs = function toHawkejs() {
+		return this;
+	};
+
 	let my_deck = new __Protoblast.Classes.Deck();
 	my_deck.set('x', 'X');
 	my_deck.set('y', 'Y');
@@ -990,7 +994,7 @@ function createTests(tests) {
 				empty_obj : {},
 				falsy     : false,
 				success   : true,
-				error     : new Error('Some error'),
+				error     : 'some error',//,new Error('Some error'),
 				stuff     : 'stuff',
 				opt_str   : new Blast.Classes.Develry.Optional('truthy'),
 				opt_empty : new Blast.Classes.Develry.Optional(),
@@ -1106,10 +1110,14 @@ function createTests(tests) {
 				}
 			};
 
-			vars.iterable = iterable;
+			let renderer = hawkejs.createRenderer();
+			let variables = renderer.prepareVariables(vars);
 
+			// Set this later, so it won't get cloned
+			// (and lose the iterator property)
+			variables.set('iterable', iterable);
 
-			hawkejs.render(compiled, vars, function done(err, res) {
+			renderer.renderHTML(compiled, variables).done(function done(err, res) {
 
 				if (err) {
 					return next(err);
