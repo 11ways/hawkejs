@@ -757,6 +757,12 @@ describe('CustomElement', function() {
 
 			let data = await getBlockData('main');
 
+			let has_missing_data_index = data.html.indexOf('nested-async>DONE<') > -1;
+
+			if (has_missing_data_index) {
+				throw new Error('The nested-async element has rendered, but it is missing the `data-index="0"` attribute');
+			}
+
 			let has_done = data.html.indexOf('nested-async data-index="0">DONE<') > -1;
 
 			assert.strictEqual(has_done, true, 'The nested elements did not render fully');

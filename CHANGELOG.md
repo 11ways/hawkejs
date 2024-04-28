@@ -6,6 +6,7 @@
 * Add `Variables#get(key)` & `Variables#setFromTemplate(key, value)` method
 * Don't let `Hawkejs.doNextSync(promise)` swallow errors
 * Use methods for getting (and proxy traps for setting) variables on the `Variables` class
+* Refactor variable access in compiled template code
 
 ## 2.3.19 (2024-04-13)
 

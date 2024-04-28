@@ -31,6 +31,13 @@ describe('Variables', () => {
 			vars.getProxy().bla = 47;
 
 			assert.strictEqual(vars.get('bla'), 47);
+
+			const proxy = vars.getProxy();
+			proxy.i = 0;
+			proxy.i++;
+			proxy.i++;
+			assert.strictEqual(vars.get('i'), 2);
+			assert.strictEqual(proxy.i, 2);
 		});
 	});
 
@@ -94,6 +101,39 @@ describe('Variables', () => {
 			let overlay = vars.overlay({beta: 48});
 			dict = overlay.getOwnDict();
 			assert.deepStrictEqual(dict, {beta: 48});
+		});
+	});
+
+	describe('#toHawkejs()', () => {
+		it('should be used as a JSON-DRY cloning method', () => {
+
+			let vars = renderer.prepareVariables({alpha: 47, beta: 100, obj: {a: 1}});
+			let cloned = Bound.JSON.clone(vars, 'toHawkejs');
+
+			assert.strictEqual(vars.get('alpha'), 47);
+			assert.strictEqual(cloned.get('alpha'), 47);
+
+			let original_obj = vars.get('obj');
+			let cloned_obj = cloned.get('obj');
+
+			assert.strictEqual(original_obj.a, 1);
+			assert.strictEqual(cloned_obj.a, 1);
+
+			assert.deepStrictEqual(original_obj, cloned_obj);
+			assert.notStrictEqual(original_obj, cloned_obj);
+			assert.strictEqual(cloned instanceof Blast.Classes.Hawkejs.Variables, true);
+
+			vars = Hawkejs.Variables.cast({obj: {a: 2}}, renderer);
+			cloned = Bound.JSON.clone(vars, 'toHawkejs');
+
+			original_obj = vars.get('obj');
+			cloned_obj = cloned.get('obj');
+
+			assert.strictEqual(original_obj.a, 2);
+			assert.strictEqual(cloned_obj.a, 2);
+			assert.deepStrictEqual(original_obj, cloned_obj);
+			assert.notStrictEqual(original_obj, cloned_obj);
+			assert.strictEqual(cloned instanceof Blast.Classes.Hawkejs.Variables, true);
 		});
 	});
 
