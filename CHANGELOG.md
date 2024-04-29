@@ -9,6 +9,7 @@
 * Refactor variable access in compiled template code
 * Only clone certain variables once, when they are initially set
 * Prepare text nodes during compiling
+* Clean up custom element `renderCustomTemplate` function
 
 ## 2.3.19 (2024-04-13)
 
