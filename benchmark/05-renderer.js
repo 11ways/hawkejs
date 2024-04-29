@@ -36,6 +36,8 @@ const RAW_VARIABLES = {
 		map: new Map([['a', 1], ['b', 2]]),
 	},
 	f_date     : new Date('2024-04-27 14:33:01'),
+	g_string   : '<p><br><a>',
+	h_array    : [],
 };
 
 const createRawVariables = () => {
@@ -67,6 +69,11 @@ suite('Renderer', function() {
 	bench('renderHTML() (Variable test)', function() {
 		let renderer = hawkejs.createRenderer();
 		return renderer.renderHTML(VARIABLE_TEST_TEMPLATE, createRawVariables());
+	});
+
+	bench('renderHTML() (Full example)', function() {
+		let renderer = hawkejs.createRenderer();
+		return renderer.renderHTML('bench', createRawVariables());
 	});
 
 	bench('toDry()', function() {

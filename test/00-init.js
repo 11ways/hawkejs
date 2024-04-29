@@ -105,7 +105,7 @@ describe('Hawkejs', function() {
 
 			assert.strictEqual(fnc.name, 'compiledView');
 			assert.strictEqual(fnc.source_name.indexOf('inline'), 0);
-			assert.strictEqual(code.indexOf('.printUnsafe("this is inline ') > -1, true, 'Print was cut off');
+			assert.strictEqual(code.indexOf('.printTextNode("this is inline ') > -1, true, 'Print was cut off');
 		});
 
 		it('should add line information to multiline javascript', function() {

@@ -8,6 +8,7 @@
 * Use methods for getting (and proxy traps for setting) variables on the `Variables` class
 * Refactor variable access in compiled template code
 * Only clone certain variables once, when they are initially set
+* Prepare text nodes during compiling
 
 ## 2.3.19 (2024-04-13)
 

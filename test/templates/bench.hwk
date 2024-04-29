@@ -1,0 +1,40 @@
+{% extend "base_scene" %}
+
+{% set my_value = 47 %}
+
+{% block "main" %}
+	<h1>Welcome to the Benchmark page!</h1>
+	<p>
+		This template is used to test the performance of the framework.
+	</p>
+	<p>
+		Most elements on this page won't do anything.
+	</p>
+	<div>
+		<a id="link-to-welcome" href="/welcome">Go to welcome</a><br>
+		<a id="link-to-welcome-without-history" href="/welcome" data-he-history="false">
+			Go to welcome without history
+		</a><br>
+	</div>
+	<div>
+		<ul>
+			<li>A simple string: {{ b_string }}</li>
+			<li>A string containg HTML tags: {{ g_string }}</li>
+		</ul>
+	</div>
+	{% if a_number gt 0 %}
+		<p>`a_number` is greater than 0: {{ a_number }}</p>
+	{% /if %}
+	{% if does.not.exist gt 0 %}
+		WRONG
+	{% else %}
+		<p>`does.not.exist` was successfully detected as not-existing</p>
+	{% /if %}
+	{% if h_array %}
+		WRONG
+	{% else %}
+		<p>`h_array` was successfully detected as empty</p>
+	{% /if %}
+	<p>Getting `a` from a map: {{ e_object.map.get('a') }}</p>
+	<p>`my_value` should be 47: {{ my_value }}</p>
+{% /block %}
