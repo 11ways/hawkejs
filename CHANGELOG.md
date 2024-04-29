@@ -10,6 +10,7 @@
 * Only clone certain variables once, when they are initially set
 * Prepare text nodes during compiling
 * Clean up custom element `renderCustomTemplate` function
+* Add initial reactive variable support
 
 ## 2.3.19 (2024-04-13)
 

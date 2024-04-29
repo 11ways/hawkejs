@@ -913,6 +913,32 @@ This should be a converted variable:
 		createTests(tests);
 	});
 
+	describe('Reactive variables', () => {
+
+		let tests = [
+			[
+				(vars) => vars.set('ref_title', Optional('Original title')),
+				`<span>{{ &ref_title }}</span>`,
+				`<span>Original title</span>`,
+				(vars) => {vars.get('ref_title').value = 'New title'},
+				`<span>New title</span>`,
+				(vars) => {vars.get('ref_title').value = 'Third attempt'},
+				`<span>Third attempt</span>`,
+			],
+			[
+				(vars) => vars.set('ref_bool', Optional(false)),
+				`<span>Ref bool is: {% if &ref_bool %}{{ ref_bool }}{% else %}FALSE{% /if %}</span>`,
+				`<span>Ref bool is: FALSE</span>`,
+				(vars) => {vars.get('ref_bool').value = 'str'},
+				`<span>Ref bool is: str</span>`,
+				(vars) => {vars.get('ref_bool').value = null},
+				`<span>Ref bool is: FALSE</span>`,
+			],
+		];
+
+		createReactiveTests(tests);
+	});
+
 	return;
 
 	describe('None existing method calls', function() {
@@ -925,7 +951,18 @@ This should be a converted variable:
 	});
 });
 
+function Optional(value) {
+	return new Blast.Classes.Develry.Optional(value);
+}
+
+function createReactiveTests(tests) {
+	return createTests(tests);
+}
+
 function createTests(tests) {
+
+	const Blast = __Protoblast,
+	      Classes = Blast.Classes;
 
 	const CustomList = function CustomList(records) {
 		this.should_not_be_visible = 'nope';
@@ -943,23 +980,57 @@ function createTests(tests) {
 		return this;
 	};
 
-	let my_deck = new __Protoblast.Classes.Deck();
+	let my_deck = new Classes.Deck();
 	my_deck.set('x', 'X');
 	my_deck.set('y', 'Y');
 	my_deck.push('Z');
 
 	for (let i = 0; i < tests.length; i++) {
 
-		let template,
+		let setup_tasks = [],
+		    extra_tasks = [],
+		    template,
 		    result,
 		    title,
 		    code,
 		    test = tests[i];
 
 		if (Array.isArray(test)) {
-			code = tests[i][0];
-			title = tests[i][0].replace(/\r\n/g, '\\n').replace(/\n/g, '\\n').replace(/\t/g, '\\t');
-			result = tests[i][1];
+
+			if (test.length === 2) {
+				code = tests[i][0];
+				result = tests[i][1];
+			} else {
+
+				let seen_template = false,
+				    seen_initial_result = false;
+
+				for (let entry of test) {
+
+					if (typeof entry == 'function') {
+						if (!seen_template) {
+							setup_tasks.push(entry);
+							continue;
+						}
+					} else if (typeof entry == 'string') {
+						if (!seen_template) {
+							code = entry;
+							seen_template = true;
+							continue;
+						}
+
+						if (!seen_initial_result) {
+							result = entry;
+							seen_initial_result = true;
+							continue;
+						}
+					}
+
+					extra_tasks.push(entry);
+				}
+			}
+
+			title = code.replace(/\r\n/g, '\\n').replace(/\n/g, '\\n').replace(/\t/g, '\\t');
 		} else {
 			title = test.template;
 			template = test.template;
@@ -1117,19 +1188,77 @@ function createTests(tests) {
 			// (and lose the iterator property)
 			variables.set('iterable', iterable);
 
-			renderer.renderHTML(compiled, variables).done(function done(err, res) {
+			let setup_pledges = [];
+
+			if (setup_tasks) {
+
+				for (let task of setup_tasks) {
+					setup_pledges.push(task(variables));
+				}
+			}
+
+			Blast.Bound.Function.series(setup_pledges, (err) => {
 
 				if (err) {
 					return next(err);
 				}
 
-				try {
-					assertEqualHtml(res, result);
-				} catch (e) {
-					return next(e);
-				}
+				let is_reactive = setup_pledges?.length > 0;
 
-				next();
+				renderer.render(compiled, variables).done(async function done(err, block) {
+
+					if (err) {
+						return next(err);
+					}
+
+					let elements = block.toElements();
+					let res = block.toHTML();
+
+					if (is_reactive) {
+						res = res.replace(/\s+data-hid=["'].*?["']/g, '');
+					}
+	
+					try {
+						assertEqualHtml(res, result);
+					} catch (e) {
+						return next(e);
+					}
+
+					if (is_reactive) {
+
+						for (let task of extra_tasks) {
+
+							if (typeof task == 'function') {
+
+								try {
+									await task(variables);
+								} catch (err) {
+									return next(err);
+								}
+								continue;
+							}
+
+							if (typeof task == 'string') {
+
+								// Simple race condition hack
+								await Classes.Pledge.after(5);
+
+								res = block.toHTML();
+								res = res.replace(/\s+data-hid=["'].*?["']/g, '');
+								res = res.replace(/\s+he-rendered=["'].*?["']/g, '');
+
+								try {
+									assertEqualHtml(res, task);
+								} catch (e) {
+									return next(e);
+								}
+							}
+						}
+					}
+	
+					next();
+				});
+
 			});
 		});
 	}
