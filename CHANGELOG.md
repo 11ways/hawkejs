@@ -11,6 +11,7 @@
 * Prepare text nodes during compiling
 * Clean up custom element `renderCustomTemplate` function
 * Add initial reactive variable support
+* Allow assigning an element to a reference using `:ref` syntax
 
 ## 2.3.19 (2024-04-13)
 

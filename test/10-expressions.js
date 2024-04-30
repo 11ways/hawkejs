@@ -934,6 +934,25 @@ This should be a converted variable:
 				(vars) => {vars.get('ref_bool').value = null},
 				`<span>Ref bool is: FALSE</span>`,
 			],
+			[
+				(vars) => vars.set('ref_el', Optional()),
+				`<span :ref={% ref_el %}>INNER</span><div>{{ &ref_el.textContent }}</div>`,
+				`<span>INNER</span><div>INNER</div>`,
+				(vars) => {
+					// Get the reference again
+					let ref_el = vars.get('ref_el');
+
+					// Get the element it is referring
+					let el = ref_el.value;
+
+					// Change the content of the element directly
+					el.textContent = 'CHANGED';
+
+					// Trigger a change
+					ref_el.value = el;
+				},
+				`<span>CHANGED</span><div>CHANGED</div>`,
+			]
 		];
 
 		createReactiveTests(tests);
