@@ -41,6 +41,7 @@ global.hawkejs = hawkejs;
 global.Hawkejs = Hawkejs;
 
 require('../test/helpers/_load.js')(hawkejs);
+hawkejs.skip_set_err = true;
 
 module.exports = {
 	Hawkejs   : Hawkejs,
