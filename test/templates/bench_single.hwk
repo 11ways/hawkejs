@@ -1,0 +1,58 @@
+<h1>Bench single</h1>
+<p>
+	This template is used to test the performance of the framework.<br>
+	As opposed to the bench template, this one is not extending <strong>any</strong> other template.
+</p>
+<p>
+	It does <i>nest</i> elements more than the other example, for the following reasons:
+</p>
+<div>
+	<ul>
+		<li>
+			<strong>Performance</strong>:
+			<span>Everything is a performance check, but this one is a bit more intense.</span>
+		</li>
+		<li>
+			<strong>Complexity</strong>:
+			<span>
+				We want to see how the framework handles a more complex structure.
+			</span>
+		</li>
+		<li>
+			<strong>Edge cases</strong>:
+			<span>
+				We want to see how the framework handles <strong>edge</strong> cases.<br>
+				It <i>might</i> be possible that we change the way elements are rendered later on,<br>
+				so this <abbr title="information">info</abbr> might be interesting.
+			</span>
+		</li>
+	</ul>
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th>Key</th>
+					<th>Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-index="0">
+					<td>A simple string</td>
+					<td>{{ does.not.exist.as.value }}</td>
+				</tr>
+				<tr data-index="1">
+					<td>A string containing HTML tags</td>
+					<td>{{ "<strong>Should be escaped</strong>" }}</td>
+				</tr>
+				<tr data-index="2">
+					<td>A string containing HTML tags</td>
+					<td>{%= "<strong>Should be parsed</strong>" %}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<p>Getting `a` from a map: {{ e_object.map.get('a') }}</p>
+		<p>`my_value` should be 47: {{ my_value }}</p>
+	</div>
+</div>

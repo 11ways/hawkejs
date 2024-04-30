@@ -71,7 +71,12 @@ suite('Renderer', function() {
 		return renderer.renderHTML(VARIABLE_TEST_TEMPLATE, createRawVariables());
 	});
 
-	bench('renderHTML() (Full example)', function() {
+	bench('renderHTML() (Single template)', function() {
+		let renderer = hawkejs.createRenderer();
+		return renderer.renderHTML('bench', createRawVariables());
+	});
+
+	bench('renderHTML() (Extended template)', function() {
 		let renderer = hawkejs.createRenderer();
 		return renderer.renderHTML('bench', createRawVariables());
 	});
