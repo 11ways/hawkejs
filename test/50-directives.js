@@ -451,7 +451,12 @@ function createTests(tests) {
 					return next(err);
 				}
 
-				assertEqualHtml(res, result);
+				try {
+					assertEqualHtml(res, result);
+				} catch (err) {
+					return next(err);
+				}
+
 				next();
 			});
 		});
