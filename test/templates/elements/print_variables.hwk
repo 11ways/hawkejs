@@ -1,0 +1,4 @@
+	<div>
+		Injected: {{ &injected }}
+		Servervar: {{ serverVar('my_server_var') }}
+	</div>

@@ -1080,6 +1080,24 @@ This should be a converted variable:
 						</span>
 					</div>
 				`,
+			],
+			[
+				(vars, renderer) => {
+					state = {};
+					vars.set('my_injected_value', Optional('alpha'));
+					renderer.serverVar('my_server_var', Optional('beta'));
+				},
+				`
+					<print-variables +injected={% my_injected_value %}></print-variables>
+				`,
+				`
+					<print-variables>
+						<div>
+							Injected: alpha
+							Servervar: beta
+						</div>
+					</print-variables>
+				`,
 			]
 		];
 
@@ -1344,7 +1362,7 @@ function createTests(tests) {
 			if (setup_tasks) {
 
 				for (let task of setup_tasks) {
-					setup_pledges.push(task(variables));
+					setup_pledges.push(task(variables, renderer));
 				}
 			}
 
@@ -1367,6 +1385,7 @@ function createTests(tests) {
 
 					if (is_reactive) {
 						res = res.replace(/\s+data-hid=["'].*?["']/g, '');
+						res = res.replace(/\s+he-rendered=["'].*?["']/g, '');
 					}
 	
 					try {
@@ -1382,7 +1401,7 @@ function createTests(tests) {
 							if (typeof task == 'function') {
 
 								try {
-									await task(variables);
+									await task(variables, renderer);
 								} catch (err) {
 									return next(err);
 								}
@@ -1393,6 +1412,17 @@ function createTests(tests) {
 
 								// Simple race condition hack
 								await Classes.Pledge.after(5);
+
+								let pledge = new Classes.Pledge();
+
+								// Reactive changes are grouped in an immediate call,
+								// we need to make sure we wait until the next group call
+								// to continue
+								Blast.nextGroupedImmediate(() => {
+									pledge.resolve();
+								});
+
+								await pledge;
 
 								res = block.toHTML();
 								res = res.replace(/\s+data-hid=["'].*?["']/g, '');

@@ -111,7 +111,7 @@ global.despace = function despace(text, replacement) {
 		replacement = ' ';
 	}
 
-	let result = text.trim().replace(/\r\n/g, '\n').replace(/\n/g, replacement).replace(/\s\s+/g, replacement);
+	let result = text.trim().replace(/\t/g, ' ').replace(/\r\n/g, '\n').replace(/\n/g, replacement).replace(/\s\s+/g, replacement);
 
 	return result;
 };
