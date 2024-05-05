@@ -915,6 +915,8 @@ This should be a converted variable:
 
 	describe('Reactive variables', () => {
 
+		let state;
+
 		let tests = [
 			[
 				(vars) => vars.set('ref_title', Optional('Original title')),
@@ -952,6 +954,132 @@ This should be a converted variable:
 					ref_el.value = el;
 				},
 				`<span>CHANGED</span><div>CHANGED</div>`,
+			],
+			[
+				// Prepare the state & variables
+				(vars) => {
+					state = {};
+					vars.set('ref_el', Optional()).onChange(val => state.last_ref_el = val);
+					vars.set('ref_attr', Optional('-'));
+					vars.set('ref_static', Optional('static'));
+					state.ref_counter = vars.set('ref_counter', Optional(1));
+				},
+				// The initial test template (first string is always the template)
+				`
+					<div>
+						{{ &ref_static }}
+						<span :ref={% ref_el %} data-attr={% &ref_attr %}>
+							{{ ref_counter }}
+						</span>
+					</div>
+				`,
+				// The expected result
+				`
+					<div>
+						static
+						<span data-attr="-">
+							1
+						</span>
+					</div>
+				`,
+				// New function to change things
+				(vars) => {
+					state.current_span = state.last_ref_el;
+					vars.get('ref_attr').value = 'changed!';
+
+					// Even though we change it, it should not trigger a rerender
+					// since the variable was not used reactively in the template
+					vars.get('ref_counter').value = 2;
+				},
+				// New expected result
+				`
+					<div>
+						static
+						<span data-attr="changed!">
+							1
+						</span>
+					</div>
+				`,
+				(vars) => {
+					// The reference element should still be the same
+					// (The first div should not have re-rendered its contents)
+					assert.strictEqual(state.last_ref_el, state.current_span);
+				},
+			],
+			[
+				// Prepare the state & variables
+				(vars) => {
+					state = {};
+					vars.set('ref_static', Optional('static'));
+					state.ref_counter = vars.set('ref_counter', Optional(1));
+					state.info_counter = vars.set('info_counter', Optional(0));
+				},
+				// The initial test template (first string is always the template)
+				`
+					<div>
+						{{ &ref_static }}
+						<span>
+							<% info_counter.value += 1 %>
+							Info counter: {{ &ref_counter }}
+
+							<span>
+								<% info_counter.value += 1 %>
+								Nested info counter: {{ &ref_counter }}
+							</span>
+							Text
+						</span>
+					</div>
+				`,
+				// The expected result
+				`
+					<div>
+						static
+						<span>
+							Info counter: 1
+
+							<span>
+								Nested info counter: 1
+							</span>
+							Text
+						</span>
+					</div>
+				`,
+				(vars) => {
+					assert.strictEqual(state.info_counter.value, 2, 'The info counter should have been increased twice');
+					state.ref_counter.value = 2;
+				},
+				// New expected result
+				`
+					<div>
+						static
+						<span>
+							Info counter: 2
+
+							<span>
+								Nested info counter: 2
+							</span>
+							Text
+						</span>
+					</div>
+				`,
+				(vars) => {
+					let value = state.info_counter.value;
+					assert.strictEqual(value, 4, 'The info counter should have been increased twice to four, but it is ' + value);
+					state.ref_counter.value = 3;
+				},
+				`
+					<div>
+						static
+						<span>
+							Info counter: 3
+
+							<span>
+								Nested info counter: 3
+							</span>
+							Text
+						</span>
+					</div>
+				`,
 			]
 		];
 
@@ -1049,7 +1177,11 @@ function createTests(tests) {
 				}
 			}
 
-			title = code.replace(/\r\n/g, '\\n').replace(/\n/g, '\\n').replace(/\t/g, '\\t');
+			//title = code.replace(/\r\n/g, '\\n').replace(/\n/g, '\\n').replace(/\t/g, '\\t');
+			title = code.trim().replace(/\r\n/g, ' ').replace(/\n/g, ' ').replace(/\t/g, ' ');
+
+			// Replace multiple whitespaces with a single space
+			title = title.replace(/\s+/g, ' ');
 		} else {
 			title = test.template;
 			template = test.template;
