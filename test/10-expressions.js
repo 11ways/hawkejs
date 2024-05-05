@@ -135,6 +135,22 @@ describe('Expressions', function() {
 		createTests(tests);
 	});
 
+	describe('Conditional', () => {
+
+		let tests = [
+			[
+				`{{ (c eq "a") ? "A" : "NO" }}`,
+				`NO`
+			],
+			[
+				`{{ (c eq "c") ? "C" : "NO" }}`,
+				`C`
+			]
+		];
+
+		createTests(tests);
+	});
+
 	describe('Switch', function() {
 
 		var tests = [
@@ -648,7 +664,7 @@ NO
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_174">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_176">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
