@@ -5,7 +5,7 @@ var assert   = require('assert'),
 
 let Blast;
 
-const Optional = (value) => new Blast.Classes.Develry.Optional(value);
+const Optional = (value) => new Blast.Classes.Develry.ObservableOptional(value);
 
 describe('Expressions', function() {
 
@@ -986,7 +986,7 @@ This should be a converted variable:
 				// Prepare the state & variables
 				(vars) => {
 					state = {};
-					vars.set('ref_el', Optional()).onChange(val => state.last_ref_el = val);
+					vars.set('ref_el', Optional()).addListener(val => state.last_ref_el = val);
 					vars.set('ref_attr', Optional('-'));
 					vars.set('ref_static', Optional('static'));
 					state.ref_counter = vars.set('ref_counter', Optional(1));
