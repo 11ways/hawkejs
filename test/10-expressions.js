@@ -5,6 +5,8 @@ var assert   = require('assert'),
 
 let Blast;
 
+const Optional = (value) => new Blast.Classes.Develry.Optional(value);
+
 describe('Expressions', function() {
 
 	before(function() {
@@ -145,7 +147,15 @@ describe('Expressions', function() {
 			[
 				`{{ (c eq "c") ? "C" : "NO" }}`,
 				`C`
-			]
+			],
+			[
+				`{{ true_primitive ? "TRUE" : "FALSE" }}`,
+				`TRUE`
+			],
+			[
+				`{{ true_optional ? "TRUE" : "FALSE" }}`,
+				`TRUE`
+			],
 		];
 
 		createTests(tests);
@@ -664,7 +674,7 @@ NO
 		var tests = [
 			[
 				`{% block "test" %}TESTING{% /block %}<he-block data-he-name="test"></he-block>`,
-				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_176">TESTING</he-block>`
+				`<he-block data-he-name="test" data-hid="hserverside-0" data-he-template="test_178">TESTING</he-block>`
 			],
 			[
 				`€{% if true %}€<span>€</span>{% /if %}`,
@@ -967,6 +977,7 @@ This should be a converted variable:
 					el.textContent = 'CHANGED';
 
 					// Trigger a change
+					ref_el.value = null;
 					ref_el.value = el;
 				},
 				`<span>CHANGED</span><div>CHANGED</div>`,
@@ -1131,10 +1142,6 @@ This should be a converted variable:
 		createTests(tests);
 	});
 });
-
-function Optional(value) {
-	return new Blast.Classes.Develry.Optional(value);
-}
 
 function createReactiveTests(tests) {
 	return createTests(tests);
@@ -1372,6 +1379,12 @@ function createTests(tests) {
 			// Set this later, so it won't get cloned
 			// (and lose the iterator property)
 			variables.set('iterable', iterable);
+
+			// Set an optional with a true value
+			variables.set('true_optional', Optional(true));
+
+			// Set the true primitive
+			variables.set('true_primitive', true);
 
 			let setup_pledges = [];
 
