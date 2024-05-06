@@ -13,6 +13,8 @@
 * Add initial reactive variable support
 * Allow assigning an element to a reference using `:ref` syntax
 * Add support for ternary conditionals
+* Add `CustomElement.defineStateVariable(name, config)` static method
+* Add `CustomElement#setState(name, value)` and `CustomElement#getState(name)` methods
 
 ## 2.3.19 (2024-04-13)
 
