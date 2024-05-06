@@ -1125,6 +1125,42 @@ This should be a converted variable:
 						</div>
 					</print-variables>
 				`,
+			],
+			[
+				(vars, renderer) => {
+					state = {};
+					state.ref_el = vars.set('ref_el', Optional());
+					state.ref_bool = vars.set('ref_bool', Optional(false));
+				},
+				`
+					<button :ref={% ref_el %} #disabled={% &ref_bool %}>Click me</button>
+				`,
+				`
+					<button>Click me</button>
+				`,
+				(vars) => {
+					let el = state.ref_el.value;
+					
+					if (!el) {
+						throw new Error('Element reference should have been set');
+					}
+
+					assert.strictEqual(el.disabled, false, 'The button should not be disabled');
+
+					state.ref_bool.value = true;
+				},
+				`
+					<button disabled="true">Click me</button>
+				`,
+				(vars) => {
+					let el = state.ref_el.value;
+					
+					if (!el) {
+						throw new Error('Element reference should have been set');
+					}
+
+					assert.strictEqual(el.disabled, true, 'The button should be disabled');
+				},
 			]
 		];
 
