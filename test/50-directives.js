@@ -205,6 +205,21 @@ describe('Directives', function() {
 		createTests(tests);
 	});
 
+	describe('Set properties using the `prop` domain', function() {
+		let tests = [
+			[
+				`<i prop:testing="ok"><%= $0.testing %></i>`,
+				`<i>ok</i>`
+			],
+			[
+				`<input prop:disabled={% true %}>`,
+				`<input disabled="true">`
+			]
+		];
+
+		createTests(tests);
+	});
+
 	describe('Apply directives using the ! syntax', function() {
 
 		var tests = [
@@ -236,6 +251,11 @@ describe('Directives', function() {
 				`<element-specific-variables +my_specific_variable={% 1 + 1 %}></element-specific-variables>`,
 				`<element-specific-variables he-rendered="1">my_specific_variable: 2</element-specific-variables>`
 			],
+
+			[
+				`<element-specific-variables var:my_specific_variable={% 1 + 1 %}></element-specific-variables>`,
+				`<element-specific-variables he-rendered="1">my_specific_variable: 2</element-specific-variables>`
+			],
 		];
 
 		createTests(tests);
@@ -246,6 +266,10 @@ describe('Directives', function() {
 			[
 				`<div +new_variable="NEW">{{new_variable}}</div>`,
 				`<div>NEW</div>`
+			],
+			[
+				`<div var:new_variable="NEW2">{{new_variable}}</div>`,
+				`<div>NEW2</div>`
 			],
 			[
 				`<div>{{def_string}}</div>`,
