@@ -1161,7 +1161,42 @@ This should be a converted variable:
 
 					assert.strictEqual(el.disabled, true, 'The button should be disabled');
 				},
-			]
+			],
+			// Reactive sub-variables
+			[
+				// Prepare the state & variables
+				(vars) => {
+					state = {};
+					state.holder = vars.set('holder', Optional({}));
+					state.holder.value.sub = Optional('subvalue');
+				},
+				// The initial test template (first string is always the template)
+				`
+					<div>
+						<span>{{ holder{:}.sub }}</span>
+						<span>{{ holder.sub{:} }}</span>
+					</div>
+				`,
+				// The expected result
+				`
+					<div>
+						<span>subvalue</span>
+						<span>subvalue</span>
+					</div>
+				`,
+				(vars) => {
+					assert.strictEqual(state.holder.value.sub.value, 'subvalue');
+					state.holder.value.sub.value = 'changed';
+					assert.strictEqual(state.holder.value.sub.value, 'changed');
+				},
+				// New expected result
+				`
+					<div>
+						<span>subvalue</span>
+						<span>changed</span>
+					</div>
+				`,
+			],
 		];
 
 		createReactiveTests(tests);
@@ -1460,6 +1495,12 @@ function createTests(tests) {
 					}
 
 					if (is_reactive) {
+						const doCheck = (task) => {
+							res = block.toHTML();
+							res = res.replace(/\s+data-hid=["'].*?["']/g, '');
+							res = res.replace(/\s+he-rendered=["'].*?["']/g, '');
+							assertEqualHtml(res, task);
+						};
 
 						for (let task of extra_tasks) {
 
@@ -1476,7 +1517,7 @@ function createTests(tests) {
 							if (typeof task == 'string') {
 
 								// Simple race condition hack
-								await Classes.Pledge.after(5);
+								await Classes.Pledge.after(3);
 
 								let pledge = new Classes.Pledge();
 
@@ -1489,14 +1530,19 @@ function createTests(tests) {
 
 								await pledge;
 
-								res = block.toHTML();
-								res = res.replace(/\s+data-hid=["'].*?["']/g, '');
-								res = res.replace(/\s+he-rendered=["'].*?["']/g, '');
-
 								try {
-									assertEqualHtml(res, task);
-								} catch (e) {
-									return next(e);
+									// Initial check
+									doCheck(task);
+								} catch (_) {
+									// Most of the time the initial 2 async delays are enough,
+									// but sometimes the system is still not done
+									await Classes.Pledge.after(10);
+
+									try {
+										doCheck(task);
+									} catch (err) {
+										next(err);
+									}
 								}
 							}
 						}
