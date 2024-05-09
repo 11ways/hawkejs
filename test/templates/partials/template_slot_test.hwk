@@ -1,1 +1,1 @@
-<div data-he-slot="main">Default main slot</div>
+<slot name="main">Default main slot</slot>

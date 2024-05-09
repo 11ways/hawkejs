@@ -244,7 +244,7 @@ describe('Expressions', function() {
 		let tests = [
 			[
 				`{% include "partials/template_slot_test" %}`,
-				`<div data-he-slot="main">Default main slot</div>`
+				`<slot name="main">Default main slot</slot>`
 			],
 			[
 				`{% include "partials/print_title_var" title="Test" %}`,

@@ -628,7 +628,7 @@ describe('CustomElement', function() {
 			let compiled = hawkejs.compile('template_test_2', code);
 
 			let result = await renderWithPledge(compiled);
-			assertEqualHtml(result.html, '<template-slot-test he-rendered="1"><div data-he-slot="main">This will set the content of the <b>main</b> slot</div></template-slot-test>');
+			assertEqualHtml(result.html, '<template-slot-test he-rendered="1"><slot name="main"><div slot="main">This will set the content of the <b>main</b> slot</div></slot></template-slot-test>');
 		});
 
 		it('should not confuse slots with similar elements', async function() {
@@ -643,7 +643,7 @@ describe('CustomElement', function() {
 			let compiled = hawkejs.compile('template_test_3', code);
 
 			let result = await renderWithPledge(compiled);
-			assertEqualHtml(result.html, '<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 1</div></template-slot-test>\n<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 2</div></template-slot-test>');
+			assertEqualHtml(result.html, '<template-slot-test he-rendered="1"><slot name="main"><div slot="main">Slot test 1</div></slot></template-slot-test> <template-slot-test he-rendered="1"><slot name="main"><div slot="main">Slot test 2</div></slot></template-slot-test>');
 		});
 
 		it('should render the contents after the attributes have been set', async function() {
@@ -658,7 +658,7 @@ describe('CustomElement', function() {
 			assertEqualHtml(result.html, '<render-after-attributes title="pretty-title" he-rendered="1"><span class="title">pretty-title</span></render-after-attributes>');
 		});
 
-		it('should render the contents after the attribtues have been set (within extensions)', async function() {
+		it('should render the contents after the attributes have been set (within extensions)', async function() {
 
 			await setLocation('/render_after_attributes');
 
