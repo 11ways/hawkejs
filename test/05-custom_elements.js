@@ -327,27 +327,18 @@ describe('CustomElement', function() {
 	});
 
 	describe('.setAttribute(name)', function() {
-		it('should add an attribute that is also accessible via a getter/setter', function(done) {
+		it('should add an attribute that is also accessible via a getter/setter', async function() {
 
-			var code = `
+			let code = `
 				<% el = create_element('he-test') %>
 				<% el.testval = "bla" %>
 				<%= el %>
 			`;
 
-			var compiled = hawkejs.compile('he_test_1', code);
+			let compiled = hawkejs.compile('he_test_1', code);
+			let result = await renderWithPledge(compiled);
 
-			hawkejs.render(compiled, {}, function rendered(err, res) {
-
-				if (err) {
-					throw err;
-				}
-
-				res = res.trim();
-
-				assertEqualHtml(res, '<he-test default-tokens="a b c" default-boolean="true" default-number="47" testval="bla"></he-test>');
-				done();
-			});
+			assertEqualHtml(result.html, '<he-test default-tokens="a b c" default-boolean="true" default-number="47" testval="bla"></he-test>');
 		});
 
 		it('supports custom DOMTokenList', function() {
@@ -396,28 +387,20 @@ describe('CustomElement', function() {
 	});
 
 	describe('.setAssignedProperty(name)', function() {
-		it('should execute the special assigned function', function(done) {
+		it('should execute the special assigned function', async function() {
 
-			var code = `<div><%
+			let code = `<div><%
 				at = createElement('assign-test');
 				at.stopped = "test";
 				at.title = "Bla";
 				print(at);
 				%></div>`;
 
-			var compiled = hawkejs.compile('he_test_2', code);
+			let compiled = hawkejs.compile('he_test_2', code);
 
-			hawkejs.render(compiled, {}, function rendered(err, res) {
+			let result = await renderWithPledge(compiled);
 
-				if (err) {
-					throw err;
-				}
-
-				res = res.trim();
-
-				assertEqualHtml(res, '<div><assign-test class="stopped" data-hid="hserverside-0"><div class="title">Bla</div></assign-test></div>');
-				done();
-			});
+			assertEqualHtml(result.html, '<div><assign-test class="stopped" data-hid="hserverside-0"><div class="title">Bla</div></assign-test></div>');
 		});
 
 		it('should revive the assigned data when sent to the browser', async function() {
@@ -454,28 +437,16 @@ describe('CustomElement', function() {
 	});
 
 	describe('.setTemplate(source, is_plain_html)', function() {
-		it('should set the template to render the contents', function(done) {
+		it('should set the template to render the contents', async function() {
 
-			setTimeout(function() {
+			await Blast.Classes.Pledge.after(4);
 
-				var code = `<sync-template-test></sync-template-test><sync-template-test>NOPE</sync-template-test>`;
+			let code = `<sync-template-test></sync-template-test><sync-template-test>NOPE</sync-template-test>`;
+			let compiled = hawkejs.compile('template_test_2', code);
 
-				var compiled = hawkejs.compile('template_test_2', code);
+			let result = await renderWithPledge(compiled);
 
-				hawkejs.render(compiled, {}, function rendered(err, res) {
-
-					if (err) {
-						throw err;
-					}
-
-					res = res.trim();
-
-					assertEqualHtml(res, '<sync-template-test he-rendered="1"><span class="test">This is a test!!</span></sync-template-test><sync-template-test he-rendered="1"><span class="test">This is a test!!</span></sync-template-test>');
-
-					done();
-				});
-
-			}, 4);
+			assertEqualHtml(result.html, '<sync-template-test he-rendered="1"><span class="test">This is a test!!</span></sync-template-test><sync-template-test he-rendered="1"><span class="test">This is a test!!</span></sync-template-test>');
 		});
 
 		it('should load the stylesheets of custom elements created in the sync template', async function() {
@@ -623,113 +594,68 @@ describe('CustomElement', function() {
 	});
 
 	describe('.setTemplateFile(path)', function() {
-		it('should set the template to use for the content of the element', function(done) {
+		it('should set the template to use for the content of the element', async function() {
 
-			var TemplateTest = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function TemplateTest() {
+			let TemplateTest = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function TemplateTest() {
 				return TemplateTest.super.call(this);
 			});
 
 			TemplateTest.setTemplateFile('partials/template_test');
 
-			setTimeout(function() {
+			await Blast.Classes.Pledge.after(4);
 
-				var code = `<template-test></template-test>`;
+			let code = `<template-test></template-test>`;
+			let compiled = hawkejs.compile('template_test_1', code);
 
-				var compiled = hawkejs.compile('template_test_1', code);
-
-				hawkejs.render(compiled, {}, function rendered(err, res) {
-
-					if (err) {
-						throw err;
-					}
-
-					res = res.trim();
-
-					assertEqualHtml(res, '<template-test he-rendered="1">This is the content of template-test</template-test>');
-					done();
-				});
-
-			}, 4);
+			let result = await renderWithPledge(compiled);
+			assertEqualHtml(result.html, '<template-test he-rendered="1">This is the content of template-test</template-test>');
 		});
 
-		it('should allow the usage of slots', function(done) {
+		it('should allow the usage of slots', async function() {
 
-			var TemplateSlotTest = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function TemplateSlotTest() {
+			let TemplateSlotTest = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function TemplateSlotTest() {
 				return TemplateSlotTest.super.call(this);
 			});
 
 			TemplateSlotTest.setTemplateFile('partials/template_slot_test');
 
-			setTimeout(function() {
+			await Blast.Classes.Pledge.after(4);
 
-				var code = `<template-slot-test>
+			let code = `<template-slot-test>
 	<div slot="main">This will set the content of the <b>main</b> slot</div>
 </template-slot-test>`;
 
-				var compiled = hawkejs.compile('template_test_2', code);
+			let compiled = hawkejs.compile('template_test_2', code);
 
-				hawkejs.render(compiled, {}, function rendered(err, res) {
-
-					if (err) {
-						throw err;
-					}
-
-					res = res.trim();
-
-					assertEqualHtml(res, '<template-slot-test he-rendered="1"><div data-he-slot="main">This will set the content of the <b>main</b> slot</div></template-slot-test>');
-					done();
-				});
-
-			}, 4);
+			let result = await renderWithPledge(compiled);
+			assertEqualHtml(result.html, '<template-slot-test he-rendered="1"><div data-he-slot="main">This will set the content of the <b>main</b> slot</div></template-slot-test>');
 		});
 
-		it('should not confuse slots with similar elements', function(done) {
+		it('should not confuse slots with similar elements', async function() {
 
-			var code = `<template-slot-test>
+			let code = `<template-slot-test>
 	<div slot="main">Slot test 1</div>
 </template-slot-test>
 <template-slot-test>
 	<div slot="main">Slot test 2</div>
 </template-slot-test>`;
 
-			var compiled = hawkejs.compile('template_test_3', code);
+			let compiled = hawkejs.compile('template_test_3', code);
 
-			hawkejs.render(compiled, {}, function rendered(err, res) {
-
-				if (err) {
-					throw err;
-				}
-
-				res = res.trim();
-
-				assertEqualHtml(res, '<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 1</div></template-slot-test>\n<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 2</div></template-slot-test>');
-				done();
-			});
+			let result = await renderWithPledge(compiled);
+			assertEqualHtml(result.html, '<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 1</div></template-slot-test>\n<template-slot-test he-rendered="1"><div data-he-slot="main">Slot test 2</div></template-slot-test>');
 		});
 
-		it('should render the contents after the attributes have been set', function(done) {
+		it('should render the contents after the attributes have been set', async function() {
 
 			let code = `
 				<render-after-attributes title={% delayResult("pretty-title") %} ></render-after-attributes>
 			`;
 
-			var compiled = hawkejs.compile('template_test_4', code);
+			let compiled = hawkejs.compile('template_test_4', code);
 
-			hawkejs.render(compiled, {}, function rendered(err, res) {
-
-				if (err) {
-					throw err;
-				}
-
-				res = res.trim();
-
-				try {
-					assertEqualHtml(res, '<render-after-attributes title="pretty-title" he-rendered="1"><span class="title">pretty-title</span></render-after-attributes>');
-				} catch (err) {
-					return done(err);
-				}
-				done();
-			});
+			let result = await renderWithPledge(compiled);
+			assertEqualHtml(result.html, '<render-after-attributes title="pretty-title" he-rendered="1"><span class="title">pretty-title</span></render-after-attributes>');
 		});
 
 		it('should render the contents after the attribtues have been set (within extensions)', async function() {
@@ -767,24 +693,13 @@ describe('CustomElement', function() {
 
 			assert.strictEqual(has_done, true, 'The nested elements did not render fully');
 
-			let pledge = new __Protoblast.Classes.Pledge();
+			let result = await renderWithPledge('nested_async_elements');
 
-			hawkejs.render('nested_async_elements', {}, (err, res) => {
-				
-				if (err) {
-					return pledge.reject(err);
-				}
+			has_done = result.html.indexOf('nested-async data-index="0">DONE<') > -1;
 
-				let has_done = res.indexOf('nested-async data-index="0">DONE<') > -1;
-
-				if (!has_done) {
-					return pledge.reject(new Error('The nested elements did not render fully'));
-				}
-
-				pledge.resolve();
-			});
-
-			return pledge;
+			if (!has_done) {
+				throw new Error('The nested elements did not render fully');
+			}
 		});
 
 		it('should render looped nested custom elements', async function() {
@@ -818,81 +733,41 @@ describe('CustomElement', function() {
 
 			assert.strictEqual(text, 'DONE DONE DONE DONE DONE DONE DONE DONE');
 
-			let pledge = new __Protoblast.Classes.Pledge();
+			let result = await renderWithPledge('nested_sub_renders');
 
-			hawkejs.render('nested_sub_renders', {}, (err, res) => {
-				
-				if (err) {
-					return pledge.reject(err);
-				}
+			let has_done = result.html.indexOf('nested-async data-index="1">DONE<') > -1;
 
-				let has_done = res.indexOf('nested-async data-index="1">DONE<') > -1;
-
-				if (!has_done) {
-					return pledge.reject(new Error('The nested elements did not render fully'));
-				}
-
-				pledge.resolve();
-			});
-
-			return pledge;
+			if (!has_done) {
+				throw new Error('The nested elements did not render fully');
+			}
 		});
 	});
 
 	describe('#prepareRenderVariables()', () => {
-		it('should be called before rendering the template', (done) => {
+		it('should be called before rendering the template', async () => {
 
 			let code = `
 				<with-prepared-variables></with-prepared-variables>
 			`;
 
-			var compiled = hawkejs.compile('template_test_with_prepared_variables', code);
+			let compiled = hawkejs.compile('template_test_with_prepared_variables', code);
 
-			hawkejs.render(compiled, {}, function rendered(err, res) {
-
-				if (err) {
-					throw err;
-				}
-
-				res = res.trim();
-
-				try {
-					assertEqualHtml(res, '<with-prepared-variables he-rendered="1"><table class="main-table"> <thead> <tr> <th>1</th> <th>2</th> <th>3</th> </tr> </thead> </table></with-prepared-variables>');
-				} catch (err) {
-					return done(err);
-				}
-				done();
-			});
-
+			let result = await renderWithPledge(compiled);
+			assertEqualHtml(result.html, '<with-prepared-variables he-rendered="1"><table class="main-table"> <thead> <tr> <th>1</th> <th>2</th> <th>3</th> </tr> </thead> </table></with-prepared-variables>');
 		});
 	});
 
 	describe('#rendered()', () => {
-		it('should call back when the element has been rendered', (done) => {
+		it('should call back when the element has been rendered', async () => {
 
 			let code = `
 				<rendered-counter></rendered-counter>
 			`;
 
-			var compiled = hawkejs.compile('template_test_rendered_counter', code);
+			let compiled = hawkejs.compile('template_test_rendered_counter', code);
 
-			hawkejs.render(compiled, {}, function rendered(err, res) {
-
-				if (err) {
-					throw err;
-				}
-
-				res = res.trim();
-
-				try {
-					assertEqualHtml(res, '<rendered-counter he-rendered="1" rcount="1"></rendered-counter>');
-				} catch (err) {
-					return done(err);
-				}
-				done();
-			});
-
+			let result = await renderWithPledge(compiled);
+			assertEqualHtml(result.html, '<rendered-counter he-rendered="1" rcount="1"></rendered-counter>');
 		});
 	});
-
 });

@@ -400,6 +400,17 @@ global.timeLog = function timeLog(name) {
 const console_error = console.error;
 const console_warn = console.warn;
 
+global.renderWithPledge = async function renderWithPledge(template, code) {
+
+	let result = await renderAndCaptureErrorMessage(template, code);
+
+	if (result.error) {
+		throw result.error;
+	}
+
+	return result;
+};
+
 global.renderAndCaptureErrorMessage = async function renderAndCaptureErrorMessage(template, data) {
 
 	let pledge = new __Protoblast.Classes.Pledge(),
@@ -415,13 +426,13 @@ global.renderAndCaptureErrorMessage = async function renderAndCaptureErrorMessag
 		warnings = args;
 	};
 
-	hawkejs.render(template, data, (err, html) => {
+	hawkejs.render(template, data || {}, (err, html) => {
 
 		let result = {
 			warnings : warnings,
 			message  : message,
 			error    : err,
-			htmm     : html,
+			html     : html,
 		};
 
 		console.warn = console_warn;
