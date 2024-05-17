@@ -1197,6 +1197,40 @@ This should be a converted variable:
 					</div>
 				`,
 			],
+			[
+				// Prepare the state & variables
+				(vars) => {
+					state = {};
+					state.my_boolean = vars.set('my_boolean', Optional(false));
+				},
+				// The initial test template (first string is always the template)
+				`
+					<div>
+						{% if my_boolean{:} %}TRUE{% else %}FALSE{% /if %}
+						»{{ my_boolean OR 'default' }}«
+						<span data-bool={% my_boolean OR 'default' %}><i></i></span>
+					</div>
+				`,
+				// The expected result
+				`
+					<div>
+						FALSE
+						»default«
+						<span data-bool="default"><i></i></span>
+					</div>
+				`,
+				(vars) => {
+					state.my_boolean.value = true;
+				},
+				// New expected result
+				`
+					<div>
+						TRUE
+						»true«
+						<span data-bool="true"><i></i></span>
+					</div>
+				`,
+			]
 		];
 
 		createReactiveTests(tests);
