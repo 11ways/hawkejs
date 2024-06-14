@@ -1282,7 +1282,7 @@ This should be a converted variable:
 						state:message={% my_name{:} %}
 					>
 						{{ state:message{:} }}-{{ attr:name }}-{{ prop:id }}
-						<span>{{ state:message{:} }}-{{ attr:name }}-{{ prop:id }}</span>
+						<span name="A">{{ state:message{:} }}-{{ attr:name }}-{{ prop:id }}</span>
 						<div>{{ var:foo{:} }}</div>
 					</my-text>
 				`,
@@ -1290,7 +1290,7 @@ This should be a converted variable:
 				`
 					<my-text id="l" name="t1">
 						init-t1-l
-						<span>init--</span>
+						<span name="A">init-A-</span>
 						<div>bar</div>
 					</my-text>
 				`,
@@ -1302,11 +1302,40 @@ This should be a converted variable:
 				`
 					<my-text id="l" name="t1">
 						second-t1-l
-						<span>second--</span>
+						<span name="A">second-A-</span>
 						<div>baz</div>
 					</my-text>
 				`,
-			]
+			],
+			// Test to see if `updateElementProperty()` has the correct renderer
+			[
+				// Prepare the state & variables
+				(vars) => {
+					state = {};
+					state.name_one = vars.set('name_one', Optional('init1'));
+					state.name_two = vars.set('name_two', Optional('init2'));
+				},
+				// Initial template
+				`
+					<my-text id="one" state:message={% name_one{:} %}><i title={% state:message{:} %}></i></my-text>
+					<my-text id="two" state:message={% name_two{:} %}><i title={% state:message{:} %}></i></my-text>
+				`,
+				// Expected result
+				`
+					<my-text id="one"><i title="init1"></i></my-text>
+					<my-text id="two"><i title="init2"></i></my-text>
+				`,
+				(vars) => {
+					state.name_one.value = 'change1';
+					state.name_two.value = 'change2';
+				},
+				// New expected result
+				`
+					<my-text id="one"><i title="change1"></i></my-text>
+					<my-text id="two"><i title="change2"></i></my-text>
+				`,
+
+			],
 		];
 
 		createReactiveTests(tests);
