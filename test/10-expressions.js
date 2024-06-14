@@ -1230,6 +1230,82 @@ This should be a converted variable:
 						<span data-bool="true"><i></i></span>
 					</div>
 				`,
+			],
+			[
+				// Prepare the state & variables
+				(vars) => {
+					state = {};
+					state.my_name = vars.set('my_name', Optional('first'));
+				},
+				// The initial test template (first string is always the template)
+				`
+					<my-text
+						id="l"
+						name="t1"
+						state:message={% my_name %}
+					>
+						{{ state:message }}-{{ attr:name }}-{{ prop:id }}
+						<span>{{ state:message }}-{{ attr:name }}-{{ prop:id }}</span>
+					</my-text>
+				`,
+				// The expected result
+				`
+					<my-text id="l" name="t1">
+						first-t1-l
+						<span>first--</span>
+					</my-text>
+				`,
+				(vars) => {
+					state.my_name.value = 'second';
+				},
+				// We don't expect any changes because the `my_name` value
+				// was not set using the `{:}` reactive suffix
+				`
+					<my-text id="l" name="t1">
+						first-t1-l
+						<span>first--</span>
+					</my-text>
+				`,
+			],
+			[
+				// Prepare the state & variables
+				(vars) => {
+					state = {};
+					state.my_name = vars.set('my_name', Optional('init'));
+					state.foo = vars.set('foo', Optional('bar'));
+				},
+				// The initial test template (first string is always the template)
+				`
+					<my-text
+						id="l"
+						name="t1"
+						state:message={% my_name{:} %}
+					>
+						{{ state:message{:} }}-{{ attr:name }}-{{ prop:id }}
+						<span>{{ state:message{:} }}-{{ attr:name }}-{{ prop:id }}</span>
+						<div>{{ var:foo{:} }}</div>
+					</my-text>
+				`,
+				// The expected result
+				`
+					<my-text id="l" name="t1">
+						init-t1-l
+						<span>init--</span>
+						<div>bar</div>
+					</my-text>
+				`,
+				(vars) => {
+					state.my_name.value = 'second';
+					state.foo.value = 'baz';
+				},
+				// New expected result
+				`
+					<my-text id="l" name="t1">
+						second-t1-l
+						<span>second--</span>
+						<div>baz</div>
+					</my-text>
+				`,
 			]
 		];
 
