@@ -1334,8 +1334,56 @@ This should be a converted variable:
 					<my-text id="one"><i title="change1"></i></my-text>
 					<my-text id="two"><i title="change2"></i></my-text>
 				`,
-
 			],
+			// Test to see if the listeners are attached to the correct optional
+			[
+				// Prepare the state & variables
+				(vars) => {
+					state = {};
+					state.my_name = vars.set('my_name', Optional('init'));
+					state.some_text = vars.set('some_text', Optional('init'));
+				},
+				// Template
+				`
+					<div>
+						<state-value-test
+							id="one"
+							state:title={% my_name{:} %}
+						></state-value-test>
+						<state-value-test
+							id="two"
+							state:title={% some_text{:} %}
+						></state-value-test>
+					</div>
+				`,
+				// Expected result
+				`
+					<div>
+						<state-value-test id="one"><i id="ione" result="init"></i></state-value-test>
+						<state-value-test id="two"><i id="itwo" result="init"></i></state-value-test>
+					</div>
+				`,
+				() => {
+					// Change the second variable (some_text) first
+					state.some_text.value = '1stchange';
+				},
+				`
+					<div>
+						<state-value-test id="one"><i id="ione" result="init"></i></state-value-test>
+						<state-value-test id="two"><i id="itwo" result="1stchange"></i></state-value-test>
+					</div>
+				`,
+				() => {
+					// Change only the first variable (my_name) first
+					state.my_name.value = '2ndchange';
+				},
+				`
+					<div>
+						<state-value-test id="one"><i id="ione" result="2ndchange"></i></state-value-test>
+						<state-value-test id="two"><i id="itwo" result="1stchange"></i></state-value-test>
+					</div>
+				`,
+			]
 		];
 
 		createReactiveTests(tests);

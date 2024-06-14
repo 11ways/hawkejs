@@ -1,0 +1,1 @@
+<i id={% "i" + self.id  %} result={% state:title{:} %}></i>
