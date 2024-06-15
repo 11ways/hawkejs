@@ -1427,6 +1427,98 @@ This should be a converted variable:
 					<test-ref-button id="one"><span>test2</span></test-ref-button>
 				`,
 			],
+			// Passing down state (nested test)
+			[
+				// Prepare the state & variables
+				(vars) => {
+					state = {};
+					state.message = vars.set('original_message', Optional('init'));
+					state.times = vars.set('original_times', Optional(2));
+				},
+				`
+					<state-passing-down
+						id="start"
+						state:message={% original_message{:} %}
+						state:times={% original_times{:} %}
+						prop:counter={% 0 %}
+					></state-passing-down>
+				`,
+				`
+					<state-passing-down id="start">
+						<div id="div0" title="init">
+							<state-passing-down id="spd2">
+								<div id="div1" title="»init">
+									<state-passing-down id="spd1">
+										<div id="div2" title="»»init">
+										</div>
+									</state-passing-down>
+								</div>
+							</state-passing-down>
+						</div>
+					</state-passing-down>
+				`,
+				() => {
+					// Change the amount of times it should render
+					state.times.value = 1;
+				},
+				`
+					<state-passing-down id="start">
+						<div id="div0" title="init">
+							<state-passing-down id="spd1">
+								<div id="div1" title="»init">
+								</div>
+							</state-passing-down>
+						</div>
+					</state-passing-down>
+				`,
+				() => {
+					// Change the message and the times
+					state.message.value = 'change';
+					state.times.value = 2;
+				},
+				`
+					<state-passing-down id="start">
+						<div id="div0" title="change">
+							<state-passing-down id="spd2">
+								<div id="div1" title="»change">
+									<state-passing-down id="spd1">
+										<div id="div2" title="»»change">
+										</div>
+									</state-passing-down>
+								</div>
+							</state-passing-down>
+						</div>
+					</state-passing-down>
+				`,
+				() => {
+					// Change the amount of times only
+					state.times.value = 1;
+				},
+				`
+					<state-passing-down id="start">
+						<div id="div0" title="change">
+							<state-passing-down id="spd1">
+								<div id="div1" title="»change">
+								</div>
+							</state-passing-down>
+						</div>
+					</state-passing-down>
+				`,
+				() => {
+					// Change the message
+					state.message.value = 'third';
+				},
+				`
+					<state-passing-down id="start">
+						<div id="div0" title="third">
+							<state-passing-down id="spd1">
+								<div id="div1" title="»third">
+								</div>
+							</state-passing-down>
+						</div>
+					</state-passing-down>
+				`,
+			],
 		];
 
 		createReactiveTests(tests);

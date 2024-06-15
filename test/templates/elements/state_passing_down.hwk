@@ -1,0 +1,11 @@
+
+<div id="div{% self.counter or 0 %}" title={% state:message{:} %}>
+	{% if state:times{:} gt 0 %}
+		<state-passing-down
+			id="spd{% state:times %}"
+			state:message={% "»" + state:message{:} %}
+			state:times={% state:times{:} - 1 %}
+			prop:counter={% (self.counter OR 0) + 1 %}
+		></state-passing-down>
+	{% /if %}
+</div>
