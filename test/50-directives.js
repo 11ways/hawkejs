@@ -214,7 +214,25 @@ describe('Directives', function() {
 			[
 				`<input prop:disabled={% true %}>`,
 				`<input disabled="true">`
-			]
+			],
+			[
+				{strip: true},
+				`<prop-passing-down id="start" prop:times={% 2 %}></prop-passing-down>`,
+				`
+					<prop-passing-down id="start">
+						<div id="div0" data-left="2">
+							<prop-passing-down id="ppd1">
+								<div id="div1" data-left="1">
+									<prop-passing-down id="ppd2">
+										<div id="div2" data-left="0">
+										</div>
+									</prop-passing-down>
+								</div>
+							</prop-passing-down>
+						</div>
+					</prop-passing-down>
+				`
+			],
 		];
 
 		createTests(tests);
@@ -429,9 +447,19 @@ describe('Directives', function() {
 
 function createTests(tests) {
 	for (let i = 0; i < tests.length; i++) {
-		let code = tests[i][0],
-		    title = tests[i][0].replace(/\r\n/g, '\\n').replace(/\n/g, '\\n').replace(/\t/g, '\\t'),
-		    result = tests[i][1];
+
+		let entry = tests[i],
+		    settings = entry[0];
+
+		if (typeof settings == 'object') {
+			entry.shift();
+		} else {
+			settings = {};
+		}
+
+		let code = entry[0],
+		    title = entry[0].replace(/\r\n/g, '\\n').replace(/\n/g, '\\n').replace(/\t/g, '\\t'),
+		    result = entry[1];
 
 		if (title.length > 74) {
 			title = title.slice(0, 72) + '…';
@@ -473,6 +501,11 @@ function createTests(tests) {
 
 				if (err) {
 					return next(err);
+				}
+
+				if (settings.strip) {
+					res = res.replace(/\s+data-hid=["'].*?["']/g, '');
+					res = res.replace(/\s+he-rendered=["'].*?["']/g, '');
 				}
 
 				try {

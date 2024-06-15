@@ -21,4 +21,5 @@ module.exports = function loadHawkejs(hawkejs) {
 	hawkejs.load(test_base + '/helpers/print_variables_element.js');
 	hawkejs.load(test_base + '/helpers/state_value_test.js');
 	hawkejs.load(test_base + '/helpers/test_ref_button.js');
+	hawkejs.load(test_base + '/helpers/prop_passing_down.js');
 }

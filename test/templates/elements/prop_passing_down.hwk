@@ -1,0 +1,10 @@
+
+<div id="div{% self.counter or 0 %}" data-left={% self.times %}>
+	{% if self.times gt 0 %}
+		<prop-passing-down
+			id="ppd{% (self.counter or 0) + 1 %}"
+			prop:times={% self.times - 1 %}
+			prop:counter={% (self.counter or 0) + 1 %}
+		></prop-passing-down>
+	{% /if %}
+</div>
