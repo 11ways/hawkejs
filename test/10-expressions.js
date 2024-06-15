@@ -1383,7 +1383,50 @@ This should be a converted variable:
 						<state-value-test id="two"><i id="itwo" result="1stchange"></i></state-value-test>
 					</div>
 				`,
-			]
+			],
+			// :refs tests
+			[
+				// Prepare the state & variables
+				(vars) => {
+					state = {};
+					state.my_button = vars.set('my_button', Optional(null));
+				},
+				// Template
+				`
+					<test-ref-button
+						id="one"
+						:ref={% my_button %}
+						state:message="test1"
+					></test-ref-button>
+				`,
+				// Expected result
+				`
+					<test-ref-button id="one"><span>test1</span></test-ref-button>
+				`,
+				() => {
+
+					const my_button = state.my_button.value;
+
+					if (!my_button) {
+						throw new Error('The `<test-ref-button>` element should have been stored in the `my_button` variable');
+					}
+
+					assert.strictEqual(my_button.id, 'one');
+
+					const span = my_button.getState('span_element');
+
+					if (!span) {
+						throw new Error('The span element should have been stored in the `span_element` state');
+					}
+
+					assert.strictEqual(span.textContent, 'test1');
+
+					my_button.setState('message', 'test2');
+				},
+				`
+					<test-ref-button id="one"><span>test2</span></test-ref-button>
+				`,
+			],
 		];
 
 		createReactiveTests(tests);

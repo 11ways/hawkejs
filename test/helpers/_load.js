@@ -20,4 +20,5 @@ module.exports = function loadHawkejs(hawkejs) {
 	hawkejs.load(test_base + '/helpers/with_prepared_variables.js');
 	hawkejs.load(test_base + '/helpers/print_variables_element.js');
 	hawkejs.load(test_base + '/helpers/state_value_test.js');
+	hawkejs.load(test_base + '/helpers/test_ref_button.js');
 }
