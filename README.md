@@ -52,7 +52,7 @@
 
 ## Documentation
 
-For more information and API documentation, visit the [Hawkejs homepage](https://hawkejs.develry.be).
+For more information and API documentation, visit the [Hawkejs homepage](https://hawkejs.elevenways.be).
 
 ## Authors
 
