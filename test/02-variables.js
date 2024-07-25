@@ -155,6 +155,22 @@ describe('Variables', () => {
 			assert.strictEqual(vars.get('obj').a, 2);
 			assert.strictEqual(clone.get('obj').a, 2);
 		});
+
+		it('should work when being overlayed', () => {
+
+			let initial = Hawkejs.Variables.cast({alpha: 47, beta: 100}, renderer);
+
+			let base_variables = initial.overlay();
+			let shallow_clone = base_variables.getShallowClone();
+
+			let extra_variables = renderer.prepareVariables({beta: 48, gamma: 49});
+
+			let overlayed = shallow_clone.overlay(extra_variables);
+
+			assert.strictEqual(overlayed.get('alpha'), 47);
+			assert.strictEqual(overlayed.get('beta'), 48);
+			assert.strictEqual(overlayed.get('gamma'), 49);
+		});
 	});
 
 	describe('#getExistingCloneIfValied(symbol)', () => {
