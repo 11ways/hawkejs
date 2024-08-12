@@ -1,4 +1,4 @@
-## 2.4.0 (WIP)
+## 2.4.0 (2024-08-12)
 
 * Use shorter compiled function body ids when not on development environment
 * Add basic `Optional` value-wrapper class support
