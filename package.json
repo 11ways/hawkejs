@@ -13,7 +13,7 @@
 	"main": "./lib/init.js",
 	"repository": "git@github.com:11ways/hawkejs.git",
 	"dependencies": {
-		"nwsapi"     : "2.2.0",
+		"nwsapi"     : "2.2.12",
 		"protoblast" : "~0.9.3"
 	},
 	"devDependencies": {

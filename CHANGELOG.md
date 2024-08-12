@@ -16,6 +16,7 @@
 * Add `CustomElement.defineStateVariable(name, config)` static method
 * Add `CustomElement#setState(name, value)` and `CustomElement#getState(name)` methods
 * Make *template slots* behave more like vanilla custom element slots
+* Finally upgrade NWSAPI from v2.2.0 to v2.2.12
 
 ## 2.3.19 (2024-04-13)
 
