@@ -1,3 +1,7 @@
+## 2.4.1 (WIP)
+
+* Fix variables not being available for custom elements that require synchronous rendering
+
 ## 2.4.0 (2024-08-12)
 
 * Use shorter compiled function body ids when not on development environment
