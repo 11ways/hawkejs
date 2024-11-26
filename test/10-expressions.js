@@ -69,6 +69,11 @@ describe('Expressions', function() {
 			['{% if my_obj.c eq "a" or my_obj.b eq "a" %}ERR{% elseif my_obj.a eq "a" and my_obj.b eq "b" %}AB{% else %}ERRTOO{% /if %}', 'AB'],
 			['{% if opt_str %}{{ opt_str }}{% /if %}', 'truthy'],
 			['{% if opt_empty %}OOPS{% /if %}', ''],
+			['{% if Math.max(1, 2) gte 2 %}ALWAYSTRUE{% else %}WRONG{% / if %}', 'ALWAYSTRUE'],
+			['{% if Math.max(0, 0) gte 2 %}WRONG{% else %}ALWAYSELSE{% / if %}', 'ALWAYSELSE'],
+			['{% if (Math.max(0, 0) gte 2) %}WRONG{% else %}ALWAYSELSE{% / if %}', 'ALWAYSELSE'],
+			['{% if (Math.max(0, 0)) gte 2 %}WRONG{% else %}ALWAYSELSE{% / if %}', 'ALWAYSELSE'],
+			['{% if ((Math.max(0, 0) gte 2) %}WRONG{% else %}ALWAYSELSE{% / if %}', 'ALWAYSELSE'],
 			// @TODO: ['{% if 1 emptyhtml %}WRONG{% /if %}', ''],
 		];
 
