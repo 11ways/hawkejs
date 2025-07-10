@@ -74,6 +74,10 @@ describe('Expressions', function() {
 			['{% if (Math.max(0, 0) gte 2) %}WRONG{% else %}ALWAYSELSE{% / if %}', 'ALWAYSELSE'],
 			['{% if (Math.max(0, 0)) gte 2 %}WRONG{% else %}ALWAYSELSE{% / if %}', 'ALWAYSELSE'],
 			['{% if ((Math.max(0, 0) gte 2) %}WRONG{% else %}ALWAYSELSE{% / if %}', 'ALWAYSELSE'],
+
+			// @TODO: Add support for 'new' keyword
+			//['{% if (new Date()).getMonth() gte 0 %}ALWAYSTRUE{% else %}WRONG{% / if %}', 'ALWAYSTRUE'],
+			//['{% if (new Date()).getMonth() gte 20 %}WRONG{% else %}ALWAYSELSE{% / if %}', 'ALWAYSELSE'],
 			// @TODO: ['{% if 1 emptyhtml %}WRONG{% /if %}', ''],
 		];
 

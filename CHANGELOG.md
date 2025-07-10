@@ -1,4 +1,4 @@
-## 2.4.1 (WIP)
+## 2.4.1 (2025-07-10)
 
 * Fix variables not being available for custom elements that require synchronous rendering
 * Add support for `gte` and `lte` operator, which are aliases for `ge` and `le`
