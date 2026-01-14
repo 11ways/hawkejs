@@ -1,3 +1,7 @@
+## 2.4.2 (WIP)
+
+- Fix an un-bound Protoblast Array method call
+
 ## 2.4.1 (2025-07-10)
 
 * Fix variables not being available for custom elements that require synchronous rendering
