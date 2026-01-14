@@ -1,0 +1,18 @@
+<div class="slot-parent-wrapper">
+	<h2>Parent with {{ self.count || 3 }} slot children</h2>
+
+	<slot-child label="first">
+		<span slot="title">First Title</span>
+		<span slot="content">First Content</span>
+	</slot-child>
+
+	<slot-child label="second">
+		<span slot="title">Second Title</span>
+		<span slot="content">Second Content</span>
+	</slot-child>
+
+	<slot-child label="third">
+		<span slot="title">Third Title</span>
+		<span slot="content">Third Content</span>
+	</slot-child>
+</div>

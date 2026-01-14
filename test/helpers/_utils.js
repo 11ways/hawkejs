@@ -375,6 +375,7 @@ global.loadHawkejs = function loadHawkejs() {
 	hawkejs.load(base + '/helpers/error_thrower.js');
 	hawkejs.load(base + '/helpers/nested_template_elements.js');
 	hawkejs.load(base + '/helpers/render_looper.js');
+	hawkejs.load(base + '/helpers/slot_test_elements.js');
 
 	addActions();
 }
@@ -623,6 +624,15 @@ function addActions() {
 				throw err;
 			}
 
+			responder(html);
+		});
+	};
+
+	actions['/slot_parent_test'] = function(req, res, renderer, responder) {
+		renderer.renderHTML('slot_parent_test').done(function afterRender(err, html) {
+			if (err) {
+				throw err;
+			}
 			responder(html);
 		});
 	};

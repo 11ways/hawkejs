@@ -1,0 +1,9 @@
+<html>
+<head><title>Slot Test</title></head>
+<body>
+<div class="slot-test-container">
+	<h1>Slot Parent Test</h1>
+	<slot-parent></slot-parent>
+</div>
+</body>
+</html>

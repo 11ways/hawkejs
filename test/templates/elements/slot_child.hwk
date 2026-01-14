@@ -1,0 +1,9 @@
+<div class="slot-child-wrapper">
+	<div class="slot-child-title">
+		<span data-he-slot="title">Default title</span>
+	</div>
+	<div class="slot-child-content">
+		<span data-he-slot="content">Default content</span>
+	</div>
+	<div class="slot-child-label">Label: {{ self.label }}</div>
+</div>

@@ -530,6 +530,44 @@ describe('CustomElement', function() {
 			assertEqualHtml(result.html, '<template-slot-test he-rendered="1"><slot name="main"><div slot="main">Slot test 1</div></slot></template-slot-test> <template-slot-test he-rendered="1"><slot name="main"><div slot="main">Slot test 2</div></slot></template-slot-test>');
 		});
 
+		it('should preserve slot content for all children during parent re-render', async function() {
+
+			// Define the child element that uses slots
+			let SlotChild = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function SlotChild() {
+				return SlotChild.super.call(this);
+			});
+			SlotChild.setTemplateFile('elements/slot_child');
+			SlotChild.setAttribute('label');
+
+			// Define the parent element that creates multiple SlotChild instances
+			let SlotParent = __Protoblast.Bound.Function.inherits('Hawkejs.Element', function SlotParent() {
+				return SlotParent.super.call(this);
+			});
+			SlotParent.setTemplateFile('elements/slot_parent');
+			SlotParent.setAttribute('count', {type: 'number'});
+			SlotParent.setMethod(function triggerRerender() {
+				return this.rerender();
+			});
+
+			// Wait for element classes to be ready
+			await Blast.Classes.Pledge.after(10);
+
+			// First render - slots should work for all children
+			let code = `<slot-parent></slot-parent>`;
+			let compiled = hawkejs.compile('slot_parent_test_1', code);
+			let result = await renderWithPledge(compiled);
+
+			// Check that all three slot-child elements got their slot content
+			assert.strictEqual(result.html.includes('First Title'), true, 'First slot content should be present');
+			assert.strictEqual(result.html.includes('Second Title'), true, 'Second slot content should be present');
+			assert.strictEqual(result.html.includes('Third Title'), true, 'Third slot content should be present');
+
+			// Also check the content slots
+			assert.strictEqual(result.html.includes('First Content'), true, 'First content slot should be present');
+			assert.strictEqual(result.html.includes('Second Content'), true, 'Second content slot should be present');
+			assert.strictEqual(result.html.includes('Third Content'), true, 'Third content slot should be present');
+		});
+
 		it('should render the contents after the attributes have been set', async function() {
 
 			let code = `
