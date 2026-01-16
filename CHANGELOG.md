@@ -2,6 +2,7 @@
 
 * Fix an un-bound Protoblast Array method call
 * Fix custom elements trying to populate slots belonging to ancestor elements
+* Fix dynamic `expose_to_scene` values not being sent to the client scene properly
 
 ## 2.4.1 (2025-07-10)
 
