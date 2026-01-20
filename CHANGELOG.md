@@ -6,6 +6,7 @@
 * Fix `each` statement null issue
 * Fix memory leak in `appears()` with `live: true` option where event listeners and intervals were never cleaned up; added `destroy()` method to returned function for manual cleanup
 * Fix debug `console.log` left in server-side `closest()` implementation
+* Fix inverted `indexOf` condition for placeholder check in `BlockBuffer`; changed to use `includes()` for correct behavior
 
 ## 2.4.1 (2025-07-10)
 
