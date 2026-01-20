@@ -5,6 +5,7 @@
 * Fix dynamic `expose_to_scene` values not being sent to the client scene properly
 * Fix `each` statement null issue
 * Fix memory leak in `appears()` with `live: true` option where event listeners and intervals were never cleaned up; added `destroy()` method to returned function for manual cleanup
+* Fix debug `console.log` left in server-side `closest()` implementation
 
 ## 2.4.1 (2025-07-10)
 
