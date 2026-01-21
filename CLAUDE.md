@@ -144,6 +144,35 @@ MyElement.setMethod(async function refresh() {
 });
 ```
 
+### Element Templates and Stylesheets
+
+```javascript
+// Template path (relative to registered view directories)
+MyElement.setTemplateFile('elements/my_element');
+
+// Stylesheet path (must be explicit - no auto-discovery)
+MyElement.setStylesheetFile('elements/my_element');
+
+// Inline styles
+MyElement.setStylesheet(`my-element { color: red; }`);
+```
+
+View directories are registered via `hawkejs.addViewDirectory(path, weight)`. Templates are searched in priority order, checking for `.hwk` then `.ejs` extensions.
+
+**Class name → tag name:**
+```javascript
+// HeStatsOverview → <he-stats-overview>
+// MyWidgetElement → <my-widget-element>
+```
+
+**Template variable access:**
+```hawkejs
+<div class="my-element">
+    <h1>{{ self.title }}</h1>
+    <p>{{ self.getFormattedContent() }}</p>
+</div>
+```
+
 ## Exposing Data to Client
 
 ```javascript
@@ -155,6 +184,102 @@ let data = hawkejs.scene.exposed['my-data'];
 ```
 
 Static exposed data (same for all requests) goes in `_hawkejs_static_expose`. Request-specific data (like logged-in user) goes in `renderer.expose_to_scene`.
+
+## Data Preparation: toHawkejs and JSON-Dry
+
+Hawkejs uses a two-phase process to prepare data for client-side rendering:
+
+### Phase 1: Clone with toHawkejs (Preparation)
+
+Before rendering begins, Hawkejs clones all template variables using `JSON.clone(obj, 'toHawkejs')`:
+
+```javascript
+// In Variables.setShouldTransform():
+let cloned = Bound.JSON.clone(value, 'toHawkejs', [renderer], weakmap);
+```
+
+This calls the `toHawkejs()` method on any object that has one. The result is a **live object in memory** - no string conversion happens yet.
+
+**Purpose:** Transform server-only objects into client-safe versions. For example, AlchemyMVC's Server Documents become Client Documents.
+
+### Phase 2: JSON.dry (Serialization)
+
+After rendering, when sending the page to the browser, Hawkejs serializes the prepared data:
+
+```javascript
+let dried = Bound.JSON.dry(obj);  // Object → JSON string
+```
+
+This uses `toDry()`/`unDry()` methods for serialization. On the client, `JSON.undry()` reconstructs the objects.
+
+### Implementing toHawkejs
+
+When creating classes that need client-side representation:
+
+```javascript
+MyClass.setMethod(function toHawkejs(wm) {
+    // wm = WeakMap tracking cloned objects (for reference preservation)
+    
+    // Option 1: Return a client-safe version
+    let ClientClass = this.constructor.getClientClass();
+    let result = new ClientClass();
+    
+    // Clone nested data, passing wm to preserve references
+    result.data = Bound.JSON.clone(this.data, 'toHawkejs', wm);
+    
+    return result;
+    
+    // Option 2: Return plain data (if no client class needed)
+    return {
+        name: this.name,
+        items: Bound.JSON.clone(this.items, 'toHawkejs', wm)
+    };
+});
+```
+
+**Critical:** Always pass `wm` (WeakMap) when cloning nested objects. This preserves object identity - if the same object is referenced twice, both references will point to the same clone.
+
+### Common toHawkejs Patterns
+
+```javascript
+// Pattern 1: Server class → Client class (Documents, Models)
+ServerDoc.prototype.toHawkejs = function(wm) {
+    let ClientDoc = this.constructor.getClientDocumentClass();
+    let result = new ClientDoc();
+    result.$record = JSON.clone(this.$record, 'toHawkejs', wm);
+    return result;
+};
+
+// Pattern 2: Transform and simplify
+ComplexObject.prototype.toHawkejs = function(wm) {
+    return {
+        id: this.id,
+        displayName: this.getDisplayName(),
+        // Omit server-only properties
+    };
+};
+
+// Pattern 3: Delegate to nested objects
+Container.prototype.toHawkejs = function(wm) {
+    let result = new ClientContainer();
+    result.items = JSON.clone(this.items, 'toHawkejs', wm);
+    return result;
+};
+```
+
+### toHawkejsString (Different Purpose)
+
+Don't confuse `toHawkejs` with `toHawkejsString`:
+
+- **`toHawkejs(wm)`** - Transforms objects during cloning (preparation phase)
+- **`toHawkejsString(renderer)`** - Returns HTML string representation for template output
+
+```javascript
+// toHawkejsString is for rendering objects as HTML content
+MyClass.prototype.toHawkejsString = function(renderer) {
+    return '<span class="my-class">' + this.name + '</span>';
+};
+```
 
 ## Key Classes
 
@@ -238,3 +363,13 @@ lib/
 26. **`querySelector` on custom elements may trigger render** - Elements with templates render synchronously when queried
 
 27. **`addElementGetter()` caches until rerender** - DOM changes externally won't update cached references
+
+28. **No auto-discovery for stylesheets** - Must explicitly call `setStylesheetFile()` or `setStylesheet()`
+
+29. **CSS selectors use tag names** - Style elements using their tag name: `he-stats-overview { ... }` not `.he-stats-overview`
+
+30. **`toHawkejs` vs `toDry`** - `toHawkejs` is called during cloning BEFORE render (object→object transformation); `toDry` is called during serialization AFTER render (object→string)
+
+31. **Pass `wm` in toHawkejs** - When cloning nested objects in `toHawkejs`, always pass the WeakMap: `JSON.clone(nested, 'toHawkejs', wm)`. Failing to do so breaks reference preservation
+
+32. **toHawkejs receives renderer** - Extra args passed to clone are available: `JSON.clone(obj, 'toHawkejs', [renderer])` means `toHawkejs(wm, renderer)`

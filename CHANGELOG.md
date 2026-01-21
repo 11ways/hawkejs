@@ -1,4 +1,4 @@
-## 2.4.2 (WIP)
+## 2.4.2 (2026-01-21)
 
 * Fix an un-bound Protoblast Array method call
 * Fix custom elements trying to populate slots belonging to ancestor elements
