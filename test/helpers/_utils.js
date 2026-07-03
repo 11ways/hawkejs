@@ -2,7 +2,8 @@ let puppeteer = require('puppeteer'),
     assert    = require('assert'),
     Hawkejs   = require('../../index.js'),
     http      = require('http'),
-    fs        = require('fs');
+    fs        = require('fs'),
+    child_process = require('child_process');
 
 let navigations = 0,
     coverages = [];
@@ -445,10 +446,64 @@ global.renderAndCaptureErrorMessage = async function renderAndCaptureErrorMessag
 	return pledge;
 };
 
+/**
+ * Check if a browser executable actually works in headless mode.
+ * Puppeteer's own bundled-Chrome download can be missing/corrupt in some
+ * sandboxes (e.g. a pinned old revision missing its ICU data file). Such a
+ * binary still exits 0 for `--version`, but hangs and never emits a CDP
+ * handshake when actually launched headless - which is what makes
+ * `puppeteer.launch()` hang until its connect-timeout instead of failing
+ * fast. So a real headless run is checked synchronously up front instead.
+ */
+function isUsableBrowser(executable_path) {
+
+	if (!executable_path || !fs.existsSync(executable_path)) {
+		return false;
+	}
+
+	let result = child_process.spawnSync(executable_path, [
+		'--headless',
+		'--disable-gpu',
+		'--no-sandbox',
+		'--dump-dom',
+		'about:blank',
+	], {timeout: 8000});
+
+	return result.status === 0 && !result.error;
+}
+
+/**
+ * Resolve which Chrome/Chromium executable to launch.
+ * Prefers `PUPPETEER_EXECUTABLE_PATH` (puppeteer already honors it, but we
+ * validate it here too) and puppeteer's own bundled download; falls back to
+ * common system-installed locations when neither actually works.
+ */
+function resolveExecutablePath() {
+
+	let candidates = [
+		process.env.PUPPETEER_EXECUTABLE_PATH,
+		puppeteer.executablePath(),
+		'/usr/bin/chromium',
+		'/usr/bin/chromium-browser',
+		'/usr/bin/google-chrome',
+	];
+
+	for (let candidate of candidates) {
+		if (isUsableBrowser(candidate)) {
+			return candidate;
+		}
+	}
+
+	// Nothing usable found: let puppeteer try its own default and produce
+	// its normal error/timeout, rather than silently launching with none
+	return undefined;
+}
+
 global.loadBrowser = async function loadBrowser() {
 
 	global.browser = await puppeteer.launch({
-		headless : true
+		headless        : true,
+		executablePath  : resolveExecutablePath(),
 	});
 
 	global.page = await browser.newPage();

@@ -5,6 +5,7 @@
 * Upgrade the `mocha` devDependency to v11 so the test suite runs on modern Node again
 * Restore the covered url when closing a navigation dialog: a route rendered into a `he-dialog` (via `makeDialog()`) changes the url, but closing the dialog left that stale url in place. The long-disabled `if (false && ...)` branch in `close()` also read the wrong renderer and used an undeclared variable; the scene now stamps the covered url on navigation dialogs at creation time (inline `showDialog()` dialogs are untouched)
 * Drop an ignored second argument from the two `createTextNodeFromUnsafe()` call sites
+* Make the test harness fall back to a working system Chrome/Chromium when puppeteer's own bundled download is broken or incomplete: `puppeteer.launch()` would otherwise hang until its connect-timeout instead of failing fast, since a bad binary can still pass a bare `--version` check
 
 ## 2.4.2 (2026-01-21)
 
