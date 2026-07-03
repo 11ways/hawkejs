@@ -1,3 +1,7 @@
+## 2.4.3 (WIP)
+
+* Fall back to the exposed `app_version` for client template fetches: `getFirstAvailableInternalSource` read the `app_version` property, which is still empty early in the boot process, producing unversioned `/hawkejs/templates` urls. Combined with the server's 1h cache header on versioned urls, browsers could keep rendering an old element template for up to an hour after a deploy
+
 ## 2.4.2 (2026-01-21)
 
 * Fix an un-bound Protoblast Array method call
