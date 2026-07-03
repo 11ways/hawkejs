@@ -14,7 +14,7 @@
 	"repository": "git@github.com:11ways/hawkejs.git",
 	"dependencies": {
 		"nwsapi"     : "2.2.12",
-		"protoblast" : "~0.9.6"
+		"protoblast" : "~0.9.9"
 	},
 	"devDependencies": {
 		"codecov"                 : "~3.8.3",
