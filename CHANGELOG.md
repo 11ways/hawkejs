@@ -3,6 +3,8 @@
 * Fall back to the exposed `app_version` for client template fetches: `getFirstAvailableInternalSource` read the `app_version` property, which is still empty early in the boot process, producing unversioned `/hawkejs/templates` urls. Combined with the server's 1h cache header on versioned urls, browsers could keep rendering an old element template for up to an hour after a deploy
 * Remove the dead server-side `Hawkejs.closest()` static: it unconditionally returned `null` and had no callers (the real `closest()` lives on the DOM element implementation)
 * Upgrade the `mocha` devDependency to v11 so the test suite runs on modern Node again
+* Restore the covered url when closing a navigation dialog: a route rendered into a `he-dialog` (via `makeDialog()`) changes the url, but closing the dialog left that stale url in place. The long-disabled `if (false && ...)` branch in `close()` also read the wrong renderer and used an undeclared variable; the scene now stamps the covered url on navigation dialogs at creation time (inline `showDialog()` dialogs are untouched)
+* Drop an ignored second argument from the two `createTextNodeFromUnsafe()` call sites
 
 ## 2.4.2 (2026-01-21)
 

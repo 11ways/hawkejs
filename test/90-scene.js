@@ -411,6 +411,66 @@ describe('Scene', function() {
 			assertEqualHtml(result.html, `<div class="he-dialog-contents" data-he-slot="main" data-he-template="make_dialog"> This should now be a dialog! <hr></div>`);
 		});
 
+		it('should restore the previous url when closing a navigation dialog', async function() {
+
+			await setLocation('/base_scene');
+
+			let result = await evalPage(async function() {
+
+				let start_url = document.location.pathname;
+
+				await hawkejs.scene.openUrl('/make_dialog');
+
+				let url_with_dialog = document.location.pathname;
+
+				let dialog = document.querySelector('he-dialog');
+
+				if (dialog) {
+					dialog.close();
+				}
+
+				return {
+					start_url        : start_url,
+					had_dialog       : !!dialog,
+					url_with_dialog  : url_with_dialog,
+					url_after_close  : document.location.pathname,
+					dialog_remains   : !!document.querySelector('he-dialog'),
+				};
+			});
+
+			assert.strictEqual(result.had_dialog, true, 'The navigation should have opened a dialog');
+			assert.strictEqual(result.url_with_dialog, '/make_dialog', 'The navigation should have changed the url');
+			assert.strictEqual(result.dialog_remains, false, 'The dialog should have been removed');
+			assert.strictEqual(result.url_after_close, result.start_url, 'Closing the dialog should restore the covered url');
+		});
+
+		it('should not change the url when closing an inline dialog', async function() {
+
+			await setLocation('/base_scene');
+
+			let result = await evalPage(async function() {
+
+				let start_url = document.location.pathname;
+
+				await hawkejs.scene.render('make_dialog');
+
+				let dialog = document.querySelector('he-dialog');
+
+				if (dialog) {
+					dialog.close();
+				}
+
+				return {
+					start_url       : start_url,
+					had_dialog      : !!dialog,
+					url_after_close : document.location.pathname,
+				};
+			});
+
+			assert.strictEqual(result.had_dialog, true, 'The render should have opened a dialog');
+			assert.strictEqual(result.url_after_close, result.start_url, 'An inline dialog close should leave the url alone');
+		});
+
 		it('should update blocks', async function() {
 
 			await setLocation('/block_update_base');
